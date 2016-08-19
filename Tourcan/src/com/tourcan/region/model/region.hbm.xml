@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.tourcan.region.model.RegionVO" table="region">
+
+		<id name="region_id" column="region_id">
+			<generator class="native"/>
+		</id>
+
+		<property name="region_name" column="region_name" />
+		<property name="region_area" column="region_area" />
+
+		<set name="atts" table="att" lazy="false" cascade="all"  inverse="true"  order-by="att_id asc">			
+			<key>
+				<column name="region_id" />
+			</key>
+			<one-to-many class="com.tourcan.att.model.AttVO" />
+		</set>
+
+	</class>
+</hibernate-mapping>
+
