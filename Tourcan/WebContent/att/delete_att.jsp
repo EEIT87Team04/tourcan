@@ -20,7 +20,7 @@ function disp_confirm()
 <table border="1">
 <tr>
 <td>請輸入景點ID：</td>
-<td><input type="text" name="mem_id" size="45"></input>  
+<td><input type="text" name="att_id" size="45"></input>  
 	<span style="color:red;font-size:70%">${errorMsgs}</span></td>
 </tr>
 </table>

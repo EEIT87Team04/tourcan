@@ -29,14 +29,6 @@ public class AttServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
-	}
-
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-	}
-
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
@@ -55,7 +47,7 @@ public class AttServlet extends HttpServlet {
 				}
 				// 驗證有誤，提示錯誤訊息
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher rd = request.getRequestDispatcher("/att/deleteError_att.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/att/delete_att.jsp");
 					rd.forward(request, response);
 					return;// 程式中斷
 				}
@@ -87,7 +79,7 @@ public class AttServlet extends HttpServlet {
 				/***************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 *************/
-				RequestDispatcher rd = request.getRequestDispatcher("/att/deleteSuccess_att.jsp"); // 成功轉交
+				RequestDispatcher rd = request.getRequestDispatcher("/att/deleteSuccess.jsp"); // 成功轉交
 				rd.forward(request, response);
 				return;// 程式中斷
 
@@ -98,5 +90,14 @@ public class AttServlet extends HttpServlet {
 				rd.forward(request, response);
 			}
 		}
+	}
+
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+	}
+
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
 	}
 }
