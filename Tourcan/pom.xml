@@ -29,10 +29,16 @@
 	<properties>
 		<spring.version>4.3.1.RELEASE</spring.version>
 		<googleapi.version>[1.20.0,)</googleapi.version>
-		<hibernate.version>3.5.3-Final</hibernate.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
 		<build.sourceEncoding>UTF-8</build.sourceEncoding>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>4.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.json</groupId>
@@ -47,7 +53,7 @@
 			<artifactId>firebase-server-sdk</artifactId>
 			<version>[3.0.0,)</version>
 		</dependency>
-		
+
 
 		<!-- Google API -->
 		<dependency>
@@ -70,7 +76,7 @@
 			<artifactId>google-api-client-gson</artifactId>
 			<version>${googleapi.version}</version>
 		</dependency>
-		
+
 
 		<!-- spring -->
 		<dependency>
@@ -133,7 +139,7 @@
 		<!-- <artifactId>spring-webmvc</artifactId> -->
 		<!-- <version>${spring.version}</version> -->
 		<!-- </dependency> -->
-		
+
 
 		<!-- hibernate -->
 		<dependency>
@@ -172,11 +178,11 @@
 		<!-- <artifactId>hibernate-infinispan</artifactId> -->
 		<!-- <version>${hibernate.version}</version> -->
 		<!-- </dependency> -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.hibernate</groupId> -->
+<!-- 			<artifactId>hibernate-annotations</artifactId> -->
+<!-- 			<version>${hibernate.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
