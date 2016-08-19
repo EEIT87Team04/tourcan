@@ -8,6 +8,8 @@ public class RegionVO implements java.io.Serializable {
 	private String region_name;
 	private Integer region_area;
 	
+	public RegionVO() {
+	}
 	public Integer getRegion_id() {
 		return region_id;
 	}

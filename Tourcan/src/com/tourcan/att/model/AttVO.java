@@ -1,4 +1,4 @@
-package com.tourcan.att.model;
+ package com.tourcan.att.model;
 
 public class AttVO implements java.io.Serializable {
 
@@ -26,6 +26,9 @@ public class AttVO implements java.io.Serializable {
 //	public void setAtt_area(Integer att_area) {
 //		this.att_area = att_area;
 //	}
+
+	public AttVO() {
+	}
 
 	public String getAtt_name() {
 		return att_name;

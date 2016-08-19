@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 
-import com.tourcan.region.model.RegionDAO;
+import com.tourcan.region.model.RegionDAO_JDBC;
 
 /**
  * Servlet implementation class RegionServlet
@@ -27,7 +27,7 @@ public class RegionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		RegionDAO dao = new RegionDAO();
+		RegionDAO_JDBC dao = new RegionDAO_JDBC();
 		dao.getAll();
 		PrintWriter out = response.getWriter();
 //		System.out.println(new JSONArray(dao.getAll()).toString());
