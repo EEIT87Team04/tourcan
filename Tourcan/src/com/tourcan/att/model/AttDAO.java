@@ -20,11 +20,12 @@ public class AttDAO implements AttDAO_interface {
 	private static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	private static final String url = "jdbc:sqlserver://localhost:1433;DatabaseName=Tourcan";
 	private static final String userid = "sa";
-	private static final String passwd = "P@ssw0rd";
+	private static final String passwd = "sa123456";
 
 	private static int STMT_SHIFT = 1; // 1 for JDBC, 0 for Hibernate
 
 	// SQL statements
+	
 	private static final String INSERT_STMT = "INSERT INTO att ( "
 			+ "att_name, att_staytime, region_id, att_addr, att_price, att_phone, att_url, att_eat, att_intro, att_open, att_lat, att_lng ) "
 			+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
