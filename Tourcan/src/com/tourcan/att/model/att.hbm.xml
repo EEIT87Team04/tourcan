@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.tourcan.att.model.AttVO" table="att" >
+        
+        <id name="att_id" column="att_id">
+            <generator class="identity"/>
+        </id>
+        
+        <property name="att_name" column="att_name" />
+        <property name="att_staytime" column="att_staytime" />
+        <property name="att_addr" column="att_addr" />
+        <property name="att_price" column="att_price" />
+        <property name="att_phone" column="att_phone" />
+        <property name="att_url" column="att_url" />
+        <property name="att_eat" column="att_eat" />
+        <property name="att_intro" column="att_intro" />
+        <property name="att_open" column="att_open" />
+        <property name="att_lat" column="att_lat" />
+        <property name="att_lng" column="att_lng" />
+        
+<!--         <many-to-one name="regionVO" class="com.tourcan.region.model.RegionVO" lazy="false"> -->
+<!--             <column name="region_id" /> -->
+<!--         </many-to-one> -->
+        
+    </class>
+</hibernate-mapping>
+
