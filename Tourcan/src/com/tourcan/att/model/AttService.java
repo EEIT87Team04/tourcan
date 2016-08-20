@@ -8,12 +8,7 @@ public class AttService {
 		dao = new AttDAO();
 	}
 
-	public AttVO deleteAtt(Integer att_id) {
-
-		AttVO attVO = new AttVO();
-		attVO.setAtt_id(att_id);
-		dao.delete(attVO);
-
-		return attVO;
+	public void deleteAtt(Integer att_id) {
+		dao.delete(att_id);
 	}
 }

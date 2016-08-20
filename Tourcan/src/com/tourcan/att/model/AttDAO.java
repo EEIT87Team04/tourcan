@@ -21,12 +21,11 @@ public class AttDAO implements AttDAO_interface {
 	}
 
 	@Override
-	public void delete(AttVO attVO) {
+	public void delete(Integer att_id) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			AttVO attVO1 = (AttVO) session.get(AttVO.class, attVO.getAtt_id());
-			session.delete(attVO1);
+			session.delete(att_id);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
