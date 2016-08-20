@@ -1,26 +1,33 @@
 package com.tourcan.att.model;
 
+import com.tourcan.region.model.RegionVO;
+
 public class AttService {
 
 	public AttVO insert(String attName, Integer regionId, String attAddr, Boolean attEat, String attIntro,
 			String appOpen, String attPhone, Double attPrice, Integer attStaytime, String attUrl, Double attLat,
 			Double attLng) {
-		AttVO attvo = new AttVO();
+		AttDAO dao = new AttDAO();
+		AttVO attVO = new AttVO();
+		RegionVO regionVO = new RegionVO();
+		regionVO.setRegion_id(regionId);
 
-		attvo.setAtt_name(attName);
-		attvo.setRegion_id(regionId);
-		attvo.setAtt_addr(attAddr);
-		attvo.setAtt_eat(attEat);
-		attvo.setAtt_intro(attIntro);
-		attvo.setAtt_open(appOpen);
-		attvo.setAtt_phone(attPhone);
-		attvo.setAtt_price(attPrice);
-		attvo.setAtt_staytime(attStaytime);
-		attvo.setAtt_url(attUrl);
-		attvo.setAtt_lat(attLat);
-		attvo.setAtt_lng(attLng);
+		attVO.setAtt_name(attName);
+		attVO.setRegionVO(regionVO);;
+		attVO.setAtt_addr(attAddr);
+		attVO.setAtt_eat(attEat);
+		attVO.setAtt_intro(attIntro);
+		attVO.setAtt_open(appOpen);
+		attVO.setAtt_phone(attPhone);
+		attVO.setAtt_price(attPrice);
+		attVO.setAtt_staytime(attStaytime);
+		attVO.setAtt_url(attUrl);
+		attVO.setAtt_lat(attLat);
+		attVO.setAtt_lng(attLng);
 		
-		return attvo;
+		dao.insert(attVO);
+		
+		return attVO;
 	}
 
 }

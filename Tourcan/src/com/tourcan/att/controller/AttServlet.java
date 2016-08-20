@@ -199,6 +199,7 @@ public class AttServlet extends HttpServlet {
 				
 				AttService srv = new AttService();
 				srv.insert(attName, regionId, attAddr, attEat, attIntro, appOpen, attPhone, attPrice, attStaytime, attUrl, attLat, attLng);
+				
 			}
 		} catch (Exception e) {
 			err.append("result", "新增失敗。");
