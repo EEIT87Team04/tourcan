@@ -23,14 +23,16 @@ public class AttServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+//		doGet(request, response);
 		
 		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		/***************************** 刪除一筆資料 ************************************************************************/
@@ -79,7 +81,7 @@ public class AttServlet extends HttpServlet {
 				/***************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 *************/
-				RequestDispatcher rd = request.getRequestDispatcher("/att/deleteSuccess.jsp"); // 成功轉交
+				RequestDispatcher rd = request.getRequestDispatcher("/success/deleteSuccess.jsp"); // 成功轉交
 				rd.forward(request, response);
 				return;// 程式中斷
 

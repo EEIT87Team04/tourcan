@@ -21,9 +21,9 @@
         <property name="att_lat" column="att_lat" />
         <property name="att_lng" column="att_lng" />
         
-        <many-to-one name="regionVO" class="com.tourcan.region.model.RegionVO" lazy="false">
-            <column name="region_id" />
-        </many-to-one>
+<!--         <many-to-one name="regionVO" class="com.tourcan.region.model.RegionVO" lazy="false"> -->
+<!--             <column name="region_id" /> -->
+<!--         </many-to-one> -->
         
     </class>
 </hibernate-mapping>
