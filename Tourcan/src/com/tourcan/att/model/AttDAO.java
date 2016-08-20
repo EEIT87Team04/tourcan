@@ -25,7 +25,9 @@ public class AttDAO implements AttDAO_interface {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			session.delete(att_id);
+			AttVO attVO=new AttVO();
+			attVO.setAtt_id(att_id);
+			session.delete(attVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
