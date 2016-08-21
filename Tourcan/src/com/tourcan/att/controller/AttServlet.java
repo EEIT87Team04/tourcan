@@ -261,7 +261,7 @@ public class AttServlet extends HttpServlet {
 					rd.forward(request, response);
 					return;
 				} else {
-					request.setAttribute("memVO", mb);
+					request.setAttribute("attVO", mb);
 					RequestDispatcher rd = request
 							.getRequestDispatcher("/att/update_reNew.jsp");
 					rd.forward(request, response);
@@ -285,58 +285,100 @@ public class AttServlet extends HttpServlet {
 			/*********************** 用 id 找 data *************************/
 
 			/************** 驗證update輸入錯誤 ****************/
-			Integer id = new Integer(request.getParameter("mem_id"));
+			Integer id = new Integer(request.getParameter("att_id"));
 
 			try {
-				String name = request.getParameter("mem_name");
-				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{2,50}$";
+				String name = request.getParameter("att_name");
+				String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z)]{1,50}$";
 				if (name == null || (name.trim()).length() == 0) {
 					errorMsgMap.put("name", "please into name ");
 				} else if (!name.trim().matches(nameReg)) {
-					errorMsgMap.put("nameReg", "只能是中,英文;長度在2~50之間");
+					errorMsgMap.put("nameReg", "只能是中,英文;長度在1~50之間");
 				}
 
 				java.sql.Date date = null; // Date形式
-				String bdate = request.getParameter("mem_bdate");
+				String staytime = request.getParameter("att_staytime");
 
-				if (bdate == null || (bdate.trim()).length() == 0) {
-					errorMsgMap.put("bdate", "please into bdate ");
+				if (staytime == null || (staytime.trim()).length() == 0) {
+					errorMsgMap.put("staytime", "please into staytime ");
 				} else {
 					try {
 						SimpleDateFormat sdf = new SimpleDateFormat(
 								"yyyy-MM-dd");
 						sdf.setLenient(false);
-						java.util.Date bdConv = sdf.parse(bdate);
+						java.util.Date bdConv = sdf.parse(staytime);
 						date = new Date(bdConv.getTime());
 					} catch (Exception e) {
-						errorMsgMap.put("date", "日期格式錯誤");
+						errorMsgMap.put("staytime", "日期格式錯誤");
 					}
 				}
 
-				String account = request.getParameter("mem_account");
-				String accountReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,50}$";
-				if (account == null || (account.trim()).length() == 0) {
-					errorMsgMap.put("account", "please into account ");
-				} else if (!account.trim().matches(accountReg)) {
-					errorMsgMap.put("accountReg", "只能是中,英文,數字,_;長度在2~50之間");
+				String regionId = request.getParameter("region_id");
+				String regionIdReg = "^[(0-9)]{1,2}$";
+				if (regionId == null || (regionId.trim()).length() == 0) {
+					errorMsgMap.put("regionId", "please into regionId ");
+				} else if (!regionId.trim().matches(regionIdReg)) {
+					errorMsgMap.put("regionIdReg", "只能是數字,_;0~20");
 				}
 
-				String pwd = request.getParameter("mem_pwd");
-				String pwdReg = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20})";
-				if (pwd == null || (pwd.trim()).length() == 0) {
-					errorMsgMap.put("pwd", "please into pwd ");
-				} else if (!pwd.trim().matches(pwdReg)) {
-					errorMsgMap.put("pwdReg", "只能是英文,數字,@#$%^&+=;長度在6~50之間");
+				String addr = request.getParameter("att_addr");
+				if (addr == null || (addr.trim()).length() == 0) {
+					errorMsgMap.put("addr", "please into addr ");
+				} 
+
+				String price = request.getParameter("att_price");
+				String priceReg = "^[(0-9)]{1,10}$";
+				if (price == null || (price.trim()).length() == 0) {
+					errorMsgMap.put("price", "please into price ");
+				} else if (!price.trim().matches(priceReg)) {
+					errorMsgMap.put("priceReg", "數字;長度在1~10之間");
 				}
-
-				String email = request.getParameter("mem_email");
-				String emailReg = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-						+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
-				if (email == null || (email.trim()).length() == 0) {
-					errorMsgMap.put("email", "please into email ");
-				} else if (!email.trim().matches(emailReg)) {
-					errorMsgMap.put("emailReg", "只能是英文,數字,_;長度在2~50之間");
+				
+				String phone = request.getParameter("att_phone");
+				String phoneReg = "^[(0-9)]{1,20}$";
+				if (phone == null || (phone.trim()).length() == 0) {
+					errorMsgMap.put("phone", "please into phone ");
+				} else if (!phone.trim().matches(phoneReg)) {
+					errorMsgMap.put("phoneReg", "數字;長度在1~20之間");
+				}
+				
+				String url = request.getParameter("att_url");
+				if (url == null || (url.trim()).length() == 0) {
+					errorMsgMap.put("url", "please into url ");
+				} 
+				
+				String eat = request.getParameter("att_eat");
+				String eatReg = "^[(0-1)]{1}$";
+				if (eat == null || (eat.trim()).length() == 0) {
+					errorMsgMap.put("eat", "please into eat ");
+				} else if (!eat.trim().matches(eatReg)) {
+					errorMsgMap.put("eatReg", "0 or 1;長度在1之間");
+				}
+				
+				String intro = request.getParameter("att_intro");
+				if (intro == null || (intro.trim()).length() == 0) {
+					errorMsgMap.put("intro", "please into intro ");
+				} 
+				
+				String open = request.getParameter("att_open");
+				if (open == null || (open.trim()).length() == 0) {
+					errorMsgMap.put("open", "please into open ");
+				} 
+				
+				String lat = request.getParameter("att_lat");
+				String latReg = "^[(0-9)]{1,3}$";
+				if (lat == null || (lat.trim()).length() == 0) {
+					errorMsgMap.put("lat", "please into lat ");
+				} else if (!lat.trim().matches(latReg)) {
+					errorMsgMap.put("latReg", "number;長度在1~3之間");
+				}
+				
+				String lng = request.getParameter("att_lng");
+				String lngReg = "^[(0-9)]{1,3}$";
+				if (lng == null || (lng.trim()).length() == 0) {
+					errorMsgMap.put("lng", "please into lng ");
+				} else if (!lng.trim().matches(eatReg)) {
+					errorMsgMap.put("lngReg",  "number;長度在1~3之間");
 				}
 
 				if (!errorMsgMap.isEmpty()) {
