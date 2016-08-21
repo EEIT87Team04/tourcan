@@ -12,7 +12,7 @@
 <table border="1">
 
 <tr>
-<td>會員Id:</td>
+<td>att_id:</td>
 <td><input type="TEXT" name="att_id" value="${param.att_id}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.id}</div>
 
