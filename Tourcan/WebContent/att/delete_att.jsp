@@ -16,7 +16,7 @@ function disp_confirm()
 </script>
 </head>
 <body>
-<form action="att.do" method="post">
+<form action="AttServlet" method="">
 <table border="1">
 <tr>
 <td>請輸入景點ID：</td>
