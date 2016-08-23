@@ -90,13 +90,20 @@ public class AttDAO implements AttDAO_interface {
 
 	@Override
 	public List<AttVO> findByName(String att_name) {
-		List<AttVO> name=null;
+//		List<AttVO> name=null;
     	List<AttVO> attname=null;
     	Session session=HibernateUtil.getSessionFactory().getCurrentSession();
     	System.out.println("s2="+att_name);
-    	String s2=att_name;
+    	String s2= "%" + att_name + "%";
 		try {
 			session.beginTransaction();
+			String queryByName = "FROM AttVO WHERE att_name like :att_name";
+			Query qry = session.createQuery(queryByName);
+			qry.setParameter("att_name", s2);
+			attname = qry.list();
+//			for (AttVO attVO : attname) {
+//				System.out.println(attVO.getAtt_name());
+//			}
 //			String hql="from AttVO  where  att_name = ?";
 ////			name=(List<AttVO>) session.get(AttVO.class, att_name );
 //			   Query query=session.createQuery(hql);
@@ -111,23 +118,22 @@ public class AttDAO implements AttDAO_interface {
 			   
 			   
 			   
-			Query query= session.createSQLQuery("select att_id,att_name from att where att_name=?");
-		
-		
-			query.setString(0, s2);
-			attname=query.list();	
-			
-			for( AttVO attVO :attname){			
-				name=(List<AttVO>) attVO;
-			}
+//			Query query= session.createSQLQuery("select att_id,att_name from att where att_name=?");
+//		
+//		
+//			query.setString(0, s2);
+//			attname=query.list();	
+//			
+//			for( AttVO attVO :attname){			
+//				name=(List<AttVO>) attVO;
+//			}
 			session.beginTransaction().commit();
-
 			} catch (RuntimeException e) {
 				session.beginTransaction().rollback();
 				throw e;
 				
 			}
-			return name;
+		return attname;
 	}
 
 	@Override

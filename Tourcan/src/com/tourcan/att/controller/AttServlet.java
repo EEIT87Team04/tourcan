@@ -31,7 +31,7 @@ public class AttServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
-//		response.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 //		response.setContentType("application/json");
 //		BufferedReader br = request.getReader();
 //		StringBuffer sb = new StringBuffer(128);
@@ -269,11 +269,11 @@ public class AttServlet extends HttpServlet {
 
 			try {
 	//***************************1.接收請求參數 - 輸入格式的錯誤處理**********************//*
-				String str = request.getParameter("attname");
-				if (str == null || (str.trim()).length() == 0) {
+				String att_name = request.getParameter("attname");
+				if (att_name == null || (att_name.trim()).length() == 0) {
 					errorMsgs1.add("請輸入attname");
 				}
-				System.out.println("s1="+str);
+				System.out.println("s1="+att_name);
 		// Send the use back to the form, if there were errors
 				if (!errorMsgs1.isEmpty()) {
 					RequestDispatcher failureView = request
@@ -299,8 +299,11 @@ public class AttServlet extends HttpServlet {
 				//***************************2.開始查詢資料*****************************************//*
 		
 				AttService asv =new AttService();
-				Integer attVO= asv.getId(str);
-				AttVO avo =asv.getOne(attVO);
+//				Integer attVO= asv.getId(str);
+//				AttVO avo =asv.getOne(attVO);
+				
+				List<AttVO> avo = asv.getAllByName(att_name);
+				
 				if (avo == null) {
 					errorMsgs1.add("查無資料");
 				}
@@ -313,8 +316,8 @@ public class AttServlet extends HttpServlet {
 //				}
 				
 		//***************************3.查詢完成,準備轉交(Send the Success view)*************//*
-				request.setAttribute("avo", avo); // 資料庫取出的empVO物件,存入req
-				String url = "/result/listOneAtt2.jsp";
+				request.setAttribute("list", avo); // 資料庫取出的empVO物件,存入req
+				String url = "/att/query_All_att_for_name.jsp";
 				RequestDispatcher successView = request.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(request, response);
 
