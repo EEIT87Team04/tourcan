@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ page import="com.tourcan.att.model.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> --%>
 
 <%-- 此頁為script取值 ，應練習改用採用 EL 的寫法取值 --%>
 
@@ -38,31 +38,34 @@
 			<th>region_id</th>
 		</tr>
 		<tr align='center' valign='middle'>
-			<td><%=attVO.getAtt_id()%></td>
-			<td><%=attVO.getAtt_name()%></td>
-			<td><%=attVO.getAtt_addr()%></td>
-			<td><%=attVO.getAtt_intro()%></td>
-			<td><%=attVO.getAtt_open()%></td>
-			<td><%=attVO.getAtt_phone()%></td>
-			<td><%=attVO.getAtt_url()%></td>
-			<td><%=attVO.getAtt_price()%></td>
-			<td><%=attVO.getAtt_staytime()%></td>
-			<td>${attVO.regionVO.region_id }</td>
+		
+<%-- 			<td><%=attVO.getAtt_id()%></td> --%>
+<%-- 			<td><%=attVO.getAtt_name()%></td> --%>
+<%-- 			<td><%=attVO.getAtt_addr()%></td> --%>
+<%-- 			<td><%=attVO.getAtt_intro()%></td> --%>
+<%-- 			<td><%=attVO.getAtt_open()%></td> --%>
+<%-- 			<td><%=attVO.getAtt_phone()%></td> --%>
+<%-- 			<td><%=attVO.getAtt_url()%></td> --%>
+<%-- 			<td><%=attVO.getAtt_price()%></td> --%>
+<%-- 			<td><%=attVO.getAtt_staytime()%></td> --%>
+<%-- 			<td>${attVO.regionVO.region_id }</td> --%>
 			
-			<td></td>
 		</tr>
 	</table>
-	<h3>id:${attVO.att_id }</h3>
+	<table>
+	<c:forEach var="attVO" items="${list}">
+	<tr align='center' valign='middle'>
+	<td>id:${attVO.att_id }</td>
+	<td>name:${attVO.att_name }</td>
+	<td>addr:${attVO.att_addr }</td>
+	<td>intro:${attVO.att_intro }</td>
+	<td>open:${attVO.att_open }</td>
+	<td>phone:${attVO.att_phone }</td>
+	<td>Region:${attVO.regionVO.region_id }</td>
+	</tr>
+</c:forEach>
 
-	<h3>name:${attVO.att_name }</h3>
-	<h3>addr:${attVO.att_addr }</h3>
-	<h3>intro:${attVO.att_intro }</h3>
-	<h3>open:${attVO.att_open }</h3>
-	<h3>phone:${attVO.att_phone }</h3>
-	<h3>Region:${attVO.regionVO.region_id }</h3>
-
-
-
+</table>
 
 	<input type="button" value="回首頁"
 		onclick="javascript:location.href='../index.jsp'" />
