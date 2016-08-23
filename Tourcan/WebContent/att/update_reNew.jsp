@@ -25,7 +25,7 @@ ${ErrorMsgKey.error}
 
 <tr>
 <td>會員姓名:</td>
-<td><input type="TEXT" name="mem_name" value="${param.att_name}${attVO.att_name}" size="12" >
+<td><input type="TEXT" name="att_name" value="${param.att_name}${attVO.att_name}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.name}</div>
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.nameReg}</div></td>
 
@@ -33,7 +33,7 @@ ${ErrorMsgKey.error}
 
 <tr>
 <td>att_staytime:</td>
-<td><input type="TEXT" name="mem_bdate" value="${param.att_staytime}${attVO.att_staytime}" size="12" >
+<td><input type="TEXT" name="att_staytime" value="${param.att_staytime}${attVO.att_staytime}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.staytime}</div>
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.staytimeReg}</div></td>
 
@@ -41,7 +41,7 @@ ${ErrorMsgKey.error}
 
 <tr>
 <td>region_id:</td>
-<td><input type="TEXT" name="mem_name" value="${param.region_id}${attVO.region_id}" size="12" >
+<td><input type="TEXT" name="region_id" value="${param.region_id}${attVO.regionVO.region_id}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.regionId}</div>
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.regionIdReg}</div></td>
 
@@ -49,14 +49,14 @@ ${ErrorMsgKey.error}
 
 <tr>
 <td>att_addr:</td>
-<td><input type="TEXT" name="mem_bdate" value="${param.att_addr}${attVO.att_addr}" size="12" >
+<td><input type="TEXT" name="att_addr" value="${param.att_addr}${attVO.att_addr}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.addr}</div>
 
 
 </tr>
 <tr>
 <td>att_price:</td>
-<td><input type="TEXT" name="mem_name" value="${param.att_price}${attVO.att_price}" size="12" >
+<td><input type="TEXT" name="att_price" value="${param.att_price}${attVO.att_price}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.price}</div>
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.priceReg}</div></td>
 
@@ -64,41 +64,41 @@ ${ErrorMsgKey.error}
 
 <tr>
 <td>att_phone:</td>
-<td><input type="TEXT" name="mem_bdate" value="${param.att_phone}${attVO.att_phone}" size="12" >
+<td><input type="TEXT" name="att_phone" value="${param.att_phone}${attVO.att_phone}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.phone}</div>
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.phoneReg}</div></td>
 
 </tr>
 <tr>
 <td>att_url:</td>
-<td><input type="TEXT" name="mem_name" value="${param.att_url}${attVO.att_url}" size="12" >
+<td><input type="TEXT" name="att_url" value="${param.att_url}${attVO.att_url}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.url}</div>
 
 </tr>
 
 <tr>
 <td>att_eat:</td>
-<td><input type="TEXT" name="mem_bdate" value="${param.att_eat}${attVO.att_eat}" size="12" >
+<td><input type="TEXT" name="att_eat" value="${param.att_eat}${attVO.att_eat}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.eat}</div>
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.eatReg}</div></td>
 
 </tr>
 <tr>
 <td>att_intro:</td>
-<td><input type="TEXT" name="mem_name" value="${param.att_intro}${attVO.att_intro}" size="12" >
+<td><input type="TEXT" name="att_intro" value="${param.att_intro}${attVO.att_intro}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.intro}</div>
 
 </tr>
 
 <tr>
 <td>att_open:</td>
-<td><input type="TEXT" name="mem_bdate" value="${param.att_open}${attVO.att_open}" size="12" >
+<td><input type="TEXT" name="att_open" value="${param.att_open}${attVO.att_open}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.open}</div>
 
 </tr>
 <tr>
 <td>att_lat:</td>
-<td><input type="TEXT" name="mem_name" value="${param.att_lat}${attVO.att_lat}" size="12" >
+<td><input type="TEXT" name="att_lat" value="${param.att_lat}${attVO.att_lat}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.lat}</div>
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.latReg}</div></td>
 
@@ -106,7 +106,7 @@ ${ErrorMsgKey.error}
 
 <tr>
 <td>att_lng:</td>
-<td><input type="TEXT" name="mem_bdate" value="${param.att_lng}${attVO.att_lng}" size="12" >
+<td><input type="TEXT" name="att_lng" value="${param.att_lng}${attVO.att_lng}" size="12" >
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.lng}</div>
 <div style="color:red; font-size:x-small display:inline">${ErrorMsgKey.lngReg}</div></td>
 

@@ -1,6 +1,6 @@
 package com.tourcan.region.model;
 
-import com.tourcan.att.model.AttDAO_JDBC;
+
 import com.tourcan.att.model.AttVO;
 
 public class RegionSevice {

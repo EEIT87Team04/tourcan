@@ -17,9 +17,9 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
-import com.tourcan.att.model.AttDAO_JDBC;
 import com.tourcan.att.model.AttService;
 import com.tourcan.att.model.AttVO;
+import com.tourcan.region.model.RegionVO;
 
 @WebServlet("/att/mem.do")
 public class AttServlet extends HttpServlet {
@@ -224,7 +224,7 @@ public class AttServlet extends HttpServlet {
 			/*********************** 檢查id *************************/
 
 			Integer idI = null;
-			// Integer id=new Integer(request.getParameter("mem_id"));
+//			Integer id=new Integer(request.getParameter("att_id"));
 
 			/****************** 驗證id ********************/
 			try {
@@ -273,6 +273,7 @@ public class AttServlet extends HttpServlet {
 				RequestDispatcher rd = request
 						.getRequestDispatcher("/att/update_idCheck.jsp");
 				rd.forward(request, response);
+				System.out.println(e.getMessage());
 				return;
 			}
 		}
@@ -285,7 +286,20 @@ public class AttServlet extends HttpServlet {
 			/*********************** 用 id 找 data *************************/
 
 			/************** 驗證update輸入錯誤 ****************/
-			Integer id = new Integer(request.getParameter("att_id"));
+			Integer id=null;
+			try {
+				id = new Integer(request.getParameter("att_id"));
+			} catch (NumberFormatException e1) {
+				System.out.println(e1.getMessage());
+			}
+			Integer staytimeI = new Integer(request.getParameter("att_staytime"));
+			Integer regionIdI = new Integer(request.getParameter("region_id"));
+			Double priceD=new Double(request.getParameter("att_price"));
+			Boolean eatB=new Boolean(request.getParameter("att_eat"));
+			Double latD=new Double(request.getParameter("att_lat"));
+			Double lngD=new Double(request.getParameter("att_lng"));
+			
+			
 
 			try {
 				String name = request.getParameter("att_name");
@@ -296,22 +310,12 @@ public class AttServlet extends HttpServlet {
 					errorMsgMap.put("nameReg", "只能是中,英文;長度在1~50之間");
 				}
 
-				java.sql.Date date = null; // Date形式
+				
 				String staytime = request.getParameter("att_staytime");
-
 				if (staytime == null || (staytime.trim()).length() == 0) {
 					errorMsgMap.put("staytime", "please into staytime ");
-				} else {
-					try {
-						SimpleDateFormat sdf = new SimpleDateFormat(
-								"yyyy-MM-dd");
-						sdf.setLenient(false);
-						java.util.Date bdConv = sdf.parse(staytime);
-						date = new Date(bdConv.getTime());
-					} catch (Exception e) {
-						errorMsgMap.put("staytime", "日期格式錯誤");
-					}
-				}
+				} 
+				
 
 				String regionId = request.getParameter("region_id");
 				String regionIdReg = "^[(0-9)]{1,2}$";
@@ -327,6 +331,7 @@ public class AttServlet extends HttpServlet {
 				} 
 
 				String price = request.getParameter("att_price");
+				
 				String priceReg = "^[(0-9)]{1,10}$";
 				if (price == null || (price.trim()).length() == 0) {
 					errorMsgMap.put("price", "please into price ");
@@ -366,7 +371,6 @@ public class AttServlet extends HttpServlet {
 				} 
 				
 				String lat = request.getParameter("att_lat");
-				String latReg = "^[(0-9)]{1,3}$";
 				if (lat == null || (lat.trim()).length() == 0) {
 					errorMsgMap.put("lat", "please into lat ");
 				} else if (!lat.trim().matches(latReg)) {
@@ -374,10 +378,9 @@ public class AttServlet extends HttpServlet {
 				}
 				
 				String lng = request.getParameter("att_lng");
-				String lngReg = "^[(0-9)]{1,3}$";
 				if (lng == null || (lng.trim()).length() == 0) {
 					errorMsgMap.put("lng", "please into lng ");
-				} else if (!lng.trim().matches(eatReg)) {
+				} else if (!lng.trim().matches(lngReg)) {
 					errorMsgMap.put("lngReg",  "number;長度在1~3之間");
 				}
 
@@ -400,19 +403,28 @@ public class AttServlet extends HttpServlet {
 //				dao.update(memvo);   //DAO中 update()
 				
 				/*******************2.開始更新資料*******************/
-//				AttService memSvc=new AttService();
-//				AttVO memVO=memSvc.updateMem(att_name,att_id,att_staytime,egion_id,att_addr,att_price,att_phone,att_url,att_eat,att_intro,att_open,att_lat,att_lng);
-//
-//				HttpSession session = request.getSession();
-//
-//				session.setAttribute("mem_name", name);
-//				session.setAttribute("mem_bdate", bdate);
-//				session.setAttribute("mem_account", account);
-//				session.setAttribute("mem_pwd", pwd);
-//				session.setAttribute("mem_email", email);
-//
-//				// 修改成功;從 update_reNew.jsp 轉往 update.jsp
-//				response.sendRedirect("../result/update.jsp");
+				AttService memSvc=new AttService();
+				AttVO attVO=memSvc.updateMem(name,id,staytimeI,regionIdI,addr,priceD,phone,url,eatB,intro,open,latD,lngD);
+
+				HttpSession session = request.getSession();
+
+				session.setAttribute("att_name", name);
+				session.setAttribute("att_id", id);
+				session.setAttribute("att_staytime", staytimeI);
+				session.setAttribute("region_id", regionIdI);
+				session.setAttribute("att_addr", addr);
+				session.setAttribute("att_price", priceD);
+				session.setAttribute("att_phone", phone);
+				session.setAttribute("att_url", url);
+				session.setAttribute("att_eat", eatB);
+				session.setAttribute("att_intro", intro);
+				session.setAttribute("att_open", open);
+				session.setAttribute("att_lat", latD);
+				session.setAttribute("att_lng", lngD);
+
+
+				// 修改成功;從 update_reNew.jsp 轉往 update.jsp
+				response.sendRedirect("../result/update.jsp");
 
 			} catch (Exception e) {
 				errorMsgMap.put("error", e.getMessage());
