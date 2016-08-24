@@ -20,7 +20,7 @@ ${ErrorMsgKey.error}
 
 <tr>
 <td>會員Id:</td>
-<td><input type="TEXT" name="mem_id" value="${param.att_id}" size="12" readonly="readonly"></td>
+<td><input type="TEXT" name="att_id" value="${param.att_id}" size="12" readonly="readonly"></td>
 </tr>
 
 <tr>

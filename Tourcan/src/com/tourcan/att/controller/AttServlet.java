@@ -370,17 +370,18 @@ public class AttServlet extends HttpServlet {
 					errorMsgMap.put("open", "please into open ");
 				} 
 				
+				
 				String lat = request.getParameter("att_lat");
 				if (lat == null || (lat.trim()).length() == 0) {
 					errorMsgMap.put("lat", "please into lat ");
-				} else if (!lat.trim().matches(latReg)) {
+				} else if (latD > 90 || latD < -90) {
 					errorMsgMap.put("latReg", "number;長度在1~3之間");
 				}
 				
 				String lng = request.getParameter("att_lng");
 				if (lng == null || (lng.trim()).length() == 0) {
 					errorMsgMap.put("lng", "please into lng ");
-				} else if (!lng.trim().matches(lngReg)) {
+				} else if (lngD > 180 || lngD < -180) {
 					errorMsgMap.put("lngReg",  "number;長度在1~3之間");
 				}
 
