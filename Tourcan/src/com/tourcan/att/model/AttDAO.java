@@ -23,6 +23,7 @@ public class AttDAO implements AttDAO_interface {
 
 	private static int STMT_SHIFT = 0; // 1 for JDBC, 0 for Hibernate
 	private static final String Get_Img_Name="SELECT att_id FROM AttVO where att_name=?";   
+
 	
 
 	@Override
@@ -114,6 +115,7 @@ public class AttDAO implements AttDAO_interface {
 	}
 
 	@Override
+
 	 public void update(AttVO attVO) {
 	  Session session=HibernateUtil.getSessionFactory().getCurrentSession();
 	  try{
@@ -126,5 +128,6 @@ public class AttDAO implements AttDAO_interface {
 	  }
 	  
 	 }
+
 
 }

@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.tourcan.region.model.RegionVO;
 
+
 public class AttService {
+
 	private AttDAO_interface dao;
 
 	public AttService() {
@@ -35,6 +37,7 @@ public class AttService {
 		
 		return attVO;
 	}
+
 	
 	public AttVO updateMem(String att_name,Integer att_id,Integer att_staytime,Integer region_id,String att_addr, Double att_price,String att_phone,String att_url,Boolean att_eat,String att_intro,String att_open,Double att_lat,Double att_lng){
 		
@@ -64,6 +67,7 @@ public class AttService {
 	public AttVO getOneMem(Integer att_id){
 		return dao.findById(att_id);
 	}
+
 	
 	public AttVO getOne(Integer att_id){
 		return dao.findById(att_id);
@@ -74,7 +78,9 @@ public class AttService {
 	
 	public List<AttVO> getAll(){
 		return dao.getAll();
+
 	}
+
 	public void deleteAtt(Integer att_id) {
 		dao.delete(att_id);
 	}
