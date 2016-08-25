@@ -6,10 +6,10 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-String str = request.getParameter("att_name");
-	AttService asv =new AttService();
-    List<AttVO> list = asv.getAllByName(str);
-    pageContext.setAttribute("list",list);
+// String str = request.getParameter("att_name");
+// 	AttService asv =new AttService();
+//     List<AttVO> list = asv.getAllByName(str);
+//     pageContext.setAttribute("list",list);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

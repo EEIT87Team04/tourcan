@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>景點資料</title>
+</head>
+<body>
+<h3>Search</h3>
+	<div >
+		<label for="attid">ATTID</label> <input type="text"
+			class="form-control" id="attid" name="attno"
+			placeholder="id" >
+			<button type="button"
+			id="btnSave">Save</button>
+	</div>
+	<div id="aa">
+	</div>
+
+
+	<script src="../js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+	var attno = $("#attid").val(); 
+// 	console.log(attno.GetType().ToString());
+	$("#btnSave").click(function() {
+	$.get(("AttServlet"),attno,function(data){
+	console.log(typeof (attno));
+		$("#aa").html(data)
+	})
+
+	});
+</script>
+</body>
+</html>

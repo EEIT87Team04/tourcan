@@ -69,7 +69,7 @@ function toDelete() {
 		<td>${attVO.att_url }</td>
 		<td>${attVO.att_price }</td>
 		<td>${attVO.att_staytime }</td>
-		<td>${attVO.region_id }</td>
+		<td>${attVO.regionVO.region_id }</td>
 	
 		
 <!-- 			<td> -->

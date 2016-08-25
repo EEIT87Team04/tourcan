@@ -29,7 +29,8 @@ public class AttVO implements java.io.Serializable {
 //		this.att_area = att_area;
 //	}
 
-	
+	public AttVO() {
+	}
 	
 	public RegionVO getRegionVO() {
 		return regionVO;

@@ -9,8 +9,8 @@
             <generator class="identity"/>
         </id>
         
-        <property name="att_staytime" column="att_staytime" />
         <property name="att_name" column="att_name" />
+        <property name="att_staytime" column="att_staytime" />
         <property name="att_addr" column="att_addr" />
         <property name="att_price" column="att_price" />
         <property name="att_phone" column="att_phone" />
