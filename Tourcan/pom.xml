@@ -10,6 +10,7 @@
 		<googleapi.version>[1.20.0,)</googleapi.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<build.sourceEncoding>UTF-8</build.sourceEncoding>
+		<jersey.version>2.23.2</jersey.version>
 	</properties>
 	<dependencies>
 
@@ -185,6 +186,25 @@
 			<version>1.5.8</version>
 		</dependency>
 
+
+		<!-- Jersey Server -->
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-jaxb</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -198,7 +218,7 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>

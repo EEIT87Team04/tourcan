@@ -1,0 +1,22 @@
+﻿firebase.auth().createUserWithEmailAndPassword("pingu8007@gmail.com", "66316666").catch(function(error) {});
+firebase.auth().signInWithEmailAndPassword("pingu8007@gmail.com", "66316666").catch(function(error) {});
+firebase.auth().signOut().then(function() {}, function(error) {});
+
+
+provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope('profile');
+provider.addScope('email');
+
+firebase.auth().signInWithPopup(provider).then(function(result){console.log(result)},function(error){console.log(error)});
+
+firebase.auth().signInWithRedirect(provider);
+firebase.auth().getRedirectResult().then(function(result){console.log(result)},function(error){console.log(error)});
+
+firebase.auth().onAuthStateChanged(function(result){console.log(result)});
+
+
+
+
+
+
+

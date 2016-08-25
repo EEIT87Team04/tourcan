@@ -201,7 +201,7 @@
 					json[form[i].name] = form[i].value;
 	
 				$.post("AttServlet", JSON.stringify(json)).done(function(data) {
-					console.log("200.");
+					console.log("200: "+data);
 				}).fail(function(xhr) {
 					console.log("ERR.");
 				});

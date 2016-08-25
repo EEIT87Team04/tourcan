@@ -1,4 +1,4 @@
-package com.tourcan.att.controller;
+package com.tourcan.hotel.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,11 +14,11 @@ import org.json.JSONObject;
 import com.tourcan.att.model.AttDAO;
 import com.tourcan.att.model.AttVO;
 
-@WebServlet("/HotelServlet")
-public class AttServlet extends HttpServlet {
+@WebServlet("/AttServlet")
+public class HotelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public AttServlet() {
+	public HotelServlet() {
 		super();
 	}
 
