@@ -2,6 +2,7 @@ package com.tourcan.att.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Writer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -199,15 +200,16 @@ public class AttServlet extends HttpServlet {
 				
 				AttService srv = new AttService();
 				srv.insert(attName, regionId, attAddr, attEat, attIntro, appOpen, attPhone, attPrice, attStaytime, attUrl, attLat, attLng);
-				
+				err.append("result", "新增成功");
+				response.getWriter().println(err.toString());
 			}
 		} catch (Exception e) {
 			err.append("result", "新增失敗。");
+			response.getWriter().println(err.toString());
 //			e.printStackTrace();
 		}
 		
-		response.getWriter().println(err.toString());
-
+		
 		// // test output
 		// for (String key : JSONObject.getNames(obj)) {
 		// System.out.println(key+"\t"+obj.getString(key));
