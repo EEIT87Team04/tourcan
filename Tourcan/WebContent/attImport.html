@@ -194,6 +194,7 @@
 			});
 	
 			$("#btnSave").click(function() {
+				$('form[name="addAtt"] span').remove();
 				var form = $(document.addAtt).serializeArray(),
 					json = {};
 				for (var i = 0; i < form.length; i++)
@@ -202,19 +203,9 @@
 				$.post("AttServlet", JSON.stringify(json)).done(function(data) {
 					$.each(data,function(errAtt,errMsg){
 						if(errMsg=="新增成功"){
-							for(var i=0; i<form.length;i++)
-							{
-								form[i].value="";
-							}
-							var errSpan = document.createElement("span");
-							var errText = document.createTextNode(errMsg);
-							var errId = 'err' + errAtt;
-							errSpan.appendChild(errText);
-							errSpan.setAttribute("style","color:red");
-							errSpan.setAttribute("id",errId);
-							$('#'+errId).remove();
-							$('#'+errAtt).after(errSpan);
-						}else{
+							document.addAtt.reset();
+							$('form[name="addAtt"] span').remove();
+						}
 						var errSpan = document.createElement("span");
 						var errText = document.createTextNode(errMsg);
 						var errId = 'err' + errAtt;
@@ -223,7 +214,6 @@
 						errSpan.setAttribute("id",errId);
 						$('#'+errId).remove();
 						$('#'+errAtt).after(errSpan);
-						}
 					});
 					console.log("200.");
 				}).fail(function(xhr) {
@@ -232,6 +222,7 @@
 			});
 			$("#btnReset").click(function() {
 				document.addAtt.reset();
+				$('form[name="addAtt"] span').remove();
 			});
 		});
 	</script>
