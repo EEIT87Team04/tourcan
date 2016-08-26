@@ -35,6 +35,14 @@
 		</property>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
 	</bean>
+	
+	<bean id="jsonArray" class="org.json.JSONArray" scope="prototype" />
+	<bean id="gsonInstance" class="com.google.gson.Gson" />
+	
+<!-- 	<bean id="attDAO" class="com.tourcan.att.model.AttHibernateDAO"> -->
+<!-- 		<property name="sessionFactory" ref="sessionFactory"></property> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="attVO" class="com.tourcan.att.model.AttVO" scope="prototype" /> -->
 
 	<bean id="hotelDAO" class="com.tourcan.hotel.model.HotelHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>

@@ -200,7 +200,12 @@
 				for (var i = 0; i < form.length; i++)
 					json[form[i].name] = form[i].value;
 	
-				$.post("AttServlet", JSON.stringify(json)).done(function(data) {
+				$.ajax({
+					url: "AttServlet",
+					method: "POST",
+					data: JSON.stringify(json),
+					contentType: "application/json; charset=UTF-8"
+				}).done(function(data) {
 					console.log("200: "+data);
 				}).fail(function(xhr) {
 					console.log("ERR.");

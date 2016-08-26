@@ -1,6 +1,5 @@
 package com.tourcan.hotel.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -10,21 +9,51 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.tourcan.att.model.AttDAO;
-import com.tourcan.att.model.AttVO;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.tourcan.hotel.model.HotelDAO;
+import com.tourcan.hotel.model.HotelHibernateDAO;
+import com.tourcan.hotel.model.HotelVO;
 
-@WebServlet("/AttServlet")
+@WebServlet("/HotelServlet/*")
 public class HotelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	ApplicationContext context;
 
-	public HotelServlet() {
-		super();
+	@Override
+	public void init() throws ServletException {
+		context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doPost(request, response);
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		HotelDAO dao = context.getBean(HotelHibernateDAO.class);
+
+		String[] parameters;
+		String name = "";
+		Integer id = 0;
+		if (request.getPathInfo() != null && (parameters = request.getPathInfo().split("/")).length > 0
+				&& parameters[1].length() > 0) {
+			try {
+				id = Integer.parseInt(parameters[1]);
+			} catch (NumberFormatException e) {
+				name = parameters[1].trim();
+			}
+		}
+		if (id > 0) {
+			response.getWriter().println(context.getBean(Gson.class).toJson(dao.findById(id)));
+			// when 404 ??
+		} else if (!name.equalsIgnoreCase("")) {
+			response.getWriter().println(context.getBean(Gson.class).toJson(dao.findByName(name)));
+		} else {
+			response.getWriter().println(context.getBean(Gson.class).toJson(dao.getAll()));
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -33,184 +62,277 @@ public class HotelServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		BufferedReader br = request.getReader();
-		StringBuffer sb = new StringBuffer(128);
-		String json;
-		while ((json = br.readLine()) != null)
-			sb.append(json);
-		json = sb.toString();
-		// System.out.println(json);
 
-		JSONObject err = new JSONObject(); // checking result
+		HotelVO vo = null;
+		JSONObject err = new JSONObject();
+
+		// mapping json to vo
 		try {
-			JSONObject obj = new JSONObject(json); // received and parsed JSON
-			AttVO vo = new AttVO();
-
-			try {
-				String attName = obj.getString("attName");
-				if (attName == null || attName.trim().isEmpty() || attName.trim().length() >= 50) {
-					throw new Exception();
-				}
-				vo.setAtt_name(attName);
-			} catch (Exception e) {
-				err.append("attName", "無效的景點名稱。");
-//				e.printStackTrace();
-			}
-
-			try {
-				Integer regionId = obj.getInt("regionId");
-				if (regionId == null || regionId < 0) {
-					throw new Exception();
-				}
-				vo.setRegion_id(regionId);
-			} catch (Exception e) {
-				err.append("regionId", "無效的地區代號。");
-//				e.printStackTrace();
-			}
-
-			try {
-				String attAddr = obj.getString("attAddr");
-				if (attAddr == null || attAddr.trim().isEmpty()) {
-					throw new Exception();
-				}
-				vo.setAtt_addr(attAddr);
-			} catch (Exception e) {
-				err.append("attAddr", "無效的景點地址。");
-//				e.printStackTrace();
-			}
-
-			try {
-				Boolean attEat = obj.getBoolean("attEat");
-				vo.setAtt_eat(attEat);
-			} catch (Exception e) {
-				err.append("attAddr", "無效的吃貨屬性。");
-//				e.printStackTrace();
-			}
-
-			try {
-				String attIntro = obj.getString("attIntro");
-				if (attIntro == null || attIntro.trim().isEmpty()) {
-					throw new Exception();
-				}
-				vo.setAtt_intro(attIntro);
-			} catch (Exception e) {
-				err.append("attIntro", "無效的景點介紹。");
-//				e.printStackTrace();
-			}
-
-			try {
-				String appOpen = obj.getString("attOpen");
-				if (appOpen == null || appOpen.trim().isEmpty()) {
-					throw new Exception();
-				}
-				vo.setAtt_open(appOpen);
-			} catch (Exception e) {
-				err.append("attOpen", "無效的開放資訊。");
-//				e.printStackTrace();
-			}
-
-			try {
-				String attPhone = obj.getString("attPhone");
-				if (attPhone == null || attPhone.trim().isEmpty() || attPhone.trim().length() >= 50) {
-					throw new Exception();
-				}
-				vo.setAtt_phone(attPhone);
-			} catch (Exception e) {
-				err.append("attPhone", "無效的聯絡電話。");
-//				e.printStackTrace();
-			}
-
-			try {
-				Double attPrice = obj.getDouble("attPrice");
-				if (attPrice == null || attPrice < 0) {
-					throw new Exception();
-				}
-				vo.setAtt_price(attPrice);
-			} catch (Exception e) {
-				err.append("attPrice", "無效的基本消費。");
-//				e.printStackTrace();
-			}
-
-			try {
-				Integer attStaytime = obj.getInt("attStaytime");
-				if (attStaytime == null || attStaytime < -1) {
-					throw new Exception();
-				}
-				vo.setAtt_staytime(attStaytime);
-			} catch (Exception e) {
-				err.append("attStaytime", "無效的滯留時間。");
-//				e.printStackTrace();
-			}
-
-			try {
-				String attUrl = obj.getString("attUrl");
-				if (attUrl == null || attUrl.trim().isEmpty()) {
-					throw new Exception();
-				}
-				vo.setAtt_url(attUrl);
-			} catch (Exception e) {
-				err.append("attUrl", "無效的景點網址。");
-//				e.printStackTrace();
-			}
-
-			try {
-				Double attLat = obj.getDouble("attLat");
-				if (attLat == null || attLat < -90 || attLat > 90) {
-					throw new Exception();
-				}
-				vo.setAtt_lat(attLat);
-			} catch (Exception e) {
-				err.append("attLat", "無效的緯度。");
-//				e.printStackTrace();
-			}
-
-			try {
-				Double attLng = obj.getDouble("attLng");
-				if (attLng == null || attLng < -180 || attLng > 180) {
-					throw new Exception();
-				}
-				vo.setAtt_lng(attLng);
-			} catch (Exception e) {
-				err.append("attLng", "無效的經度。");
-//				e.printStackTrace();
-			}
-
-			if (err.length() > 0) {
-				throw new Exception();
-			} else {
-				AttDAO dao = new AttDAO();
-				dao.insert(vo);
-			}
-		} catch (Exception e) {
-			err.append("result", "新增失敗。");
-//			e.printStackTrace();
+			vo = context.getBean(Gson.class).fromJson(request.getReader(), HotelVO.class);
+		} catch (JsonSyntaxException e) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println(new JSONObject().put("result", "error: JsonSyntaxException.").toString());
+			e.printStackTrace();
+			return;
 		}
-		
-		response.getWriter().println(err.toString());
 
-		// // test output
-		// for (String key : JSONObject.getNames(obj)) {
-		// System.out.println(key+"\t"+obj.getString(key));
-		// for (String key2 : JSONObject.getNames(obj.getJSONObject(key1))) {
-		// System.out.println(" " + key2);
-		// }
-		// }
-		//
-		// // test output
-		// System.out.println("\n" + sb.toString());
-		// Enumeration<String> headers = request.getHeaderNames();
-		// while (headers.hasMoreElements()) {
-		// String header = headers.nextElement();
-		// System.out.println(header + "\t: " + request.getHeader(header));
-		// }
+		// checking input
+		// hotel_name
+		if (vo.getHotel_name() == null) {
+			err.put("hotelName", "can't be empty.");
+		} else {
+			if (vo.getHotel_name().trim().length() == 0)
+				err.put("hotelName", "can't be empty.");
+			if (vo.getHotel_name().trim().length() > 60)
+				err.put("hotelName", "too long.");
+		}
+
+		// // hotel_id
+		// if (vo.getHotel_id() == null || vo.getHotel_id() <= 0)
+		// err.put("hotelId", "must provide.");
+		if (vo.getHotel_id() != null)
+			err.put("hotelId", "not allowed for insert.");
+
+		// region_id
+		if (vo.getRegion_id() == null || vo.getRegion_id() < 0 || vo.getRegion_id() == 0)
+			err.put("regionId", "must provide.");
+
+		// phone_addr
+		if (vo.getHotel_addr() == null) {
+			err.put("hotelAddr", "can't be empty.");
+		} else {
+			if (vo.getHotel_addr().trim().length() == 0)
+				err.put("hotelAddr", "can't be empty.");
+			if (vo.getHotel_addr().trim().length() >= 60)
+				err.put("hotelAddr", "too long.");
+		}
+
+		// hotel_price
+		if (vo.getHotel_price() == null) {
+			vo.setHotel_price(-1.0);
+		} else {
+			if (vo.getHotel_price() <= -1)
+				err.put("hotelPrice", "invalid price range.");
+		}
+
+		// hotel_phone
+		if (vo.getHotel_phone() == null) {
+			vo.setHotel_phone("");
+		} else {
+			if (vo.getHotel_phone().trim().length() >= 20)
+				err.put("hotelPhone", "too long.");
+		}
+
+		// hotel_class
+		if (vo.getHotel_class() == null) {
+			vo.setHotel_class(-1);
+		} else {
+			if (vo.getHotel_class() <= -1 || vo.getHotel_class() > 10)
+				err.put("hotelClass", "invalid ranking.");
+		}
+
+		// hotel_url
+		if (vo.getHotel_url() == null) {
+			vo.setHotel_url("");
+		} else {
+			if (vo.getHotel_phone().trim().length() >= 60)
+				err.put("hotelUrl", "too long.");
+		}
+
+		// hotel_lat
+		if (vo.getHotel_lat() == null) {
+			err.put("hotelLat", "invalid coordinate format.");
+		} else {
+			if (vo.getHotel_lat() > 90 || vo.getHotel_lat() < -90)
+				err.put("hotelLat", "invalid coordinate format.");
+		}
+
+		// hotel_lng
+		if (vo.getHotel_lng() == null) {
+			err.put("hotelLat", "invalid coordinate format.");
+		} else {
+			if (vo.getHotel_lng() > 180 || vo.getHotel_lng() < -180)
+				err.put("hotelLat", "invalid coordinate format.");
+		}
+
+		// update database
+		if (err.length() > 0) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter()
+					.println(new JSONObject().put("result", "validation-error").put("message", err).toString());
+		} else {
+			try {
+				context.getBean(HotelHibernateDAO.class).insert(vo);
+				response.setStatus(HttpServletResponse.SC_CREATED);
+				response.getWriter().println(new JSONObject().put("result", "success").toString());
+			} catch (Exception e) {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				response.getWriter().println(new JSONObject().put("result", "error: insert unsuccessful.").toString());
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+
+		HotelVO vo = null;
+		JSONObject err = new JSONObject();
+
+		// mapping json to vo
+		try {
+			vo = context.getBean(Gson.class).fromJson(request.getReader(), HotelVO.class);
+		} catch (JsonSyntaxException e) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println(new JSONObject().put("result", "error: JsonSyntaxException.").toString());
+			e.printStackTrace();
+			return;
+		}
+
+		// checking input
+		// hotel_name
+		if (vo.getHotel_name() == null) {
+			err.put("hotelName", "can't be empty.");
+		} else {
+			if (vo.getHotel_name().trim().length() == 0)
+				err.put("hotelName", "can't be empty.");
+			if (vo.getHotel_name().trim().length() > 60)
+				err.put("hotelName", "too long.");
+		}
+
+		// hotel_id
+		if (vo.getHotel_id() == null || vo.getHotel_id() <= 0)
+			err.put("hotelId", "must provide.");
+
+		// region_id
+		if (vo.getRegion_id() == null || vo.getRegion_id() < 0 || vo.getRegion_id() == 0)
+			err.put("regionId", "must provide.");
+
+		// phone_addr
+		if (vo.getHotel_addr() == null) {
+			err.put("hotelAddr", "can't be empty.");
+		} else {
+			if (vo.getHotel_addr().trim().length() == 0)
+				err.put("hotelAddr", "can't be empty.");
+			if (vo.getHotel_addr().trim().length() >= 60)
+				err.put("hotelAddr", "too long.");
+		}
+
+		// hotel_price
+		if (vo.getHotel_price() == null) {
+			vo.setHotel_price(-1.0);
+		} else {
+			if (vo.getHotel_price() <= -1)
+				err.put("hotelPrice", "invalid price range.");
+		}
+
+		// hotel_phone
+		if (vo.getHotel_phone() == null) {
+			vo.setHotel_phone("");
+		} else {
+			if (vo.getHotel_phone().trim().length() >= 20)
+				err.put("hotelPhone", "too long.");
+		}
+
+		// hotel_class
+		if (vo.getHotel_class() == null) {
+			vo.setHotel_class(-1);
+		} else {
+			if (vo.getHotel_class() <= -1 || vo.getHotel_class() > 10)
+				err.put("hotelClass", "invalid ranking.");
+		}
+
+		// hotel_url
+		if (vo.getHotel_url() == null) {
+			vo.setHotel_url("");
+		} else {
+			if (vo.getHotel_phone().trim().length() >= 60)
+				err.put("hotelUrl", "too long.");
+		}
+
+		// hotel_lat
+		if (vo.getHotel_lat() == null) {
+			err.put("hotelLat", "invalid coordinate format.");
+		} else {
+			if (vo.getHotel_lat() > 90 || vo.getHotel_lat() < -90)
+				err.put("hotelLat", "invalid coordinate format.");
+		}
+
+		// hotel_lng
+		if (vo.getHotel_lng() == null) {
+			err.put("hotelLat", "invalid coordinate format.");
+		} else {
+			if (vo.getHotel_lng() > 180 || vo.getHotel_lng() < -180)
+				err.put("hotelLat", "invalid coordinate format.");
+		}
+
+		// update database
+		if (err.length() > 0) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter()
+					.println(new JSONObject().put("result", "validation-error").put("message", err).toString());
+		} else {
+			try {
+				context.getBean(HotelHibernateDAO.class).update(vo);
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.getWriter().println(new JSONObject().put("result", "success").toString());
+			} catch (Exception e) {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				response.getWriter().println(new JSONObject().put("result", "error: update unsuccessful.").toString());
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	}
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
 
+		String[] parameters;
+		HotelVO vo = null;
+		Integer id = 0;
+		if (request.getPathInfo() != null && (parameters = request.getPathInfo().split("/")).length > 0
+				&& parameters[1].length() > 0) {
+			try {
+				id = Integer.parseInt(parameters[1]);
+			} catch (NumberFormatException e) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response.getWriter()
+						.println(new JSONObject().put("result", "error: number format exception.").toString());
+				e.printStackTrace();
+				return;
+			}
+			if (id <= 0) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response.getWriter().println(new JSONObject().put("result", "error: id invalid.").toString());
+				return;
+			}
+			if ((context.getBean(HotelHibernateDAO.class).findById(id)) == null) {
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				response.getWriter().println(new JSONObject().put("result", "error: id not exist.").toString());
+				return;
+			}
+			vo = context.getBean(HotelVO.class);
+			vo.setHotel_id(id);
+			try {
+				context.getBean(HotelHibernateDAO.class).delete(vo);
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.getWriter().println(new JSONObject().put("result", "success").toString());
+			} catch (Exception e) {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				response.getWriter().println(new JSONObject().put("result", "error: delete unsuccessful.").toString());
+				e.printStackTrace();
+				return;
+			}
+		} else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println(new JSONObject().put("result", "error: id invalid.").toString());
+		}
+	}
 }

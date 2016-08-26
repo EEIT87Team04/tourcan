@@ -1,22 +1,37 @@
 package com.tourcan.att.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class AttVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 //	private Integer att_area;
+	@SerializedName("attName")
 	private String att_name;
+	@SerializedName("attId")
 	private Integer att_id;
+	@SerializedName("attStaytime")
 	private Integer att_staytime;
+	@SerializedName("regionId")
 	private Integer region_id;
+	@SerializedName("attAddr")
 	private String att_addr;
+	@SerializedName("attPrice")
 	private Double att_price;
+	@SerializedName("attPhone")
 	private String att_phone;
+	@SerializedName("attUrl")
 	private String att_url;
+	@SerializedName("attEat")
 	private Boolean att_eat;
+	@SerializedName("attIntro")
 	private String att_intro;
+	@SerializedName("attOpen")
 	private String att_open;
+	@SerializedName("attLat")
 	private Double att_lat;
+	@SerializedName("attLng")
 	private Double att_lng;
 
 //	public Integer getAtt_area() {

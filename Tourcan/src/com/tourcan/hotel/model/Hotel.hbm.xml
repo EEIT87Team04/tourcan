@@ -7,7 +7,7 @@
 	<class name="com.tourcan.hotel.model.HotelVO" table="hotel" >
 	    <!-- name: 類別內的性質(property)名稱，column: 表格內的欄位名稱  -->
 	    <!-- 表示當永續本類別的物件時，性質pk的值會儲存到表格的PK欄位內  -->
-		<id name="hotel_id" type="java.lang.Integer">
+		<id name="hotel_id" type="java.lang.Integer" unsaved-value="null">
 		   <generator class="native" />
 		</id>
 		<!-- 省略length屬性時， 如果欄位型態為varchar，則預設值為255，如果欄位型態為int，則預設值為11 -->

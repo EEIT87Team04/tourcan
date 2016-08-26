@@ -9,37 +9,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.google.gson.Gson;
 import com.tourcan.region.model.RegionDAO;
 import com.tourcan.region.model.RegionHibernateDAO;
 
-/**
- * Servlet implementation class RegionServlet
- */
 @WebServlet("/RegionServlet")
 public class RegionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public RegionServlet() {
-        super();
-    }
+	ApplicationContext context;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+	@Override
+	public void init() throws ServletException {
+		context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		RegionDAO dao = context.getBean(RegionHibernateDAO.class);
-		dao.getAll();
 		PrintWriter out = response.getWriter();
-//		System.out.println(new JSONArray(dao.getAll()).toString());
-		out.println(new JSONArray(dao.getAll()).toString());
+		out.println(context.getBean(Gson.class).toJson(dao.getAll()));
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
 }
