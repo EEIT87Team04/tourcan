@@ -10,16 +10,7 @@ public class AttDAO implements AttDAO_interface {
 
 	@Override
 	public void insert(AttVO attVO) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			session.saveOrUpdate(attVO);
-			session.getTransaction().commit();
-		} catch (RuntimeException e) {
-			System.out.println(e.getMessage());
-			session.getTransaction().rollback();
-			throw e;
-		}
+	
 	}
 
 	@Override
@@ -29,12 +20,12 @@ public class AttDAO implements AttDAO_interface {
 	}
 
 	@Override
-	public void delete(Integer att_id) {
+	public void delete(Integer attId) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			AttVO attVO=new AttVO();
-			attVO.setAtt_id(att_id);
+			attVO.setAtt_id(attId);
 			session.delete(attVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
