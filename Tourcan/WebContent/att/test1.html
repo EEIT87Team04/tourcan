@@ -13,7 +13,19 @@
 			class="form-control" id="attid" name="attno"
 			placeholder="id" >
 			<button type="button"
-			id="btnSave">Save</button>
+			id="search1">search</button>
+	</div>
+	<div >
+		<label for="attname">ATTNAME</label> <input type="text"
+			class="form-control" id="attname" name="attname"
+			placeholder="attname" >
+			<button type="button"
+			id="search2">search</button>
+	</div>
+	<div >
+		<label for="attid">LIST ALL</label> 
+			<button type="button"
+			id="search3">search all</button>
 	</div>
 	<div id="aa">
 	</div>
@@ -21,15 +33,42 @@
 
 	<script src="../js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">
-	var attno = $("#attid").val(); 
-// 	console.log(attno.GetType().ToString());
-	$("#btnSave").click(function() {
-	$.get(("AttServlet"),attno,function(data){
-	console.log(typeof (attno));
-		$("#aa").html(data)
-	})
+// $.getJSON('Products',{categoryID:$(this).val()},function(datas){	
+// 	var myBody = $('#productTable>tbody')
+// 	myBody.empty();
+// 	$.each(datas,function(idx,product){
+// 		var cell1 = $("<td></td>").text(product.ProductID);
+// 		var cell2 = $("<td></td>").text(product.ProductName);
+// 		var cell3 = $("<td></td>").text(product.UnitPrice);
+// 		var cell4 = $("<td></td>").text(product.UnitsInStock);
+// 		var row = $("a<tr></tr>").append([cell1,cell2,cell3,cell4]);
+		
+// 		myBody.append(row);
 
+	$("#search1").click(function() {
+	var attno2 = $("#attid").val(); 
+	$.getJSON(("TestAttServlet"),{"attno":attno2},function(data){
+	//console.log(typeof (attno));
+		$("#aa").html(data)
+		console.log(data);
+	})
 	});
+	
+	$("#search2").click(function() {
+		var attname = $("#attname").val(); 
+		$.get(("AttServlet"),{"attname":attname},function(data){
+		//console.log(typeof (attno));
+			$("#aa").html(data)
+		})
+		});
+	$("#search3").click(function() {
+		 url: "http://localhost:8080/Tourcan"
+// 		$.get(("AttServlet"),{"attname":attname},function(data){
+		//console.log(typeof (attno));
+		$("#aa").location.href="http://localhost:8080/Tourcan/att/query_All_att.jsp"	
+		//$("#aa").lo
+// 		})
+		});
 </script>
 </body>
 </html>
