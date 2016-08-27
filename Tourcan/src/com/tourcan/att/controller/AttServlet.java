@@ -117,7 +117,7 @@ public class AttServlet extends HttpServlet {
 				if (att_name == null || (att_name.trim()).length() == 0) {
 				errorMsgs1.add("請輸入attname");
 			}
-			System.out.println("s1="+att_name);
+//			System.out.println("s1="+att_name);
 							// Send the use back to the form, if there were errors
 						if (!errorMsgs1.isEmpty()) {
 							RequestDispatcher failureView = request
