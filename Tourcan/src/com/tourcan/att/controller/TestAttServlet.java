@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -37,37 +39,32 @@ public class TestAttServlet extends HttpServlet {
 		String att_name = request.getParameter("attname");
 //		PrintWriter out = response.getWriter();
 		if(str!=null){
-			List<String> errorMsgs1 = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			request.setAttribute("errorMsgs", errorMsgs1);
-
-					
+		
+			JSONObject err = new JSONObject(); // checking result
+	
 			//***************************1.接收請求參數 - 輸入格式的錯誤處理**********************//*
-
-						if (str == null || (str.trim()).length() == 0) {
-							errorMsgs1.add("請輸入員工編號");
-						}
-						Integer memno = null;
+			try{
+				JsonObject jsob =new JsonObject();
+					
+						Integer attno = null;
 						try {
-							memno = new Integer(str);
+							attno = new Integer(str);
+							if(str==null||str.trim().length()==0){
+								throw new Exception();
+							}
 						} catch (Exception e) {
-							errorMsgs1.add("員工編號格式不正確");
+							System.out.println(e.getMessage());
+							err.append("errmsg", "att error");
 						}
 						
 						
 						//***************************2.開始查詢資料*****************************************//*
 						
 						AttService asv =new AttService();
-						AttVO attVO= asv.getOne(memno);
-				
-						if (attVO == null) {
-							errorMsgs1.add("查無資料");
-						}
-				
+						AttVO attVO= asv.getOne(attno);
+			
 						
 				//***************************3.查詢完成,準備轉交(Send the Success view)*************//*
-						JsonObject jsob =new JsonObject();
 //						JSONArray list = new JSONArray();
 						request.setAttribute("attVO", attVO); // 資料庫取出的attVO物件,存入req
 						jsob.addProperty("id", attVO.getAtt_id());
@@ -91,7 +88,11 @@ public class TestAttServlet extends HttpServlet {
 //						RequestDispatcher successView = request.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 //						successView.forward(request, response);
 
-//		}
+		}catch (Exception e) {
+//			System.out.println(e.getMessage());
+
+			err.append("errmsg", "新增失敗。");
+		}
 //		}
 														
 					

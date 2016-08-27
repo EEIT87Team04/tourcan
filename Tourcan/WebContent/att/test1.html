@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +18,7 @@ table, th, td {
 </head>
 <body>
 <h3>Search</h3>
+<div id="d1"></div>
 	<div >
 		<label for="attid">ATTID</label> <input type="text"
 			class="form-control" id="attid" name="attno"
@@ -63,15 +66,17 @@ table, th, td {
 <script type="text/javascript">
 
 	$("#search1").click(function() {
-			$('#tb1>tbody').remove();
+	$('#tb1>tbody').empty();
 	var attno2 = $("#attid").val(); 
-	$.getJSON(("TestAttServlet"),{"attno":attno2},function(data){
-	console.log(data);
+	$.get(("TestAttServlet"),{"attno":attno2},function(data){
+	console.log(data.errmsg);
 		var myBody = $('#tb1>tbody');
+		
 		$.each(data,function(idx,att1){
 				//console.log(product.ProductName);
-				
+				console.log(att1);
 				var cell1 = $("<td></td>").text(att1);
+				$("#d1").text(att1);			
 
 // 				var row = $("<tr></tr>").append([cell1,cell2,cell8,cell3,cell4,cell5,cell6,cell7,cell9,cell10]);
 						myBody.append(cell1);												
@@ -80,7 +85,7 @@ table, th, td {
 	});
 	
 	$("#search2").click(function() {
-				$('#tb1>tbody').remove();
+				$('#tb1>tbody').empty();
 		var attname = $("#attname").val(); 
 		$.getJSON(("TestAttServlet"),{"attname":attname},function(data){
 		var myBody = $('#tb1>tbody');
@@ -106,7 +111,7 @@ table, th, td {
 		});
 	
 	$("#search3").click(function() {
-				$('#tb1>tbody').remove();
+				$('#tb1>tbody').empty();
 		$.getJSON(("TestAttServlet"),function(data){
 			var myBody = $('#tb1>tbody');
 			$.each(data,function(idx,att2){
