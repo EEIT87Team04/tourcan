@@ -33,6 +33,7 @@
 
 	<div id="test"></div>
 
+    <script src="../js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
 			$("#btnDelete").click(function() {
@@ -41,7 +42,8 @@
 					type : "post",
 					url : "AttServlet",
 					dataType : "json",
-					data : {"attId" : attId},
+					data : {"attId" : attId,
+						    "method":"delete"},
 					success : function(data) {
 // 						alert(data.errMsg)
 						if(data.errMsg!=null){
