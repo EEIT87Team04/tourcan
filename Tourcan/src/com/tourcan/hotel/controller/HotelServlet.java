@@ -1,6 +1,7 @@
 package com.tourcan.hotel.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,40 +29,79 @@ public class HotelServlet extends HttpServlet {
 		context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		HotelDAO dao = context.getBean(HotelHibernateDAO.class);
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("application/json");
 
 		String[] parameters;
-		String name = "";
-		Integer id = 0;
-		if (request.getPathInfo() != null && (parameters = request.getPathInfo().split("/")).length > 0
+		if (req.getPathInfo() != null && (parameters = req.getPathInfo().split("/")).length > 0
 				&& parameters[1].length() > 0) {
-			try {
-				id = Integer.parseInt(parameters[1]);
-			} catch (NumberFormatException e) {
-				name = parameters[1].trim();
+			req.setAttribute("pathParam", parameters);
+			if (parameters[1].trim().length() > 0) {
+				try {
+					req.setAttribute("queryId", Integer.parseInt(parameters[1].trim()));
+				} catch (NumberFormatException e) {
+					req.setAttribute("queryString", parameters[1].trim());
+				}
 			}
 		}
-		if (id > 0) {
-			response.getWriter().println(context.getBean(Gson.class).toJson(dao.findById(id)));
-			// when 404 ??
-		} else if (!name.equalsIgnoreCase("")) {
-			response.getWriter().println(context.getBean(Gson.class).toJson(dao.findByName(name)));
+
+		super.service(req, resp);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HotelDAO dao = context.getBean(HotelHibernateDAO.class);
+
+		String name = (String) request.getAttribute("queryString");
+		Integer id = (Integer) request.getAttribute("queryId");
+
+		if (id != null) {
+			// Query by Id
+			HotelVO vo = context.getBean(HotelVO.class);
+			if ((vo = dao.findById(id)) == null) {
+				// 404 Not found
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			} else {
+				// 200 OK
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.getWriter().println(context.getBean(Gson.class).toJson(vo));
+			}
+		} else if (name != null) {
+			// Query by String/Name
+			List<HotelVO> vos = dao.findByName(name);
+			if (vos == null || vos.size() == 0) {
+				// 404 Not found
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			} else {
+				// 200 OK
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.getWriter().println(context.getBean(Gson.class).toJson(vos));
+			}
 		} else {
-			response.getWriter().println(context.getBean(Gson.class).toJson(dao.getAll()));
+			// Query all
+			List<HotelVO> vos = dao.getAll();
+			if (vos == null || vos.size() == 0) {
+				// 404 Not found
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			} else {
+				// 200 OK
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.getWriter().println(context.getBean(Gson.class).toJson(vos));
+			}
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
+		// Query that had either Id or String.
+		if (request.getAttribute("queryString") != null || request.getAttribute("queryId") != null) {
+			// 405 Method not allowed
+			response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+			return;
+		}
 
 		HotelVO vo = null;
 		JSONObject err = new JSONObject();
@@ -70,6 +110,7 @@ public class HotelServlet extends HttpServlet {
 		try {
 			vo = context.getBean(Gson.class).fromJson(request.getReader(), HotelVO.class);
 		} catch (JsonSyntaxException e) {
+			// 400 Bad request
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println(new JSONObject().put("result", "error: JsonSyntaxException.").toString());
 			e.printStackTrace();
@@ -77,6 +118,18 @@ public class HotelServlet extends HttpServlet {
 		}
 
 		// checking input
+		// hotel_id
+		if (vo.getHotel_id() != null) {
+			if ((context.getBean(HotelHibernateDAO.class).findById(vo.getHotel_id())) == null) {
+				// 404 Not found
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			} else {
+				// 409 Conflict
+				response.setStatus(HttpServletResponse.SC_CONFLICT);
+			}
+			return;
+		}
+
 		// hotel_name
 		if (vo.getHotel_name() == null) {
 			err.put("hotelName", "can't be empty.");
@@ -86,12 +139,6 @@ public class HotelServlet extends HttpServlet {
 			if (vo.getHotel_name().trim().length() > 60)
 				err.put("hotelName", "too long.");
 		}
-
-		// // hotel_id
-		// if (vo.getHotel_id() == null || vo.getHotel_id() <= 0)
-		// err.put("hotelId", "must provide.");
-		if (vo.getHotel_id() != null)
-			err.put("hotelId", "not allowed for insert.");
 
 		// region_id
 		if (vo.getRegion_id() == null || vo.getRegion_id() < 0 || vo.getRegion_id() == 0)
@@ -157,15 +204,18 @@ public class HotelServlet extends HttpServlet {
 
 		// update database
 		if (err.length() > 0) {
+			// 400 Bad request
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter()
 					.println(new JSONObject().put("result", "validation-error").put("message", err).toString());
 		} else {
 			try {
 				context.getBean(HotelHibernateDAO.class).insert(vo);
+				// 201 Created
 				response.setStatus(HttpServletResponse.SC_CREATED);
 				response.getWriter().println(new JSONObject().put("result", "success").toString());
 			} catch (Exception e) {
+				// 500 Internal server error
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				response.getWriter().println(new JSONObject().put("result", "error: insert unsuccessful.").toString());
 				e.printStackTrace();
@@ -175,10 +225,12 @@ public class HotelServlet extends HttpServlet {
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
+		// Query that had either Id or String.
+		if (request.getAttribute("queryString") != null) {
+			// 400 Bad request
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
 
 		HotelVO vo = null;
 		JSONObject err = new JSONObject();
@@ -187,6 +239,7 @@ public class HotelServlet extends HttpServlet {
 		try {
 			vo = context.getBean(Gson.class).fromJson(request.getReader(), HotelVO.class);
 		} catch (JsonSyntaxException e) {
+			// 400 Bad request
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println(new JSONObject().put("result", "error: JsonSyntaxException.").toString());
 			e.printStackTrace();
@@ -194,6 +247,23 @@ public class HotelServlet extends HttpServlet {
 		}
 
 		// checking input
+		// hotel_id
+		if (request.getAttribute("queryId") != null && (Integer) request.getAttribute("queryId") != vo.getHotel_id()) {
+			// 400 Bad request
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println(new JSONObject().put("result", "error: resource Id not match.").toString());
+			return;
+		}
+		if (vo.getHotel_id() == null) {
+			err.put("hotelId", "must provide.");
+		} else {
+			if ((context.getBean(HotelHibernateDAO.class).findById(vo.getHotel_id())) == null) {
+				// 404 Not found
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+		}
+
 		// hotel_name
 		if (vo.getHotel_name() == null) {
 			err.put("hotelName", "can't be empty.");
@@ -203,10 +273,6 @@ public class HotelServlet extends HttpServlet {
 			if (vo.getHotel_name().trim().length() > 60)
 				err.put("hotelName", "too long.");
 		}
-
-		// hotel_id
-		if (vo.getHotel_id() == null || vo.getHotel_id() <= 0)
-			err.put("hotelId", "must provide.");
 
 		// region_id
 		if (vo.getRegion_id() == null || vo.getRegion_id() < 0 || vo.getRegion_id() == 0)
@@ -272,15 +338,18 @@ public class HotelServlet extends HttpServlet {
 
 		// update database
 		if (err.length() > 0) {
+			// 400 Bad request
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter()
 					.println(new JSONObject().put("result", "validation-error").put("message", err).toString());
 		} else {
 			try {
 				context.getBean(HotelHibernateDAO.class).update(vo);
+				// 200 OK
 				response.setStatus(HttpServletResponse.SC_OK);
 				response.getWriter().println(new JSONObject().put("result", "success").toString());
 			} catch (Exception e) {
+				// 500 Internal server error
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				response.getWriter().println(new JSONObject().put("result", "error: update unsuccessful.").toString());
 				e.printStackTrace();
@@ -290,49 +359,41 @@ public class HotelServlet extends HttpServlet {
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
 
-		String[] parameters;
+		HotelDAO dao = context.getBean(HotelHibernateDAO.class);
 		HotelVO vo = null;
-		Integer id = 0;
-		if (request.getPathInfo() != null && (parameters = request.getPathInfo().split("/")).length > 0
-				&& parameters[1].length() > 0) {
-			try {
-				id = Integer.parseInt(parameters[1]);
-			} catch (NumberFormatException e) {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response.getWriter()
-						.println(new JSONObject().put("result", "error: number format exception.").toString());
-				e.printStackTrace();
-				return;
-			}
-			if (id <= 0) {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response.getWriter().println(new JSONObject().put("result", "error: id invalid.").toString());
-				return;
-			}
-			if ((context.getBean(HotelHibernateDAO.class).findById(id)) == null) {
+		String name = (String) request.getAttribute("queryString");
+		Integer id = (Integer) request.getAttribute("queryId");
+
+		if (id != null) {
+			if ((vo = dao.findById(id)) == null) {
+				// 404 Not found
 				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				response.getWriter().println(new JSONObject().put("result", "error: id not exist.").toString());
 				return;
+			} else {
+				vo = context.getBean(HotelVO.class);
+				vo.setHotel_id(id);
+				try {
+					dao.delete(vo);
+					// 200 OK
+					response.setStatus(HttpServletResponse.SC_OK);
+					response.getWriter().println(new JSONObject().put("result", "success").toString());
+				} catch (Exception e) {
+					// 500 Internal server error
+					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					response.getWriter()
+							.println(new JSONObject().put("result", "error: delete unsuccessful.").toString());
+					e.printStackTrace();
+					return;
+				}
 			}
-			vo = context.getBean(HotelVO.class);
-			vo.setHotel_id(id);
-			try {
-				context.getBean(HotelHibernateDAO.class).delete(vo);
-				response.setStatus(HttpServletResponse.SC_OK);
-				response.getWriter().println(new JSONObject().put("result", "success").toString());
-			} catch (Exception e) {
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				response.getWriter().println(new JSONObject().put("result", "error: delete unsuccessful.").toString());
-				e.printStackTrace();
-				return;
-			}
-		} else {
+		} else if (name != null) {
+			// 400 Bad request
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response.getWriter().println(new JSONObject().put("result", "error: id invalid.").toString());
+		} else {
+			// 405 Method not allowed
+			response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 		}
 	}
 }
