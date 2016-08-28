@@ -111,19 +111,15 @@ public class TestAttServlet extends HttpServlet {
 				}
 					//System.out.println("s1="+att_name);
 					// Send the use back to the form, if there were errors
-						
-					//***************************2.開始查詢資料*****************************************//*
-							
+			//***************************2.開始查詢資料*****************************************//*		
 				AttService asv =new AttService();				
 				List<AttVO> avo = asv.getAllByName(att_name);
 				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			//指定要給的值  避免gson.toJson() throws StackOverflowError			
 											
 				//***************************3.查詢完成,準備轉交(Send the Success view)*************//*
-					 
 					String jsonG = gson.toJson(avo);
-					System.out.println(jsonG);
-					           
+					System.out.println(jsonG);         
 					//response.getWriter().write(jsonG);
 					response.getWriter().println(jsonG.toString());;
 					//***************************其他可能的錯誤處理*************************************//*
@@ -138,12 +134,8 @@ public class TestAttServlet extends HttpServlet {
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			String jsonG = gson.toJson(avo);
 			System.out.println(jsonG);
-			
-			response.getWriter().println(jsonG.toString());;
-
+			response.getWriter().println(jsonG.toString());
 		}
-		
-		
 	}
 	
 		

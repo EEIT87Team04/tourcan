@@ -14,12 +14,14 @@ table, th, td {
 h3{
 color:red;
 }
-
+h2{
+text-decoration: underline;
+}
 </style>
 <title>景點資料</title>
 </head>
 <body>
-<h2>Search</h2>
+<h2 >Search One or Search All</h2>
 <div id="d1"></div>
 	<div >
 		<label for="attid">ATTID</label> <input type="text"
@@ -67,44 +69,64 @@ color:red;
 	<script src="../js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript">
 
+	
 	$("#search1").click(function() {
-	$('#tb1>tbody').empty();
-	$("#d1").empty();
-	var attno2 = $("#attid").val(); 
-	$.get(("TestAttServlet"),{"attno":attno2},function(data){
-		var myBody = $('#tb1>tbody');
-		$.each(data,function(idx,att1){
+		$('#tb1>tbody').empty();
+		$("#d1").empty();
+		var attno2 = $("#attid").val(); 
+			if(attno2==null||attno2.trim().length==0){
+				var errSpan= document.createElement("span");
+				var errMsg = document.createTextNode("plz enter number");
+				errSpan.appendChild(errMsg);
+				errSpan.setAttribute("style","color:red");
+				errSpan.setAttribute("id",'errid')
+				$("#errid").remove();
+				$("#search1").after(errSpan);
+			}else{
+		$.get(("TestAttServlet"),{"attno":attno2},function(data){
+			$("#errid").remove();
+			var myBody = $('#tb1>tbody');
+			$.each(data,function(idx,att1){
 				var j1= JSON.stringify(att1);
 // 				console.log(j1);
- 				if(j1.indexOf("error")>-1){
-				var p1=$("<h3></h3>").text(att1);
+ 					if(j1.indexOf("error")>-1){
+						var p1=$("<h3></h3>").text(att1);
 // 				$("#h3").setAttribute("style","color:red");
-				$("#d1").append(p1);
- 				}else{
-				var cell1 = $("<td></td>").text(att1);							
-				myBody.append(cell1);												
- 				}	
+						$("#d1").append(p1);
+ 					}else{
+						var cell1 = $("<td></td>").text(att1);							
+						myBody.append(cell1);												
+ 						}	
 				})
 		})
+	}
 	});
 	
 	$("#search2").click(function() {
-		$('#tb1>tbody').empty();
-		$("#d1").empty();
-		var attname = $("#attname").val(); 
-		$.getJSON(("TestAttServlet"),{"attname":attname},function(data){
-			var myBody = $('#tb1>tbody');
-			console.log(data)
-			if(data<1){
-				var p1=$("<h3></h3>").text("search error");
-				$("#d1").append(p1);
-		}
-		$.each(data,function(idx,att2){
-				var j1= JSON.stringify(att2);
- 				
+			$('#tb1>tbody').empty();
+			$("#d1").empty();
+			var attname = $("#attname").val(); 
+		if(attname==null||attname.trim().length==0){
+				var errSpan= document.createElement("span");
+				var errMsg = document.createTextNode("plz enter attname");
+					errSpan.appendChild(errMsg);
+					errSpan.setAttribute("style","color:red");
+					errSpan.setAttribute("id",'errname')
+					$("#errname").remove();
+					$("#search2").after(errSpan);
+					}else{
+			$.getJSON(("TestAttServlet"),{"attname":attname},function(data){
+				$("#errname").remove();
+					var myBody = $('#tb1>tbody');
+					console.log(data)
+					if(data<1){
+						var p1=$("<h3></h3>").text("search error");
+						$("#d1").append(p1);
+								}
+				$.each(data,function(idx,att2){
+// 				var j1= JSON.stringify(att2);
 // 			console.log(att2)
 // 			console.log(att2.att_name)
- 				
 				var cell1 = $("<td></td>").text(att2.att_id);
 				var cell2 = $("<td></td>").text(att2.att_name);
 				var cell3 = $("<td></td>").text(att2.att_staytime);
@@ -122,6 +144,7 @@ color:red;
  				
 				})
 			})
+		}
 		});
 	
 	$("#search3").click(function() {
