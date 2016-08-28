@@ -35,10 +35,10 @@ public class TestAttServlet extends HttpServlet {
 		//-------------------------------------------------------
 				
 //				if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
-		String str = request.getParameter("attno");
+		String attstr = request.getParameter("attno");
 		String att_name = request.getParameter("attname");
 //		PrintWriter out = response.getWriter();
-		if(str!=null){
+		if(attstr!=null){
 		
 			JSONObject err = new JSONObject(); // checking result
 	
@@ -48,13 +48,14 @@ public class TestAttServlet extends HttpServlet {
 					
 						Integer attno = null;
 						try {
-							attno = new Integer(str);
-							if(str==null||str.trim().length()==0){
+							attno = new Integer(attstr);
+							if(attstr==null||attstr.trim().length()==0){
 								throw new Exception();
 							}
 						} catch (Exception e) {
 							System.out.println(e.getMessage());
-							err.append("errmsg", "att error");
+							err.append("errmsg", "attno error");
+
 						}
 						
 						
@@ -91,19 +92,23 @@ public class TestAttServlet extends HttpServlet {
 		}catch (Exception e) {
 //			System.out.println(e.getMessage());
 
-			err.append("errmsg", "新增失敗。");
+			err.append("errmsg", "search error");
+			response.getWriter().println(err.toString());
 		}
 //		}
 														
 					
 		}else if(att_name!=null){
-			List<String> errorMsgs1 = new LinkedList<String>();
-			request.setAttribute("errorMsgs", errorMsgs1);
-			
-						//***************************1.接收請求參數 - 輸入格式的錯誤處理**********************//*
+			JSONObject err = new JSONObject();
+				//***************************1.接收請求參數 - 輸入格式的錯誤處理**********************//*
+			try{
+				try{
 				if (att_name == null || (att_name.trim()).length() == 0) {
-				errorMsgs1.add("請輸入attname");
-			}
+					throw new Exception();
+					}
+				}catch (Exception e) {
+					err.append("errname", "attname error");
+				}
 					//System.out.println("s1="+att_name);
 					// Send the use back to the form, if there were errors
 						
@@ -112,24 +117,22 @@ public class TestAttServlet extends HttpServlet {
 				AttService asv =new AttService();				
 				List<AttVO> avo = asv.getAllByName(att_name);
 				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-					//指定要給的值  避免gson.toJson() throws StackOverflowError
-				
-				if (avo == null) {
-				errorMsgs1.add("查無資料");
-					}
-				// Send the use back to the form, if there were errors
-									
+			//指定要給的值  避免gson.toJson() throws StackOverflowError			
+											
 				//***************************3.查詢完成,準備轉交(Send the Success view)*************//*
 					 
 					String jsonG = gson.toJson(avo);
 					System.out.println(jsonG);
 					           
-//					response.getWriter().write(jsonG);
+					//response.getWriter().write(jsonG);
 					response.getWriter().println(jsonG.toString());;
 					//***************************其他可能的錯誤處理*************************************//*
+			}catch (Exception e) {
+				err.append("errmsg", "search error");
+				response.getWriter().println(err.toString());
+			}	
 		
-		
-		}else if(str==null&&att_name==null){
+		}else if(attstr==null&&att_name==null){
 			AttService asv =new AttService();				
 			List<AttVO> avo = asv.getAll();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();

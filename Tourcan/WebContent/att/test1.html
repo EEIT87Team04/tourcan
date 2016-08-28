@@ -11,13 +11,15 @@
 table, th, td {
    border: 1px solid black;
 }
-
+h3{
+color:red;
+}
 
 </style>
 <title>景點資料</title>
 </head>
 <body>
-<h3>Search</h3>
+<h2>Search</h2>
 <div id="d1"></div>
 	<div >
 		<label for="attid">ATTID</label> <input type="text"
@@ -67,31 +69,42 @@ table, th, td {
 
 	$("#search1").click(function() {
 	$('#tb1>tbody').empty();
+	$("#d1").empty();
 	var attno2 = $("#attid").val(); 
 	$.get(("TestAttServlet"),{"attno":attno2},function(data){
-	console.log(data.errmsg);
 		var myBody = $('#tb1>tbody');
-		
 		$.each(data,function(idx,att1){
-				//console.log(product.ProductName);
-				console.log(att1);
-				var cell1 = $("<td></td>").text(att1);
-				$("#d1").text(att1);			
-
-// 				var row = $("<tr></tr>").append([cell1,cell2,cell8,cell3,cell4,cell5,cell6,cell7,cell9,cell10]);
-						myBody.append(cell1);												
-					})
+				var j1= JSON.stringify(att1);
+// 				console.log(j1);
+ 				if(j1.indexOf("error")>-1){
+				var p1=$("<h3></h3>").text(att1);
+// 				$("#h3").setAttribute("style","color:red");
+				$("#d1").append(p1);
+ 				}else{
+				var cell1 = $("<td></td>").text(att1);							
+				myBody.append(cell1);												
+ 				}	
+				})
 		})
 	});
 	
 	$("#search2").click(function() {
-				$('#tb1>tbody').empty();
+		$('#tb1>tbody').empty();
+		$("#d1").empty();
 		var attname = $("#attname").val(); 
 		$.getJSON(("TestAttServlet"),{"attname":attname},function(data){
-		var myBody = $('#tb1>tbody');
-			$.each(data,function(idx,att2){
+			var myBody = $('#tb1>tbody');
+			console.log(data)
+			if(data<1){
+				var p1=$("<h3></h3>").text("search error");
+				$("#d1").append(p1);
+		}
+		$.each(data,function(idx,att2){
+				var j1= JSON.stringify(att2);
+ 				
 // 			console.log(att2)
 // 			console.log(att2.att_name)
+ 				
 				var cell1 = $("<td></td>").text(att2.att_id);
 				var cell2 = $("<td></td>").text(att2.att_name);
 				var cell3 = $("<td></td>").text(att2.att_staytime);
@@ -106,6 +119,7 @@ table, th, td {
 				var cell12 = $("<td></td>").text(att2.att_lng);
 				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9,cell10,cell11,cell12]);
 				myBody.append(row);
+ 				
 				})
 			})
 		});
