@@ -8,13 +8,13 @@
 //import java.util.ArrayList;
 //import java.util.List;
 //
-//public class RegionDAO_JDBC implements RegionDAO_interface {
+//public class RegionJdbcDAO implements RegionDAO {
 //
 //	// Ver.JDBC
 //	private static final String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 //	private static final String url = "jdbc:sqlserver://localhost:1433;DatabaseName=Tourcan";
 //	private static final String userid = "sa";
-//	private static final String passwd = "sa123456";
+//	private static final String passwd = "P@ssw0rd";
 //
 //	private static int STMT_SHIFT = 1; // 1 for JDBC, 0 for Hibernate
 //	// private boolean manual_mode = false;
@@ -335,7 +335,7 @@
 //	}
 //
 //	public static void main(String[] args) {
-//		for (RegionVO att : new RegionDAO().getAll()) {
+//		for (RegionVO att : new RegionJdbcDAO().getAll()) {
 //			System.out.println(att.getRegion_id() + ": " + att.getRegion_name() + " @ " + att.getRegion_area());
 //		}
 //	}
