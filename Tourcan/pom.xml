@@ -5,39 +5,30 @@
 	<artifactId>Tourcan</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<warSourceDirectory>WebContent</warSourceDirectory>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 	<properties>
-		<spring.version>4.3.1.RELEASE</spring.version>
+		<spring.version>4.3.2.RELEASE</spring.version>
 		<googleapi.version>[1.20.0,)</googleapi.version>
-		<hibernate.version>3.5.3-Final</hibernate.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
 		<build.sourceEncoding>UTF-8</build.sourceEncoding>
+		<jersey.version>2.23.2</jersey.version>
 	</properties>
 	<dependencies>
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.microsoft.sqlserver.jdbc</groupId> -->
+<!-- 			<artifactId>sqljdbc</artifactId> -->
+<!-- 			<version>4.2</version> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20160212</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.6.2</version>
 		</dependency>
 
 
@@ -47,7 +38,7 @@
 			<artifactId>firebase-server-sdk</artifactId>
 			<version>[3.0.0,)</version>
 		</dependency>
-		
+
 
 		<!-- Google API -->
 		<dependency>
@@ -70,7 +61,7 @@
 			<artifactId>google-api-client-gson</artifactId>
 			<version>${googleapi.version}</version>
 		</dependency>
-		
+
 
 		<!-- spring -->
 		<dependency>
@@ -133,7 +124,7 @@
 		<!-- <artifactId>spring-webmvc</artifactId> -->
 		<!-- <version>${spring.version}</version> -->
 		<!-- </dependency> -->
-		
+
 
 		<!-- hibernate -->
 		<dependency>
@@ -172,11 +163,11 @@
 		<!-- <artifactId>hibernate-infinispan</artifactId> -->
 		<!-- <version>${hibernate.version}</version> -->
 		<!-- </dependency> -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-annotations</artifactId> -->
+		<!-- <version>${hibernate.version}</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
@@ -201,5 +192,68 @@
 		</dependency>
 
 
+		<!-- Jersey Server -->
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-jaxb</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 	</dependencies>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<warSourceDirectory>WebContent</warSourceDirectory>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>

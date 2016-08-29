@@ -2,7 +2,7 @@ package com.tourcan.att.model;
 
 import java.util.List;
 
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 
 import hibernate.util.HibernateUtil;
 

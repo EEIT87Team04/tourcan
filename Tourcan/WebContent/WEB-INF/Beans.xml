@@ -44,10 +44,10 @@
 <!-- 	</bean> -->
 <!-- 	<bean id="attVO" class="com.tourcan.att.model.AttVO" scope="prototype" /> -->
 
-	<bean id="hotelDAO" class="com.tourcan.hotel.model.HotelHibernateDAO">
-		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>
-	<bean id="hotelVO" class="com.tourcan.hotel.model.HotelVO" scope="prototype" />
+<!-- 	<bean id="hotelDAO" class="com.tourcan.hotel.model.HotelHibernateDAO"> -->
+<!-- 		<property name="sessionFactory" ref="sessionFactory"></property> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="hotelVO" class="com.tourcan.hotel.model.HotelVO" scope="prototype" /> -->
 	
 	<bean id="regionDAO" class="com.tourcan.region.model.RegionHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
