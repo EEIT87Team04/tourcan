@@ -14,7 +14,7 @@
 </head>
 <body>
 ${ErrorMsgKey.error}
-<form action="AttServlet" method="POST">
+<form action=mem.do method="POST">
 
 <table border="1">
 

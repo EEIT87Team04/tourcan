@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +18,41 @@
 </head>
 <body>
 	<div class="container">
-		<form name="addAtt">
+		<form name="idCheckAtt" >
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3">
+					<h1>編號IdCheck</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-7">
+					<div class="row">
+						<div class="col-sm-9 form-group">
+							<label for="attId">編號Id</label> <input type="text"
+								class="form-control" id="att_id" name="attId" placeholder="attId">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-7 form-group">
+					<button type="button" class="btn btn-success form-control"
+						id="btnIdCheck">IdCheck</button>
+				</div>
+				<div class="col-sm-5 form-group">
+					<button type="button" class="btn btn-danger form-control"
+						id="btnReset">Reset</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3" id="idCheck" ></div>
+			</div>
+		</form>
+	</div>
+
+
+	<div class="container">
+		<form name="attUpdate">
 			<div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
 					<h1>Title text</h1>
@@ -31,7 +67,8 @@
 								placeholder="景點名稱">
 						</div>
 						<div class="col-sm-3 form-group">
-							<label for="attEat">吃貨</label> <select class="form-control"
+							<label for="attEat">吃貨</label>
+							<select class="form-control"
 								id="att_eat" name="attEat">
 								<option value="false">否</option>
 								<option value="true">是</option>
@@ -113,11 +150,11 @@
 					<div class="row">
 						<div class="col-sm-7 form-group">
 							<button type="button" class="btn btn-success form-control"
-								id="btnSave">Save</button>
+								id="btnUpdate">Update</button>
 						</div>
 						<div class="col-sm-5 form-group">
 							<button type="button" class="btn btn-danger form-control"
-								id="btnReset">Reset</button>
+								id="btnReset2">Reset</button>
 						</div>
 					</div>
 				</div>
@@ -130,17 +167,12 @@
 		</form>
 	</div>
 
-
 	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
-		var coder,
-			map,
-			marker,
-			checkTrigger,
-			lastValue = "";
-	
+		var coder, map, marker, checkTrigger, lastValue = "";
+
 		function initMap() {
 			var initPos = new google.maps.LatLng(25.042485, 121.543543);
 			coder = new google.maps.Geocoder();
@@ -155,11 +187,15 @@
 				draggable : true
 			});
 			marker.addListener("position_changed", function() {
-				document.getElementById("attLat").value = marker.getPosition().lat();
-				document.getElementById("attLng").value = marker.getPosition().lng();
+				document.getElementById("att_lat").value = marker.getPosition()
+						.lat();
+				document.getElementById("att_lng").value = marker.getPosition()
+						.lng();
 			});
-			document.getElementById("attName").addEventListener("input", queryMap);
-			document.getElementById("attAddr").addEventListener("input", queryMap);
+			document.getElementById("att_name").addEventListener("input",
+					queryMap);
+			document.getElementById("att_addr").addEventListener("input",
+					queryMap);
 		}
 		function queryMap() {
 			if (lastValue != this.value) {
@@ -177,39 +213,106 @@
 				}, 300);
 			}
 		}
-	
+
+		
 		$(function() {
-			$.get("RegionServlet").done(function(list) {
-				var frag = document.createDocumentFragment();
-				for (var i = 1; i < list.length; i++)
-					frag.appendChild(new Option(list[i].region_name, list[i].region_id));
-				$("#regionId").append(frag);
-			}).fail(function(xhr) {
-				console.log("Get region list unsuccessful.");
+			$("#btnIdCheck").click(function() {
+				var att_id = $("#att_id").val();
+				console.log(att_id);
+				$.getJSON(("AttServlet"), {
+					"att_id" : att_id
+				}, function(data) {
+					console.log(data);
+					$.each(data, function(attName, attValue) {
+						var form = $(document.attUpdate).serialize();
+						
+					    	$("#"+attName).val(attValue);
+							if(attName=="att_eat")
+							{
+								if(attValue==false){
+									$("#att_eat option:nth-child(2)").prop("selected",null);
+									$("#att_eat option:nth-child(1)").prop("selected",true);}
+									
+								if(attValue==true){
+									$("#att_eat option:nth-child(1)").prop("selected",null);
+									$("#att_eat option:nth-child(2)").prop("selected",true);}
+					        
+					        
+// 					        if(($("#"+attName).val(attValue))=="true"){
+// 					        	console.log(attName);
+// 					        $("#att_eat option:contains('是')").prop("selected",true);}
+					        
+// 					        if(($("#"+attName).val(attValue))=="false"){
+// 					        	console.log(attName);
+// 						        $("#att_eat option:contains('否')").prop("selected",true);}
+					        
+// 					        if($("#"+attName).val(attValue)=="true"){
+// 					        	document.getElementById("true").selected = true;
+// 					        } 
+// 					        if($("#"+attName).val(attValue)=="false"){
+// 					        	document.getElementById("false").selected = true;
+// 					        }
+// 								console.log(attValue);
+					    }
+					});
+				});
+				
+				
+			$("#btnReset").click(function() {
+				document.idCheckAtt.reset();
+				$('form[name="idCheckAtt"] span').remove();
 			});
-	
-			$('#attPrice').change(function() {
-				if ($(this).val() % 1 != 0) {
-					console.log('attPrice is not a integer.');
-				}
-			});
-	
-			$("#btnSave").click(function() {
-				var form = $(document.addAtt).serializeArray(),
-					json = {};
+				
+				
+				
+			$("#btnUpdate").click(function() {
+				var att_id = $("#att_id").val();
+				
+				var form = $(document.attUpdate).serializeArray();
+				var nameValue = $(document.attUpdate).serialize();
+				json = {};
 				for (var i = 0; i < form.length; i++)
 					json[form[i].name] = form[i].value;
-	
-				$.post("AttServlet", JSON.stringify(json)).done(function(data) {
-					console.log("200.");
-				}).fail(function(xhr) {
-					console.log("ERR.");
+				
+
+				console.log($(document.attUpdate).serialize());
+				
+				
+				$.ajax({
+					"type":"post",
+					"url":"AttServlet",
+					"dataType":"json",
+					"data":JSON.stringify(json),
+// 					"headers": {"X-HTTP-Method-Override": "put"}, 
+					"success":function(data){
+// 		 				console.log($(document.attUpdate).serialize());
+						
+// 				$.post("AttServlet", JSON.stringify(json)).done(function(data)
+// 				{
+// 					console.log("200.");
+// 				})
+// 				.fail(function(xhr) 
+// 				{
+// 					console.log("ERR.");
+// 				});
+					}
 				});
+
 			});
-			$("#btnReset").click(function() {
-				document.addAtt.reset();
+			
+			
+			
+			
+			$("#btnReset2").click(function() {
+				document.attUpdate.reset();
+				$('form[name="attUpdate"] span').remove();
 			});
-		});
+			
+			
+	});
+			
+		});		
+			
 	</script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&callback=initMap"

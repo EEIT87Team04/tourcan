@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="AttServlet" method="POST">
+<form action="mem.do" method="POST">
 
 <table border="1">
 
