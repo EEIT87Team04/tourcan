@@ -39,11 +39,9 @@
 			$("#btnDelete").click(function() {
 				var attId = $("#attId").val();
 				$.ajax({
-					type : "post",
-					url : "AttServlet",
+					type : "delete",
+					url:"AttServlet?" + $.param({"attId" : attId}),
 					dataType : "json",
-					data : {"attId" : attId,
-						    "method":"delete"},
 					success : function(data) {
 // 						alert(data.errMsg)
 						if(data.errMsg!=null){

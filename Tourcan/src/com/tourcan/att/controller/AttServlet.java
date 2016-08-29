@@ -29,10 +29,6 @@ public class AttServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (request.getParameter("method").equals("delete")) {
-			doDelete(request, response);
-		}
-
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
