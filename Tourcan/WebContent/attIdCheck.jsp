@@ -12,6 +12,19 @@
 #mapPreview {
 	height: 292px;
 }
+
+.error {
+   color: #ff0000;
+   font-size: 12px;
+   margin-top: 5px;
+   margin-bottom: 0;
+}
+ 
+.inputTxtError {
+   border: 1px solid #ff0000;
+   color: #0e0e0e;
+}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -266,22 +279,26 @@
 					"success":function(data){
 						$.each(data,function(attName,attValue){
 						
-							if(attValue=="修改失敗"){
-								alert("修改失敗!");
+							if(attValue=="修改成功"){
+								alert("修改成功!");
 							}
-						
+							
+							var msg = '<label class="error" for="'+attName+'">'+attValue+'</label>';
+							$('input[name="' + attName + '"], select[name="' + attValue + '"]').addClass('inputTxtError').after(msg);
 						});
-					    console.log(JSON.stringify(json));
-	                    document.idCheckAtt.reset();
-						document.attUpdate.reset();
-						$('form[name="idCheckAtt"] span').remove();
-						$('form[name="attUpdate"] span').remove();}
+							alert("修改失敗!");
+					    
+							console.log(JSON.stringify(json));
+
+                        }
 					
 				})		
 			 
-				.done(function(data)
+				.done(function(datas)
 			    {
 	 				console.log("200.");
+	                document.idCheckAtt.reset();
+				    document.attUpdate.reset();
 					
 			    })
 				.fail(function(xhr) 
@@ -293,8 +310,13 @@
 			 
 			$("#btnReset2").click(function() {
 				document.attUpdate.reset();
-				$('form[name="attUpdate"] span').remove();
+				resetErrors();
 			});
+			
+			function resetErrors() {
+			    $('form input, form select').removeClass('inputTxtError');
+			    $('label.error').remove();
+			}
 			
 	   });
 			
