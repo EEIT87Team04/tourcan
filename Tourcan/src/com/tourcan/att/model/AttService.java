@@ -30,4 +30,13 @@ public class AttService {
 		return attVO;
 	}
 
+	public AttVO insert(AttVO attVO) {
+		AttDAO dao = new AttDAO();
+		
+		dao.insert(attVO);
+		
+		return attVO;
+	}
+
+
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
 import com.tourcan.att.model.AttDAO;
 import com.tourcan.att.model.AttService;
 import com.tourcan.att.model.AttVO;
@@ -199,7 +200,9 @@ public class AttServlet extends HttpServlet {
 //				dao.insert(vo);
 				
 				AttService srv = new AttService();
-				srv.insert(attName, regionId, attAddr, attEat, attIntro, appOpen, attPhone, attPrice, attStaytime, attUrl, attLat, attLng);
+				AttVO attVO = new Gson().fromJson(json, AttVO.class);
+				System.out.println(attVO.getAtt_name());
+				srv.insert(attVO);
 				err.append("result", "新增成功");
 				response.getWriter().println(err.toString());
 			}
@@ -209,22 +212,6 @@ public class AttServlet extends HttpServlet {
 //			e.printStackTrace();
 		}
 		
-		
-		// // test output
-		// for (String key : JSONObject.getNames(obj)) {
-		// System.out.println(key+"\t"+obj.getString(key));
-		// for (String key2 : JSONObject.getNames(obj.getJSONObject(key1))) {
-		// System.out.println(" " + key2);
-		// }
-		// }
-		//
-		// // test output
-		// System.out.println("\n" + sb.toString());
-		// Enumeration<String> headers = request.getHeaderNames();
-		// while (headers.hasMoreElements()) {
-		// String header = headers.nextElement();
-		// System.out.println(header + "\t: " + request.getHeader(header));
-		// }
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
