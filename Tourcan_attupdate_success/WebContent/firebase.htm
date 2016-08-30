@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Demo Site</title>
+<script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
+<script>
+	// Initialize Firebase
+	var config = {
+		apiKey : "AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw",
+		authDomain : "tourcan-1373.firebaseapp.com",
+		databaseURL : "https://tourcan-1373.firebaseio.com",
+		storageBucket : "tourcan-1373.appspot.com",
+	};
+	firebase.initializeApp(config);
+
+	function onSuccess(id_token) {
+	}
+	firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+			// User is signed in.
+			// var id_token = firebase.User.getToken();
+			user.getToken().then(function(id_token) {
+				console.log('ID: ' + user.uid); // Do not send to your backend! Use an ID token instead.
+				console.log('Name: ' + user.displayName);
+				console.log('Image URL: ' + user.photoURL);
+				console.log('Email: ' + user.email);
+				console.log('id_token: ' + id_token);
+
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', 'http://localhost:8080/test_LoginAPI/FirebaseLogger');
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				xhr.onload = function() {
+					console.log('Signed in as: ' + xhr.responseText);
+				};
+				xhr.send('idtoken=' + id_token);
+			});
+		}
+		else {
+			// No user is signed in.
+		}
+	});
+</script>
+</head>
+<body>
+
+</body>
+</html>
