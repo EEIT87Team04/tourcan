@@ -264,6 +264,13 @@
 					"data":JSON.stringify(json),
 					
 					"success":function(data){
+						$.each(data,function(attName,attValue){
+						
+							if(attValue=="修改失敗"){
+								alert("修改失敗!");
+							}
+						
+						});
 					    console.log(JSON.stringify(json));
 	                    document.idCheckAtt.reset();
 						document.attUpdate.reset();
@@ -274,15 +281,12 @@
 			 
 				.done(function(data)
 			    {
-//	 				console.log("200.");
-					if(form[i].value=="修改失敗"){
-							alert("修改失敗!");
-					}
+	 				console.log("200.");
 					
 			    })
 				.fail(function(xhr) 
 				{
-// // 					console.log("ERR.");
+    			   console.log("ERR.");
 				});
 			});		
 			

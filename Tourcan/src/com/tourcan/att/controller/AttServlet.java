@@ -272,7 +272,7 @@ public class AttServlet extends HttpServlet {
 				response.getWriter().println(err.toString());
 			}
 		} catch (Exception e) {
-			err.append("result", "修改失敗。");
+			err.append("result", "修改失敗");
 			response.getWriter().println(err.toString());
 			// e.printStackTrace();
 		}
