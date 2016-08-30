@@ -38,12 +38,13 @@ public class AttService {
 	
 	public AttVO update(String attName, Integer regionId, String attAddr, Boolean attEat, String attIntro,
 			String appOpen, String attPhone, Double attPrice, Integer attStaytime, String attUrl, Double attLat,
-			Double attLng){
+			Double attLng, Integer attId){
 		
 		AttVO attVO = new AttVO();
 		RegionVO regionVO = new RegionVO();
 		regionVO.setRegion_id(regionId);
 
+		attVO.setAtt_id(attId);
 		attVO.setAtt_name(attName);
 		attVO.setRegionVO(regionVO);;
 		attVO.setAtt_addr(attAddr);

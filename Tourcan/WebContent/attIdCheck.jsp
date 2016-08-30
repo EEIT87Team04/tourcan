@@ -18,7 +18,7 @@
 </head>
 <body>
 	<div class="container">
-		<form name="idCheckAtt" >
+		<form name="idCheckAtt" id="idCheckAtt">
 			<div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
 					<h1>編號IdCheck</h1>
@@ -29,7 +29,8 @@
 					<div class="row">
 						<div class="col-sm-9 form-group">
 							<label for="attId">編號Id</label> <input type="text"
-								class="form-control" id="att_id" name="attId" placeholder="attId">
+								class="form-control" id="att_id" name="attId"
+								placeholder="attId">
 						</div>
 					</div>
 				</div>
@@ -45,14 +46,14 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3" id="idCheck" ></div>
+				<div class="col-sm-6 col-sm-offset-3" id="idCheck"></div>
 			</div>
 		</form>
 	</div>
 
 
 	<div class="container">
-		<form name="attUpdate">
+		<form name="attUpdate" id="attUpdate">
 			<div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
 					<h1>Title text</h1>
@@ -67,8 +68,7 @@
 								placeholder="景點名稱">
 						</div>
 						<div class="col-sm-3 form-group">
-							<label for="attEat">吃貨</label>
-							<select class="form-control"
+							<label for="attEat">吃貨</label> <select class="form-control"
 								id="att_eat" name="attEat">
 								<option value="false">否</option>
 								<option value="true">是</option>
@@ -218,13 +218,10 @@
 		$(function() {
 			$("#btnIdCheck").click(function() {
 				var att_id = $("#att_id").val();
-				console.log(att_id);
-				$.getJSON(("AttServlet"), {
-					"att_id" : att_id
-				}, function(data) {
-					console.log(data);
+// 				console.log(att_id);
+				$.getJSON(("AttServlet"), {"att_id" : att_id}, function(data) {
+// 					console.log(data);
 					$.each(data, function(attName, attValue) {
-						var form = $(document.attUpdate).serialize();
 						
 					    	$("#"+attName).val(attValue);
 							if(attName=="att_eat")
@@ -236,26 +233,10 @@
 								if(attValue==true){
 									$("#att_eat option:nth-child(1)").prop("selected",null);
 									$("#att_eat option:nth-child(2)").prop("selected",true);}
-					        
-					        
-// 					        if(($("#"+attName).val(attValue))=="true"){
-// 					        	console.log(attName);
-// 					        $("#att_eat option:contains('是')").prop("selected",true);}
-					        
-// 					        if(($("#"+attName).val(attValue))=="false"){
-// 					        	console.log(attName);
-// 						        $("#att_eat option:contains('否')").prop("selected",true);}
-					        
-// 					        if($("#"+attName).val(attValue)=="true"){
-// 					        	document.getElementById("true").selected = true;
-// 					        } 
-// 					        if($("#"+attName).val(attValue)=="false"){
-// 					        	document.getElementById("false").selected = true;
-// 					        }
-// 								console.log(attValue);
-					    }
+				            }
 					});
-				});
+			   });
+		    });
 				
 				
 			$("#btnReset").click(function() {
@@ -264,53 +245,56 @@
 			});
 				
 				
-				
 			$("#btnUpdate").click(function() {
-				var att_id = $("#att_id").val();
+				var attId = $("#att_id").val();
 				
 				var form = $(document.attUpdate).serializeArray();
 				var nameValue = $(document.attUpdate).serialize();
 				json = {};
+				json["attId"]=+attId;
 				for (var i = 0; i < form.length; i++)
 					json[form[i].name] = form[i].value;
 				
-
-				console.log($(document.attUpdate).serialize());
-				
+				console.log(JSON.stringify(json));
 				
 				$.ajax({
-					"type":"post",
-					"url":"AttServlet",
+					"type":"PUT",
+					"url":"AttServlet?att_id="+att_id,
 					"dataType":"json",
 					"data":JSON.stringify(json),
+					
 					"success":function(data){
-// 		 				console.log($(document.attUpdate).serialize());
-						
-// 				$.post("AttServlet", JSON.stringify(json)).done(function(data)
-// 				{
-// 					console.log("200.");
-// 				})
-// 				.fail(function(xhr) 
-// 				{
-// 					console.log("ERR.");
-// 				});
+					    console.log(JSON.stringify(json));
+	                    document.idCheckAtt.reset();
+						document.attUpdate.reset();
+						$('form[name="idCheckAtt"] span').remove();
+						$('form[name="attUpdate"] span').remove();}
+					
+				})		
+			 
+				.done(function(data)
+			    {
+//	 				console.log("200.");
+					if(form[i].value=="修改失敗"){
+							alert("修改失敗!");
 					}
+					
+			    })
+				.fail(function(xhr) 
+				{
+// // 					console.log("ERR.");
 				});
-
-			});
+			});		
 			
-			
-			
-			
+			 
 			$("#btnReset2").click(function() {
 				document.attUpdate.reset();
 				$('form[name="attUpdate"] span').remove();
 			});
 			
+	   });
 			
-	});
-			
-		});		
+	
 			
 	</script>
 	<script
