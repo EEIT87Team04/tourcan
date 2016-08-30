@@ -283,7 +283,6 @@
 					"url":"AttServlet",
 					"dataType":"json",
 					"data":JSON.stringify(json),
-// 					"headers": {"X-HTTP-Method-Override": "put"}, 
 					"success":function(data){
 // 		 				console.log($(document.attUpdate).serialize());
 						
