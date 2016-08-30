@@ -30,7 +30,7 @@
 				<property name="jdbcUrl"
 					value="jdbc:sqlserver://localhost:1433;DatabaseName=tourcan" />
 				<property name="user" value="sa" />
-				<property name="password" value="P@ssw0rd" />
+				<property name="password" value="sa123456" />
 			</bean>
 		</property>
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />

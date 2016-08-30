@@ -10,7 +10,7 @@ public class AttVO implements java.io.Serializable {
 	private String att_name;
 	private Integer att_id;
 	private Integer att_staytime;
-	// private Integer region_id;
+//	private Integer region_id;
 	private RegionVO regionVO;
 	private String att_addr;
 	private Double att_price;

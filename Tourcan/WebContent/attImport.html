@@ -27,12 +27,12 @@
 					<div class="row">
 						<div class="col-sm-9 form-group">
 							<label for="attName">景點名稱</label> <input type="text"
-								class="form-control" id="attName" name="attName"
+								class="form-control" id="att_name" name="att_name"
 								placeholder="景點名稱">
 						</div>
 						<div class="col-sm-3 form-group">
 							<label for="attEat">吃貨</label> <select class="form-control"
-								id="attEat" name="attEat">
+								id="att_eat" name="att_eat">
 								<option value="false">否</option>
 								<option value="true">是</option>
 							</select>
@@ -41,24 +41,24 @@
 
 					<div class="row">
 						<div class="col-sm-4 form-group">
-							<label>縣市</label> <select class="form-control" id="regionId"
-								name="regionId">
+							<label>縣市</label> <select class="form-control" id="region_id"
+								name="region_id">
 								<option value="0">請選擇</option>
 							</select>
 						</div>
 						<div class="col-sm-4 form-group">
 							<label for="attLat">緯度</label> <input type="number"
-								class="form-control" id="attLat" name="attLat" placeholder="緯度"
+								class="form-control" id="att_lat" name="att_lat" placeholder="緯度"
 								readonly>
 						</div>
 						<div class="col-sm-4 form-group">
 							<label for="attLng">經度</label> <input type="number"
-								class="form-control" id="attLng" name="attLng" placeholder="經度"
+								class="form-control" id="att_lng" name="att_lng" placeholder="經度"
 								readonly>
 						</div>
 						<div class="col-sm-12 form-group">
 							<label for="attAddr">街道地址</label> <input type="text"
-								class="form-control" id="attAddr" name="attAddr"
+								class="form-control" id="att_addr" name="att_addr"
 								placeholder="地址">
 						</div>
 					</div>
@@ -66,17 +66,17 @@
 					<div class="row">
 						<div class="col-sm-4 form-group">
 							<label for="attStaytime">逗留時長</label> <input type="number"
-								class="form-control" id="attStaytime" name="attStaytime"
+								class="form-control" id="att_staytime" name="att_staytime"
 								placeholder="分鐘" min=0>
 						</div>
 						<div class="col-sm-4 form-group">
 							<label for="attPrice">景點開銷</label> <input type="number"
-								class="form-control" id="attPrice" name="attPrice"
+								class="form-control" id="att_price" name="att_price"
 								placeholder="新台幣元" min=-1>
 						</div>
 						<div class="col-sm-4 form-group">
 							<label for="attPhone">電話</label> <input type="text"
-								class="form-control" id="attPhone" name="attPhone"
+								class="form-control" id="att_phone" name="att_phone"
 								placeholder="電話">
 						</div>
 					</div>
@@ -86,8 +86,8 @@
 					<div class="row">
 						<div class="col-sm-12 form-group">
 							<label>景點介紹</label>
-							<textarea class="form-control" rows="8" id="attIntro"
-								name="attIntro" placeholder="景點介紹"></textarea>
+							<textarea class="form-control" rows="8" id="att_intro"
+								name="att_intro" placeholder="景點介紹"></textarea>
 						</div>
 					</div>
 				</div>
@@ -99,15 +99,15 @@
 					<div class="row">
 						<div class="col-sm-12 form-group">
 							<label for="電話">網址</label> <input type="text"
-								class="form-control" id="attUrl" name="attUrl" placeholder="網址">
+								class="form-control" id="att_url" name="att_url" placeholder="網址">
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="col-sm-12 form-group">
 							<label>開放時間</label>
-							<textarea class="form-control" rows="2" id="attOpen"
-								name="attOpen" placeholder="開放時間"></textarea>
+							<textarea class="form-control" rows="2" id="att_open"
+								name="att_open" placeholder="開放時間"></textarea>
 						</div>
 					</div>
 					<div class="row">
@@ -154,11 +154,11 @@
 				draggable : true
 			});
 			marker.addListener("position_changed", function() {
-				document.getElementById("attLat").value = marker.getPosition().lat();
-				document.getElementById("attLng").value = marker.getPosition().lng();
+				document.getElementById("att_lat").value = marker.getPosition().lat();
+				document.getElementById("att_lng").value = marker.getPosition().lng();
 			});
-			document.getElementById("attName").addEventListener("input", queryMap);
-			document.getElementById("attAddr").addEventListener("input", queryMap);
+			document.getElementById("att_name").addEventListener("input", queryMap);
+			document.getElementById("att_addr").addEventListener("input", queryMap);
 		}
 		function queryMap() {
 			if (lastValue != this.value) {
@@ -182,12 +182,12 @@
 				var frag = document.createDocumentFragment();
 				for (var i = 1; i < list.length; i++)
 					frag.appendChild(new Option(list[i].region_name, list[i].region_id));
-				$("#regionId").append(frag);
+				$("#region_id").append(frag);
 			}).fail(function(xhr) {
 				console.log("Get region list unsuccessful.");
 			});
 	
-			$('#attPrice').change(function() {
+			$('#att_price').change(function() {
 				if ($(this).val() % 1 != 0) {
 					console.log('attPrice is not a integer.');
 				}
