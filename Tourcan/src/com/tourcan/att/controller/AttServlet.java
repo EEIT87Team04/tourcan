@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.tourcan.att.model.AttDAO;
 import com.tourcan.att.model.AttService;
 import com.tourcan.att.model.AttVO;
@@ -82,12 +84,8 @@ public class AttServlet extends HttpServlet {
 			}
 
 			try {
-				RegionDAO rdao = new RegionHibernateDAO();
 				regionId = obj.getInt("region_id");
-				regionVO = rdao.findById(regionId);
-				obj.append("regionVO", regionVO);
-				obj.remove("region_id");
-				System.out.println(json);
+//				obj.remove("region_id");
 				if (regionId == null || regionId < 0) {
 					throw new Exception();
 				}
@@ -209,9 +207,18 @@ public class AttServlet extends HttpServlet {
 			} else {
 				
 				AttService srv = new AttService();
-				AttVO attVO = new Gson().fromJson(json, AttVO.class);
-				System.out.println("attVO:" + attVO.getAtt_eat());
+				RegionDAO rdao = new RegionHibernateDAO();
+				regionVO = rdao.findById(regionId);
 				
+				String regJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(regionVO);
+				
+				JSONObject regobj = new JSONObject(regJson);
+				
+				obj.put("regionVO", regobj);
+				System.out.println(obj.toString());
+				
+				AttVO attVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(obj.toString(), AttVO.class);
+				System.out.println(attVO.getRegionVO());
 				srv.insert(attVO);
 				err.append("result", "新增成功");
 				response.getWriter().println(err.toString());

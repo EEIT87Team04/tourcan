@@ -10,6 +10,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import hibernate.util.HibernateUtil;
+
 public class RegionHibernateDAO implements RegionDAO {
 
 	private SessionFactory factory;
@@ -47,7 +49,7 @@ public class RegionHibernateDAO implements RegionDAO {
 
 	@Override
 	public RegionVO findById(Integer region_id) {
-		Session session = factory.getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		RegionVO vo = (RegionVO) session.get(RegionVO.class, region_id);
 		session.flush();
@@ -93,24 +95,24 @@ public class RegionHibernateDAO implements RegionDAO {
 		return vo;
 	}
 
-	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-		// RegionVO vo = context.getBean(RegionVO.class);
-		RegionDAO dao = context.getBean(RegionHibernateDAO.class);
-
-		for (RegionVO att : dao.getAll())
-			System.out.println(att.getRegion_id() + ": " + att.getRegion_name() + " @ " + att.getRegion_area());
-		System.out.println("------------");
-		for (RegionVO att : dao.findByName("北"))
-			System.out.println(att.getRegion_id() + ": " + att.getRegion_name() + " @ " + att.getRegion_area());
-		System.out.println("------------");
-		for (RegionVO att : dao.findByArea(3))
-			System.out.println(att.getRegion_id() + ": " + att.getRegion_name() + " @ " + att.getRegion_area());
-		System.out.println("------------");
-		RegionVO att = dao.findById(3);
-		System.out.println(att.getRegion_id() + ": " + att.getRegion_name() + " @ " + att.getRegion_area());
-
-		((ConfigurableApplicationContext) context).close();
-	}
+//	public static void main(String[] args) {
+//		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+//		// RegionVO vo = context.getBean(RegionVO.class);
+//		RegionDAO dao = context.getBean(RegionHibernateDAO.class);
+//
+//		for (RegionVO att : dao.getAll())
+//			System.out.println(att.getRegion_id() + ": " + att.getRegion_name() + " @ " + att.getRegion_area());
+//		System.out.println("------------");
+//		for (RegionVO att : dao.findByName("北"))
+//			System.out.println(att.getRegion_id() + ": " + att.getRegion_name() + " @ " + att.getRegion_area());
+//		System.out.println("------------");
+//		for (RegionVO att : dao.findByArea(3))
+//			System.out.println(att.getRegion_id() + ": " + att.getRegion_name() + " @ " + att.getRegion_area());
+//		System.out.println("------------");
+//		RegionVO att = dao.findById(3);
+//		System.out.println(att.getRegion_id() + ": " + att.getRegion_name() + " @ " + att.getRegion_area());
+//
+//		((ConfigurableApplicationContext) context).close();
+//	}
 
 }

@@ -1,5 +1,6 @@
 package com.tourcan.att.model;
 
+import com.google.gson.annotations.Expose;
 import com.tourcan.region.model.RegionVO;
 
 public class AttVO implements java.io.Serializable {
@@ -7,19 +8,32 @@ public class AttVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// private Integer att_area;
+	@Expose
 	private String att_name;
+	@Expose
 	private Integer att_id;
+	@Expose
 	private Integer att_staytime;
 //	private Integer region_id;
+	@Expose
 	private RegionVO regionVO;
+	@Expose
 	private String att_addr;
+	@Expose
 	private Double att_price;
+	@Expose
 	private String att_phone;
+	@Expose
 	private String att_url;
+	@Expose
 	private Boolean att_eat;
+	@Expose
 	private String att_intro;
+	@Expose
 	private String att_open;
+	@Expose
 	private Double att_lat;
+	@Expose
 	private Double att_lng;
 
 	public static long getSerialversionuid() {
@@ -31,6 +45,7 @@ public class AttVO implements java.io.Serializable {
 	}
 
 	public void setRegionVO(RegionVO regionVO) {
+//		System.out.println(regionVO);
 		this.regionVO = regionVO;
 	}
 
