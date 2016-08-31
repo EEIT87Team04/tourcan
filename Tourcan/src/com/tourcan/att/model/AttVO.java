@@ -33,7 +33,12 @@ public class AttVO implements java.io.Serializable {
 	private Double att_lat;
 	@Expose
 	private Double att_lng;
+	@Expose
+	private Integer region_id;
 
+	public AttVO() {
+	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -140,6 +145,14 @@ public class AttVO implements java.io.Serializable {
 
 	public void setAtt_lng(Double att_lng) {
 		this.att_lng = att_lng;
+	}
+	
+	public Integer getRegion_id() {
+		return region_id;
+	}
+
+	public void setRegion_id(Integer region_id) {
+		this.region_id = region_id;
 	}
 
 }

@@ -22,6 +22,10 @@ public class RegionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ApplicationContext context;
 
+	public RegionServlet() {
+        super();
+    }
+	
 	@Override
 	public void init() throws ServletException {
 		context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
