@@ -4,10 +4,15 @@ import com.tourcan.region.model.RegionVO;
 
 public class AttService {
 
+	AttDAO_interface dao;
+	
+	public AttService() {
+		dao = new AttDAO();
+	}
+
 	public AttVO insert(String attName, Integer regionId, String attAddr, Boolean attEat, String attIntro,
 			String appOpen, String attPhone, Double attPrice, Integer attStaytime, String attUrl, Double attLat,
 			Double attLng) {
-		AttDAO dao = new AttDAO();
 		AttVO attVO = new AttVO();
 		RegionVO regionVO = new RegionVO();
 		regionVO.setRegion_id(regionId);

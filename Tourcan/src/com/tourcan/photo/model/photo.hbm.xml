@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.tourcan.att.model.PhotoVO" table="photo" >
+    <class name="com.tourcan.photo.model.PhotoVO" table="photo" >
         
         <id name="photo_id" column="photo_id">
             <generator class="identity"/>

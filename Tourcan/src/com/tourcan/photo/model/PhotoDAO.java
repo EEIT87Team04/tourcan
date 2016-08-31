@@ -11,6 +11,7 @@ public class PhotoDAO implements PhotoDAO_interface {
 
 	private static final String QUERY_ALL = "FROM PhotoVO ORDER BY photo_id";
 	private static final String QUERY_BY_HOTEL_ID = "FROM PhotoVO WHERE hotel_id = :hotel_id ORDER BY photo_id";
+	private static final String QUERY_BY_ATT_ID = "FROM PhotoVO WHERE att_id = :att_id ORDER BY photo_id";
 
 	@Override
 	public void insert(PhotoVO photoVO) {
@@ -71,7 +72,19 @@ public class PhotoDAO implements PhotoDAO_interface {
 
 	@Override
 	public List<PhotoVO> findByAttId(Integer att_id) {
-		return null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		List<PhotoVO> photoList = null;
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(QUERY_BY_ATT_ID);
+			query.setParameter("att_id", att_id);
+			photoList = query.list();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+		}
+		return photoList;
 	}
 
 	@Override
@@ -88,7 +101,6 @@ public class PhotoDAO implements PhotoDAO_interface {
 			session.getTransaction().rollback();
 			e.printStackTrace();
 		}
-		
 		return photoList;
 	}
 
@@ -105,7 +117,6 @@ public class PhotoDAO implements PhotoDAO_interface {
 			session.getTransaction().rollback();
 			e.printStackTrace();
 		}
-
 		return photoList;
 	}
 
