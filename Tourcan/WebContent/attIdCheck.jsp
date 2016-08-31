@@ -43,7 +43,7 @@
 						<div class="col-sm-9 form-group">
 							<label for="attId">編號Id</label> <input type="text"
 								class="form-control" id="att_id" name="attId"
-								placeholder="attId">
+								placeholder="attId" >
 						</div>
 					</div>
 				</div>
@@ -249,6 +249,7 @@
 			});
 			
 			$("#btnIdCheck").click(function() {
+
 				resetErrors();
 				var att_id = $("#att_id").val();
 // 				console.log(att_id);
@@ -270,14 +271,20 @@
 								});
 							}
 							
+							if(attName=="att_id"){
+								console.log(attName);
+					 			$("#att_id").prop("readonly", true);
+							}
+							
 							if(attName=="attId"){
-								
+								console.log(attName);
 							    if(attValue=="編號只能為整數" || attValue=="無此編號"){
 								    alert("查無編號!");
 								    var msg = '<label class="error" for="attId">'+attValue+'</label>';
-									$('input[name="attId"]').addClass('inputTxtError').after(msg);}
-					        }
-							
+									$('input[name="attId"]').addClass('inputTxtError').after(msg);
+								}
+					        
+							}
 					});
 			   });
 		    });
@@ -286,11 +293,13 @@
 			$("#btnReset").click(function() {
 				document.idCheckAtt.reset();
 				resetErrors();
+				$("#att_id").prop("readonly", false);
 			});
 				
 				
 			$("#btnUpdate").click(function() {
 				resetErrors();
+				
 				var attId = $("#att_id").val();
 				
 				var form = $(document.attUpdate).serializeArray();
@@ -298,6 +307,7 @@
 				json = {};
 				json["attId"]=+attId;
 				for (var i = 0; i < form.length; i++){
+					$("#att_id").prop("readonly", true);
 					json[form[i].name] = form[i].value;
 				
 				if(form[i].name=="regionId"){
@@ -346,6 +356,7 @@
 	 					if(attValue=="修改成功"){
 	 				document.idCheckAtt.reset();
 	 				document.attUpdate.reset();
+	 				$("#att_id").prop("readonly", false);
 	 					}
 	 				});
 			    })
