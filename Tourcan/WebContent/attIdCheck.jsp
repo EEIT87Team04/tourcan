@@ -259,16 +259,13 @@
 					    	$("#"+attName).val(attValue);
 					    	
 							if(attName=="att_eat"){
-							
-								$("#att_eat option[value="+ attValue +"]").prop("selected",null);
 								$("#att_eat option[value="+ attValue +"]").prop("selected",true);
 				            }
 							
 							if(attName=="regionVO"){
 								$.each(data.regionVO, function(regionVOName, regionVOValue) {
 								    if(regionVOName=="region_id"){
-								$("#region_id option[value="+ regionVOValue +"]").prop("selected",null);
-								$("#region_id option[value="+ regionVOValue +"]").prop("selected",true);
+								    $("#region_id option[value="+ regionVOValue +"]").prop("selected",true);
 								    }
 								});
 							}
