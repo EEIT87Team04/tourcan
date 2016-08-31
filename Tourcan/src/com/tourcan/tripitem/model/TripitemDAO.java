@@ -2,45 +2,84 @@ package com.tourcan.tripitem.model;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import hibernate.util.HibernateUtil;
+
 
 public class TripitemDAO implements TripitemDAO_interface {
 
 	@Override
 	public void insert(TripitemVO tripitemVO) {
-		// TODO Auto-generated method stub
-		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(tripitemVO);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
 	}
 
 	@Override
 	public void update(TripitemVO tripitemVO) {
-		// TODO Auto-generated method stub
-		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(tripitemVO);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
 	}
 
 	@Override
-	public void delete(Integer tripitem_id) {
-		// TODO Auto-generated method stub
-		
+	public void delete(Integer tripitem_serial) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			TripitemVO tripitemVO=new TripitemVO();
+			tripitemVO.setTripitem_serial(tripitem_serial);
+			session.delete(tripitemVO);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
 	}
 
 	@Override
-	public TripitemVO findById(Integer tripitem_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public TripitemVO findById(Integer tripitem_serial) {
+		TripitemVO tripitemVO=null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			tripitemVO=(TripitemVO) session.get(TripitemVO.class, tripitem_serial);
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return tripitemVO;
 	}
 
-	@Override
-	public List<TripitemVO> findByName(String tripitem_name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<TripitemVO> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-
+			List<TripitemVO> list=null;
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			try {
+				session.beginTransaction();
+				Query query=session.createQuery("From TripitemVO order by tripitem_serial");
+				list=query.list();
+				session.getTransaction().commit();
+			} catch (RuntimeException ex) {
+				session.getTransaction().rollback();
+				throw ex;
+			}
+			return list;
+		}
 }

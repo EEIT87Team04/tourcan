@@ -1,7 +1,84 @@
 package com.tourcan.tripitem.model;
 
+import java.sql.Date;
+
+import com.google.gson.annotations.Expose;
+
 public class TripitemVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	@Expose
+	private Integer tripitem_serial;
+	@Expose
+	private String tripitem_traffic;
+	@Expose
+	private String tripitem_memo;
+	@Expose
+	private Integer tripitem_staytime;
+	@Expose
+	private Date tripitem_begin;
+	@Expose
+	private Date tripitem_end;
+	@Expose
+	private Integer trip_id;
+	@Expose
+	private Integer att_id;
+	@Expose
+	private Integer hotel_id;
+	
+	public Integer getTripitem_serial() {
+		return tripitem_serial;
+	}
+	public void setTripitem_serial(Integer tripitem_serial) {
+		this.tripitem_serial = tripitem_serial;
+	}
+	public String getTripitem_traffic() {
+		return tripitem_traffic;
+	}
+	public void setTripitem_traffic(String tripitem_traffic) {
+		this.tripitem_traffic = tripitem_traffic;
+	}
+	public String getTripitem_memo() {
+		return tripitem_memo;
+	}
+	public void setTripitem_memo(String tripitem_memo) {
+		this.tripitem_memo = tripitem_memo;
+	}
+	public Integer getTripitem_staytime() {
+		return tripitem_staytime;
+	}
+	public void setTripitem_staytime(Integer tripitem_staytime) {
+		this.tripitem_staytime = tripitem_staytime;
+	}
+	public Date getTripitem_begin() {
+		return tripitem_begin;
+	}
+	public void setTripitem_begin(Date tripitem_begin) {
+		this.tripitem_begin = tripitem_begin;
+	}
+	public Date getTripitem_end() {
+		return tripitem_end;
+	}
+	public void setTripitem_end(Date tripitem_end) {
+		this.tripitem_end = tripitem_end;
+	}
+	public Integer getTrip_id() {
+		return trip_id;
+	}
+	public void setTrip_id(Integer trip_id) {
+		this.trip_id = trip_id;
+	}
+	public Integer getAtt_id() {
+		return att_id;
+	}
+	public void setAtt_id(Integer att_id) {
+		this.att_id = att_id;
+	}
+	public Integer getHotel_id() {
+		return hotel_id;
+	}
+	public void setHotel_id(Integer hotel_id) {
+		this.hotel_id = hotel_id;
+	}
 }

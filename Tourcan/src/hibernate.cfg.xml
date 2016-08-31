@@ -27,6 +27,8 @@
 		<!--Java物件與資料庫表格的映射檔 -->
 		<mapping resource="com/tourcan/att/model/att.hbm.xml" />
 		<mapping resource="com/tourcan/region/model/region.hbm.xml" />
+		<mapping resource="com/tourcan/trip/model/trip.hbm.xml" />
+		<mapping resource="com/tourcan/tripitem/model/tripitem.hbm.xml" />
 
 	</session-factory>
 	
