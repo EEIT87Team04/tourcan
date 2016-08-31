@@ -67,22 +67,25 @@ public class AttServlet extends HttpServlet {
 				// ***************************3.查詢完成,準備轉交(Send the Success
 				// view)*************//*
 				// JSONArray list = new JSONArray();
-				request.setAttribute("attVO", attVO); // 資料庫取出的attVO物件,存入req
-				jsob.addProperty("id", attVO.getAtt_id());
-				jsob.addProperty("name", attVO.getAtt_name());
-				jsob.addProperty("addr", attVO.getAtt_addr());
-				jsob.addProperty("intro", attVO.getAtt_intro());
-				jsob.addProperty("open", attVO.getAtt_open());
-				jsob.addProperty("phone", attVO.getAtt_phone());
-				jsob.addProperty("url", attVO.getAtt_url());
-				jsob.addProperty("price", attVO.getAtt_price());
-				jsob.addProperty("staytime", attVO.getAtt_staytime());
-				jsob.addProperty("region_id", attVO.getRegionVO().getRegion_id());
-				jsob.addProperty("att_lat", attVO.getAtt_lat());
-				jsob.addProperty("att_lng", attVO.getAtt_lng());
-				System.out.println(jsob);
+//				request.setAttribute("attVO", attVO); // 資料庫取出的attVO物件,存入req
+//				jsob.addProperty("id", attVO.getAtt_id());
+//				jsob.addProperty("name", attVO.getAtt_name());
+//				jsob.addProperty("addr", attVO.getAtt_addr());
+//				jsob.addProperty("intro", attVO.getAtt_intro());
+//				jsob.addProperty("open", attVO.getAtt_open());
+//				jsob.addProperty("phone", attVO.getAtt_phone());
+//				jsob.addProperty("url", attVO.getAtt_url());
+//				jsob.addProperty("price", attVO.getAtt_price());
+//				jsob.addProperty("staytime", attVO.getAtt_staytime());
+//				jsob.addProperty("region_id", attVO.getRegionVO().getRegion_id());
+//				jsob.addProperty("att_lat", attVO.getAtt_lat());
+//				jsob.addProperty("att_lng", attVO.getAtt_lng());
+//				System.out.println(jsob);
 
-				response.getWriter().println(jsob.toString());
+				
+				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+				String jsonG = gson.toJson(attVO);
+				response.getWriter().println(jsonG.toString());
 				;
 
 				// out.println(jsob);

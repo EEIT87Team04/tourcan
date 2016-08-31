@@ -18,18 +18,18 @@
 	<hr>
 	<hr>
 	<div>
-		<label for="attid">ThemeID</label> <input type="text"
-			class="form-control" id="ThemeID" name="attno" placeholder="id">
+		<label for="themeID">ThemeID</label> <input type="text"
+			class="form-control" id="themeID" name="themeID" placeholder="id">
 		<button type="button" id="search1">search</button>
 	</div>
 	<div>
-		<label for="attname">ThemeTopice</label> <input type="text"
-			class="form-control" id="attname" name="attname"
-			placeholder="attname">
+		<label for="themeTopice">ThemeTopice</label> <input type="text"
+			class="form-control" id="themeTopice" name="themeTopice"
+			placeholder="themeTopice">
 		<button type="button" id="search2">search</button>
 	</div>
 	<div>
-		<label for="attid">LIST ALL Theme</label>
+		<label for="themeID">LIST ALL Theme</label>
 		<button type="button" id="search3">search all</button>
 	</div>
 
