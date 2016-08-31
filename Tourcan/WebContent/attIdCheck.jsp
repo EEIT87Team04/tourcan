@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>景點資料新增</title>
+<title>景點資料修改</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 #mapPreview {
@@ -297,9 +297,16 @@
 				var nameValue = $(document.attUpdate).serialize();
 				json = {};
 				json["attId"]=+attId;
-				for (var i = 0; i < form.length; i++)
+				for (var i = 0; i < form.length; i++){
 					json[form[i].name] = form[i].value;
 				
+				if(form[i].name=="regionId"){
+					if(form[i].value=="0"){
+							var msg = '<label class="error" for="regionId">無效的地區代號。</label>';
+						    $('select[name="regionId"]').addClass('inputTxtError').after(msg);
+						 }
+				}
+				}
 				console.log(JSON.stringify(json));
 				
 				$.ajax({
@@ -311,6 +318,7 @@
 					"success":function(data){
 						$.each(data,function(attName,attValue){
 						
+							
 							if(attValue=="修改成功"){
 								alert("修改成功!");
 							}
@@ -320,13 +328,12 @@
 							}
 							
 							var msg = '<label class="error" for="'+attName+'">'+attValue+'</label>';
-							$('input[name="' + attName + '"], select[name="' + attValue + '"]').addClass('inputTxtError').after(msg);
+							$("input[name=" + attName + "], select[name=" + attName + "], textarea[name=" + attName + "]").addClass('inputTxtError').after(msg);
 						
 							
+							
 						});
-					    
 							console.log(JSON.stringify(json));
-
                         }
 					
 				})		
