@@ -38,7 +38,8 @@ public class AttServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//----------------INSERT----------------
+
+		// ----------------INSERT----------------
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
@@ -48,44 +49,28 @@ public class AttServlet extends HttpServlet {
 		while ((json = br.readLine()) != null)
 			sb.append(json);
 		json = sb.toString();
-		 System.out.println(json);
+		// System.out.println(json);
 
 		JSONObject err = new JSONObject(); // checking result
-		
-		String attName = null;
 		Integer regionId = null;
-		RegionVO regionVO = null;
-		String attAddr = null;
-		Boolean attEat = null;
-		String attIntro = null;
-		String appOpen = null;
-		String attPhone = null;
-		Double attPrice = null;
-		Integer attStaytime = null;
-		String attUrl = null;
-		Double attLat = null;
-		Double attLng = null;
-		
-		
+
 		try {
 			JSONObject obj = new JSONObject(json); // received and parsed JSON
 
-			
-			
 			try {
-				attName = obj.getString("att_name");
+				String attName = obj.getString("att_name");
 				if (attName == null || attName.trim().isEmpty() || attName.trim().length() >= 50) {
 					throw new Exception();
 				}
 
 			} catch (Exception e) {
 				err.append("att_name", "無效的景點名稱。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
 				regionId = obj.getInt("region_id");
-//				obj.remove("region_id");
+				// obj.remove("region_id");
 				if (regionId == null || regionId < 0) {
 					throw new Exception();
 				}
@@ -96,129 +81,125 @@ public class AttServlet extends HttpServlet {
 			}
 
 			try {
-				attAddr = obj.getString("att_addr");
+				String attAddr = obj.getString("att_addr");
 				if (attAddr == null || attAddr.trim().isEmpty()) {
 					throw new Exception();
 				}
-			
+
 			} catch (Exception e) {
 				err.append("att_addr", "無效的景點地址。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
-				attEat = obj.getBoolean("att_eat");
-				
+				Boolean attEat = obj.getBoolean("att_eat");
+
 			} catch (Exception e) {
 				err.append("att_eat", "無效的吃貨屬性。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
-				attIntro = obj.getString("att_intro");
+				String attIntro = obj.getString("att_intro");
 				if (attIntro == null || attIntro.trim().isEmpty()) {
 					throw new Exception();
 				}
-				
+
 			} catch (Exception e) {
 				err.append("att_intro", "無效的景點介紹。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
-				appOpen = obj.getString("att_open");
+				String appOpen = obj.getString("att_open");
 				if (appOpen == null || appOpen.trim().isEmpty()) {
 					throw new Exception();
 				}
-				
+
 			} catch (Exception e) {
 				err.append("att_open", "無效的開放資訊。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
-				attPhone = obj.getString("att_phone");
-				if (attPhone == null || attPhone.trim().isEmpty() || attPhone.trim().length() >= 50) {
+				String attPhone = obj.getString("att_phone");
+				if (attPhone == null || attPhone.trim().isEmpty() || attPhone.trim().length() >= 50
+						|| attPhone.matches("^[0-9]{7,}$")) {
 					throw new Exception();
 				}
-				
+
 			} catch (Exception e) {
 				err.append("att_phone", "無效的聯絡電話。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
-				attPrice = obj.getDouble("att_price");
+				Double attPrice = obj.getDouble("att_price");
 				if (attPrice == null || attPrice < 0) {
 					throw new Exception();
 				}
-				
+
 			} catch (Exception e) {
 				err.append("att_price", "無效的基本消費。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
-				attStaytime = obj.getInt("att_staytime");
+				Integer attStaytime = obj.getInt("att_staytime");
 				if (attStaytime == null || attStaytime < -1) {
 					throw new Exception();
 				}
-				
+
 			} catch (Exception e) {
 				err.append("att_staytime", "無效的滯留時間。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
-				attUrl = obj.getString("att_url");
+				String attUrl = obj.getString("att_url");
 				if (attUrl == null || attUrl.trim().isEmpty()) {
 					throw new Exception();
 				}
-				
+
 			} catch (Exception e) {
 				err.append("att_url", "無效的景點網址。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
-				attLat = obj.getDouble("att_lat");
+				Double attLat = obj.getDouble("att_lat");
 				if (attLat == null || attLat < -90 || attLat > 90) {
 					throw new Exception();
 				}
-				
+
 			} catch (Exception e) {
 				err.append("att_lat", "無效的緯度。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			try {
-				attLng = obj.getDouble("att_lng");
+				Double attLng = obj.getDouble("att_lng");
 				if (attLng == null || attLng < -180 || attLng > 180) {
 					throw new Exception();
 				}
-				
+
 			} catch (Exception e) {
 				err.append("att_lng", "無效的經度。");
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 
 			if (err.length() > 0) {
 				throw new Exception();
 			} else {
-				
+
 				AttService srv = new AttService();
 				RegionDAO rdao = new RegionHibernateDAO();
-				regionVO = rdao.findById(regionId);
-				
+				RegionVO regionVO = rdao.findById(regionId);
 				String regJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(regionVO);
-				
 				JSONObject regobj = new JSONObject(regJson);
-				
 				obj.put("regionVO", regobj);
-				System.out.println(obj.toString());
-				
-				AttVO attVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(obj.toString(), AttVO.class);
-				System.out.println(attVO.getRegionVO());
+				AttVO attVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(obj.toString(),
+						AttVO.class);
 				srv.insert(attVO);
 				err.append("result", "新增成功");
 				response.getWriter().println(err.toString());
@@ -226,9 +207,9 @@ public class AttServlet extends HttpServlet {
 		} catch (Exception e) {
 			err.append("result", "新增失敗。");
 			response.getWriter().println(err.toString());
-//			e.printStackTrace();
+			// e.printStackTrace();
 		}
-		
+
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)

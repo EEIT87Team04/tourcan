@@ -13,7 +13,7 @@ public class AttService {
 		regionVO.setRegion_id(regionId);
 
 		attVO.setAtt_name(attName);
-		attVO.setRegionVO(regionVO);;
+		attVO.setRegionVO(regionVO);
 		attVO.setAtt_addr(attAddr);
 		attVO.setAtt_eat(attEat);
 		attVO.setAtt_intro(attIntro);
@@ -24,19 +24,15 @@ public class AttService {
 		attVO.setAtt_url(attUrl);
 		attVO.setAtt_lat(attLat);
 		attVO.setAtt_lng(attLng);
-		
+
 		dao.insert(attVO);
-		
 		return attVO;
 	}
 
 	public AttVO insert(AttVO attVO) {
 		AttDAO dao = new AttDAO();
-		
 		dao.insert(attVO);
-		
 		return attVO;
 	}
-
 
 }

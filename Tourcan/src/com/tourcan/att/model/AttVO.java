@@ -7,14 +7,12 @@ public class AttVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	// private Integer att_area;
 	@Expose
 	private String att_name;
 	@Expose
 	private Integer att_id;
 	@Expose
 	private Integer att_staytime;
-//	private Integer region_id;
 	@Expose
 	private RegionVO regionVO;
 	@Expose
@@ -45,18 +43,8 @@ public class AttVO implements java.io.Serializable {
 	}
 
 	public void setRegionVO(RegionVO regionVO) {
-//		System.out.println(regionVO);
 		this.regionVO = regionVO;
 	}
-
-
-	// public Integer getAtt_area() {
-	// return att_area;
-	// }
-	//
-	// public void setAtt_area(Integer att_area) {
-	// this.att_area = att_area;
-	// }
 
 	public String getAtt_name() {
 		return att_name;
@@ -81,14 +69,6 @@ public class AttVO implements java.io.Serializable {
 	public void setAtt_staytime(Integer att_staytime) {
 		this.att_staytime = att_staytime;
 	}
-
-//	public Integer getRegion_id() {
-//		return region_id;
-//	}
-//
-//	public void setRegion_id(Integer region_id) {
-//		this.region_id = region_id;
-//	}
 
 	public String getAtt_addr() {
 		return att_addr;
