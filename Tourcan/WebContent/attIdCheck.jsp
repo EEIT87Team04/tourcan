@@ -251,24 +251,17 @@
 			$("#btnIdCheck").click(function() {
 				resetErrors();
 				var att_id = $("#att_id").val();
-				console.log(att_id);
+// 				console.log(att_id);
 				$.getJSON(("AttServlet"), {"att_id" : att_id}, function(data) {
-					console.log(data);
+// 					console.log(data);
 					$.each(data, function(attName, attValue) {
 // 						console.log("att_id:"+att_id);
-						console.log(attName);
-						console.log(attValue);
 					    	$("#"+attName).val(attValue);
 					    	
-							if(attName=="att_eat")
-							{
-								if(attValue==false){
-									$("#att_eat option:nth-child(2)").prop("selected",null);
-									$("#att_eat option:nth-child(1)").prop("selected",true);}
-									
-								if(attValue==true){
-									$("#att_eat option:nth-child(1)").prop("selected",null);
-									$("#att_eat option:nth-child(2)").prop("selected",true);}
+							if(attName=="att_eat"){
+							
+								$("#att_eat option[value="+ attValue +"]").prop("selected",null);
+								$("#att_eat option[value="+ attValue +"]").prop("selected",true);
 				            }
 							
 							if(attName=="regionVO"){
