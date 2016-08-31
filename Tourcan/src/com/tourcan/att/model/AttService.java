@@ -30,14 +30,24 @@ public class AttService {
 		attVO.setAtt_lat(attLat);
 		attVO.setAtt_lng(attLng);
 
-		dao.insert(attVO);
-		return attVO;
+		try {
+			dao.insert(attVO);
+			return attVO;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public AttVO insert(AttVO attVO) {
 		AttDAO dao = new AttDAO();
-		dao.insert(attVO);
-		return attVO;
+		try {
+			dao.insert(attVO);
+			return attVO;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }
