@@ -8,6 +8,6 @@ public interface Resp_interface  {
 	public void insert(RespVO respVO);
 	public void update(RespVO respVO);
 	public void delete(RespVO respVO);
-	public RespVO findById(Integer theme_id);
-	public List<RespVO> findByTopic(String theme_topic);
+	public RespVO findById(Integer resp_id);
+	public List<RespVO> findByTopic(String resp_topic);
 }

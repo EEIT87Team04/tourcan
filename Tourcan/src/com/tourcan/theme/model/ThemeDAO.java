@@ -1,4 +1,4 @@
-package com.tourcan.resp.model;
+package com.tourcan.theme.model;
 
 import java.util.List;
 
@@ -7,14 +7,14 @@ import org.hibernate.Session;
 
 import hibernate.util.HibernateUtil;
 
-public class RespDAO implements Resp_interface {
+public class ThemeDAO implements Theme_interface {
 
 	@Override
-	public void insert(RespVO respVO) {
+	public void insert(ThemeVO themeVO) {
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 		sion.beginTransaction();
-		sion.saveOrUpdate(respVO);
+		sion.saveOrUpdate(themeVO);
 		sion.getTransaction().commit();;
 		}catch (RuntimeException e) {
 			sion.getTransaction().rollback();
@@ -23,11 +23,11 @@ public class RespDAO implements Resp_interface {
 	}
 
 	@Override
-	public void update(RespVO respVO) {
+	public void update(ThemeVO themeVO) {
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
-			sion.saveOrUpdate(respVO);
+			sion.saveOrUpdate(themeVO);
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
 				sion.getTransaction().rollback();
@@ -37,11 +37,11 @@ public class RespDAO implements Resp_interface {
 	}
 
 	@Override
-	public void delete(RespVO respVO) {
+	public void delete(ThemeVO themeVO) {
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
-			sion.delete(respVO);
+			sion.delete(themeVO);
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
 				sion.getTransaction().rollback();
@@ -51,12 +51,12 @@ public class RespDAO implements Resp_interface {
 	}
 
 	@Override
-	public RespVO findById(Integer resp_id) {
-		RespVO themeVO =null;
+	public ThemeVO findById(Integer theme_id) {
+		ThemeVO themeVO =null;
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
-			themeVO = (RespVO) sion.get(RespVO.class,resp_id );
+			themeVO = (ThemeVO) sion.get(ThemeVO.class,theme_id );
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
 				sion.getTransaction().rollback();
@@ -66,15 +66,15 @@ public class RespDAO implements Resp_interface {
 	}
 
 	@Override
-	public List<RespVO> findByTopic(String resp_topic) {
-		List<RespVO> topic = null;
+	public List<ThemeVO> findByTopic(String theme_topic) {
+		List<ThemeVO> topic = null;
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
-		String topic2 ="%" +resp_topic+ "%";
+		String topic2 ="%" +theme_topic+ "%";
 		try{
 			sion.beginTransaction();
-			String QueryTopic ="FROM AttVO WHERE resp_topic like :resp_topic";
+			String QueryTopic ="FROM AttVO WHERE theme_topic like :theme_topic";
 			Query query =sion.createQuery(QueryTopic);
-			query.setParameter("resp_topic",topic2);
+			query.setParameter("theme_topic",topic2);
 			topic=query.list();
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
