@@ -1,5 +1,8 @@
 package com.tourcan.hotel.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="hotel")
 public class HotelVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
