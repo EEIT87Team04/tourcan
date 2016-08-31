@@ -317,7 +317,7 @@
 						 }
 				}
 				}
-				console.log(JSON.stringify(json));
+// 				console.log(JSON.stringify(json));
 				
 				$.ajax({
 					"type":"PUT",
