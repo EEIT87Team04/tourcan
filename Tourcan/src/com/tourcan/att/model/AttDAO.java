@@ -76,7 +76,7 @@ public class AttDAO implements AttDAO_interface {
 			session.saveOrUpdate(attVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 			session.getTransaction().rollback();
 			throw e;
 		}

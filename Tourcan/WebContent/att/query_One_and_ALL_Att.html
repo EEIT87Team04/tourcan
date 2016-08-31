@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,7 +81,7 @@ text-decoration: underline;
 				$("#errid").remove();
 				$("#search1").after(errSpan);
 			}else{
-		$.get(("TestAttServlet"),{"attno":attno2},function(data){
+		$.get(("AttServlet"),{"attno":attno2},function(data){
 			$("#errid").remove();
 			var myBody = $('#tb1>tbody');
 			$.each(data,function(idx,att1){
@@ -115,7 +113,7 @@ text-decoration: underline;
 					$("#errname").remove();
 					$("#search2").after(errSpan);
 					}else{
-			$.getJSON(("TestAttServlet"),{"attname":attname},function(data){
+			$.getJSON(("AttServlet"),{"attname":attname},function(data){
 				$("#errname").remove();
 					var myBody = $('#tb1>tbody');
 					console.log(data)
@@ -149,7 +147,7 @@ text-decoration: underline;
 	
 	$("#search3").click(function() {
 				$('#tb1>tbody').empty();
-		$.getJSON(("TestAttServlet"),function(data){
+		$.getJSON(("AttServlet"),function(data){
 			var myBody = $('#tb1>tbody');
 			$.each(data,function(idx,att2){
 				var cell1 = $("<td></td>").text(att2.att_id);
