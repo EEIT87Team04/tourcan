@@ -48,13 +48,13 @@
 						</div>
 						<div class="col-sm-4 form-group">
 							<label for="attLat">緯度</label> <input type="number"
-								class="form-control" id="att_lat" name="att_lat" placeholder="緯度"
-								readonly>
+								class="form-control" id="att_lat" name="att_lat"
+								placeholder="緯度" readonly>
 						</div>
 						<div class="col-sm-4 form-group">
 							<label for="attLng">經度</label> <input type="number"
-								class="form-control" id="att_lng" name="att_lng" placeholder="經度"
-								readonly>
+								class="form-control" id="att_lng" name="att_lng"
+								placeholder="經度" readonly>
 						</div>
 						<div class="col-sm-12 form-group">
 							<label for="attAddr">街道地址</label> <input type="text"
@@ -99,7 +99,8 @@
 					<div class="row">
 						<div class="col-sm-12 form-group">
 							<label for="電話">網址</label> <input type="text"
-								class="form-control" id="att_url" name="att_url" placeholder="網址">
+								class="form-control" id="att_url" name="att_url"
+								placeholder="網址">
 						</div>
 					</div>
 
@@ -123,8 +124,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3" id="result">
-				</div>
+				<div class="col-sm-6 col-sm-offset-3" id="result"></div>
 			</div>
 		</form>
 	</div>
@@ -134,12 +134,9 @@
 	<script src="js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
-		var coder,
-			map,
-			marker,
-			checkTrigger,
-			lastValue = "";
-	
+		var coder, map, marker, checkTrigger, lastValue = "";
+		var regionList;
+
 		function initMap() {
 			var initPos = new google.maps.LatLng(25.042485, 121.543543);
 			coder = new google.maps.Geocoder();
@@ -154,11 +151,15 @@
 				draggable : true
 			});
 			marker.addListener("position_changed", function() {
-				document.getElementById("att_lat").value = marker.getPosition().lat();
-				document.getElementById("att_lng").value = marker.getPosition().lng();
+				document.getElementById("att_lat").value = marker.getPosition()
+						.lat();
+				document.getElementById("att_lng").value = marker.getPosition()
+						.lng();
 			});
-			document.getElementById("att_name").addEventListener("input", queryMap);
-			document.getElementById("att_addr").addEventListener("input", queryMap);
+			document.getElementById("att_name").addEventListener("input",
+					queryMap);
+			document.getElementById("att_addr").addEventListener("input",
+					queryMap);
 		}
 		function queryMap() {
 			if (lastValue != this.value) {
@@ -176,44 +177,51 @@
 				}, 300);
 			}
 		}
-	
+
 		$(function() {
-			$.get("RegionServlet").done(function(list) {
-				var frag = document.createDocumentFragment();
-				for (var i = 1; i < list.length; i++)
-					frag.appendChild(new Option(list[i].region_name, list[i].region_id));
-				$("#region_id").append(frag);
-			}).fail(function(xhr) {
+			$.get("RegionServlet").done(
+					function(list) {
+						regionList = list;
+						var frag = document.createDocumentFragment();
+						for (var i = 1; i < list.length; i++)
+							frag.appendChild(new Option(list[i].region_name,
+									list[i].region_id));
+						$("#region_id").append(frag);
+					}).fail(function(xhr) {
 				console.log("Get region list unsuccessful.");
 			});
-	
+
 			$('#att_price').change(function() {
 				if ($(this).val() % 1 != 0) {
 					console.log('attPrice is not a integer.');
 				}
 			});
-	
+
 			$("#btnSave").click(function() {
-				$('form[name="addAtt"] span').remove();
-				var form = $(document.addAtt).serializeArray(),
-					json = {};
-				for (var i = 0; i < form.length; i++)
-					json[form[i].name] = form[i].value;
-	
+				var errMsgSpan = $('form[name="addAtt"] span');
+				errMsgSpan.remove();
+				var form = $(document.addAtt).serializeArray(), json = {};
+				for (var i = 0; i < form.length; i++) {
+					if (form[i].value.length > 0) {
+						json[form[i].name] = form[i].value;
+					}
+				}
+				json["regionVO"] = regionList[json.region_id];
+
 				$.post("AttServlet", JSON.stringify(json)).done(function(data) {
-					$.each(data,function(errAtt,errMsg){
-						if(errMsg=="新增成功"){
+					$.each(data, function(errAtt, errMsg) {
+						if (errMsg == "新增成功") {
 							document.addAtt.reset();
-							$('form[name="addAtt"] span').remove();
+							errMsgSpan.remove();
 						}
 						var errSpan = document.createElement("span");
 						var errText = document.createTextNode(errMsg);
 						var errId = 'err' + errAtt;
 						errSpan.appendChild(errText);
-						errSpan.setAttribute("style","color:red");
-						errSpan.setAttribute("id",errId);
-						$('#'+errId).remove();
-						$('#'+errAtt).after(errSpan);
+						errSpan.setAttribute("style", "color:red");
+						errSpan.setAttribute("id", errId);
+						$('#' + errId).remove();
+						$('#' + errAtt).after(errSpan);
 					});
 					console.log("200.");
 				}).fail(function(xhr) {
@@ -222,7 +230,7 @@
 			});
 			$("#btnReset").click(function() {
 				document.addAtt.reset();
-				$('form[name="addAtt"] span').remove();
+				errMsgSpan.remove();
 			});
 		});
 	</script>

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.tourcan.att.model.AttDAO;
 import com.tourcan.att.model.AttService;
@@ -44,169 +45,86 @@ public class AttServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		BufferedReader br = request.getReader();
-		StringBuffer sb = new StringBuffer(128);
-		String json;
-		while ((json = br.readLine()) != null)
-			sb.append(json);
-		json = sb.toString();
+		// StringBuffer sb = new StringBuffer(128);
+		// String json;
+		// while ((json = br.readLine()) != null)
+		// sb.append(json);
+		// json = sb.toString();
 		// System.out.println(json);
 
-		JSONObject err = new JSONObject(); // checking result
-		Integer regionId = null;
-
+		JSONObject checkResult = new JSONObject(); // checking result
+		AttVO attVO = null;
 		try {
-			JSONObject obj = new JSONObject(json); // received and parsed JSON
+			// JSONObject obj = new JSONObject(json); // received and parsed
+			// JSON
+			attVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(br, AttVO.class);
 
-			try {
-				String attName = obj.getString("att_name");
-				if (attName == null || attName.trim().isEmpty() || attName.trim().length() >= 50) {
-					throw new Exception();
-				}
+			String attName = attVO.getAtt_name();
+			if (attName == null || attName.trim().isEmpty() || attName.trim().length() >= 50)
+				checkResult.append("att_name", "請輸入景點名稱。");
 
-			} catch (Exception e) {
-				err.append("att_name", "無效的景點名稱。");
-				// e.printStackTrace();
+			RegionVO regionVO = attVO.getRegionVO();
+			if (regionVO == null)
+				checkResult.append("region_id", "請選擇地區代號。");
+
+			String attAddr = attVO.getAtt_addr();
+			if (attAddr == null || attAddr.trim().isEmpty())
+				checkResult.append("att_addr", "請輸入景點地址。");
+
+			Boolean attEat = attVO.getAtt_eat();
+			if (attEat == null)
+				checkResult.append("att_eat", "無效的吃貨屬性。");
+
+			String attIntro = attVO.getAtt_intro();
+			if (attIntro == null || attIntro.trim().isEmpty())
+				checkResult.append("att_intro", "請輸入景點介紹。");
+
+			String appOpen = attVO.getAtt_open();
+			if (appOpen == null || appOpen.trim().isEmpty())
+				checkResult.append("att_open", "請輸入開放時間。");
+
+			Double attPrice = attVO.getAtt_price();
+			if (attPrice == null || attPrice < 0)
+				checkResult.append("att_price", "請輸入最低消費金額。");
+
+			Integer attStaytime = attVO.getAtt_staytime();
+			if (attStaytime == null || attStaytime < -1)
+				checkResult.append("att_staytime", "請輸入滯留時間。");
+
+			String attUrl = attVO.getAtt_url();
+			if (attUrl == null || attUrl.trim().isEmpty())
+				checkResult.append("att_url", "無效的景點網址。");
+
+			Double attLat = attVO.getAtt_lat();
+			if (attLat == null || attLat < -90 || attLat > 90)
+				checkResult.append("att_lat", "移動座標以設定經緯度。");
+
+			Double attLng = attVO.getAtt_lng();
+			if (attLng == null || attLng < -180 || attLng > 180)
+				checkResult.append("att_lng", "移動座標以設定經緯度。");
+
+			String attPhone = attVO.getAtt_phone();
+			if (attPhone == null || attPhone.trim().isEmpty() || attPhone.trim().length() >= 50) {
+				String errMsg = "請勿空白。";
+				checkResult.append("att_phone", errMsg);
+			}
+			if (!attPhone.matches("[0-9]{7,}")) {
+				String errMsg = "請確認您的電話格式。";
+				checkResult.append("att_phone", errMsg);
 			}
 
-			try {
-				regionId = obj.getInt("region_id");
-				// obj.remove("region_id");
-				if (regionId == null || regionId < 0) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("region_id", "無效的地區代號。");
-				e.printStackTrace();
-			}
-
-			try {
-				String attAddr = obj.getString("att_addr");
-				if (attAddr == null || attAddr.trim().isEmpty()) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("att_addr", "無效的景點地址。");
-				// e.printStackTrace();
-			}
-
-			try {
-				Boolean attEat = obj.getBoolean("att_eat");
-
-			} catch (Exception e) {
-				err.append("att_eat", "無效的吃貨屬性。");
-				// e.printStackTrace();
-			}
-
-			try {
-				String attIntro = obj.getString("att_intro");
-				if (attIntro == null || attIntro.trim().isEmpty()) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("att_intro", "無效的景點介紹。");
-				// e.printStackTrace();
-			}
-
-			try {
-				String appOpen = obj.getString("att_open");
-				if (appOpen == null || appOpen.trim().isEmpty()) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("att_open", "無效的開放資訊。");
-				// e.printStackTrace();
-			}
-
-			try {
-				String attPhone = obj.getString("att_phone");
-				if (attPhone == null || attPhone.trim().isEmpty() || attPhone.trim().length() >= 50
-						|| attPhone.matches("^[0-9]{7,}$")) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("att_phone", "無效的聯絡電話。");
-				// e.printStackTrace();
-			}
-
-			try {
-				Double attPrice = obj.getDouble("att_price");
-				if (attPrice == null || attPrice < 0) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("att_price", "無效的基本消費。");
-				// e.printStackTrace();
-			}
-
-			try {
-				Integer attStaytime = obj.getInt("att_staytime");
-				if (attStaytime == null || attStaytime < -1) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("att_staytime", "無效的滯留時間。");
-				// e.printStackTrace();
-			}
-
-			try {
-				String attUrl = obj.getString("att_url");
-				if (attUrl == null || attUrl.trim().isEmpty()) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("att_url", "無效的景點網址。");
-				// e.printStackTrace();
-			}
-
-			try {
-				Double attLat = obj.getDouble("att_lat");
-				if (attLat == null || attLat < -90 || attLat > 90) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("att_lat", "無效的緯度。");
-				// e.printStackTrace();
-			}
-
-			try {
-				Double attLng = obj.getDouble("att_lng");
-				if (attLng == null || attLng < -180 || attLng > 180) {
-					throw new Exception();
-				}
-
-			} catch (Exception e) {
-				err.append("att_lng", "無效的經度。");
-				// e.printStackTrace();
-			}
-
-			if (err.length() > 0) {
+			if (checkResult.length() > 0) {
 				throw new Exception();
 			} else {
-
 				AttService srv = new AttService();
-				RegionDAO rdao = new RegionHibernateDAO();
-				RegionVO regionVO = rdao.findById(regionId);
-				String regJson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(regionVO);
-				JSONObject regobj = new JSONObject(regJson);
-				obj.put("regionVO", regobj);
-				AttVO attVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(obj.toString(),
-						AttVO.class);
 				srv.insert(attVO);
-				err.append("result", "新增成功");
-				response.getWriter().println(err.toString());
+				checkResult.append("result", "新增成功");
+				response.getWriter().println(checkResult.toString());
 			}
+
 		} catch (Exception e) {
-			err.append("result", "新增失敗。");
-			response.getWriter().println(err.toString());
+			checkResult.append("result", "新增失敗。");
+			response.getWriter().println(checkResult.toString());
 			// e.printStackTrace();
 		}
 
