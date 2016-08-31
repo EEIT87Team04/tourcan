@@ -70,12 +70,12 @@ public class AttServlet extends HttpServlet {
 					String attVOGson = gson.toJson(attVO);
 					response.getWriter().println(attVOGson);
 				} catch (Exception e) {
-					err.append("attId", "無此編號。");
+					err.append("attId", "無此編號");
 					// e.printStackTrace();
 				}
 			}
-		}
 		
+		}
 		
 	}
 	
@@ -127,7 +127,7 @@ public class AttServlet extends HttpServlet {
 				}
 
 			} catch (Exception e) {
-				err.append("attId", "無效的景點名稱。");
+				err.append("attId", ""); // do not need error in update
 				// e.printStackTrace();
 			}
 			

@@ -231,9 +231,9 @@
 		$(function() {
 			$("#btnIdCheck").click(function() {
 				var att_id = $("#att_id").val();
-// 				console.log(att_id);
+				console.log(att_id);
 				$.getJSON(("AttServlet"), {"att_id" : att_id}, function(data) {
-// 					console.log(data);
+					console.log(data);
 					$.each(data, function(attName, attValue) {
 						
 					    	$("#"+attName).val(attValue);
@@ -247,6 +247,15 @@
 									$("#att_eat option:nth-child(1)").prop("selected",null);
 									$("#att_eat option:nth-child(2)").prop("selected",true);}
 				            }
+							
+// 							if(attName=="att_id"){
+// 							if(attValue=="編號只能為整數" || attValue=="無此編號"){
+// 								alert("查無編號!");
+// 								var msg = '<label class="error" for="'+attName+'">'+attValue+'</label>';
+// 								$('input[name="' + attName + '"], select[name="' + attValue + '"]').addClass('inputTxtError').after(msg);
+// 							}
+// 					        }
+							
 					});
 			   });
 		    });
@@ -254,11 +263,12 @@
 				
 			$("#btnReset").click(function() {
 				document.idCheckAtt.reset();
-				$('form[name="idCheckAtt"] span').remove();
+				resetErrors();
 			});
 				
 				
 			$("#btnUpdate").click(function() {
+				resetErrors();
 				var attId = $("#att_id").val();
 				
 				var form = $(document.attUpdate).serializeArray();
@@ -283,10 +293,16 @@
 								alert("修改成功!");
 							}
 							
+							if(attValue=="修改失敗"){
+								alert("修改失敗!");
+							}
+							
 							var msg = '<label class="error" for="'+attName+'">'+attValue+'</label>';
 							$('input[name="' + attName + '"], select[name="' + attValue + '"]').addClass('inputTxtError').after(msg);
+						
+							
 						});
-							alert("修改失敗!");
+// 							alert("修改失敗!");
 					    
 							console.log(JSON.stringify(json));
 
@@ -294,12 +310,16 @@
 					
 				})		
 			 
-				.done(function(datas)
+				.done(function(data)
 			    {
 	 				console.log("200.");
-	                document.idCheckAtt.reset();
-				    document.attUpdate.reset();
-					
+	 				
+	 				$.each(data,function(attName,attValue){
+	 					if(attValue=="修改成功"){
+	 				document.idCheckAtt.reset();
+	 				document.attUpdate.reset();
+	 					}
+	 				});
 			    })
 				.fail(function(xhr) 
 				{
