@@ -230,13 +230,17 @@
 		
 		$(function() {
 			$("#btnIdCheck").click(function() {
+				resetErrors();
 				var att_id = $("#att_id").val();
 				console.log(att_id);
 				$.getJSON(("AttServlet"), {"att_id" : att_id}, function(data) {
 					console.log(data);
 					$.each(data, function(attName, attValue) {
-						
+						console.log("att_id:"+att_id);
+						console.log(attName);
+						console.log(attValue);
 					    	$("#"+attName).val(attValue);
+					    	
 							if(attName=="att_eat")
 							{
 								if(attValue==false){
@@ -248,13 +252,13 @@
 									$("#att_eat option:nth-child(2)").prop("selected",true);}
 				            }
 							
-// 							if(attName=="att_id"){
-// 							if(attValue=="編號只能為整數" || attValue=="無此編號"){
-// 								alert("查無編號!");
-// 								var msg = '<label class="error" for="'+attName+'">'+attValue+'</label>';
-// 								$('input[name="' + attName + '"], select[name="' + attValue + '"]').addClass('inputTxtError').after(msg);
-// 							}
-// 					        }
+							if(attName=="attId"){
+								
+							    if(attValue=="編號只能為整數" || attValue=="無此編號"){
+								    alert("查無編號!");
+								    var msg = '<label class="error" for="attId">'+attValue+'</label>';
+									$('input[name="attId"]').addClass('inputTxtError').after(msg);}
+					        }
 							
 					});
 			   });
@@ -302,7 +306,6 @@
 						
 							
 						});
-// 							alert("修改失敗!");
 					    
 							console.log(JSON.stringify(json));
 

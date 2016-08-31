@@ -41,44 +41,43 @@ public class AttServlet extends HttpServlet {
 		while ((json = br.readLine()) != null)
 			sb.append(json);
 		json = sb.toString();
-		
-		
+
 		JSONObject err = new JSONObject();
 
 		// Query by att_id
-		String paramId = null;
+		Integer attId = null;
 		try {
-			paramId = request.getParameter("att_id");
+			attId = new Integer(request.getParameter("att_id"));
 		} catch (Exception e) {
+			err.append("attId", "編號只能為整數");
+			response.getWriter().println(err.toString());
 			// e.printStackTrace();
 		}
-		Integer attId = null;
-		if (paramId != null) {
-			try {
-				attId = new Integer(paramId);
-			} catch (Exception e) {
-				err.append("attId", "編號只能為整數");
-				// e.printStackTrace();
-			}
 
+		if (attId != null) {
 			AttService asv = new AttService();
 			AttVO attVO = asv.getOneMem(attId);
 
 			if (attVO != null) {
 				try {
-					Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create(); 
+					Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 					String attVOGson = gson.toJson(attVO);
 					response.getWriter().println(attVOGson);
 				} catch (Exception e) {
 					err.append("attId", "無此編號");
+					response.getWriter().println(err.toString());
 					// e.printStackTrace();
 				}
+			} else {
+				err.append("attId", "無此編號");
+				response.getWriter().println(err.toString());
 			}
-		
+
+		} else {
+			err.append("attId", "無此編號");
 		}
-		
+
 	}
-	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -97,10 +96,9 @@ public class AttServlet extends HttpServlet {
 			sb.append(json);
 		json = sb.toString();
 
-		
-		JSONObject err = new JSONObject(); 
+		JSONObject err = new JSONObject();
 
-		Integer attId=null;
+		Integer attId = null;
 		String attName = null;
 		Integer regionId = null;
 		String attAddr = null;
@@ -114,9 +112,8 @@ public class AttServlet extends HttpServlet {
 		Double attLat = null;
 		Double attLng = null;
 
-		
 		// update
-		
+
 		try {
 			JSONObject obj = new JSONObject(json); // received and parsed JSON
 
@@ -130,7 +127,7 @@ public class AttServlet extends HttpServlet {
 				err.append("attId", ""); // do not need error in update
 				// e.printStackTrace();
 			}
-			
+
 			try {
 				attName = obj.getString("attName");
 				if (attName == null || attName.trim().isEmpty() || attName.trim().length() >= 50) {
@@ -265,7 +262,7 @@ public class AttServlet extends HttpServlet {
 			} else {
 
 				AttService srv = new AttService();
-				
+
 				srv.update(attName, regionId, attAddr, attEat, attIntro, appOpen, attPhone, attPrice, attStaytime,
 						attUrl, attLat, attLng, attId);
 				err.append("result", "修改成功");
