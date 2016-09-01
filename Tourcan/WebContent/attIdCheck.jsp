@@ -250,6 +250,7 @@
 			
 			$("#btnIdCheck").click(function() {
 
+				
 				resetErrors();
 				var att_id = $("#att_id").val();
 // 				console.log(att_id);
@@ -264,7 +265,10 @@
 				            }
 							
 							if(attName=="regionVO"){
+								console.log(attName);
 								$.each(data.regionVO, function(regionVOName, regionVOValue) {
+									console.log(regionVOName);
+									console.log(regionVOValue);
 								    if(regionVOName=="region_id"){
 								    $("#region_id option[value="+ regionVOValue +"]").prop("selected",true);
 								    }

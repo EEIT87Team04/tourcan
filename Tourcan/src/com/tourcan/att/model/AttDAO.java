@@ -77,7 +77,7 @@ public class AttDAO implements AttDAO_interface {
 //		List<AttVO> name=null;
     	List<AttVO> attname=null;
     	Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-    	System.out.println("s2="+att_name);
+    	//System.out.println("s2="+att_name);
     	String s2= "%" + att_name + "%";
 		try {
 			session.beginTransaction();

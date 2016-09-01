@@ -23,13 +23,13 @@ text-decoration: underline;
 <body>
 <h2 >Search One or Search All</h2>
 <div id="d1"></div>
-	<div >
-		<label for="attid">ATTID</label> <input type="text"
-			class="form-control" id="attid" name="attno"
-			placeholder="id" >
-			<button type="button"
-			id="search1">search</button>
-	</div>
+<!-- 	<div > -->
+<!-- 		<label for="attid">ATTID</label> <input type="text" -->
+<!-- 			class="form-control" id="attid" name="attno" -->
+<!-- 			placeholder="id" > -->
+<!-- 			<button type="button" -->
+<!-- 			id="search1">search</button> -->
+<!-- 	</div> -->
 	<div >
 		<label for="attname">ATTNAME</label> <input type="text"
 			class="form-control" id="attname" name="attname"
@@ -70,60 +70,61 @@ text-decoration: underline;
 <script type="text/javascript">
 
 	
-	$("#search1").click(function() {
-		$('#tb1>tbody').empty();
-		$("#d1").empty();
-		var attno2 = $("#attid").val(); 
-			if(attno2==null||attno2.trim().length==0){
-				var errSpan= document.createElement("span");
-				var errMsg = document.createTextNode("plz enter number");
-				errSpan.appendChild(errMsg);
-				errSpan.setAttribute("style","color:red");
-				errSpan.setAttribute("id",'errid')
-				$("#errid").remove();
-				$("#search1").after(errSpan);
-			}else{
-		$.getJSON(("AttServlet"),{"attno":attno2},function(data){
-			$("#errid").remove();
-			var myBody = $('#tb1>tbody');
-			$.each(data,function(idx,att1){
-				var j1= JSON.stringify(att1);
-// 				console.log(j1);
- 					if(j1.indexOf("error")>-1){
-						var p1=$("<h3></h3>").text(att1);
-// 				$("#h3").setAttribute("style","color:red");
-						$("#d1").append(p1);
- 					}else{
-// 						var j2= JSON.stringify(att1);
-// 						console.log(att1.regionVO);
-//  						console.log(att1);
- 						var cell1 = $("<td></td>").text(att1);
-//  						var row = $("<tr></tr>").append(cell1);
+// 	$("#search1").click(function() {
+// 		$('#tb1>tbody').empty();
+// 		$("#d1").empty();
+// 		var attno2 = $("#attid").val(); 
+// 			if(attno2==null||attno2.trim().length==0){
+// 				var errSpan= document.createElement("span");
+// 				var errMsg = document.createTextNode("plz enter number");
+// 				errSpan.appendChild(errMsg);
+// 				errSpan.setAttribute("style","color:red");
+// 				errSpan.setAttribute("id",'errid')
+// 				$("#errid").remove();
+// 				$("#search1").after(errSpan);
+// 			}else{
+// 		$.getJSON(("AttServlet"),{"attno":attno2},function(data){
+// 			$("#errid").remove();
+// 			var myBody = $('#tb1>tbody');
+// 			$.each(data,function(idx,att1){
+// 				var j1= JSON.stringify(att1);
+// // 				console.log(j1);
+//  					if(j1.indexOf("error")>-1){
+// 						var p1=$("<h3></h3>").text(att1);
+// // 				$("#h3").setAttribute("style","color:red");
+// 						$("#d1").append(p1);
+//  					}else{
+// // 						var j2= JSON.stringify(att1);
+// // 						console.log(att1.regionVO);
+// //  						console.log(att1);
+//  						var cell1 = $("<td></td>").text(att1);
+// //  						var row = $("<tr></tr>").append(cell1);
  					
- 						if(att1=="[object Object]"){
- 						if(idx=="regionVO"){
- 							$.each(data.regionVO,function(idx2,att3){
- 								if(idx2=="region_name"){
-//  									console.log(typeof(att3));
- 									var cell2 = $("<td></td>").text(att3);
- 									att1=att3;
- 									myBody.append(cell2);
- 								}
- 							})
- 						}
- 						}
- 						myBody.append(cell1);
- 						$("#myBody>td").css("color","red");
- 						}	
-				})
-		})
-	}
-	});
+//  						if(att1=="[object Object]"){
+//  						if(idx=="regionVO"){
+//  							$.each(data.regionVO,function(idx2,att3){
+//  								if(idx2=="region_name"){
+// //  									console.log(typeof(att3));
+//  									var cell2 = $("<td></td>").text(att3);
+//  									att1=att3;
+//  									myBody.append(cell2);
+//  								}
+//  							})
+//  						}
+//  						}
+//  						myBody.append(cell1);
+//  						$("#myBody>td").css("color","red");
+//  						}	
+// 				})
+// 		})
+// 	}
+// 	});
 	
 	$("#search2").click(function() {
 			$('#tb1>tbody').empty();
 			$("#d1").empty();
 			var attname = $("#attname").val(); 
+			console.log("attname:"+attname);
 		if(attname==null||attname.trim().length==0){
 				var errSpan= document.createElement("span");
 				var errMsg = document.createTextNode("plz enter attname");
@@ -136,15 +137,16 @@ text-decoration: underline;
 			$.getJSON(("AttServlet"),{"attname":attname},function(data){
 				$("#errname").remove();
 					var myBody = $('#tb1>tbody');
-					console.log(data)
+					console.log("data:"+data)
 					if(data<1){
 						var p1=$("<h3></h3>").text("search error");
 						$("#d1").append(p1);
 								}
 				$.each(data,function(idx,att2){
+					console.log("data:"+data)
 // 				var j1= JSON.stringify(att2);
-// 			console.log(att2)
-// 			console.log(att2.att_name)
+			console.log(att2)
+			console.log(att2.att_name)
 				var cell1 = $("<td></td>").text(att2.att_id);
 				var cell2 = $("<td></td>").text(att2.att_name);
 				var cell3 = $("<td></td>").text(att2.att_staytime);

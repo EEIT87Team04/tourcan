@@ -38,7 +38,7 @@ public class AttServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		// ----------------Query one by attId----------------
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -53,38 +53,43 @@ public class AttServlet extends HttpServlet {
 		JSONObject err = new JSONObject();
 
 		// Query by att_id
-//		Integer attId = null;
-//		try {
-//			attId = new Integer(request.getParameter("att_id"));
-//		} catch (Exception e) {
-//			err.append("attId", "編號只能為整數");
-//			response.getWriter().println(err.toString());
-//			// e.printStackTrace();
-//		}
-//
-//		if (attId != null) {
-//			AttService asv = new AttService();
-//			AttVO attVO = asv.getOneMem(attId);
-//
-//			if (attVO != null) {
-//				try {
-//					Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-//					String attVOGson = gson.toJson(attVO);
-//					response.getWriter().println(attVOGson);
-//				} catch (Exception e) {
-//					err.append("attId", "無此編號");
-//					response.getWriter().println(err.toString());
-//					// e.printStackTrace();
-//				}
-//			} else {
-//				err.append("attId", "無此編號");
-//				response.getWriter().println(err.toString());
-//			}
-//
-//		} else {
-//			err.append("attId", "無此編號");
-//		}
+		 String attIdStr=request.getParameter("att_id");
+		 if(attIdStr != null){
+		 Integer attId = null;
+		 try {
+		 attId = new Integer(request.getParameter("att_id"));
+		 } catch (Exception e) {
+		 err.append("attId", "編號只能為整數");
+		 response.getWriter().println(err.toString());
+		 // e.printStackTrace();
+		 }
 		
+		 if (attId != null) {
+		 AttService asv = new AttService();
+		 AttVO attVO = asv.getOneMem(attId);
+		
+		 if (attVO != null) {
+		 try {
+		 Gson gson = new
+		 GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		 String attVOGson = gson.toJson(attVO);
+		 response.getWriter().println(attVOGson);
+		 } catch (Exception e) {
+		 err.append("attId", "無此編號");
+		 response.getWriter().println(err.toString());
+		 // e.printStackTrace();
+		 }
+		 } else {
+		 err.append("attId", "無此編號");
+		 response.getWriter().println(err.toString());
+		 }
+		
+		 } else {
+		 err.append("attId", "無此編號");
+		 }
+		 return;
+		 }
+		 
 		// ----------------Query one by attname----------------
 		String att_name = request.getParameter("attname");
 		if (att_name != null) {
@@ -156,7 +161,7 @@ public class AttServlet extends HttpServlet {
 				checkResult.append("att_name", "請輸入景點名稱。");
 
 			RegionVO regionVO = attVO.getRegionVO();
-			if (regionVO == null ||regionVO.getRegion_id()==0)
+			if (regionVO == null || regionVO.getRegion_id() == 0)
 				checkResult.append("region_id", "請選擇地區代號。");
 
 			String attAddr = attVO.getAtt_addr();
@@ -224,7 +229,7 @@ public class AttServlet extends HttpServlet {
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
