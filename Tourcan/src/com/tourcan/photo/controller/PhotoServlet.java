@@ -14,6 +14,7 @@ import javax.servlet.http.Part;
 
 import org.json.JSONObject;
 
+import com.tourcan.att.model.AttService;
 import com.tourcan.photo.model.PhotoService;
 import com.tourcan.photo.model.PhotoVO;
 
@@ -36,12 +37,25 @@ public class PhotoServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		System.out.println(request.getContentType());
-		
-		
 		JSONObject checkResult = new JSONObject();
+		Integer att_id = null;
+		Integer hotel_id = null;
 
 		try {
+			try {
+				att_id = new Integer(request.getParameter("att_id"));
+				AttService attSrc = new AttService();
+				
+					
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				hotel_id = new Integer(request.getParameter("hotel_id"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			Part photoFile = request.getPart("photo");
 			byte[] photo_file = new byte[(int) photoFile.getSize()];
 			InputStream is = photoFile.getInputStream();

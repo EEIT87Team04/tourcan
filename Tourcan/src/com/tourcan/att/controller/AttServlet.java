@@ -24,7 +24,7 @@ import com.tourcan.region.model.RegionDAO_interface;
 import com.tourcan.region.model.RegionHibernateDAO;
 import com.tourcan.region.model.RegionVO;
 
-@WebServlet("/AttServlet")
+@WebServlet("/att/AttServlet")
 public class AttServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -52,6 +52,8 @@ public class AttServlet extends HttpServlet {
 		// json = sb.toString();
 		// System.out.println(json);
 
+		
+		
 		JSONObject checkResult = new JSONObject(); // checking result
 		AttVO attVO = null;
 		try {
@@ -64,7 +66,7 @@ public class AttServlet extends HttpServlet {
 				checkResult.append("att_name", "請輸入景點名稱。");
 
 			RegionVO regionVO = attVO.getRegionVO();
-			if (regionVO == null)
+			if (regionVO == null||regionVO.getRegion_id()==0)
 				checkResult.append("region_id", "請選擇地區代號。");
 
 			String attAddr = attVO.getAtt_addr();

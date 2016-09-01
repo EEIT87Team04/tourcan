@@ -10,9 +10,11 @@
 </head>
 <body>
 	<center>
-<!-- 		<form action="PhotoServlet" method="post" name="insertPhoto" enctype="multipart/form-data"> -->
-		<form name="insertPhoto">
+		<form action="PhotoServlet" method="post" name="insertPhoto" enctype="multipart/form-data">
 			<h2>Photo CRUD</h2>
+			<div>
+				
+			</div>
 			<div>
 				<label for="photo"></label><input type="file" name="photo"
 					id="photo">
@@ -21,33 +23,14 @@
 				<span style="color: RED" id="result"></span>
 			</div>
 			<div>
-<!-- 				<input type="submit" id="sendPhoto" value="send"> -->
-				<input type="button" id="sendPhoto" value="send">
+				<input type="submit" id="sendPhoto" value="send">
 			</div>
 		</form>
 	</center>
 
 	<script type="text/javascript">
 		$(function() {
-			var form = $(document.insertPhoto).serializeArray(), json = {};
-			for(var i=0;i<form.length;i++)
-			json[form[i].name] = form[i].value;
-			$("#sendPhoto").click(function() {
-				$.ajax({
-					"type":"post",
-					"url":"PhotoServlet",
-					"data":JSON.stringify(json),
-				    "cache":false,
-				    "processData":false,
-				    "contentType":false
-// 					"contentType":"multipart/form-data"
-				}).done(function(data) {
-					$.each(data, function(pos, msg) {
-						$("#" + pos).text(msg);
-					});
-				});
-
-			});
+			
 		});
 	</script>
 </body>
