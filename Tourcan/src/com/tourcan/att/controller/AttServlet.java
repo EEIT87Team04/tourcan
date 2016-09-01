@@ -28,7 +28,7 @@ import com.tourcan.region.model.RegionDAO_interface;
 import com.tourcan.region.model.RegionHibernateDAO;
 import com.tourcan.region.model.RegionVO;
 
-@WebServlet("/AttServlet")
+@WebServlet("/att/AttServlet")
 public class AttServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
