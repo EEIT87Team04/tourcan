@@ -91,8 +91,8 @@ public class AttService {
 	public List<AttVO> getAll(){
 		return dao.getAll();
 	}
-	public void deleteAtt(Integer att_id) {
-		dao.delete(att_id);
+	public void deleteAtt(Integer attId) {
+		dao.delete(attId);
 	}
 
 }

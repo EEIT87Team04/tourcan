@@ -353,11 +353,11 @@
 	 				console.log("200.");
 	 				
 	 				$.each(data,function(attName,attValue){
-	 					if(attValue=="修改成功"){
+	 				if(attValue=="修改成功"){
 	 				document.idCheckAtt.reset();
 	 				document.attUpdate.reset();
 	 				$("#att_id").prop("readonly", false);
-	 					}
+	 				}
 	 				});
 			    })
 				.fail(function(xhr) 
