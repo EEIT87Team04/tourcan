@@ -1,5 +1,7 @@
 package com.tourcan.photo.model;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
 public class PhotoService {
 
 	private PhotoDAO_interface dao;
@@ -67,11 +69,15 @@ public class PhotoService {
 	// ------------------------GET_BY_PHOTO_ID------------------------
 	public String getOne(Integer photo_id) {
 		PhotoVO photoVO = new PhotoVO();
-		photoVO = dao.findById(photo_id);
 		
-		
-		
-		return null;
+		try {
+			photoVO = dao.findById(photo_id);
+			byte [] photo_file = photoVO.getPhoto_file();
+			return Base64.encodeBase64String(photo_file);
+		} catch (Exception e) {
+			return null;
+		}
+
 	}
 	
 	

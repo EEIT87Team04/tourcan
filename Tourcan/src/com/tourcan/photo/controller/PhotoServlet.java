@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import com.tourcan.att.model.AttService;
 import com.tourcan.photo.model.PhotoService;
 
+import net.sf.ehcache.transaction.xa.EhcacheXAException;
+
 @WebServlet("/PhotoServlet")
 @MultipartConfig
 public class PhotoServlet extends HttpServlet {
@@ -31,14 +33,44 @@ public class PhotoServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");		
+		response.setContentType("application/json");
 		JSONObject result = new JSONObject();
-		result.append("Test", "Test");
-		response.getWriter().println(result.toString());
-		
-		
-		
-		
+		String photoId = request.getParameter("photo_id");
+		String method = request.getParameter("method");
+		Integer photo_id = null;
+		if ("getOne".equals(method)) {
+			try {
+
+				// -------------Check photo_id-------------
+				if (photoId == null || photoId.trim().length() <= 0) {
+					result.append("photoId", "請輸入圖片編號");
+					throw new Exception();
+				}
+
+				try {
+					photo_id = new Integer(photoId);
+				} catch (Exception e) {
+					result.append("photoId", "編號格式錯誤");
+					throw e;
+				}
+
+				PhotoService pSrc = new PhotoService();
+				String photo_file = pSrc.getOne(photo_id);
+
+				if (photo_file == null) {
+					result.append("result", "查無資料");
+					throw new Exception();
+				}
+				
+				result.append("photo_file", photo_file);
+				response.getWriter().println(result.toString());
+			} catch (Exception e) {
+				result.append("result", "查詢失敗");
+				response.getWriter().println(result.toString());
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

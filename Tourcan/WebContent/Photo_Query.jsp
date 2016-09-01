@@ -14,13 +14,17 @@
 		<form name="queryPhoto">
 			<div>
 				<label for="getOne">Photo ID:</label><input name="photo_id"
-					id="photo_id">
+					id="photo_id"> <span id="photoId"></span>
 			</div>
-
 			<div>
 				<input type="button" id="getOne" value="Search By PhotoID">
 			</div>
-			<span id="result"></span>
+			<div>
+				<img id="photo_file" alt="" src="">
+			</div>
+			<div>
+				<span id="result"></span>
+			</div>
 		</form>
 	</center>
 	<script type="text/javascript">
@@ -29,15 +33,20 @@
 			
 			$("#getOne").click(function()
 			{
-				console.log("value:"+$("#photo_id").val());				
-				$.getJSON("PhotoServlet",{"photo_id":$("#photo_id").val()})
+				$("#photo_file").removeAttr("src");
+				$("#photoId").empty();
+				$("#result").empty();
+				$.getJSON("PhotoServlet",{"photo_id":$("#photo_id").val(),
+										  "method":"getOne"})
 					.done(function(data)
 					{
-						$.each(data,function(k,v){
-							console.log("k="+k);
-							console.log("v="+v);
+						$.each(data,function(resName,resVal){
+							if(resName=="photo_file"){
+							$("#"+resName).attr("src","data:image/jpg;base64," + resVal);}
+							
+							$("#"+resName).text(resVal);
 						});
-				});
+					});
 			});
 			
 			
