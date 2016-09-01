@@ -12,6 +12,7 @@ public class PhotoDAO implements PhotoDAO_interface {
 	private static final String QUERY_ALL = "FROM PhotoVO ORDER BY photo_id";
 	private static final String QUERY_BY_HOTEL_ID = "FROM PhotoVO WHERE hotel_id = :hotel_id ORDER BY photo_id";
 	private static final String QUERY_BY_ATT_ID = "FROM PhotoVO WHERE att_id = :att_id ORDER BY photo_id";
+	private static final String QUERY_BY_ATT_ID_AND_HOTEL_ID = "FROM PhotoVO WHERE att_id = :att_id AND hotel_id = :hotel_id ORDER BY photo_id";
 
 	@Override
 	public void insert(PhotoVO photoVO) {
@@ -24,6 +25,7 @@ public class PhotoDAO implements PhotoDAO_interface {
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -38,6 +40,7 @@ public class PhotoDAO implements PhotoDAO_interface {
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -52,6 +55,7 @@ public class PhotoDAO implements PhotoDAO_interface {
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -66,6 +70,7 @@ public class PhotoDAO implements PhotoDAO_interface {
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			e.printStackTrace();
+			throw e;
 		}
 		return photoVO;
 	}
@@ -83,6 +88,7 @@ public class PhotoDAO implements PhotoDAO_interface {
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			e.printStackTrace();
+			throw e;
 		}
 		return photoList;
 	}
@@ -100,6 +106,7 @@ public class PhotoDAO implements PhotoDAO_interface {
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			e.printStackTrace();
+			throw e;
 		}
 		return photoList;
 	}
@@ -116,6 +123,25 @@ public class PhotoDAO implements PhotoDAO_interface {
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			e.printStackTrace();
+			throw e;
+		}
+		return photoList;
+	}
+
+	@Override
+	public List<PhotoVO> findByAttNHotleId(Integer att_id, Integer hotel_id) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		List<PhotoVO> photoList = null;
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(QUERY_BY_ATT_ID_AND_HOTEL_ID);
+			query.setParameter("hotel_id", hotel_id);
+			photoList = query.list();
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+			throw e;
 		}
 		return photoList;
 	}
