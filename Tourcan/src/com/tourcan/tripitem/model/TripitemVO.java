@@ -8,23 +8,14 @@ public class TripitemVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Expose
 	private Integer tripitem_serial;
-	@Expose
 	private String tripitem_traffic;
-	@Expose
 	private String tripitem_memo;
-	@Expose
 	private Integer tripitem_staytime;
-	@Expose
 	private Date tripitem_begin;
-	@Expose
 	private Date tripitem_end;
-	@Expose
 	private Integer trip_id;
-	@Expose
 	private Integer att_id;
-	@Expose
 	private Integer hotel_id;
 	
 	public Integer getTripitem_serial() {
