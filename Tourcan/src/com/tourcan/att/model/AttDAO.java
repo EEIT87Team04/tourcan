@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import hibernate.util.HibernateUtil;
 
@@ -77,18 +78,20 @@ public class AttDAO implements AttDAO_interface {
 //		List<AttVO> name=null;
     	List<AttVO> attname=null;
     	Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+    	Transaction tx = session.beginTransaction(); 
     	//System.out.println("s2="+att_name);
     	String s2= "%" + att_name + "%";
 		try {
-			session.beginTransaction();
+//			session.beginTransaction();
 			String queryByName = "FROM AttVO WHERE att_name like :att_name";
 			Query qry = session.createQuery(queryByName);
 			qry.setParameter("att_name", s2);
 			attname = qry.list();
-
-			session.beginTransaction().commit();
+			tx.commit();
+//			session.beginTransaction().commit();
 			} catch (RuntimeException e) {
-				session.beginTransaction().rollback();
+			tx.rollback();
+//				session.beginTransaction().rollback();
 				throw e;
 				
 			}
@@ -99,14 +102,16 @@ public class AttDAO implements AttDAO_interface {
 	public List<AttVO> getAll() {
 		List<AttVO> list =null;
 		Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-
+		Transaction tx = session.beginTransaction();
     	try {
-			session.beginTransaction();
+//			session.beginTransaction();
 			Query query =session.createQuery("from AttVO order by att_id");
 			list=query.list();
-			session.beginTransaction().commit();
+			tx.commit();
+//			session.beginTransaction().commit();
 		} catch (RuntimeException e) {
-			session.beginTransaction().rollback();
+			tx.rollback();
+//			session.beginTransaction().rollback();
 			throw e;
 			
 		}

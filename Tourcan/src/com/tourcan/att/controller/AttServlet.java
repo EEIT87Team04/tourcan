@@ -117,21 +117,21 @@ public class AttServlet extends HttpServlet {
 				System.out.println(jsonG);
 				// response.getWriter().write(jsonG);
 				response.getWriter().println(jsonG.toString());
-				;
+				
 				// ***************************其他可能的錯誤處理*************************************//*
 			} catch (Exception e) {
 				err.append("errmsg", "search error");
 				response.getWriter().println(err.toString());
 			}
-		} else if (att_name == null) {
+		} else if (attIdStr == null && att_name == null) {
 			AttService asv = new AttService();
 			List<AttVO> avo = asv.getAll();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			String jsonG = gson.toJson(avo);
 			System.out.println(jsonG);
 			response.getWriter().println(jsonG.toString());
+//			return;
 		}
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
