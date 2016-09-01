@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.tourcan.theme.model.ThemeVO" table="theme" >
+        
+        <id name="theme_id" column="theme_id">
+            <generator class="identity"/>
+        </id>
+        
+        <property name="theme_id" column="theme_id" />
+        <property name="mem_id" column="mem_id" />
+        <property name="theme_time" column="theme_time" />
+        <property name="theme_topic" column="theme_topic" />
+        <property name="theme_article" column="theme_article" />
+        <property name="theme_catalog" column="theme_catalog" />
+        
+        
+<!--         <many-to-one name="regionVO" class="com.tourcan.region.model.RegionVO" lazy="false"> -->
+<!--             <column name="region_id" /> -->
+<!--         </many-to-one> -->
+        
+    </class>
+</hibernate-mapping>
+

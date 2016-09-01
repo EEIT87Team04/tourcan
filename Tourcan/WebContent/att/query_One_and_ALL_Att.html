@@ -36,7 +36,7 @@ text-decoration: underline;
 			id="search2">search</button>
 	</div>
 	<div >
-		<label for="attid">LIST ALL</label> 
+		<label for="attall">LIST ALL</label> 
 			<button type="button"
 			id="search3">search all</button>
 	</div>
@@ -44,7 +44,7 @@ text-decoration: underline;
 		<table id="tb1">
 		<thead>
 			<tr>
-				<th>id</th>
+				<th>id</th>				
 				<th>name</th>
 				<th>staytime</th>
 				<th>addr</th>
@@ -56,7 +56,7 @@ text-decoration: underline;
 				<th>open</th>
 				<th>att_lat</th>
 				<th>att_lng</th>
-				<th>region_id</th>
+				<th id="th1">region_name</th>
 			</tr>
 			</thead>
 			<tbody></tbody>
@@ -92,26 +92,26 @@ text-decoration: underline;
 // 				$("#h3").setAttribute("style","color:red");
 						$("#d1").append(p1);
  					}else{
-// 						var cell1 = $("<td></td>").text(att1);							
-// 						myBody.append(cell1);
-						var j2= JSON.stringify(att1);
-						console.log(att1.values(region_name));
+// 						var j2= JSON.stringify(att1);
 // 						console.log(att1.regionVO);
- 						var cell1 = $("<td></td>").text(att1.att_id);
- 						var cell2 = $("<td></td>").text(att1.att_name);
- 						var cell3 = $("<td></td>").text(att1.att_staytime);
- 						var cell4 = $("<td></td>").text(att1.att_addr);
- 						var cell5 = $("<td></td>").text(att1.att_price);
- 						var cell6 = $("<td></td>").text(att1.att_phone);
- 						var cell7 = $("<td></td>").text(att1.att_url);
- 						var cell8 = $("<td></td>").text(att1.att_eat);
- 						var cell9 = $("<td></td>").text(att1.att_intro);
- 						var cell10 = $("<td></td>").text(att1.att_open);
- 						var cell11 = $("<td></td>").text(att1.att_lat);
- 						var cell12 = $("<td></td>").text(att1.att_lng);
- 						var cell13 = $("<td></td>").text(att1.regionVO);
- 						var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9,cell10,cell11,cell12,cell13]);
- 						myBody.append(row);
+//  						console.log(att1);
+ 						var cell1 = $("<td></td>").text(att1);
+//  						var row = $("<tr></tr>").append(cell1);
+ 					
+ 						if(att1=="[object Object]"){
+ 						if(idx=="regionVO"){
+ 							$.each(data.regionVO,function(idx2,att3){
+ 								if(idx2=="region_name"){
+//  									console.log(typeof(att3));
+ 									var cell2 = $("<td></td>").text(att3);
+ 									att1=att3;
+ 									myBody.append(cell2);
+ 								}
+ 							})
+ 						}
+ 						}
+ 						myBody.append(cell1);
+ 						$("#myBody>td").css("color","red");
  						}	
 				})
 		})
@@ -182,7 +182,8 @@ text-decoration: underline;
 				var cell10 = $("<td></td>").text(att2.att_open);
 				var cell11 = $("<td></td>").text(att2.att_lat);
 				var cell12 = $("<td></td>").text(att2.att_lng);
-				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9,cell10,cell11,cell12]);
+				var cell13 = $("<td></td>").text(att2.regionVO.region_name);
+				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9,cell10,cell11,cell12,cell13]);
 				myBody.append(row);				
 				
 			})
