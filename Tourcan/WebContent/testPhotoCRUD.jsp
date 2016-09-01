@@ -13,10 +13,13 @@
 		<form action="PhotoServlet" method="post" name="insertPhoto" enctype="multipart/form-data">
 			<h2>Photo CRUD</h2>
 			<div>
-				
+				<label for="att_id">Attraction ID:</label><input type="text" name="att_id" id="att_id">
 			</div>
 			<div>
-				<label for="photo"></label><input type="file" name="photo"
+				<label for="hotel_id">Hotel ID:</label><input type="text" name="hotel_id" id="hotel_id">
+			</div>
+			<div>
+				<label for="photo">Photo:</label><input type="file" name="photo"
 					id="photo">
 			</div>
 			<div>
