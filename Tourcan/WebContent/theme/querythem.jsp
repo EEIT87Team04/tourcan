@@ -6,6 +6,31 @@
 <link href="https://cdn.quilljs.com/1.0.0-rc.4/quill.snow.css" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CRUD Theme</title>
+<style type="text/css">
+.quill-wrap {
+  max-width:900px;
+  width:100%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:20px;
+}
+/* .info { */
+/*   text-align:center; */
+/*   margin-top:20px; */
+/* } */
+.quill-wrap .ql-active {
+  border: 1px solid #ccc !important;
+  border-radius:4px;
+}
+.quill-wrap button, .quill-wrap .ql-picker {
+  margin-right:2px
+}
+
+
+
+
+</style>
+
 </head>
 <body>
 	<H2>Theme View</H2>
@@ -40,18 +65,60 @@
 	</div>
 	<hr>
 	<hr>
-	<div id="toolbar">
- 	 <button class="ql-bold">Bold</button>
-  	<button class="ql-italic">Italic</button>
-	</div>
+	<div class="quill-wrap">
+<!-- Create the toolbar container -->
+<div id="toolbar">
+      <span class="ql-formats">
+        <select class="ql-header">
+          <option value="1">Heading</option>
+          <option value="2">Subheading</option>
+          <option selected>Normal</option>
+        </select>
+<!--         <select class="ql-font"> -->
+<!--           <option selected>Sans Serif</option> -->
+<!--           <option value="serif">Serif</option> -->
+<!--           <option value="monospace">Monospace</option> -->
+<!--         </select> -->
+      </span>
+      <span class="ql-formats">
+        <button class="ql-bold"></button>
+        <button class="ql-italic"></button>
+        <button class="ql-underline"></button>
+        <button class="ql-strike"></button>
+      </span>
+      <span class="ql-formats">
+        <select class="ql-color"></select>
+        <select class="ql-background"></select>
+      </span>
+      <span class="ql-formats">
+        <button class="ql-list" value="ordered"></button>
+        <button class="ql-list" value="bullet"></button>
+        <select class="ql-align">
+          <option selected></option>
+          <option value="center"></option>
+          <option value="right"></option>
+          <option value="justify"></option>
+        </select>
+      </span>
+      <span class="ql-formats">
+<!--         <button class="ql-blockquote"></button> -->
+        <button class="ql-link"></button>
+        <button class="ql-image"></button>
+<!--         <button class="ql-code-block"></button> -->
+<!--         <button class="ql-video"></button> -->
+      </span>
+      <span class="ql-formats">
+        <button class="ql-clean"></button>
+      </span>
+</div>
 	
 	<div id="editor">
   		<p>Hello World!</p>
-  		<p>Some initial <strong>bold</strong> text</p>
-  		<p><br></p>
+  		<p>Some initial</p> 
+  		<p>1<br>1</p>
 	</div>
-
-
+<button id="save" class="btn btn-primary" onclick="save()" type="button">Save 2</button>
+<input type="button" id="b1"  value="but1">
 
 
 
@@ -59,16 +126,49 @@
 	<script src="https://cdn.quilljs.com/1.0.0-rc.4/quill.js"></script>
 	<script type="text/javascript">
 	
-	  var editor = new Quill('#editor', {
-	    modules: { toolbar: '#toolbar' },
-	    theme: 'snow'
-	  });
+	  var quill = new Quill('#editor', {
+		    modules: { toolbar: '#toolbar' },
+		    theme: 'snow'
+		  });
 		
-// 		quill.addModule('toolbar', Image );
 		
-		var delta = editor.getContents();
-		console.log(typeof(delta))
-		$("#d2").html(delta);
+		var delta = quill.getContents();
+// 		console.log(delta);
+// 		$("#d2").html(delta);
+// 			$.each(editor,function(indx,s1){
+// 				console.log(s1);
+// 				$("#d2").text(s1);
+// 				 console.log(  $("#d2").text(s1) );
+				
+// 			 })
+		
+// 		quill.on('text-change', function(delta, oldDelta, source) { 
+// // 		console.log(delta); 
+// 		var text1 = quill.getText(); 
+// 			$("#b1").click(function(){
+// 				$("#d2").html(text1);
+// // 				$("#d2").text(text1);
+			
+				
+// 			})
+// // 		console.log(text); 
+// 		});
+// 		quill.on('selection-change', function(range) {
+// // 		        console.log('selection-change', range)
+// 		      });
+			
+		quill.on('editor-change', function(eventName ,arguments) {
+			$("#b1").click(function(){
+			console.log( arguments)
+				$("#d2").html(arguments);
+				
+			})
+			});
+		
+		
+		
+		
+		
 		
 	</script>
 	
