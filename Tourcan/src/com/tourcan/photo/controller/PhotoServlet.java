@@ -18,8 +18,6 @@ import org.json.JSONObject;
 import com.tourcan.att.model.AttService;
 import com.tourcan.photo.model.PhotoService;
 
-import net.sf.ehcache.transaction.xa.EhcacheXAException;
-
 @WebServlet("/PhotoServlet")
 @MultipartConfig
 public class PhotoServlet extends HttpServlet {
@@ -36,8 +34,11 @@ public class PhotoServlet extends HttpServlet {
 		response.setContentType("application/json");
 		JSONObject result = new JSONObject();
 		String photoId = request.getParameter("photo_id");
+		// String attId = request.getParameter("att_id");
+		// String hotelId = request.getParameter("hotel_id");
 		String method = request.getParameter("method");
 		Integer photo_id = null;
+		PhotoService pSrc = new PhotoService();
 		if ("getOne".equals(method)) {
 			try {
 
@@ -54,14 +55,13 @@ public class PhotoServlet extends HttpServlet {
 					throw e;
 				}
 
-				PhotoService pSrc = new PhotoService();
-				String photo_file = pSrc.getOne(photo_id);
+				String photo_file = pSrc.getImg(photo_id);
 
 				if (photo_file == null) {
 					result.append("result", "查無資料");
 					throw new Exception();
 				}
-				
+
 				result.append("photo_file", photo_file);
 				response.getWriter().println(result.toString());
 			} catch (Exception e) {
@@ -69,6 +69,47 @@ public class PhotoServlet extends HttpServlet {
 				response.getWriter().println(result.toString());
 				e.printStackTrace();
 			}
+		} else if ("getOne".equals(method)) {
+			// try {
+			// // -------------Check photo_id-------------
+			// if (photoId == null || photoId.trim().length() <= 0) {
+			// result.append("photoId", "請輸入圖片編號");
+			// throw new Exception();
+			// }
+			//
+			// try {
+			// photo_id = new Integer(photoId);
+			// } catch (Exception e) {
+			// result.append("photoId", "編號格式錯誤");
+			// throw e;
+			// }
+			//
+			// PhotoService pSrc = new PhotoService();
+			// String photo_file = pSrc.getImg(photo_id);
+			//
+			// if (photo_file == null) {
+			// result.append("result", "查無資料");
+			// throw new Exception();
+			// }
+			//
+			// result.append("photo_file", photo_file);
+			// response.getWriter().println(result.toString());
+			// } catch (Exception e) {
+			// result.append("result", "查詢失敗");
+			// response.getWriter().println(result.toString());
+			// e.printStackTrace();
+			// }
+		} else if ("getAll".equals(method)) {
+
+			try {
+				JSONObject imgList = pSrc.getAll();
+				response.getWriter().println(imgList.toString());
+			} catch (Exception e) {
+				result.append("result", "查無資料");
+				response.getWriter().println(result.toString());
+				e.printStackTrace();
+			}
+
 		}
 
 	}
@@ -130,11 +171,10 @@ public class PhotoServlet extends HttpServlet {
 				}
 				session.setAttribute("result", "新增成功");
 				response.sendRedirect(uri);
-
 			} catch (Exception e) {
 				session.setAttribute("result", "新增失敗");
 				response.sendRedirect(uri);
-				// e.printStackTrace();
+				 e.printStackTrace();
 			}
 		} else if ("put".equals(method)) {
 			session.removeAttribute("attid");
@@ -185,11 +225,10 @@ public class PhotoServlet extends HttpServlet {
 				}
 				session.setAttribute("result", "新增成功");
 				response.sendRedirect(uri);
-
 			} catch (Exception e) {
 				session.setAttribute("result", "新增失敗");
 				response.sendRedirect(uri);
-				// e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 	}

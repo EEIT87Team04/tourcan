@@ -1,10 +1,20 @@
 package com.tourcan.photo.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
 
 public class PhotoService {
 
 	private PhotoDAO_interface dao;
+
 	public PhotoService() {
 		dao = new PhotoDAO();
 	}
@@ -46,7 +56,7 @@ public class PhotoService {
 			return null;
 		}
 	}
-	
+
 	public PhotoVO insert(byte[] photo_file) {
 		PhotoVO photoVO = new PhotoVO();
 		photoVO.setPhoto_file(photo_file);
@@ -57,29 +67,39 @@ public class PhotoService {
 			return null;
 		}
 	}
+
 	// -------------------------UPDATE------------------------
-//	public PhotoVO update(Integer photo_id,byte[] photo_file) {
-//		PhotoVO photoVO = new PhotoVO();
-//		photoVO.setPhoto_id(photo_id);
-//		photoVO.setPhoto_file(photo_file);
-//		dao.update(photoVO);
-//		return photoVO;
-//	}
+	// public PhotoVO update(Integer photo_id,byte[] photo_file) {
+	// PhotoVO photoVO = new PhotoVO();
+	// photoVO.setPhoto_id(photo_id);
+	// photoVO.setPhoto_file(photo_file);
+	// dao.update(photoVO);
+	// return photoVO;
+	// }
 	// -------------------------DELETE------------------------
 	// ------------------------GET_BY_PHOTO_ID------------------------
-	public String getOne(Integer photo_id) {
+	public String getImg(Integer photo_id) {
 		PhotoVO photoVO = new PhotoVO();
-		
 		try {
 			photoVO = dao.findById(photo_id);
-			byte [] photo_file = photoVO.getPhoto_file();
+			byte[] photo_file = photoVO.getPhoto_file();
 			return Base64.encodeBase64String(photo_file);
 		} catch (Exception e) {
 			return null;
 		}
-
 	}
-	
-	
+
 	// ------------------------GET_ALL------------------------
+	public JSONObject getAll() {
+		JSONObject imgJson = new JSONObject();
+		try {
+			List<PhotoVO> imgList = dao.getAll();
+			for (PhotoVO photoVO : imgList) {
+				imgJson.append(photoVO.getPhoto_id().toString(), Base64.encodeBase64String(photoVO.getPhoto_file()));
+			}
+			return imgJson;
+		} catch (JSONException e) {
+			return null;
+		}
+	}
 }
