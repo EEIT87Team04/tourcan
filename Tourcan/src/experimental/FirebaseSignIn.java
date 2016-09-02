@@ -1,17 +1,16 @@
 package experimental;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Enumeration;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.tasks.OnFailureListener;
@@ -20,7 +19,7 @@ import com.google.firebase.tasks.OnSuccessListener;
 @SuppressWarnings("serial")
 public class FirebaseSignIn extends HttpServlet implements OnSuccessListener<FirebaseToken>, OnFailureListener {
 
-	private static FirebaseOptions options = null;
+	// private static FirebaseOptions options = null;
 	FirebaseToken result = null;
 
 	public static void main(String[] args) {
@@ -36,18 +35,18 @@ public class FirebaseSignIn extends HttpServlet implements OnSuccessListener<Fir
 		System.out.println("\\\\\\ main Finish ///");
 	}
 
-	static {
-		try {
-			options = new FirebaseOptions.Builder()
-					.setServiceAccount(new FileInputStream("E:\\Tourcan-758283a500f1.json"))
-					// .setDatabaseUrl("https://databaseName.firebaseio.com/")
-					.build();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		FirebaseApp.initializeApp(options);
-		System.out.println("FirebaseApp init...");
-	}
+	// static {
+	// try {
+	// options = new FirebaseOptions.Builder()
+	// .setServiceAccount(new FileInputStream("E:\\Tourcan-758283a500f1.json"))
+	// // .setDatabaseUrl("https://databaseName.firebaseio.com/")
+	// .build();
+	// } catch (FileNotFoundException e) {
+	// e.printStackTrace();
+	// }
+	// FirebaseApp.initializeApp(options);
+	// System.out.println("FirebaseApp init...");
+	// }
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -84,11 +83,15 @@ public class FirebaseSignIn extends HttpServlet implements OnSuccessListener<Fir
 	public void onSuccess(FirebaseToken result) {
 		this.result = result;
 
-		System.out.println("Uid     :" + result.getUid());
-		System.out.println("Issuer  :" + result.getIssuer());
-		System.out.println("Name    :" + result.getName());
-		System.out.println("Email   :" + result.getEmail());
-		System.out.println("Picture :" + result.getPicture());
-		System.out.println("Claims  :" + result.getClaims());
+		// System.out.println("Uid :" + result.getUid());
+		// System.out.println("Issuer :" + result.getIssuer());
+		// System.out.println("Name :" + result.getName());
+		// System.out.println("Email :" + result.getEmail());
+		// System.out.println("Picture :" + result.getPicture());
+		// System.out.println("Claims :" + result.getClaims());
+		for (Entry<String, Object> e : result.getClaims().entrySet()) {
+			System.out.println(e.getKey() + "\t: " + e.getValue() + " (" + e.getValue().getClass().getName() + ")");
+		}
+		System.out.println(new Date(1000 * (Long) result.getClaims().get("exp")).after(new Date())); //should be true if valid.
 	}
 }

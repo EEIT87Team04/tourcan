@@ -4,14 +4,17 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
+	<bean id="applicationContextUtils" class="com.tourcan.util.ApplicationContextUtils" />
+<!-- 	<bean id="firebaseAppUtils" class="com.tourcan.util.FirebaseAppUtils" -->
+<!-- 		init-method="getApp" /> -->
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-<!-- 		<property name="dataSource"> -->
-<!-- 		<bean class="org.springframework.jndi.JndiObjectFactoryBean"> -->
-<!-- 		<property name="jndiName" value="java:comp/env/jdbc/SQLServer" /> -->
-<!-- 		</bean> -->
-<!-- 		</property> -->
+		<!-- <property name="dataSource"> -->
+		<!-- <bean class="org.springframework.jndi.JndiObjectFactoryBean"> -->
+		<!-- <property name="jndiName" value="java:comp/env/jdbc/SQLServer" /> -->
+		<!-- </bean> -->
+		<!-- </property> -->
 		<!-- <property name="dataSource"> -->
 		<!-- <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
 		<!-- <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
@@ -36,14 +39,30 @@
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
 	</bean>
 
+
+	<bean id="jsonArray" class="org.json.JSONArray" scope="prototype" />
+	<bean id="gsonInstance" class="com.google.gson.Gson" />
+
+	<!-- <bean id="attDAO" class="com.tourcan.att.model.AttHibernateDAO"> -->
+	<!-- <property name="sessionFactory" ref="sessionFactory"></property> -->
+	<!-- </bean> -->
+	<!-- <bean id="attVO" class="com.tourcan.att.model.AttVO" scope="prototype" 
+		/> -->
+
+	<bean id="memDAO" class="com.tourcan.mem.model.MemHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="memVO" class="com.tourcan.mem.model.MemVO" scope="prototype" />
+
 	<bean id="hotelDAO" class="com.tourcan.hotel.model.HotelHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="hotelVO" class="com.tourcan.hotel.model.HotelVO" scope="prototype" />
-	
+
 	<bean id="regionDAO" class="com.tourcan.region.model.RegionHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<bean id="regionVO" class="com.tourcan.region.model.RegionVO" scope="prototype" />
+	<bean id="regionVO" class="com.tourcan.region.model.RegionVO"
+		scope="prototype" />
 
 </beans>

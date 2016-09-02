@@ -83,14 +83,14 @@ public class HotelServlet extends HttpServlet {
 		} else {
 			// Query all
 			List<HotelVO> vos = dao.getAll();
-			if (vos == null || vos.size() == 0) {
-				// 404 Not found
-				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			} else {
-				// 200 OK
-				response.setStatus(HttpServletResponse.SC_OK);
-				response.getWriter().println(context.getBean(Gson.class).toJson(vos));
-			}
+//			if (vos == null || vos.size() == 0) {
+//				// 404 Not found
+//				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+//			} else {
+//			}
+			// 200 OK
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.getWriter().println(context.getBean(Gson.class).toJson(vos));
 		}
 	}
 

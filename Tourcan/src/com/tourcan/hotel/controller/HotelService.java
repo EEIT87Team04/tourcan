@@ -1,10 +1,12 @@
 package com.tourcan.hotel.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -20,7 +22,6 @@ import com.tourcan.hotel.model.HotelDAO;
 import com.tourcan.hotel.model.HotelVO;
 import com.tourcan.util.ApplicationContextUtils;
 
-//@SuppressWarnings("unused")
 @Path("hotels")
 public class HotelService {
 	HotelDAO dao = (HotelDAO) ApplicationContextUtils.getContext().getBean("hotelDAO");
@@ -31,9 +32,14 @@ public class HotelService {
 	public Response queryById(@PathParam("id") Integer id) {
 		HotelVO vo;
 		if ((vo = dao.findById(id)) == null) {
-			return Response.status(Status.NOT_FOUND).build();
+			HashMap<String, String> msg = new HashMap<String, String>();
+			msg.put("result", "failure");
+			msg.put("error", "id not exist.");
+			return Response.status(Status.NOT_FOUND).entity(msg).build();
+			// throw new
+			// NotFoundException(Response.status(Status.NOT_FOUND).entity(msg).build());
 		} else {
-			return Response.ok(vo).build();
+			return Response.status(Status.NOT_FOUND).entity(vo).build();
 		}
 	}
 
@@ -43,9 +49,14 @@ public class HotelService {
 	public Response queryByName(@PathParam("name") String name) {
 		List<HotelVO> vos;
 		if ((vos = dao.findByName(name)) == null) {
-			return Response.status(Status.NOT_FOUND).build();
+			HashMap<String, String> msg = new HashMap<String, String>();
+			msg.put("result", "failure");
+			msg.put("error", "no matched entry exist.");
+			return Response.status(Status.NOT_FOUND).entity(msg).build();
+			// throw new
+			// NotFoundException(Response.status(Status.NOT_FOUND).entity(msg).build());
 		} else {
-			return Response.ok(vos).build();
+			return Response.status(Status.NOT_FOUND).entity(vos).build();
 		}
 	}
 
@@ -54,50 +65,80 @@ public class HotelService {
 	public Response queryAll() {
 		List<HotelVO> vos = dao.getAll();
 		if ((vos = dao.getAll()) == null) {
-			return Response.status(Status.NOT_FOUND).build();
+			HashMap<String, String> msg = new HashMap<String, String>();
+			msg.put("result", "failure");
+			msg.put("error", "no data.");
+			return Response.status(Status.NOT_FOUND).entity(msg).build();
+			// throw new
+			// NotFoundException(Response.status(Status.NOT_FOUND).entity(msg).build());
 		} else {
-			return Response.ok(vos).build();
+			return Response.status(Status.NOT_FOUND).entity(vos).build();
 		}
 	}
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	public Response insertHotel(HotelVO vo) {
+		HashMap<String, String> msg = new HashMap<String, String>(); // for
+																		// general
+																		// message,
+																		// such
+																		// as
+																		// OK,
+																		// failure
+		HashMap<String, String> err = new HashMap<String, String>(); // for
+																		// column-specific
+																		// message,
+																		// such
+																		// as
+																		// hotel_name
+																		// is
+																		// invalid.
 
 		if (vo.getHotel_id() != null) {
 			if ((dao.findById(vo.getHotel_id())) == null) {
 				// 404 Not found
-				return Response.status(Status.NOT_FOUND).build();
+				msg = new HashMap<String, String>();
+				msg.put("result", "failure");
+				msg.put("error", "id not exist.");
+				return Response.status(Status.NOT_FOUND).entity(msg).build();
+				// throw new
+				// NotFoundException(Response.status(Status.NOT_FOUND).entity(msg).build());
 			} else {
 				// 409 Conflict
-				return Response.status(Status.CONFLICT).build();
+				msg = new HashMap<String, String>();
+				msg.put("result", "failure");
+				msg.put("error", "id already exist.");
+				return Response.status(Status.CONFLICT).entity(msg).build();
+				// throw new
+				// ClientErrorException(Response.status(Status.CONFLICT).entity(msg).build());
 			}
 		}
 
-		JSONObject err = new JSONObject();
+		msg = new HashMap<String, String>();
 
 		// hotel_name
 		if (vo.getHotel_name() == null) {
-			err.put("hotelName", "can't be empty.");
+			err.put("hotel_name", "can't be empty.");
 		} else {
 			if (vo.getHotel_name().trim().length() == 0)
-				err.put("hotelName", "can't be empty.");
+				err.put("hotel_name", "can't be empty.");
 			if (vo.getHotel_name().trim().length() > 60)
-				err.put("hotelName", "too long.");
+				err.put("hotel_name", "too long.");
 		}
 
 		// region_id
 		if (vo.getRegion_id() == null || vo.getRegion_id() < 0 || vo.getRegion_id() == 0)
-			err.put("regionId", "must provide.");
+			err.put("region_id", "must provide.");
 
 		// phone_addr
 		if (vo.getHotel_addr() == null) {
-			err.put("hotelAddr", "can't be empty.");
+			err.put("hotel_addr", "can't be empty.");
 		} else {
 			if (vo.getHotel_addr().trim().length() == 0)
-				err.put("hotelAddr", "can't be empty.");
+				err.put("hotel_addr", "can't be empty.");
 			if (vo.getHotel_addr().trim().length() >= 60)
-				err.put("hotelAddr", "too long.");
+				err.put("hotel_addr", "too long.");
 		}
 
 		// hotel_price
@@ -105,7 +146,7 @@ public class HotelService {
 			vo.setHotel_price(-1.0);
 		} else {
 			if (vo.getHotel_price() <= -1)
-				err.put("hotelPrice", "invalid price range.");
+				err.put("hotel_price", "invalid price range.");
 		}
 
 		// hotel_phone
@@ -113,7 +154,7 @@ public class HotelService {
 			vo.setHotel_phone("");
 		} else {
 			if (vo.getHotel_phone().trim().length() >= 20)
-				err.put("hotelPhone", "too long.");
+				err.put("hotel_phone", "too long.");
 		}
 
 		// hotel_class
@@ -121,7 +162,7 @@ public class HotelService {
 			vo.setHotel_class(-1);
 		} else {
 			if (vo.getHotel_class() <= -1 || vo.getHotel_class() > 10)
-				err.put("hotelClass", "invalid ranking.");
+				err.put("hotel_class", "invalid ranking.");
 		}
 
 		// hotel_url
@@ -129,30 +170,34 @@ public class HotelService {
 			vo.setHotel_url("");
 		} else {
 			if (vo.getHotel_phone().trim().length() >= 60)
-				err.put("hotelUrl", "too long.");
+				err.put("hotel_url", "too long.");
 		}
 
 		// hotel_lat
 		if (vo.getHotel_lat() == null) {
-			err.put("hotelLat", "invalid coordinate format.");
+			err.put("hotel_lat", "invalid coordinate format.");
 		} else {
 			if (vo.getHotel_lat() > 90 || vo.getHotel_lat() < -90)
-				err.put("hotelLat", "invalid coordinate format.");
+				err.put("hotel_lat", "invalid coordinate format.");
 		}
 
 		// hotel_lng
 		if (vo.getHotel_lng() == null) {
-			err.put("hotelLng", "invalid coordinate format.");
+			err.put("hotel_lng", "invalid coordinate format.");
 		} else {
 			if (vo.getHotel_lng() > 180 || vo.getHotel_lng() < -180)
-				err.put("hotelLng", "invalid coordinate format.");
+				err.put("hotel_lng", "invalid coordinate format.");
 		}
 
 		// update database
-		if (err.length() > 0) {
+		if (err.size() > 0) {
 			// 400 Bad request
-			return Response.status(Status.BAD_REQUEST)
-					.entity(new JSONObject().put("result", "validation-error").put("message", err).toString()).build();
+			msg.put("result", "validation-error");
+			msg.put("error", "invalid user input.");
+			msg.put("validation", err.toString());
+			return Response.status(Status.BAD_REQUEST).entity(msg).build();
+			// throw new
+			// BadRequestException(Response.status(Status.BAD_REQUEST).entity(msg).build());
 		} else {
 			try {
 				dao.insert(vo);
@@ -164,8 +209,12 @@ public class HotelService {
 			} catch (Exception e) {
 				e.printStackTrace();
 				// 500 Internal server error
-				return Response.status(Status.INTERNAL_SERVER_ERROR)
-						.entity(new JSONObject().put("result", "error: insert unsuccessful.").toString()).build();
+				msg = new HashMap<String, String>();
+				msg.put("result", "failure");
+				msg.put("error", "insert unsuccessful.");
+				return Response.status(Status.INTERNAL_SERVER_ERROR).entity(msg).build();
+				// throw new
+				// InternalServerErrorException(Response.status(Status.INTERNAL_SERVER_ERROR).entity(msg).build());
 				// response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				// response.getWriter().println(new JSONObject().put("result",
 				// "error: insert unsuccessful.").toString());
@@ -282,24 +331,27 @@ public class HotelService {
 	}
 
 	@DELETE
-	@Path("{id}")
+	@Path("{id: [0-9]+}") // Be careful, just writing "{id}" will NOT work.
+							// Maybe conflict with GET ??
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response deleteHotel(@PathParam("id") Integer id) {
 		HotelVO vo;
 		if ((vo = dao.findById(id)) == null) {
-			return Response.status(Status.NOT_FOUND).build();
+			throw new NotFoundException();
+			// return Response.status(Status.NOT_FOUND).build();
 		} else {
 			vo = ApplicationContextUtils.getContext().getBean(HotelVO.class);
 			vo.setHotel_id(id);
 			try {
 				dao.delete(vo);
 				// 200 OK
-				return Response.ok(new JSONObject().put("result", "success")).build();
+				return Response.ok(new JSONObject().put("result", "success").toString()).build();
+				// return Response.ok().build();
 			} catch (Exception e) {
 				e.printStackTrace();
 				// 500 Internal server error
 				return Response.status(Status.INTERNAL_SERVER_ERROR)
-						.entity(new JSONObject().put("result", "error: delete unsuccessful.")).build();
+						.entity(new JSONObject().put("result", "error: delete unsuccessful.").toString()).build();
 			}
 		}
 	}

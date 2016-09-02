@@ -74,7 +74,6 @@ public class GoogleSignIn extends HttpServlet {
 				System.out.println("Invalid ID token.");
 			}
 		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

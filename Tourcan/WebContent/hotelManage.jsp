@@ -173,8 +173,8 @@
 	<script type="text/javascript">
 		var coder, map, marker, checkTrigger, lastValue = "";
 		var tmp, regionList, hotelList;
-		//var serviceProvider = "api/hotels";
-		var serviceProvider = "HotelServlet";
+		var serviceProvider = "api/hotels";
+		//var serviceProvider = "HotelServlet";
 		var gmbase = "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&size=640x240&markers=color:blue%7C";
 
 		function initMap() {
@@ -289,17 +289,17 @@
 		}
 		function refreshView() {
 			$.when($.ajax({
-				url : serviceProvider,
-				method : "GET",
-				contentType : "application/json; charset=UTF-8",
-				dataType : "json"
-			}), $.ajax({
 				url : "RegionServlet",
 				method : "GET",
 				contentType : "application/json; charset=UTF-8",
 				dataType : "json"
+			}), $.ajax({
+				url : serviceProvider,
+				method : "GET",
+				contentType : "application/json; charset=UTF-8",
+				dataType : "json"
 			})).done(
-					function(d1, d2) {
+					function(d2, d1) {
 						regionList = d2[0];
 						hotelList = d1[0];
 						$("#datalist .panel:not(:first-child)").remove()
@@ -381,8 +381,8 @@
 				$.ajax({
 					url : serviceProvider + "/" + json.hotel_id,
 					method : "DELETE"
-					//data : JSON.stringify(json),
-					//contentType : "application/json; charset=UTF-8"
+				//data : JSON.stringify(json),
+				//contentType : "application/json; charset=UTF-8"
 				}).done(function(data) {
 					console.log("200: " + data);
 					refreshView();
