@@ -7,7 +7,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -47,22 +46,22 @@ public class MemHibernateDAO implements MemDAO {
 		tx.commit();
 	}
 
-	@Override
-	public MemVO findById(Integer mem_id) {
-		Session session = factory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		MemVO vo = (MemVO) session.get(MemVO.class, mem_id);
-		session.flush();
-		tx.commit();
-		return vo;
-	}
+//	@Override
+//	public MemVO findById(Integer mem_id) {
+//		Session session = factory.getCurrentSession();
+//		Transaction tx = session.beginTransaction();
+//		MemVO vo = (MemVO) session.get(MemVO.class, mem_id);
+//		session.flush();
+//		tx.commit();
+//		return vo;
+//	}
 
 	@Override
 	public MemVO findByUid(String mem_uid) {
 		Session session = factory.getCurrentSession();
 		Transaction tx = session.beginTransaction();
-		MemVO vo = (MemVO) session.createCriteria(MemVO.class).add(Restrictions.eq("mem_uid", mem_uid)).uniqueResult();
-		// MemVO vo = (MemVO) session.get(MemVO.class, uid);
+		//MemVO vo = (MemVO) session.createCriteria(MemVO.class).add(Restrictions.eq("mem_uid", mem_uid)).uniqueResult();
+		MemVO vo = (MemVO) session.get(MemVO.class, mem_uid);
 		session.flush();
 		tx.commit();
 		return vo;
@@ -95,7 +94,7 @@ public class MemHibernateDAO implements MemDAO {
 
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-		Integer id = 0;
+		String uid = "99999999999999999997";
 		MemVO vo = null;
 		List<MemVO> vos = null;
 		MemDAO dao = context.getBean(MemHibernateDAO.class);
@@ -114,15 +113,14 @@ public class MemHibernateDAO implements MemDAO {
 		vo.setMem_pwd("66666666");
 		vo.setMem_sex(2);
 		vo.setRegion_id(1);
-		vo.setMem_uid("99999999999999999997");
+		vo.setMem_uid(uid);
 		dao.insert(vo);
 		vo = null;
 		
 		System.out.println("------ FINDBYUSERID ------");
 
-		vo = dao.findByUid("99999999999999999997");
+		vo = dao.findByUid(uid);
 		if (vo != null) {
-			id = vo.getMem_id();
 			System.out.println(vo.getMem_id() + vo.getMem_lname() + vo.getMem_fname() + vo.getMem_email());
 		} else
 			System.out.println("User not exist.");
@@ -143,14 +141,14 @@ public class MemHibernateDAO implements MemDAO {
 		else
 			System.out.println("Ain't Nobody Here but Us Chickens.");
 		vos = null;
-
-		System.out.println("------ FINDBYID ------");
 		
-		vo = dao.findById(id);
+		System.out.println("------ FINDBYUSERID ------");
+
+		vo = dao.findByUid(uid);
 		if (vo != null) {
 			System.out.println(vo.getMem_id() + vo.getMem_lname() + vo.getMem_fname() + vo.getMem_email());
-//			System.out.println("------ DELETE ------");
 //			dao.delete(vo);
+//			System.out.println("------ DELETE ------");
 		} else
 			System.out.println("User not exist.");
 		

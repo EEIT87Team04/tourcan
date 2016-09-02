@@ -7,9 +7,17 @@
 	<class name="com.tourcan.mem.model.MemVO" table="mem" >
 	    <!-- name: 類別內的性質(property)名稱，column: 表格內的欄位名稱  -->
 	    <!-- 表示當永續本類別的物件時，性質pk的值會儲存到表格的PK欄位內  -->
+		<!-- 
 		<id name="mem_id" type="java.lang.Integer" unsaved-value="null">
 		   <generator class="native" />
 		</id>
+		<property name="mem_uid" />
+		-->
+		
+		<id name="mem_uid" type="java.lang.String" unsaved-value="null">
+		   <generator class="assigned"></generator>
+		</id>
+		<property name="mem_id" />
 		<!-- 省略length屬性時， 如果欄位型態為varchar，則預設值為255，如果欄位型態為int，則預設值為11 -->
         <!-- 省略type屬性時，Hibernate會用Reflection來推算每個欄位的型態， 如果欄位型態為varchar，則預設值為
              255，如果欄位型態為int，則預設值為11.。  -->
@@ -27,7 +35,6 @@
 		<property name="region_id" />
 		<property name="mem_bdate" />
 		<property name="mem_regtime" />
-		<property name="mem_uid" />
 		
 	</class>
 </hibernate-mapping>
