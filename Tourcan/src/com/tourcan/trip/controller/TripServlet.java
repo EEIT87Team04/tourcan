@@ -3,6 +3,8 @@ package com.tourcan.trip.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.tourcan.trip.model.TripService;
@@ -119,7 +122,7 @@ public class TripServlet extends HttpServlet {
 		JSONObject checkResult = new JSONObject(); // checking result
 		TripVO tripVO = null;
 		try {
-			tripVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(br, TripVO.class);
+			tripVO = new Gson().fromJson(br, TripVO.class);
 
 			tripName = tripVO.getTrip_name();
 			if (tripName == null || tripName.trim().isEmpty()) {
@@ -147,7 +150,7 @@ public class TripServlet extends HttpServlet {
 		} catch (Exception e) {
 			checkResult.append("result", "新增失敗。");
 			response.getWriter().println(checkResult.toString());
-			// e.printStackTrace();
+			 e.printStackTrace();
 		}
 	}
 
@@ -180,6 +183,12 @@ public class TripServlet extends HttpServlet {
 			tripId = tripVO.getTrip_id(); // 不能修改Id
 
 			tripCtime = tripVO.getTrip_ctime(); // 抓出修改當下時間
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date current = new Date();
+			System.out.println(sdf.format(current));
+			tripCtime = Calendar.getTime();
+			
+
 
 			tripPrice = tripVO.getTrip_price();
 			if (tripPrice == null || tripPrice < 0)
@@ -215,7 +224,7 @@ public class TripServlet extends HttpServlet {
 		JSONObject checkResult = new JSONObject(); // checking result
 		TripVO tripVO = null;
 		try {
-			tripVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(br, TripVO.class);
+			tripVO = new Gson().fromJson(br, TripVO.class);
 
 			tripId = tripVO.getTrip_id();
 			if (tripId == null) {
@@ -233,7 +242,7 @@ public class TripServlet extends HttpServlet {
 		} catch (Exception e) {
 			checkResult.append("result", "查詢失敗。");
 			response.getWriter().println(checkResult.toString());
-			// e.printStackTrace();
+			 e.printStackTrace();
 		}
 	}
 }
