@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>景點資料新增</title>
+<title>刪除一筆景點資料</title>
 <link  rel="stylesheet">
 <style type="text/css">
 #mapPreview {
@@ -29,11 +29,6 @@
 							<label for="tripName">行程名稱</label> <input type="text"
 								id="trip_name" name="trip_name"
 								placeholder="行程名稱">
-						</div>
-						<div >
-							<label for="tripCtime">建立時間</label> <input type="text"
-								 id="trip_ctime" name="trip_ctime"
-								placeholder="建立時間">
 						</div>
 					</div>
 
@@ -79,6 +74,7 @@
 			errMsgSpan.remove();
 			var form = $(document.addTrip).serializeArray(), json = {};
 			for (var i = 0; i < form.length; i++) {
+				
 				if (form[i].value.length > 0) {
 					json[form[i].name] = form[i].value;
 				}
@@ -87,7 +83,7 @@
 				console.log(data);
 				$.each(data, function(errAtt, errMsg) {
 					if (errMsg == "新增成功") {
-						document.addAtt.reset();
+						document.addTrip.reset();
 						errMsgSpan.remove();
 					}
 					var errSpan = document.createElement("span");

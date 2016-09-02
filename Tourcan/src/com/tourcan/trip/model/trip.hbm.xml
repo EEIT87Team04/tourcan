@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.tourcan.att.model.TripVO" table="trip" >
+    <class name="com.tourcan.trip.model.TripVO" table="trip" >
         
         <id name="trip_id" column="trip_id">
             <generator class="identity"/>

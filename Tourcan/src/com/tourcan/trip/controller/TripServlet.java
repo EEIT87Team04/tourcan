@@ -2,9 +2,7 @@ package com.tourcan.trip.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +14,6 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.tourcan.trip.model.TripService;
 import com.tourcan.trip.model.TripVO;
 
@@ -35,7 +32,7 @@ public class TripServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		BufferedReader br = request.getReader();
-
+		request.getReader();
 		Integer tripId = null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
@@ -115,7 +112,7 @@ public class TripServlet extends HttpServlet {
 		BufferedReader br = request.getReader();
 
 		String tripName = null;
-		Date tripCtime = null;
+		Timestamp tripCtime = null;
 		Integer tripPrice = null;
 		Integer memId = null;
 
@@ -131,8 +128,10 @@ public class TripServlet extends HttpServlet {
 				checkResult.append("trip_name", "旅遊名稱不得超過50個字");
 			}
 
-			tripCtime = tripVO.getTrip_ctime(); // 抓出建立當下時間
-
+			// 抓出建立當下時間			
+			tripCtime = new Timestamp(System.currentTimeMillis());
+			System.out.println(tripCtime);
+			
 			tripPrice = tripVO.getTrip_price();
 			if (tripPrice == null || tripPrice < 0)
 				checkResult.append("trip_price", "預算金額錯誤。");
@@ -164,7 +163,7 @@ public class TripServlet extends HttpServlet {
 
 		String tripName = null;
 		Integer tripId = null;
-		Date tripCtime = null;
+		Timestamp tripCtime = null;
 		Integer tripPrice = null;
 		Integer memId = null;
 
@@ -182,13 +181,8 @@ public class TripServlet extends HttpServlet {
 
 			tripId = tripVO.getTrip_id(); // 不能修改Id
 
-			tripCtime = tripVO.getTrip_ctime(); // 抓出修改當下時間
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Date current = new Date();
-			System.out.println(sdf.format(current));
-			tripCtime = Calendar.getTime();
-			
-
+			// 抓出修改當下時間
+			tripCtime = new Timestamp(System.currentTimeMillis());
 
 			tripPrice = tripVO.getTrip_price();
 			if (tripPrice == null || tripPrice < 0)
@@ -207,7 +201,7 @@ public class TripServlet extends HttpServlet {
 		} catch (Exception e) {
 			checkResult.append("result", "更新失敗。");
 			response.getWriter().println(checkResult.toString());
-			// e.printStackTrace();
+//			 e.printStackTrace();
 		}
 	}
 

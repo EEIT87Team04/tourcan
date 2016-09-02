@@ -1,6 +1,6 @@
 package com.tourcan.trip.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class TripService {
@@ -11,7 +11,7 @@ public class TripService {
 		dao = new TripDAO();
 	}
 
-	public TripVO insertTrip(String trip_name, Date trip_ctime, Integer trip_price, Integer mem_id) {
+	public TripVO insertTrip(String trip_name, Timestamp trip_ctime, Integer trip_price, Integer mem_id) {
 
 		TripVO tripVO = new TripVO();
 
@@ -25,7 +25,7 @@ public class TripService {
 		return tripVO;
 	}
 
-	public TripVO updateTrip(String trip_name, Integer trip_id, Date trip_ctime, Integer trip_price, Integer mem_id) {
+	public TripVO updateTrip(String trip_name, Integer trip_id, Timestamp trip_ctime, Integer trip_price, Integer mem_id) {
 
 		TripVO tripVO = new TripVO();
 
