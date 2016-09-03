@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en" >
+<html  >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CRUD Theme</title>
@@ -39,18 +39,25 @@
 		<label for="themeAll">LIST ALL Theme</label>
 		<button type="button" id="search3">search all</button>
 	</div>
-	<hr>
+	
 	<br>
-	<form action="">
-	<div class="click2edit"></div>
-	
-<!-- 	<div id="summernote"><p>Hello Summernote</p></div> -->
-	<hr>
-	  
-</form>
-	<button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit</button>
-	<button id="save" class="btn btn-primary" onclick="save()" type="button">Save </button>
-	
+<div>	
+	<form id="postForm" action="">
+		<fieldset>
+			<legend>Test001</legend>
+			<div class="click2edit"></div>
+		
+		
+		</fieldset>
+	<!-- 	<button type="submit" class="btn btn-primary">Save all</button> -->
+	<!-- 	<button type="button" class="btn btn-primary" id="canel">Cancel</button> -->
+		  
+		<button id="save" class="btn btn-primary" onclick="save()" type="submit">Save </button>
+		<button id="cancel" class="btn" onclick="edit()" type="button">Cancel</button>
+	</form>
+		<button id="show" class="btn" onclick="show()" type="button">show</button>
+		<button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit 1</button>
+</div>	
 
 
 
@@ -70,14 +77,14 @@
 // 		  maxHeight: 1000,             // set maximum height of editor
 // 		  focus: true                  // set focus to editable area after initializing summernote
 // 		});
-	
-	var edit = function() {
-		  $('.click2edit').summernote({focus: true});
-		};
+	 $('.click2edit').summernote({focus: true});
+		var edit = function() {
+			  $('.click2edit').summernote({focus: true});
+			};
 
-		var save = function() {
+		var show = function() {
 		  var makrup = $('.click2edit').summernote('code');
-		  console.log(typeof($('.click2edit').summernote('code')));
+		  console.log($('.click2edit').summernote('code'));
 		  $('.click2edit').summernote('destroy');
 		};
 	
