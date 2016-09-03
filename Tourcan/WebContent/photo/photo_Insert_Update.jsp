@@ -15,6 +15,7 @@
 	<center>
 		<form action="PhotoServlet" method="post" name="insertPhoto"
 			enctype="multipart/form-data">
+			${pageContext.request.requestURI}
 
 			<h2>Photo Insert</h2>
 			<div>
@@ -46,38 +47,7 @@
 		<br>
 		<hr>
 		<br>
-		<form action="PhotoServlet" method="post" name="updatePhoto"
-			enctype="multipart/form-data">
-			<h2>Photo Update</h2>
-			<div>
-				<label for="att_id">Attraction ID:</label><input type="text"
-					name="att_id" id="att_id" value="${param.att_id}">
-				<div style="color: RED">${attid}</div>
-			</div>
-			<!--<div> -->
-			<!--<label for="hotel_id">Hotel ID:</label><input type="text" name="hotel_id" id="hotel_id"> -->
-			<!--</div> -->
-			<div>
-				<label for="photo">Photo:</label><input type="file" name="photo"
-					id="photo">
-				<div style="color: RED">${photo}</div>
-			</div>
-			<div>
-				<span style="color: RED" id="result"></span>
-			</div>
-			<div>
-				<input type="hidden" name="uri" id="uri"
-					value="${pageContext.request.requestURI}"> <input
-					type="hidden" name="action" id="action" value="put">
-			</div>
-			<div>
-				<input type="submit" id="sendPhoto" value="send">
-				<div style="color: RED">${result}</div>
-			</div>
-		</form>
-		<br>
-		<hr>
-		<br>
+
 	</center>
 
 	<script type="text/javascript">
