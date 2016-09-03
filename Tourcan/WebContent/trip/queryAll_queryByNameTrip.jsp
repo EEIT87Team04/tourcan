@@ -52,14 +52,14 @@ text-decoration: underline;
 	</div>
 
 <!--  js/jquery-3.1.0.min.js 注意路徑-->
-	<script src="js/jquery-3.1.0.min.js"></script>  
+	<script src="../js/jquery-3.1.0.min.js"></script>  
 <script type="text/javascript">
 
 	
 	$("#search1").click(function() {
 			$('#tb1>tbody').empty();
 			$("#d1").empty();
-			var tripName = $("#tripName").val(); 
+			var tripName = $("#trip_name").val(); 
 			console.log("tripName:"+tripName);
 		if(tripName==null||tripName.trim().length==0){
 				var errSpan= document.createElement("span");
@@ -67,11 +67,11 @@ text-decoration: underline;
 					errSpan.appendChild(errMsg);
 					errSpan.setAttribute("style","color:red");
 					errSpan.setAttribute("id",'errName')
-					$("#errName").remove();
+					$("#trip_name").remove();
 					$("#search1").after(errSpan);
 					}else{
-			$.getJSON(("TripServlet"),{"tripName":tripName},function(data){
-				$("#errName").remove();
+			$.getJSON(("TripServlet"),{"tripName":tripName,"method":"getByName"},function(data){
+				$("#trip_name").remove();
 					var myBody = $('#tb1>tbody');
 					console.log("data:"+data)
 					if(data<1){

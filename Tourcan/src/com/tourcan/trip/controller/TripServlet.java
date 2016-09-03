@@ -2,7 +2,11 @@ package com.tourcan.trip.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +18,8 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tourcan.att.model.AttService;
+import com.tourcan.att.model.AttVO;
 import com.tourcan.trip.model.TripService;
 import com.tourcan.trip.model.TripVO;
 
@@ -31,76 +37,88 @@ public class TripServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		BufferedReader br = request.getReader();
-		request.getReader();
+		String method=request.getParameter("method");
+		
+		if(method.equals("getOneById")){
 		Integer tripId = null;
 
-		JSONObject checkResult = new JSONObject(); // checking result
-		TripVO tripVO = null;
+		Map<String, String> checkResult = new HashMap<>();
+
 		try {
-			tripVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(br, TripVO.class);
-
-			tripId = tripVO.getTrip_id();
-			if (tripId == null) {
-				checkResult.append("trip_id", "請輸入旅遊編號。");
-			}
-
-			if (checkResult.length() > 0) {
-				throw new Exception();
+			String id = request.getParameter("trip_id");
+			if (id == null || (id.trim()).length() == 0) {
+				checkResult.put("checkResult", "請輸入行程ID");
 			} else {
-				TripService srv = new TripService();
-				srv.findById(tripId);
-				checkResult.append("result", "查詢成功");
-				response.getWriter().println(checkResult.toString());
+
+				try {
+					tripId = new Integer(id);
+				} catch (Exception e) {
+					checkResult.put("checkResult", "行程ID格式不正確");
+				}
 			}
+
+			TripService tripSvc = new TripService();
+			try {
+				tripSvc.deleteTrip(tripId);
+			} catch (Exception e) {
+				checkResult.put("checkResult", "查無資料");
+			}
+
 		} catch (Exception e) {
-			checkResult.append("result", "查詢失敗。");
-			response.getWriter().println(checkResult.toString());
-			// e.printStackTrace();
+			checkResult.put("checkResult", "無法取得資料:" + e.getMessage());
+		}
+		JSONObject json = new JSONObject(checkResult);
+		PrintWriter out = response.getWriter();
+		out.println(json);
 		}
 
 		// ----------------findByName----------------
 
-		String tripName = null;
+		String tripName = request.getParameter("tripName");
+		JSONObject err = new JSONObject();
+		List<TripVO> TripVO=null;
+		
+		if (method.equals("getByName")) {
+			try {
+				try {
+					if (tripName == null || tripName.trim().length() == 0) {
+						throw new Exception();
+					}
+				} catch (Exception e) {
+					err.append("errName", "請輸入行程名稱");
+				}
 
-		try {
-			tripVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(br, TripVO.class);
+				TripService tripSvc = new TripService();
+				try {
+					TripVO=tripSvc.findByName(tripName);
+				} catch (Exception e) {
+					err.append("errName", "查無資料");
+				}
 
-			tripName = tripVO.getTrip_name();
-			if (tripName == null || tripName.trim().isEmpty()) {
-				checkResult.append("trip_id", "請輸入旅遊名稱。");
-			} else if (tripName.trim().length() >= 50) {
-				checkResult.append("trip_name", "旅遊名稱不得超過50個字");
+				JSONObject json = new JSONObject(TripVO);
+				response.getWriter().println(json.toString());
+				
+				// ***************************其他可能的錯誤處理*************************************//*
+			} catch (Exception e) {
+				err.append("errName", "無法取得資料:");
+				response.getWriter().println(err.toString());
 			}
-
-			if (checkResult.length() > 0) {
-				throw new Exception();
-			} else {
-				TripService srv = new TripService();
-				srv.findByName(tripName);
-				checkResult.append("result", "查詢成功");
-				response.getWriter().println(checkResult.toString());
-			}
-		} catch (Exception e) {
-			checkResult.append("result", "查詢失敗。");
-			response.getWriter().println(checkResult.toString());
-			// e.printStackTrace();
 		}
 
 		// ----------------getAll----------------
 
-		try {
-			tripVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(br, TripVO.class);
-
-			TripService srv = new TripService();
-			srv.getAll();
-			checkResult.append("result", "查詢成功");
-			response.getWriter().println(checkResult.toString());
-		} catch (Exception e) {
-			checkResult.append("result", "查詢失敗。");
-			response.getWriter().println(checkResult.toString());
-			// e.printStackTrace();
-		}
+//		try {
+//			tripVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(br, TripVO.class);
+//
+//			TripService srv = new TripService();
+//			srv.getAll();
+//			checkResult.append("result", "查詢成功");
+//			response.getWriter().println(checkResult.toString());
+//		} catch (Exception e) {
+//			checkResult.append("result", "查詢失敗。");
+//			response.getWriter().println(checkResult.toString());
+//			// e.printStackTrace();
+//		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
