@@ -14,7 +14,7 @@ public class ThemeService {
 	
 	
 	
-	public ThemeVO insert(String theme_article, String theme_topic, Integer themecatalog,Timestamp theme_time,Integer mem_id)
+	public ThemeVO insert(String theme_topic, Integer themecatalog, String theme_article,Timestamp theme_time,Integer mem_id)
 	{
 		ThemeVO thVO=new ThemeVO();
 		thVO.setTheme_article(theme_article);

@@ -28,7 +28,7 @@ public class ThemeServlet  extends HttpServlet{
   	public ThemeServlet(){
   		super();	
   	}
-  	
+  	@Override
   	protected void doGet(HttpServletRequest req ,HttpServletResponse resp) throws ServletException,IOException  {
   		req.setCharacterEncoding("UTF-8");
   		resp.setCharacterEncoding("UTF-8");
@@ -121,7 +121,7 @@ public class ThemeServlet  extends HttpServlet{
   		
   	
   	
-  	protected void doGPost(HttpServletRequest req, HttpServletResponse resp)
+  	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
   		req.setCharacterEncoding("UTF-8");
   		resp.setCharacterEncoding("UTF-8");
@@ -132,19 +132,21 @@ public class ThemeServlet  extends HttpServlet{
 		Integer memId = null;
 		ThemeVO themeVO=null;
 		try{
-			themeVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(br,ThemeVO.class);
+			themeVO = new Gson().fromJson(br,ThemeVO.class);
 			
 			String themeTopic= themeVO.getTheme_topic();
+//			System.out.println(themeTopic);
 			if(themeTopic==null||themeTopic.trim().isEmpty()||themeTopic.trim().length()==0){
 			checkR.append("theme_topic","plz into topic");
 			}
 			String themearticle = themeVO.getTheme_article();
+//			System.out.println("themearticle:"+themearticle);
 			if(themearticle==null||themearticle.trim().isEmpty()||themearticle.trim().length()==0){
-			checkR.append("theme_article", "plz into topic");
+			checkR.append("theme_article", "plz into article");
 			}
 			themetime=new Timestamp(System.currentTimeMillis());
-			System.out.println(themetime);
-			Integer themecatalog =themeVO.getMem_id();
+//			System.out.println("themetime:"+themetime);
+			Integer themecatalog =themeVO.getTheme_catalog();
 			if(themecatalog==null){
 				checkR.append("theme_catalog", "plz into catalog");	
 			}
@@ -153,7 +155,7 @@ public class ThemeServlet  extends HttpServlet{
 				throw new Exception();
 			}else{
 				ThemeService srv =new ThemeService();
-				srv.insert(themearticle, themeTopic, themecatalog, themetime, memId);
+				srv.insert(themeTopic, themecatalog, themearticle, themetime, memId);
 				checkR.append("result", "success");
 				resp.getWriter().println(checkR.toString());
 			}
