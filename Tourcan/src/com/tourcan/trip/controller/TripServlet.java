@@ -130,7 +130,6 @@ public class TripServlet extends HttpServlet {
 
 			// 抓出建立當下時間			
 			tripCtime = new Timestamp(System.currentTimeMillis());
-			System.out.println(tripCtime);
 			
 			tripPrice = tripVO.getTrip_price();
 			if (tripPrice == null || tripPrice < 0)
