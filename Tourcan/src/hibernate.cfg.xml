@@ -25,9 +25,9 @@
 		<property name="hibernate.current_session_context_class">thread</property>
 
 		<!--Java物件與資料庫表格的映射檔 -->
+		<mapping resource="com/tourcan/theme/model/theme.hbm.xml" />
 		<mapping resource="com/tourcan/region/model/region.hbm.xml" />
 		<mapping resource="com/tourcan/att/model/att.hbm.xml" />
-		<mapping resource="com/tourcan/theme/model/theme.hbm.xml" />
 
 	</session-factory>
 	

@@ -10,4 +10,5 @@ public interface Theme_interface  {
 	public void delete(ThemeVO themeVO);
 	public ThemeVO findById(Integer theme_id);
 	public List<ThemeVO> findByTopic(String theme_topic);
+	public List<ThemeVO> getAll();
 }

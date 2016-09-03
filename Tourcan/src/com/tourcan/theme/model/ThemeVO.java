@@ -1,19 +1,23 @@
 package com.tourcan.theme.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ThemeVO implements Serializable  {
 	
 	private Integer  theme_id;
 	private String theme_article;
 	private String theme_topic;
-	private String theme_catalog;
-	private Date theme_time;
+	private Integer theme_catalog;
+	private Timestamp theme_time;	
 	private Integer mem_id;
 	
-	
-	
+	public Timestamp getTheme_time() {
+		return theme_time;
+	}
+	public void setTheme_time(Timestamp theme_time) {
+		this.theme_time = theme_time;
+	}
 	public Integer getTheme_id() {
 		return theme_id;
 	}
@@ -32,18 +36,14 @@ public class ThemeVO implements Serializable  {
 	public void setTheme_topic(String theme_topic) {
 		this.theme_topic = theme_topic;
 	}
-	public String getTheme_catalog() {
+	public Integer getTheme_catalog() {
 		return theme_catalog;
 	}
-	public void setTheme_catalog(String theme_catalog) {
-		this.theme_catalog = theme_catalog;
+	public void setTheme_catalog(Integer themecatalog) {
+		this.theme_catalog = themecatalog;
 	}
-	public Date getTheme_time() {
-		return theme_time;
-	}
-	public void setTheme_time(Date theme_time) {
-		this.theme_time = theme_time;
-	}
+
+	
 	public Integer getMem_id() {
 		return mem_id;
 	}

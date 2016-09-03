@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import hibernate.util.HibernateUtil;
 
@@ -69,21 +70,42 @@ public class ThemeDAO implements Theme_interface {
 	public List<ThemeVO> findByTopic(String theme_topic) {
 		List<ThemeVO> topic = null;
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = sion.beginTransaction();
 		String topic2 ="%" +theme_topic+ "%";
 		try{
-			sion.beginTransaction();
+//			sion.beginTransaction();
 			String QueryTopic ="FROM AttVO WHERE theme_topic like :theme_topic";
 			Query query =sion.createQuery(QueryTopic);
 			query.setParameter("theme_topic",topic2);
 			topic=query.list();
-			sion.getTransaction().commit();;
+//			sion.getTransaction().commit();;
+			tx.commit();
 			}catch (RuntimeException e) {
-				sion.getTransaction().rollback();
+//				sion.getTransaction().rollback();
+				tx.rollback();
 				throw e;
 			}
 		return topic;
 	}
-
+	@Override
+	public List<ThemeVO> getAll() {
+		List<ThemeVO> list =null;
+		Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+    	try {
+//			session.beginTransaction();
+			Query query =session.createQuery("from ThemeVO order by theme_id");
+			list=query.list();
+			tx.commit();
+//			session.beginTransaction().commit();
+		} catch (RuntimeException e) {
+			tx.rollback();
+//			session.beginTransaction().rollback();
+			throw e;
+			
+		}
+		return list;
+	}
 
 
 }
