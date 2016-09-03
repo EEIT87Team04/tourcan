@@ -67,11 +67,11 @@ text-decoration: underline;
 					errSpan.appendChild(errMsg);
 					errSpan.setAttribute("style","color:red");
 					errSpan.setAttribute("id",'errName')
-					$("#trip_name").remove();
+					$("#errName").remove();
 					$("#search1").after(errSpan);
 					}else{
 			$.getJSON(("TripServlet"),{"tripName":tripName,"method":"getByName"},function(data){
-				$("#trip_name").remove();
+				$("#errName").remove();
 					var myBody = $('#tb1>tbody');
 					console.log("data:"+data)
 					if(data<1){
