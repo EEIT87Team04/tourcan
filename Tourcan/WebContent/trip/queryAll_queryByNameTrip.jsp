@@ -26,7 +26,6 @@ text-decoration: underline;
 </head>
 <body>
 <h2 >Search byName or Search All</h2>
-<div id="d1"></div>
 	<div >
 		<label for="tripName">TripNAME</label> 
 		<input type="text" class="form-control" id="trip_name" name="trip_name" placeholder="請輸入行程名稱" >
@@ -60,51 +59,45 @@ text-decoration: underline;
 			$('#tb1>tbody').empty();
 			$("#d1").empty();
 			var tripName = $("#trip_name").val(); 
-			console.log("tripName:"+tripName);
-		if(tripName==null||tripName.trim().length==0){
-				var errSpan= document.createElement("span");
-				var errMsg = document.createTextNode("plz enter tripName");
-					errSpan.appendChild(errMsg);
-					errSpan.setAttribute("style","color:red");
-					errSpan.setAttribute("id",'errName')
-					$("#errName").remove();
-					$("#search1").after(errSpan);
-					}else{
-			$.getJSON(("TripServlet"),{"tripName":tripName,"method":"getByName"},function(data){
+			$.get(("TripServlet"),{"tripName":tripName,"method":"getByName"},function(data){
 				$("#errName").remove();
 					var myBody = $('#tb1>tbody');
-					console.log("data:"+data)
-					if(data<1){
-						var p1=$("<h3></h3>").text("search error");
-						$("#d1").append(p1);
-								}
+// 					console.log("data:"+data);
+					console.log("data.result:"+data.result);
+				if(data.result==undefined){
 				$.each(data,function(idx,trip){
-					console.log("data:"+data)
-			console.log(trip)
-			console.log(trip.att_name)
-				var cell1 = $("<td></td>").text(trip.att_id);
-				var cell2 = $("<td></td>").text(trip.att_name);
-				var cell3 = $("<td></td>").text(trip.att_staytime);
-				var cell4 = $("<td></td>").text(trip.att_addr);
-				var cell5 = $("<td></td>").text(trip.att_price);
+// 					console.log("trip:"+trip);
+// 					console.log("data.result:"+data.result);
+				var cell1 = $("<td></td>").text(trip.trip_id);
+				var cell2 = $("<td></td>").text(trip.trip_name);
+				var cell3 = $("<td></td>").text(trip.trip_ctime);
+				var cell4 = $("<td></td>").text(trip.trip_price);
+				var cell5 = $("<td></td>").text(trip.mem_id);
 				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
 				myBody.append(row);
- 				
 				})
+				}else{
+	 				var errSpan= document.createElement("span");
+	 				var errMsg = document.createTextNode(data.result);
+					errSpan.appendChild(errMsg);
+					errSpan.setAttribute("style","color:red");
+					errSpan.setAttribute("id","errName");
+					$("#errName").remove();
+					$("#search1").after(errSpan);
+				}
 			})
-		}
 		});
 	
 	$("#search2").click(function() {
 				$('#tb1>tbody').empty();
-		$.getJSON(("TripServlet"),function(data){
+		$.getJSON(("TripServlet"),{"method":"getAll"},function(data){
 			var myBody = $('#tb1>tbody');
-			$.each(data,function(idx,att2){
-				var cell1 = $("<td></td>").text(trip.att_id);
-				var cell2 = $("<td></td>").text(trip.att_name);
-				var cell3 = $("<td></td>").text(trip.att_staytime);
-				var cell4 = $("<td></td>").text(trip.att_addr);
-				var cell5 = $("<td></td>").text(trip.att_price);
+			$.each(data,function(idx,trip){
+				var cell1 = $("<td></td>").text(trip.trip_id);
+				var cell2 = $("<td></td>").text(trip.trip_name);
+				var cell3 = $("<td></td>").text(trip.trip_ctime);
+				var cell4 = $("<td></td>").text(trip.trip_price);
+				var cell5 = $("<td></td>").text(trip.mem_id);
 				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
 				myBody.append(row);				
 				
