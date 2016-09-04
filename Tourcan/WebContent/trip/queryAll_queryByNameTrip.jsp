@@ -52,12 +52,11 @@ text-decoration: underline;
 
 <!--  js/jquery-3.1.0.min.js 注意路徑-->
 	<script src="../js/jquery-3.1.0.min.js"></script>  
-<script type="text/javascript">
+	<script type="text/javascript">
 
-	
+$(function(){
 	$("#search1").click(function() {
 			$('#tb1>tbody').empty();
-			$("#d1").empty();
 			var tripName = $("#trip_name").val(); 
 			$.get(("TripServlet"),{"tripName":tripName,"method":"getByName"},function(data){
 				$("#errName").remove();
@@ -103,7 +102,8 @@ text-decoration: underline;
 				
 			})
 		})
-	});
+	})
+})
 </script>
 </body>
 </html>

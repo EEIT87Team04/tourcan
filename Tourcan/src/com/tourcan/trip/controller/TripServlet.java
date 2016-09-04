@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.cfg.JoinedSubclassFkSecondPass;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
@@ -40,36 +41,36 @@ public class TripServlet extends HttpServlet {
 		String method = request.getParameter("method");
 
 		if (method.equals("getOneById")) {
+			JSONObject checkResult = new JSONObject();
 			Integer tripId = null;
-
-			Map<String, String> checkResult = new HashMap<>();
+			TripVO tripVO=null;
 
 			try {
-				String id = request.getParameter("trip_id");
-				if (id == null || (id.trim()).length() == 0) {
-					checkResult.put("checkResult", "請輸入行程ID");
+				String id = request.getParameter("tripId");
+				// System.out.println(id);
+				if (id == null || id.trim().length() == 0) {
+					checkResult.append("checkResult", "請輸入行程ID");
 				} else {
-
 					try {
 						tripId = new Integer(id);
 					} catch (Exception e) {
-						checkResult.put("checkResult", "行程ID格式不正確");
+						// e.printStackTrace();
+						checkResult.append("checkResult", "行程ID格式不正確");
 					}
 				}
-
 				TripService tripSvc = new TripService();
-				try {
-					tripSvc.deleteTrip(tripId);
-				} catch (Exception e) {
-					checkResult.put("checkResult", "查無資料");
+				tripVO=tripSvc.findById(tripId);
+				if(tripVO!=null){
+					JSONObject obj=new JSONObject(tripVO);
+					response.getWriter().println(obj.toString());
+				}else{
+					checkResult.append("checkResult", "查無資料");	
+					response.getWriter().println(checkResult.toString());
 				}
-
 			} catch (Exception e) {
-				checkResult.put("checkResult", "無法取得資料:" + e.getMessage());
+				checkResult.append("false", "查詢失敗");
+				response.getWriter().println(checkResult.toString());
 			}
-			JSONObject json = new JSONObject(checkResult);
-			PrintWriter out = response.getWriter();
-			out.println(json);
 		}
 
 		// ----------------findByName----------------
@@ -91,7 +92,7 @@ public class TripServlet extends HttpServlet {
 					if (TripVO.size() != 0) {
 						Gson gson = new Gson();
 						String jsonG = gson.toJson(TripVO);
-//						System.out.println(jsonG);
+						// System.out.println(jsonG);
 						response.getWriter().println(jsonG);
 					} else {
 						checkResult.append("result", "查無資料");
@@ -116,7 +117,7 @@ public class TripServlet extends HttpServlet {
 				if (TripVO.size() != 0) {
 					Gson gson = new Gson();
 					String jsonG = gson.toJson(TripVO);
-//					System.out.println(jsonG);
+					// System.out.println(jsonG);
 					response.getWriter().println(jsonG);
 				}
 				// ***************************其他可能的錯誤處理*************************************//*

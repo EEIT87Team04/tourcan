@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>刪除一筆景點資料</title>
+<title>新增一筆行程資料</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link  rel="stylesheet">
 <style type="text/css">
 #mapPreview {
@@ -19,7 +20,7 @@
 		<form name="addTrip">
 			<div >
 				<div>
-					<h1>新增景點</h1>
+					<h1>新增行程</h1>
 				</div>
 			</div>
 			<div>
