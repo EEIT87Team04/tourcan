@@ -40,10 +40,12 @@ public class ThemeDAO implements Theme_interface {
 	}
 
 	@Override
-	public void delete(ThemeVO themeVO) {
+	public void delete(Integer theme_id) {
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
+			ThemeVO themeVO= new ThemeVO();
+			themeVO.setTheme_id(theme_id);
 			sion.delete(themeVO);
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {

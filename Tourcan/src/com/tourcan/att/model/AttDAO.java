@@ -115,7 +115,6 @@ public class AttDAO implements AttDAO_interface {
 	}
 
 	@Override
-
 	 public void update(AttVO attVO) {
 	  Session session=HibernateUtil.getSessionFactory().getCurrentSession();
 	  try{

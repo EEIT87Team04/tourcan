@@ -8,17 +8,20 @@
 
 table, th  {
    border: 5px groove black;
-/*    border-collapse: collapse; */
 }
 td {
 	border:2px solid black;
-/* 	border-collapse: collapse; */
 }
-h3{
-color:red;
+.error {
+   color: #ff0000;
+   font-size: 12px;
+   margin-top: 5px;
+   margin-bottom: 0;
 }
-h2{
-text-decoration: underline;
+ 
+.inputTxtError {
+   border: 1px solid #ff0000;
+   color: #0e0e0e;
 }
 </style>
 <title>query theme by list</title> 
@@ -48,6 +51,7 @@ text-decoration: underline;
 		<label for="themeAll">LIST ALL Theme</label>
 		<button type="button" id="search3">search all</button>
 	</div>
+	<div id="d1"></div>
 	<hr>
 	<div>
 			<div>
@@ -78,11 +82,12 @@ text-decoration: underline;
 	</div>
 	
 
-	<div id="d1"></div>
+	
 	
 	<script type="text/javascript">
-	
+$(function(){
 	$("#btnIdCheck").click(function() {
+		resetErrors();
 		var theme_topic = $("#theme_topic").val();
 		$('#tb1>tbody').empty();
 		$("#d1").empty();
@@ -98,22 +103,30 @@ text-decoration: underline;
 		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic},function(data){
 // 			$("#errid").remove();
 			var myBody = $('#tb1>tbody');
-			$.each(data,function(idx,theme1){
-				var j1= JSON.stringify(theme1);
-// 				console.log(j1);
- 					if(j1.indexOf("error")>-1){
-						var p1=$("<h3></h3>").text(theme1);
-// 				$("#h3").setAttribute("style","color:red");
-						$("#d1").append(p1);
- 					}else{
-						var cell1 = $("<td></td>").text(theme1.theme_id);
- 						var cell2 = $("<td></td>").text(theme1.theme_topic);
- 						var cell3 = $("<td></td>").text(theme1.mem_id);
- 						var cell4 = $("<td></td>").text(theme1.theme_catalog);
- 						
+			$.each(data,function(themeName,themeValue){
+				if(themeName=="themeTopic"){
+						console.log(themeName);
+				    if(themeValue=="themeTopic error" || themeValue=="無此Topic"){
+					    alert("查無編號!");
+					    var msg = '<label class="error" for="themeTopic">'+themeValue+'</label>';
+						$('input[name="themetopic"]').addClass('inputTxtError').after(msg);
+					}
+		        
+				}else{
+// 				var j1= JSON.stringify(theme1);
+// // 				console.log(j1);
+//  					if(j1.indexOf("error")>-1){
+// 						var p1=$("<h3></h3>").text(theme1);
+// // 				$("#h3").setAttribute("style","color:red");
+// 						$("#d1").append(p1);
+ 					
+						var cell1 = $("<td></td>").text(themeValue.theme_id);
+ 						var cell2 = $("<td></td>").text(themeValue.theme_topic);
+ 						var cell3 = $("<td></td>").text(themeValue.mem_id);
+ 						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
  						var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4]);
  						myBody.append(row);
- 						}	
+}
 				})
 		})
 // 	}
@@ -128,13 +141,17 @@ text-decoration: underline;
 				var cell1 = $("<td></td>").text(theme1.theme_id);
 					var cell2 = $("<td></td>").text(theme1.theme_topic);
 					var cell3 = $("<td></td>").text(theme1.mem_id);
-					var cell4 = $("<td></td>").text(theme1.theme_catalog);
-					
+					var cell4 = $("<td></td>").text(theme1.theme_catalog);					
 					var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4]);
 					myBody.append(row);
 				
 			})
 		})
+	});
+	function resetErrors() {
+	    $('form input, form select').removeClass('inputTxtError');
+	    $('label.error').remove();
+	}
 	});
 	</script>
 </body>

@@ -10,10 +10,8 @@
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
   <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
-	<style type="text/css">
-#mapPreview {
-	height: 292px;
-}
+<style type="text/css">
+
 
 .error {
    color: #ff0000;
@@ -80,8 +78,10 @@
 <!-- 			<input type="button" id="b1" value="undo">  -->
 
 	<script type="text/javascript">
-	
-	$("#btnIdCheck").click(function() {		
+	$(function(){
+		
+	$("#btnIdCheck").click(function() {
+		resetErrors();
 		var theme_id = $("#theme_id").val();
 		var theme_topic = $("#theme_topic").val();
 		console.log((theme_topic))	
@@ -145,8 +145,12 @@
 // 	   });
 		
     });
+	function resetErrors() {
+	    $('form input, form select').removeClass('inputTxtError');
+	    $('label.error').remove();
+	}	
 	
-	
+	})
 	 
 // 	 $('#summernote').summernote({
 // 		 height:200

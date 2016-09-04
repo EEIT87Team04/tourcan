@@ -2,6 +2,7 @@ package com.tourcan.theme.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -80,7 +81,7 @@ public class ThemeServlet  extends HttpServlet{
 		}
 			
 			String th_name = req.getParameter("theme_topic");
-			System.out.println(th_name);
+//			System.out.println(th_name);
 		  if (th_name != null) {
 			try {
 				try {
@@ -88,20 +89,23 @@ public class ThemeServlet  extends HttpServlet{
 						throw new Exception();
 					}
 				} catch (Exception e) {
-					err.append("themeTopic", "themeTopic error");
+					err.append("themeTopic", "無此Topic");
 				}
 				// ***************************2.開始查詢資料*****************************************//*
 				ThemeService asv = new ThemeService();
 				List<ThemeVO> avo = asv.findByTopic(th_name);
-				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-				// 指定要給的值 避免gson.toJson() throws StackOverflowError
-
-				// ***************************3.查詢完成,準備轉交(Send the Success
-				String jsonG = gson.toJson(avo);
-				System.out.println(jsonG);
-				// response.getWriter().write(jsonG);
-				resp.getWriter().println(jsonG.toString());
 				
+				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+				String jsonG = gson.toJson(avo);
+				if(jsonG.length()<3){
+//				System.out.println(jsonG.length()<3);
+				// response.getWriter().write(jsonG);
+						err.append("themeTopic", "無此Topic");
+						resp.getWriter().println(err.toString());
+				}else{
+					resp.getWriter().println(jsonG.toString());
+					
+				}
 				// ***************************其他可能的錯誤處理*************************************//*
 			} catch (Exception e) {
 				err.append("themeTopic", "themeTopic search error");
@@ -165,5 +169,46 @@ public class ThemeServlet  extends HttpServlet{
 		}
 
   	}
+  	
+  	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+  		req.setCharacterEncoding("UTF-8");
+  		resp.setCharacterEncoding("UTF-8");
+  		resp.setContentType("application/json");
+		JSONObject err = new JSONObject();
+  		
+		String thstr = req.getParameter("theme_id");
+		
+		if(thstr!=null){
+			Integer thno =null;
+		try {
+			 thno =new Integer(req.getParameter("theme_id"));
+			 System.out.println(thno);
+			} catch (Exception e) {
+				err.append("themeId", "編號只能為整數");
+				resp.getWriter().println(err.toString());
+//				System.out.println(e.getMessage());
+			}
+			// ***************************2.開始查詢資料*****************************************//*
+
+			if(thno!=null){
+			ThemeService tsv =new ThemeService();
+			try{
+			 tsv.delete(thno);
+			}catch (Exception e) {
+				err.append("themeId", "無此編號");
+				resp.getWriter().println(err.toString());
+			}
+										
+			}else{
+			err.append("themeId", "無此編號");
+
+			}				
+		} 
+		
+		PrintWriter out = resp.getWriter();
+		out.println(err.append("themeId","success"));
+  	}
+  	
   	
 }

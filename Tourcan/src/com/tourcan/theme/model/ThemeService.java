@@ -38,8 +38,8 @@ public class ThemeService {
 
 
 
-	public void delete(ThemeVO themeVO) {
-		dao.delete(themeVO);
+	public void delete(Integer theme_id) {
+		dao.delete(theme_id);
 	}
 
 
