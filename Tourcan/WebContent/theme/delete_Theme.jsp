@@ -46,7 +46,7 @@
 					dataType : "json",
 					success : function(data) {
 						
-						if(data!=null){
+						
 						$.each(data, function(themeName, themeValue) {
 							if(themeName=="themeId"){
 //		 						console.log(themeName);
@@ -59,9 +59,9 @@
 							}
 						});
 					
-					}
+					});
 				})
-			})
+			});
 			function resetErrors() {
 			    $('form input, form select').removeClass('inputTxtError');
 			    $('label.error').remove();
