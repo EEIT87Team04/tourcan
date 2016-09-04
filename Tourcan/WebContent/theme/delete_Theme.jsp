@@ -46,22 +46,41 @@
 					dataType : "json",
 					success : function(data) {
 						
-						
 						$.each(data, function(themeName, themeValue) {
-							if(themeName=="themeId"){
-//		 						console.log(themeName);
-							    if(themeValue=="編號只能為整數" || themeValue=="無此編號"||themeValue=="success"){
-// 								    alert("查無編號!");
+		 						console.log(themeValue);
+							if(themeName=="themeInt"){
+							    if(themeValue=="編號只能為整數"||themeValue=="無此編號"||themeValue=="success" ){
+									console.log(themeValue)
+							    	
+// 								    alert("查無編號!"); ||themeName=="themeId"||themeName=="themeSu"
 								    var msg = '<label class="error" for="themeId">'+themeValue+'</label>';
 									$('input[name="themeid"]').addClass('inputTxtError').after(msg);
 									$("#theme_id").val("");
+									}
+							    }else if(themeName=="themeId"){
+							    if(themeValue=="無此編號"||themeValue=="success" ){
+// 							    	console.log(themeName);||themeName=="themeSu"
+									var msg = '<label class="error" for="themeId">'+themeValue+'</label>';
+									$('input[name="themeid"]').addClass('inputTxtError').after(msg);
+									$("#theme_id").val("");
+							    }
+							    }
+							    else if(themeName=="themeSu") {
+								$("#success").text("success");
+							    	if(themeValue=="success"){
+									console.log(themeName);
+									var msg = '<label class="error" for="themeId">'+themeValue+'</label>';
+									$('input[name="themeid"]').addClass('inputTxtError').after(msg);
+									$("#theme_id").val("");
 								}
-							}
+						}
+						
+					
 						});
 					
-					});
+					}
 				})
-			});
+			})
 			function resetErrors() {
 			    $('form input, form select').removeClass('inputTxtError');
 			    $('label.error').remove();

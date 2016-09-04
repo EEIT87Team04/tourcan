@@ -185,8 +185,8 @@ public class ThemeServlet  extends HttpServlet{
 			 thno =new Integer(req.getParameter("theme_id"));
 			 System.out.println(thno);
 			} catch (Exception e) {
-				err.append("themeId", "編號只能為整數");
-				resp.getWriter().println(err.toString());
+				err.append("themeInt", "編號只能為整數");
+//				resp.getWriter().println(err.toString());
 //				System.out.println(e.getMessage());
 			}
 			// ***************************2.開始查詢資料*****************************************//*
@@ -197,17 +197,17 @@ public class ThemeServlet  extends HttpServlet{
 			 tsv.delete(thno);
 			}catch (Exception e) {
 				err.append("themeId", "無此編號");
-				resp.getWriter().println(err.toString());
+//				resp.getWriter().println(err.toString());
 			}
 										
 			}else{
-			err.append("themeId", "無此編號");
+			err.append("themeId", "2無此編號");
 
 			}				
 		} 
 		
 		PrintWriter out = resp.getWriter();
-		out.println(err.append("themeId","success"));
+		out.println(err.append("themeSu","success"));
   	}
   	
   	

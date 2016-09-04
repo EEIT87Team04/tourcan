@@ -50,6 +50,7 @@ public class ThemeDAO implements Theme_interface {
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
 				sion.getTransaction().rollback();
+				
 				throw e;
 			}
 		
