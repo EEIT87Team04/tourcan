@@ -9,7 +9,6 @@
             <generator class="identity"/>
         </id>
         
-        <property name="theme_id" column="theme_id" />
         <property name="theme_time" column="theme_time" />
         <property name="theme_topic" column="theme_topic" />
         <property name="theme_article" column="theme_article" />
