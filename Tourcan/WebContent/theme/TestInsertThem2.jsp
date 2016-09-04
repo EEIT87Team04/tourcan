@@ -124,9 +124,9 @@
 						$('#' + errAtt).after(errSpan);
 					});
 					console.log("200.");
-// 					var makrup = $('#theme_article').summernote('code');
-					$('#theme_article').summernote('destroy');
-					$( "#theme_article" ).remove();
+					var makrup = $('#theme_article').summernote('code');
+// 					$('#theme_article').summernote('destroy');
+// 					$( "#theme_article" ).remove();
 				}).fail(function(xhr) {
 					console.log("ERR.");
 				});

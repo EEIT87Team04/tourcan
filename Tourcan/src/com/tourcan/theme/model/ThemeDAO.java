@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 
 import hibernate.util.HibernateUtil;
 
+@SuppressWarnings("unused")
 public class ThemeDAO implements Theme_interface {
 
 	@Override
@@ -75,11 +76,11 @@ public class ThemeDAO implements Theme_interface {
 		String topic2 ="%" +theme_topic+ "%";
 		try{
 //			sion.beginTransaction();
-			String QueryTopic ="FROM AttVO WHERE theme_topic like :theme_topic";
+			String QueryTopic ="FROM ThemeVO WHERE theme_topic like :theme_topic";
 			Query query =sion.createQuery(QueryTopic);
 			query.setParameter("theme_topic",topic2);
 			topic=query.list();
-//			sion.getTransaction().commit();;
+//			sion.getTransaction().commit();
 			tx.commit();
 			}catch (RuntimeException e) {
 //				sion.getTransaction().rollback();

@@ -3,13 +3,20 @@ package com.tourcan.theme.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import com.google.gson.annotations.Expose;
+
 public class ThemeVO implements Serializable  {
-	
+	@Expose
 	private Integer  theme_id;
+	@Expose
 	private String theme_article;
+	@Expose
 	private String theme_topic;
+	@Expose
 	private Integer theme_catalog;
-	private Timestamp theme_time;	
+	@Expose
+	private Timestamp theme_time;
+	@Expose
 	private Integer mem_id;
 	
 	public Timestamp getTheme_time() {
