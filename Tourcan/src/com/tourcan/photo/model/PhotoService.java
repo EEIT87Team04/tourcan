@@ -62,7 +62,6 @@ public class PhotoService {
 			return null;
 		}
 	}
-
 	// -------------------------UPDATE------------------------
 	 public PhotoVO update(Integer photo_id,byte[] photo_file) {
 		 PhotoVO photoVO = new PhotoVO();
