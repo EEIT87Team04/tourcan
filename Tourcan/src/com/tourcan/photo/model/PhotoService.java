@@ -64,14 +64,63 @@ public class PhotoService {
 	}
 
 	// -------------------------UPDATE------------------------
-	// public PhotoVO update(Integer photo_id,byte[] photo_file) {
-	// PhotoVO photoVO = new PhotoVO();
-	// photoVO.setPhoto_id(photo_id);
-	// photoVO.setPhoto_file(photo_file);
-	// dao.update(photoVO);
-	// return photoVO;
-	// }
-	// -------------------------DELETE------------------------
+	 public PhotoVO update(Integer photo_id,byte[] photo_file) {
+		 PhotoVO photoVO = new PhotoVO();
+		 photoVO.setPhoto_id(photo_id);
+		 photoVO.setPhoto_file(photo_file);
+		 dao.update(photoVO);
+		 return photoVO;
+	 }
+	// -------------------------DELETE_BY_PHOTO_ID------------------------
+	public boolean deleteById(Integer photo_id) {
+		PhotoVO photoVO = new PhotoVO();
+		try {
+			photoVO = dao.findById(photo_id);
+			if (photoVO.getPhoto_id() < 0) {
+				return false;
+			}
+			dao.delete(photo_id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	// -------------------------DELETE_BY_ATT_ID------------------------
+	public boolean deleteByAttId(Integer att_id) {
+		List<PhotoVO> imgList = null;
+		try {
+			imgList = dao.findByAttId(att_id);
+			if (imgList.isEmpty()) {
+				return false;
+			}
+			for (PhotoVO photoVO : imgList) {
+				Integer photo_id = photoVO.getPhoto_id();
+				dao.delete(photo_id);
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	// -------------------------DELETE_BY_HOTEL_ID------------------------
+	public boolean deleteByHotelId(Integer hotel_id) {
+		List<PhotoVO> imgList = null;
+		try {
+			imgList = dao.findByHotleId(hotel_id);
+			if (imgList.isEmpty()) {
+				return false;
+			}
+			for (PhotoVO photoVO : imgList) {
+				Integer photo_id = photoVO.getPhoto_id();
+				dao.delete(photo_id);
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	// ------------------------GET_BY_PHOTO_ID------------------------
 	public String getImg(Integer photo_id) {
@@ -91,7 +140,7 @@ public class PhotoService {
 		try {
 			List<PhotoVO> imgList = dao.findByAttId(att_id);
 			for (PhotoVO photoVO : imgList) {
-				imgJson.append(photoVO.getAtt_id().toString(), Base64.encodeBase64String(photoVO.getPhoto_file()));
+				imgJson.append(photoVO.getPhoto_id().toString(), Base64.encodeBase64String(photoVO.getPhoto_file()));
 			}
 			return imgJson;
 		} catch (JSONException e) {
@@ -103,9 +152,9 @@ public class PhotoService {
 	public JSONObject getByHotelId(Integer hotel_id) {
 		JSONObject imgJson = new JSONObject();
 		try {
-			List<PhotoVO> imgList = dao.findByAttId(hotel_id);
+			List<PhotoVO> imgList = dao.findByHotleId(hotel_id);
 			for (PhotoVO photoVO : imgList) {
-				imgJson.append(photoVO.getHotel_id().toString(), Base64.encodeBase64String(photoVO.getPhoto_file()));
+				imgJson.append(photoVO.getPhoto_id().toString(), Base64.encodeBase64String(photoVO.getPhoto_file()));
 			}
 			return imgJson;
 		} catch (JSONException e) {

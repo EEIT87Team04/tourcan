@@ -12,6 +12,12 @@
 	<center>
 		<h2>Search Photo</h2>
 		<form name="queryPhoto">
+		
+		<hr>
+			<div>
+				<label>查詢結果:</label><span id="result"></span>
+			</div>
+		<hr>
 			<div>
 				<label for="photo_id">Photo ID:</label><input name="photo_id"
 					id="photo_id"> <span id="photoId"></span>
@@ -21,9 +27,6 @@
 			</div>
 			<div>
 				<img id="photo_file" alt="" src="">
-			</div>
-			<div>
-				<span id="result"></span>
 			</div>
 		</form>
 		<hr>
@@ -48,9 +51,6 @@
 					</tr>
 				</table>
 			</div>
-			<div>
-				<span id="result"></span>
-			</div>
 		</form>
 		<hr>
 		<h2>List Every Images</h2>
@@ -59,7 +59,7 @@
 				<input type="button" id="getAll" value="Search For All">
 			</div>
 			<div>
-				<span id="result"></span>
+				<span id="resultForAll"></span>
 			</div>
 			<div>
 				<table id="photoList" border="1">
@@ -97,15 +97,17 @@
 					});
 			});
 			
+			
 			$("#getSeveral").click(function(){
+				$("#attId").empty();
+				$("#result").empty();
 				$.getJSON("PhotoServlet",{"att_id":$("#att_id").val(),
 // 										  "hotel_id":$("hotel_id").val(),
 					  					  "method":"getSeveral"})
 					.done(function(data){
-						$.each(data.imgs,function(id,src){
-							console.log(id);
-							console.log(src);
-							
+						console.log(data);
+						$.each(data,function(id,src){
+							if($("#att_id").val().length>0){
 							var tdID = $("<td></td>").append(id);
 							var img = $("<img></img>").attr("src","data:image/jpg;base64,"+src).attr("height","200px").attr("width","200px");
 							var tdImg = $("<td></td>").append(img);
@@ -113,9 +115,10 @@
 							row.append(tdID)
 								.append(tdImg);
 							$("#conditionalSearch").append(row);
-						
-						});	
-
+							}else{
+								$("#"+id).text(src);
+							}
+						});
 					})
 					.fail(function(err){
 					  console.log("Failed");
@@ -139,7 +142,7 @@
 							.append(tdImg);
 						$("#photoList").append(row);
 						}else{
-							$("#"+id).text(src);
+							$("#"+id+"ForAll").text(src);
 						}
 					});
 					

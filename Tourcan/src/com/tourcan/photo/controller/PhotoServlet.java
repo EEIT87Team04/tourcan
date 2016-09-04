@@ -90,19 +90,16 @@ public class PhotoServlet extends HttpServlet {
 
 				imgList = pSrc.getByAttId(att_id);
 
-				try {
-					imgList.get("photo_file");
-				} catch (Exception e) {
-					result.append("attId", "查無資料");
-					// e.printStackTrace();
+				if (imgList == null) {
+					result.append("result", "查無資料");
 					throw new Exception();
 				}
 
 				response.getWriter().println(imgList.toString());
 			} catch (Exception e) {
-				result.append("result", "查詢失敗");
+				result.append("result", "查無資料");
 				response.getWriter().println(result.toString());
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 		} else if ("getAll".equals(method)) {
 
@@ -179,7 +176,7 @@ public class PhotoServlet extends HttpServlet {
 			} catch (Exception e) {
 				session.setAttribute("result", "新增失敗");
 				response.sendRedirect(uri);
-				e.printStackTrace();
+				// e.printStackTrace();
 			}
 		} else if ("put".equals(method)) {
 			session.removeAttribute("attid");
@@ -244,6 +241,68 @@ public class PhotoServlet extends HttpServlet {
 
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+
+		String photoID = request.getParameter("photo_id");
+		String attID = request.getParameter("att_id");
+		String method = request.getParameter("method");
+
+		PhotoService srv = new PhotoService();
+		JSONObject result = new JSONObject();
+
+		if ("deleteById".equals(method)) {
+			try {
+				if (photoID == null || photoID.trim().length() <= 0) {
+					result.append("photoId", "請輸入照片編號");
+					throw new Exception();
+				}
+				Integer photo_id = null;
+				try {
+					photo_id = new Integer(photoID);
+				} catch (Exception e) {
+					result.append("photoId", "編號格式錯誤");
+					throw e;
+				}
+				if (!srv.deleteById(photo_id))  {
+					throw new Exception();
+				}
+
+				result.append("result", "刪除成功");
+				response.getWriter().println(result.toString());
+			} catch (Exception e) {
+				result.append("result", "刪除失敗");
+				response.getWriter().println(result.toString());
+//				e.printStackTrace();
+			}
+		}
+		else if ("deleteByAtt".equals(method)) {
+			try {
+				if (attID == null || attID.trim().length() <= 0) {
+					result.append("photoId", "請輸入照片編號");
+					throw new Exception();
+				}
+				Integer att_id = null;
+				try {
+					att_id = new Integer(attID);
+				} catch (Exception e) {
+					result.append("photoId", "編號格式錯誤");
+					throw e;
+				}
+				if (!srv.deleteByAttId(att_id))  {
+					throw new Exception();
+				}
+				
+				result.append("result", "刪除成功");
+				response.getWriter().println(result.toString());
+			} catch (Exception e) {
+				result.append("result", "刪除失敗");
+				response.getWriter().println(result.toString());
+//				e.printStackTrace();
+			}
+		}
+
 	}
 
 }
