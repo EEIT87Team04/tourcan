@@ -55,7 +55,7 @@
 				</div>
 				<div class="col-sm-5 form-group">
 					<button type="button" class="btn btn-danger form-control"
-						id="btnReset">Reset</button>
+						id="btnReset1">Reset</button>
 				</div>
 			</div>
 			<div class="row">
@@ -89,7 +89,10 @@
 					</div>
 				<div>
 					<button type="button" class="btn btn-danger form-control"
-						id="btnReset">Reset</button>
+						id="btnReset2">Reset</button>
+				</div>
+				<div >
+				<div  id="result"></div>
 				</div>
 			</div>
 			</div>
@@ -104,36 +107,77 @@
 	$(function(){
 		$("#btnIdCheck").click(function() {
 				var tripId = $("#trip_id").val(); 
-				console.log(tripId);
 				$.get(("TripServlet"),{"tripId":tripId,"method":"getOneById"},function(data){
-// 	 					console.log("data:"+data);
 					$.each(data,function(tripName,tripValue){
-						console.log("tripName:"+tripName);
-// 						console.log("tripValue:"+tripValue);
-						if(tripName=="trip_id"){
-				 			$("#trip_id").prop("readonly", true);
 							$("#"+tripName).val(tripValue);
-						}else{
+						if(tripName=="trip_id"){
+							$("#errId").remove();
+				 			$("#trip_id").prop("readonly", true);
+						}else if(tripName=="checkResult"){
 							var errSpan = document.createElement("span");
 							var errText = document.createTextNode(tripValue);
-							var errId = 'err' + tripName;
 							errSpan.appendChild(errText);
 							errSpan.setAttribute("style", "color:red");
-							errSpan.setAttribute("id", errId);
-							$('#' + errId).remove();
-							$('#' + tripName).after(errSpan);							
+							errSpan.setAttribute("id", "errId");
+							$("#errId").remove();
+							$('#trip_id').after(errSpan);							
 						}
 					})
 				})
 			});
-		$("#btnReset").click(function() {
+		$("#btnReset1").click(function() {
 			document.idCheckTrip.reset();
+			document.updateTrip.reset();
+			$("#errId").remove();
+			$('form[name="updateTrip"] span').remove();
 			$("#trip_id").prop("readonly", false);
 		});
-
 		
+		
+		
+		$("#btnUpdate").click(function() {
+			var trip_id = $("#trip_id").val();
+			var errMsgSpan = $('form[name="updateTrip"] span');
+			errMsgSpan.remove();
+			var form = $(document.updateTrip).serializeArray(), json = {};
+			console.log("form="+form);
+			json["att_id"]=+trip_id;
+			for (var i = 0; i < form.length; i++) {
+				if (form[i].value.length > 0) {
+					json[form[i].name] = form[i].value;
+				}
+			}
+			$.ajax({
+				"type":"PUT",
+				"url":"TripServlet?trip_id="+trip_id,
+				"dataType":"json",
+				"data":JSON.stringify(json),
+				
+				"success":function(data){
+					$.each(data, function(errTrip, errMsg) {
+						if (errMsg == "更新成功") {
+							document.updateTrip.reset();
+							errMsgSpan.remove();
+							$("#result").empty();
+						}
+						var errSpan = document.createElement("span");
+						var errText = document.createTextNode(errMsg);
+						var errId = 'err' + errTrip;
+						errSpan.appendChild(errText);
+						errSpan.setAttribute("style", "color:red");
+						errSpan.setAttribute("id", errId);
+						$('#' + errId).remove();
+						$('#' + errTrip).after(errSpan);
+					});	
+				}
+			})		
+			$("#btnReset2").click(function() {
+				document.updateTrip.reset();
+				$('form[name="updateTrip"] span').remove();
+				$("#errId").remove();
+			});
+		});
 	})
-
 	</script>
 </body>
 </html>

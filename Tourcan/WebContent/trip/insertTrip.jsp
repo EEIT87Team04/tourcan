@@ -82,19 +82,19 @@
 			}
 			$.post("TripServlet", JSON.stringify(json)).done(function(data) {
 				console.log(data);
-				$.each(data, function(errAtt, errMsg) {
+				$.each(data, function(errTrip, errMsg) {
 					if (errMsg == "新增成功") {
 						document.addTrip.reset();
 						errMsgSpan.remove();
 					}
 					var errSpan = document.createElement("span");
 					var errText = document.createTextNode(errMsg);
-					var errId = 'err' + errAtt;
+					var errId = 'err' + errTrip;
 					errSpan.appendChild(errText);
 					errSpan.setAttribute("style", "color:red");
 					errSpan.setAttribute("id", errId);
 					$('#' + errId).remove();
-					$('#' + errAtt).after(errSpan);
+					$('#' + errTrip).after(errSpan);
 				});
 				console.log("200.");
 			}).fail(function(xhr) {
