@@ -13,6 +13,7 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
 </head>
 <body>
+<div class="container">
 	<div>
 		<div>
 			<input type="button" value="New Theme" id="but1" /> 
@@ -21,31 +22,32 @@
 	</div>	
 	<div>	
 <!-- 		<form id="postForm" action="ThemeServlet" method="post"> -->
-			<form name="addTheme">
-			<div>
-				<div>
+		<form name="addTheme">
+			<div class="row">
+				<div  class="col-sm-6 col-sm-offset-3">
 					<h2>Create New Theme</h2>
 				</div>
 			</div>
 			<div>
-				<div>
-					<div>
-						<label for="themeTopic">themeTopic</label><input type="text" 
-						id="theme_topic" name="theme_topic" 
-						placeholder="themeTopic">
-					</div>
-				</div>
+				<div class="form-inline">
+				
+					<div class="form-group">
+						<label for="themeTopic"  >themeTopic</label>
 						
-				<div>
-					<div>
-						<label for="memId">會員Id</label> <input type="text"
-							id="mem_id" name="mem_id"
+						<input type="text" id="theme_topic" name="theme_topic"  class="form-control"	placeholder="themeTopic">
+						
+					</div>
+					<div class="form-group" >
+						<label for="memId" >會員Id</label> <input type="text"
+							id="mem_id" name="mem_id" class="form-control"
 							placeholder="會員Id" min=-1>
-					
+					</div>
+					<div class="form-group">
 						<label for="themeCatalog">catalog</label> <input type="number"
-							id="theme_catalog" name="theme_catalog"
+							id="theme_catalog" name="theme_catalog" class="form-control"
 							placeholder="catalog" min=0>
 						</div>
+				
 				</div>
 			</div>
 			<div class="from-grop">
@@ -60,17 +62,22 @@
 			</div>
 			  
 <!-- 			<button id="save" class="btn btn-primary"  type="submit">Save </button> -->
-			<button type="button" class="btn btn-success form-control" id="btnInsert">Save</button>
-			<button id="cancel" class="btn btn-danger form-control"  type="button">Cancel</button>
+			<div></div>
+			<div class="col-md-3 col-sm-offset-8" >
+				<button type="button" class="btn btn-success form-control" id="btnInsert">Save</button>
+			</div>
+<!-- 			<div class="col-md-3"> -->
+<!-- 				<button id="cancel" class="btn btn-danger form-control"  type="button">Cancel</button> -->
+<!-- 			</div> -->
 <!-- 		</form> -->
 		<div>
 			<div id="result"></div>
 		</div>
 		</form>
-			<button id="show" class="btn" onclick="show()" type="button">show</button>
-			<button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit 1</button>
+<!-- 			<button id="show" class="btn" onclick="show()" type="button">show</button> -->
+<!-- 			<button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit 1</button> -->
 	</div>	
-
+</div>
 
 
 

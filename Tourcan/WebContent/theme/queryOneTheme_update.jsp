@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Show Theme</title>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> 
+<title>query One Theme and Update</title>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> 
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
   <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
@@ -30,6 +30,7 @@
 
 </head>
 <body>
+<div class="container">
 	<div>
 		<div>
 			<input type="button" value="New Theme" id="but1" /> 
@@ -40,58 +41,72 @@
 	<div>
 		<div>
 			<div>
-				<div>
-					<label for="themeId">Search 編號Id</label> <input type="text"
-					class="form-control" id="theme_id" name="themeid"
-					placeholder="themeid" >
-				</div>
-			</div>
-			<div>
-					<button type="button" class="btn btn-success form-control"
-						id="btnIdCheck">IdCheck</button>
-			</div>
-			<div>
-					<button type="button" class="btn btn-warning form-control"
-						id="btnEdit">edit</button>
+				<form name="idCheckTheme" id="idCheckTheme">
+					<div>
+						<div >
+							<label for="themeId">Search 編號Id</label> <input type="text"
+							class="form-control" id="theme_id" name="themeid"
+							placeholder="themeid" >
+						</div>
+					</div>
+					<div class="col-md-6">
+						<button type="button" class="btn btn-success form-control"
+							id="btnIdCheck">IdCheck</button>
+					</div>
+					<div class="col-md-6">
+						<button type="button" class="btn btn-warning form-control"
+							id="btnEdit">edit</button>
+					</div>
+				</form>
 			</div>
 		<div>
-			<div>
-				<label for="memId">會員Id</label> <input type="text"
-							id="mem_id" name="memid"
-							placeholder="會員Id" min=-1>
-				<label for="themeTopic">themeTopic</label><input type="text" 
-					id="theme_topic" name="themetopic" 
-					placeholder="themeTopic">
-				
-				<label for="themeCatalog">catalog</label> <input type="number"
-					id="theme_catalog" name="themecatalog"
-					placeholder="catalog" min=0>
+			<form name="updateTheme" class="form-horizontal">
+				<div>
+					<h2>Update Theme </h2>
+				</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="memId">會員Id</label>
+				<div class="col-sm-6"> 
+					<input class="form-control" type="text" id="mem_id" name="mem_id" placeholder="會員Id" min=-1>
+				</div>
+			</div>
+			<div class="form-group">			
+				<label class="control-label col-sm-2" for="themeTopic">themeTopic</label>
+				<div class="col-sm-6">	
+					<input type="text" class="form-control" id="theme_topic" name="theme_topic" placeholder="themeTopic">
+				</div>	
+			</div>
+			<div class="form-group">		
+				<label class="control-label col-sm-2" for="themeCatalog">catalog</label> 
+				<div class="col-sm-6">	
+					<input type="number" class="form-control" id="theme_catalog" name="theme_catalog" placeholder="catalog" min=0>
+				</div>
 			</div>								
-		</div>
 			<div>
 				<div id="theme_article">
 				
 				</div>
-		</div>
-		<div>
+			</div>
+			<div>
 				<textarea name="theme_article" id="theme_article2" class="form-control"></textarea>
-		
-		<div>
+			</div>
+			<div>
 				<button type="button" class="btn btn-danger form-control"
 						id="btnUpdate">Update</button>
+			</div>
+			</form>
+			</div>
 		</div>
 	</div>
 </div>
 <!-- 			<input type="button" id="b1" value="undo">  -->
-
+<!-- 	<script src="../js/jquery-3.1.0.min.js"></script> -->
 	<script type="text/javascript">
-	$(function(){
+$(function(){
 		
 	$("#btnIdCheck").click(function() {
 		resetErrors();
 		var theme_id = $("#theme_id").val();
-		var theme_topic = $("#theme_topic").val();
-		console.log((theme_topic))	
 		
 		$.getJSON(("ThemeServlet"), {"theme_id" : theme_id}, function(data) {
 //				console.log(data);
@@ -125,67 +140,60 @@
 	   });				
     });
 	$("#btnEdit").click(function(){
-		 $('#theme_article2').summernote({
-			 
+		var theme_topic = $("#theme_topic").val();
+		console.log((theme_topic))	
+		 $('#theme_article2').summernote({			 
 			 height:200
 			 });
+		 $("#theme_article").remove();
 	})
 	
 	
 		$("#btnUpdate").click(function() {
-// 				resetErrors();
-				
-				var theme_id = $("#theme_id").val();
-				
-				var form = $(document.attUpdate).serializeArray();
-				var nameValue = $(document.attUpdate).serialize();
-// 				json = {};
-// 				json["theme_id"]=+theme_id;
-// 				for (var i = 0; i < form.length; i++){
+// 				resetErrors();				
+				var theme_id = $("#theme_id").val();				
+				var form = $(document.updateTheme).serializeArray();
+				var nameValue = $(document.updateTheme).serialize();
+				json = {};
+				json["theme_id"]=+theme_id;
+				for (var i = 0; i < form.length; i++){
 // 					$("#theme_id").prop("readonly", true);
-// 					json[form[i].name] = form[i].value;				
+					json[form[i].name] = form[i].value;				
 
-// 				}
-// 				console.log(JSON.stringify(json));
+				}
+				console.log(JSON.stringify(json));
 				
 				$.ajax({
 					"type":"PUT",
 					"url":"ThemeServlet?theme_id="+theme_id,
 					"dataType":"json",
-// 					"data":JSON.stringify(json),
-					
+					"data":JSON.stringify(json),					
 					"success":function(data){
-						$.each(data,function(themeinx,themeValue){
-						
+					$.each(data,function(themeinx,themeValue){						
 							
 					if(themeValue=="修改成功"){
 								alert("修改成功!");
-							}
-							
+							}							
 							if(themeValue=="修改失敗"){
 								alert("修改失敗!");
 							}
 							
 							var msg = '<label class="error" for="'+themeinx+'">'+themeValue+'</label>';
-							$("input[name=" + themeinx + "], select[name=" + themeinx + "], textarea[name=" + themeValue + "]").addClass('inputTxtError').after(msg);
-						
-							
-							
+							$("input[name=" + themeinx + "], select[name=" + themeinx + "], textarea[name=" + themeValue + "]").addClass('inputTxtError').after(msg);																				
 						});
 // 							console.log(JSON.stringify(json));
-                        }
-					
+                        }					
 				})		
 			 
 				.done(function(data)
 			    {
 	 				console.log("200.");
 	 				
-	 				$.each(data,function(attName,attValue){
-	 				if(attValue=="修改成功"){
-	 				document.idCheckAtt.reset();
-	 				document.attUpdate.reset();
-	 				$("#att_id").prop("readonly", false);
+	 				$.each(data,function(themeName,themeValue){
+	 				if(themeValue=="修改成功"){
+	 				document.idCheckTheme.reset();
+// 	 				document.attUpdate.reset();
+// 	 				$("#att_id").prop("readonly", false);
 	 				}
 	 				});
 			    })

@@ -6,12 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
 
-table, th  {
-   border: 5px groove black;
-}
-td {
-	border:2px solid black;
-}
+/*  table, th  { 
+    border: 5px ; 
+ } */ 
+ /* td { 
+ 	border:2px solid black; 
+ }  */
 .error {
    color: #ff0000;
    font-size: 12px;
@@ -32,16 +32,18 @@ td {
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
 </head>
 <body>
+<div class="container">
 	<div>
 		<input type="button" value="New Theme" id="but1" /> 
 		<input type="button" value=" New Response" id="but2" />
 	</div>
-<hr>
+
 <!-- 	<div> -->
 <!-- 		<label for="themeID">ThemeID</label> <input type="text" -->
 <!-- 			class="form-control" id="themeID" name="themeID" -->
 <!-- 			 placeholder="id"> -->
 <!-- 	</div> -->
+
 	<div>
 			<label for="themeTopic">Search ThemeTopice</label> <input type="text"
 			class="form-control" id="theme_topic" name="themetopic"
@@ -49,23 +51,25 @@ td {
 	</div>
 	<div>
 		<label for="themeAll">LIST ALL Theme</label>
-		<button type="button" id="search3">search all</button>
+	</div>
+	<div>	
+		<button type="button" id="search3" class="btn btn-default">search all</button>
 	</div>
 	<div id="d1"></div>
-	<hr>
-	<div>
-			<div>
+	
+	<div class="row">
+			<div class="col-md-6">
 				<button type="button" class="btn btn-success form-control"
 				id="btnIdCheck">TopicCheck</button>
 			</div>
-			<div>
+			<div class="col-md-6">
 				<button type="button" class="btn btn-danger form-control"
 				id="btnReset">Reset</button>
 			</div>	
 	</div>
 	<hr>
 	<div id="aa">
-		<table id="tb1">
+		<table id="tb1" class="table table-bordered">
 		<thead>
 			<tr>
 				<th>id</th>				
@@ -80,7 +84,7 @@ td {
 			<tbody></tbody>
 		</table>
 	</div>
-	
+</div>	
 
 	
 	
