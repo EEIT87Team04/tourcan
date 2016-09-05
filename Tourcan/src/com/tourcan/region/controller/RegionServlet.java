@@ -17,7 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.tourcan.region.model.RegionDAO;
 import com.tourcan.region.model.RegionHibernateDAO;
 
-@WebServlet("/att/RegionServlet")
+@WebServlet("/RegionServlet")
 public class RegionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ApplicationContext context;
