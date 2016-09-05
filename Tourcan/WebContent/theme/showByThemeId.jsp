@@ -51,8 +51,8 @@
 						id="btnIdCheck">IdCheck</button>
 			</div>
 			<div>
-					<button type="button" class="btn btn-danger form-control"
-						id="btnReset">Reset</button>
+					<button type="button" class="btn btn-warning form-control"
+						id="btnEdit">edit</button>
 			</div>
 		<div>
 			<div>
@@ -72,6 +72,13 @@
 				<div id="theme_article">
 				
 				</div>
+		</div>
+		<div>
+				<textarea name="theme_article" id="theme_article2" class="form-control"></textarea>
+		
+		<div>
+				<button type="button" class="btn btn-danger form-control"
+						id="btnUpdate">Update</button>
 		</div>
 	</div>
 </div>
@@ -95,7 +102,9 @@
 					if(themeName=="theme_article"){
 // 						console.log(themeValue);
 					$('#theme_article').summernote('code', themeValue);		
+					$('#theme_article2').summernote('code', themeValue);		
 					 var makrup = $('#theme_article').summernote('code');
+					 
 					 $("#theme_article").summernote('destroy');
 					}
 // 					if(themeName=="theme_id"){
@@ -113,38 +122,81 @@
 			        
 					}
 			});
-	   });
-		
-// 		$.getJSON(("ThemeServlet"), {"theme_topic" : theme_topic}, function(data) {
-// //				console.log(data);
-// 			$.each(data, function(themeName, themeValue) {
-// 			    	$("#"+themeName).val(themeValue);
-			    	
-
-// 					if(themeName=="theme_article"){
-// // 						console.log(themeValue);
-// 					$('#theme_article').summernote('code', themeValue);		
-// 					 var makrup = $('#theme_article').summernote('code');
-// 					 $("#theme_article").summernote('destroy');
-// 					}
-// // 					if(themeName=="theme_id"){
-// // 						console.log(themeValue);
-// // 			 			$("#theme_id").prop("readonly", true);
-// // 					}
-					
-// 					if(themeName=="themeTopic"){
-// 						console.log(themeName);
-// 					    if(themeValue=="themeTopice search error" || themeValue=="themeTopice error"){
-// // 						    alert("查無編號!");
-// 						    var msg = '<label class="error" for="themeTopic">'+themeValue+'</label>';
-// 							$('input[name="themetopic"]').addClass('inputTxtError').after(msg);
-// 						}
-			        
-// 					}
-// 			});
-// 	   });
-		
+	   });				
     });
+	$("#btnEdit").click(function(){
+		 $('#theme_article2').summernote({
+			 
+			 height:200
+			 });
+	})
+	
+	
+		$("#btnUpdate").click(function() {
+// 				resetErrors();
+				
+				var theme_id = $("#theme_id").val();
+				
+				var form = $(document.attUpdate).serializeArray();
+				var nameValue = $(document.attUpdate).serialize();
+// 				json = {};
+// 				json["theme_id"]=+theme_id;
+// 				for (var i = 0; i < form.length; i++){
+// 					$("#theme_id").prop("readonly", true);
+// 					json[form[i].name] = form[i].value;				
+
+// 				}
+// 				console.log(JSON.stringify(json));
+				
+				$.ajax({
+					"type":"PUT",
+					"url":"ThemeServlet?theme_id="+theme_id,
+					"dataType":"json",
+// 					"data":JSON.stringify(json),
+					
+					"success":function(data){
+						$.each(data,function(themeinx,themeValue){
+						
+							
+					if(themeValue=="修改成功"){
+								alert("修改成功!");
+							}
+							
+							if(themeValue=="修改失敗"){
+								alert("修改失敗!");
+							}
+							
+							var msg = '<label class="error" for="'+themeinx+'">'+themeValue+'</label>';
+							$("input[name=" + themeinx + "], select[name=" + themeinx + "], textarea[name=" + themeValue + "]").addClass('inputTxtError').after(msg);
+						
+							
+							
+						});
+// 							console.log(JSON.stringify(json));
+                        }
+					
+				})		
+			 
+				.done(function(data)
+			    {
+	 				console.log("200.");
+	 				
+	 				$.each(data,function(attName,attValue){
+	 				if(attValue=="修改成功"){
+	 				document.idCheckAtt.reset();
+	 				document.attUpdate.reset();
+	 				$("#att_id").prop("readonly", false);
+	 				}
+	 				});
+			    })
+				.fail(function(xhr) 
+				{
+    			   console.log("ERR.");
+				});
+			});	
+	
+	
+	
 	function resetErrors() {
 	    $('form input, form select').removeClass('inputTxtError');
 	    $('label.error').remove();

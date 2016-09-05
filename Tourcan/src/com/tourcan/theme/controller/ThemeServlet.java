@@ -58,12 +58,12 @@ public class ThemeServlet  extends HttpServlet{
 				if(thno!=null){
 				ThemeService tsv =new ThemeService();
 				ThemeVO thVO = tsv.findById(thno);
-				System.out.println(thVO);
+//				System.out.println(thVO);
 				if(thVO !=null){
 				try{
 				Gson gson  = GsonBuilderUtils.gsonBuilderWithBase64EncodedByteArrays().create();
 				String themeG = gson.toJson(thVO);
-				System.out.println(themeG);
+//				System.out.println(themeG);
 				resp.getWriter().println(themeG);
 				}catch (Exception e) {
 					err.append("themeId", "無此編號");
@@ -168,6 +168,55 @@ public class ThemeServlet  extends HttpServlet{
 			e.printStackTrace();
 		}
 
+  	}
+  	
+  	protected void doPut(HttpServletRequest req,HttpServletResponse resp)throws  ServletException, IOException {
+  		req.setCharacterEncoding("UTF-8");
+  		resp.setCharacterEncoding("UTF-8");
+  		resp.setContentType("application/json");
+		BufferedReader br = req.getReader();
+		JSONObject checkR =new  JSONObject();
+		Timestamp themetime =null;
+		Integer themeid=null;
+		Integer memId = null;
+		ThemeVO themeVO=null;
+		try{
+			themeVO = new Gson().fromJson(br,ThemeVO.class);
+			
+			String themeTopic= themeVO.getTheme_topic();
+//			System.out.println(themeTopic);
+			if(themeTopic==null||themeTopic.trim().isEmpty()||themeTopic.trim().length()==0){
+			checkR.append("theme_topic","plz into topic");
+			}
+			String themearticle = themeVO.getTheme_article();
+//			System.out.println("themearticle:"+themearticle);
+			if(themearticle==null||themearticle.trim().isEmpty()||themearticle.trim().length()==0){
+			checkR.append("theme_article", "plz into article");
+			}
+			themetime=new Timestamp(System.currentTimeMillis());
+//			System.out.println("themetime:"+themetime);
+			Integer themecatalog =themeVO.getTheme_catalog();
+			if(themecatalog==null){
+				checkR.append("theme_catalog", "plz into catalog");	
+			}
+			themeid=themeVO.getTheme_id();
+			memId= themeVO.getMem_id();//抓出已建立的id
+			if(checkR.length()>0){
+				throw new Exception();
+			}else{
+				ThemeService srv =new ThemeService();
+				srv.update(themeVO);
+//				srv.insert(themeTopic, themecatalog, themearticle, themetime, memId);
+				checkR.append("result", "修改成功");
+				resp.getWriter().println(checkR.toString());
+			}
+		}catch (Exception e) {
+			checkR.append("result", "修改失敗");
+			resp.getWriter().println(checkR.toString());
+			e.printStackTrace();
+		}
+  	
+  	
   	}
   	
   	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
