@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 import com.google.gson.annotations.Expose;
 
-public class ThemeVO implements Serializable  {
+public class RespVO implements Serializable  {
 	@Expose
 	private Integer  theme_id;
 	@Expose

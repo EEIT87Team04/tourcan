@@ -4,19 +4,19 @@ import java.sql.Timestamp;
 import java.util.List;
 
 
-public class ThemeService {
+public class RespService {
 
 	private Theme_interface dao;
 
-	public ThemeService() {
+	public RespService() {
 		dao = new ThemeDAO();
 	}
 	
 	
 	
-	public ThemeVO insert(String theme_topic, Integer themecatalog, String theme_article,Timestamp theme_time,Integer mem_id)
+	public RespVO insert(String theme_topic, Integer themecatalog, String theme_article,Timestamp theme_time,Integer mem_id)
 	{
-		ThemeVO thVO=new ThemeVO();
+		RespVO thVO=new RespVO();
 		thVO.setTheme_article(theme_article);
 		thVO.setTheme_topic(theme_topic);
 		thVO.setTheme_catalog(themecatalog);
@@ -32,7 +32,7 @@ public class ThemeService {
 
 
 
-	public void update(ThemeVO themeVO) {
+	public void update(RespVO themeVO) {
 		dao.update(themeVO);
 	}
 
@@ -44,16 +44,16 @@ public class ThemeService {
 
 
 
-	public ThemeVO findById(Integer theme_id) {
+	public RespVO findById(Integer theme_id) {
 		return dao.findById(theme_id);
 	}
 
 
 
-	public List<ThemeVO> findByTopic(String theme_topic) {
+	public List<RespVO> findByTopic(String theme_topic) {
 		return dao.findByTopic(theme_topic);
 	}
-	public List<ThemeVO> getAll() {
+	public List<RespVO> getAll() {
 		return dao.getAll();
 	}
 

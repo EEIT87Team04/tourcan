@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import hibernate.util.HibernateUtil;
 
@@ -37,11 +38,11 @@ public class RespDAO implements Resp_interface {
 	}
 
 	@Override
-	public void delete(RespVO respVO) {
+	public void delete(Integer resp_id) {
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
-			sion.delete(respVO);
+			sion.delete(resp_id);
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
 				sion.getTransaction().rollback();
@@ -69,16 +70,19 @@ public class RespDAO implements Resp_interface {
 	public List<RespVO> findByTopic(String resp_topic) {
 		List<RespVO> topic = null;
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tc= sion.beginTransaction();
 		String topic2 ="%" +resp_topic+ "%";
 		try{
-			sion.beginTransaction();
+//			sion.beginTransaction();
 			String QueryTopic ="FROM AttVO WHERE resp_topic like :resp_topic";
 			Query query =sion.createQuery(QueryTopic);
 			query.setParameter("resp_topic",topic2);
 			topic=query.list();
-			sion.getTransaction().commit();;
+			tc.commit();
+//			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
-				sion.getTransaction().rollback();
+//				sion.getTransaction().rollback();
+				tc.rollback();
 				throw e;
 			}
 		return topic;

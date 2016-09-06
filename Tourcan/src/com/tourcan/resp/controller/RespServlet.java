@@ -1,4 +1,4 @@
-package com.tourcan.theme.controller;
+package com.tourcan.resp.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,14 +17,16 @@ import org.springframework.http.converter.json.GsonBuilderUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tourcan.theme.model.RespService;
-import com.tourcan.theme.model.RespVO;
+import com.tourcan.resp.model.RespService;
+import com.tourcan.resp.model.RespVO;
 
-@WebServlet("/theme/ThemeServlet")
-public class ThemeServlet  extends HttpServlet{
+
+
+@WebServlet("/resp/respServlet")
+public class RespServlet  extends HttpServlet{
   	private static final long serialVersionUID =1L;
   	
-  	public ThemeServlet(){
+  	public RespServlet(){
   		super();	
   	}
   	@Override
@@ -42,22 +44,22 @@ public class ThemeServlet  extends HttpServlet{
 		JSONObject err = new JSONObject(); 
 // ----------------Query one by attId----------------	
 	
-		String thstr = req.getParameter("theme_id");
+		String thstr = req.getParameter("resp_id");
 			if(thstr!=null){
-				Integer thno =null;
+				Integer rsno =null;
 			try {
-				 thno =new Integer(req.getParameter("theme_id"));
-				 System.out.println(thno);
+				rsno =new Integer(req.getParameter("resp_id"));
+				 System.out.println(rsno);
 				} catch (Exception e) {
-					err.append("themeId", "編號只能為整數");
+					err.append("respid", "編號只能為整數");
 					resp.getWriter().println(err.toString());
 //					System.out.println(e.getMessage());
 				}
 				// ***************************2.開始查詢資料*****************************************//*
 
-				if(thno!=null){
-				RespService tsv =new RespService();
-				RespVO thVO = tsv.findById(thno);
+				if(rsno!=null){
+				RespService rsv =new RespService();
+				RespVO thVO = rsv.findById(rsno);
 //				System.out.println(thVO);
 				if(thVO !=null){
 				try{
@@ -66,21 +68,21 @@ public class ThemeServlet  extends HttpServlet{
 //				System.out.println(themeG);
 				resp.getWriter().println(themeG);
 				}catch (Exception e) {
-					err.append("themeId", "無此編號");
+					err.append("respid", "無此編號");
 					resp.getWriter().println(err.toString());
 				}				
 				} else {				
-				err.append("themeId", "無此編號");
+				err.append("respid", "無此編號");
 				resp.getWriter().println(err.toString());
 			    }
 				}else{
-				err.append("themeId", "無此編號");
+				err.append("respid", "無此編號2");
 
 				}
 			return;			
 		}
 			
-			String th_name = req.getParameter("theme_topic");
+			String th_name = req.getParameter("resp_topic");
 //			System.out.println(th_name);
 		  if (th_name != null) {
 			try {
@@ -89,7 +91,7 @@ public class ThemeServlet  extends HttpServlet{
 						throw new Exception();
 					}
 				} catch (Exception e) {
-					err.append("themeTopic", "無此Topic");
+					err.append("respTopic", "無此Resp");
 				}
 				// ***************************2.開始查詢資料*****************************************//*
 				RespService asv = new RespService();
@@ -100,7 +102,7 @@ public class ThemeServlet  extends HttpServlet{
 				if(jsonG.length()<3){
 //				System.out.println(jsonG.length()<3);
 				// response.getWriter().write(jsonG);
-						err.append("themeTopic", "無此Topic");
+						err.append("respTopic", "無此Resp");
 						resp.getWriter().println(err.toString());
 				}else{
 					resp.getWriter().println(jsonG.toString());
@@ -108,18 +110,18 @@ public class ThemeServlet  extends HttpServlet{
 				}
 				// ***************************其他可能的錯誤處理*************************************//*
 			} catch (Exception e) {
-				err.append("themeTopic", "themeTopic search error");
+				err.append("respTopic", "respTopic search error");
 				resp.getWriter().println(err.toString());
 			}
-
-		} else if (thstr == null && th_name == null) {
-			RespService asv = new RespService();
-			List<RespVO> avo = asv.getAll();
-			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-			String jsonG = gson.toJson(avo);
-			System.out.println(jsonG);
-			resp.getWriter().println(jsonG.toString());
-		}
+		  }
+//		} else if (thstr == null && th_name == null) {
+//			RespService asv = new RespService();
+//			List<ThemeVO> avo = asv.getAll();
+//			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+//			String jsonG = gson.toJson(avo);
+//			System.out.println(jsonG);
+//			resp.getWriter().println(jsonG.toString());
+//		}
 		
 	}
   		
@@ -131,34 +133,31 @@ public class ThemeServlet  extends HttpServlet{
   		resp.setContentType("application/json");
 		BufferedReader br = req.getReader();
 		JSONObject checkR =new  JSONObject();
-		Timestamp themetime =null;
+		Timestamp resptime =null;
 		Integer memId = null;
-		RespVO themeVO=null;
+		RespVO respVO=null;
 		try{
-			themeVO = new Gson().fromJson(br,RespVO.class);
+			respVO = new Gson().fromJson(br,RespVO.class);
 			
-			String themeTopic= themeVO.getTheme_topic();
+			String respTopic= respVO.getResp_topic();
 //			System.out.println(themeTopic);
-			if(themeTopic==null||themeTopic.trim().isEmpty()||themeTopic.trim().length()==0){
-			checkR.append("theme_topic","plz into topic");
+			if(respTopic==null||respTopic.trim().isEmpty()||respTopic.trim().length()==0){
+			checkR.append("resp_topic","plz into resp");
 			}
-			String themearticle = themeVO.getTheme_article();
+			String resparticle = respVO.getResp_article();
 //			System.out.println("themearticle:"+themearticle);
-			if(themearticle==null||themearticle.trim().isEmpty()||themearticle.trim().length()==0){
-			checkR.append("theme_article", "plz into article");
+			if(resparticle==null||resparticle.trim().isEmpty()||resparticle.trim().length()==0){
+			checkR.append("resp_article", "plz into resp");
 			}
-			themetime=new Timestamp(System.currentTimeMillis());
+			resptime=new Timestamp(System.currentTimeMillis());
 //			System.out.println("themetime:"+themetime);
-			Integer themecatalog =themeVO.getTheme_catalog();
-			if(themecatalog==null){
-				checkR.append("theme_catalog", "plz into catalog");	
-			}
-			memId= themeVO.getMem_id();//抓出已建立的id
+			respVO.setResp_time(resptime);
+			memId= respVO.getMem_id();//抓出已建立的id
 			if(checkR.length()>0){
 				throw new Exception();
 			}else{
 				RespService srv =new RespService();
-				srv.insert(themeTopic, themecatalog, themearticle, themetime, memId);
+				srv.insert(respVO);    //(respTopic,  resparticle, resptime, memId);
 				checkR.append("result", "success");
 				resp.getWriter().println(checkR.toString());
 			}
@@ -176,38 +175,37 @@ public class ThemeServlet  extends HttpServlet{
   		resp.setCharacterEncoding("UTF-8");
   		resp.setContentType("application/json");
 		BufferedReader br = req.getReader();
-		Timestamp themetime =null;
+		Timestamp resptime =null;
+		Integer respid=null;
 		Integer themeid=null;
 		Integer memId = null;
-		RespVO themeVO=null;
+		RespVO respVO=null;
 		JSONObject checkR =new  JSONObject();
 		try{
-			themeVO = new Gson().fromJson(br,RespVO.class);
+			respVO = new Gson().fromJson(br,RespVO.class);
 			
-			String themeTopic= themeVO.getTheme_topic();
+			String respTopic= respVO.getResp_topic();
 //			System.out.println(themeTopic);
-			if(themeTopic==null||themeTopic.trim().isEmpty()||themeTopic.trim().length()==0){
+			if(respTopic==null||respTopic.trim().isEmpty()||respTopic.trim().length()==0){
 			checkR.append("theme_topic","plz into topic");
 			}
-			String themearticle = themeVO.getTheme_article();
+			String resparticle = respVO.getResp_article();
 //			System.out.println("themearticle:"+themearticle);
-			if(themearticle==null||themearticle.trim().isEmpty()||themearticle.trim().length()==0){
+			if(resparticle==null||resparticle.trim().isEmpty()||resparticle.trim().length()==0){
 			checkR.append("theme_article", "plz into article");
 			}
 //			System.out.println("themetime:"+themetime);
-			Integer themecatalog =themeVO.getTheme_catalog();
-			if(themecatalog==null){
-				checkR.append("theme_catalog", "plz into catalog");	
-			}
-			themetime=new Timestamp(System.currentTimeMillis());
-			themeVO.setTheme_time(themetime);
-			themeid=themeVO.getTheme_id();
-			memId= themeVO.getMem_id();//抓出已建立的id
+			
+			resptime=new Timestamp(System.currentTimeMillis());
+			respVO.setResp_time(resptime);
+			themeid=respVO.getTheme_id();
+			respid=respVO.getResp_id();
+			memId= respVO.getMem_id();//抓出已建立的id
 			if(checkR.length()>0){
 				throw new Exception();
 			}else{
 				RespService srv =new RespService();
-				srv.update(themeVO);
+				srv.update(respVO);
 //				srv.insert(themeTopic, themecatalog, themearticle, themetime, memId);
 				checkR.append("result", "修改成功");
 				resp.getWriter().println(checkR.toString());
@@ -228,35 +226,35 @@ public class ThemeServlet  extends HttpServlet{
   		resp.setContentType("application/json");
 		JSONObject err = new JSONObject();
   		
-		String thstr = req.getParameter("theme_id");
+		String respstr = req.getParameter("resp_id");
 		
-		if(thstr!=null){
-			Integer thno =null;
+		if(respstr!=null){
+			Integer rsno =null;
 			try {
-				 thno =new Integer(req.getParameter("theme_id"));
-				 System.out.println(thno);
+				 rsno =new Integer(req.getParameter("resp_id"));
+				 System.out.println(rsno);
 				} catch (Exception e) {
-					err.append("themeInt", "編號只能為整數");
+					err.append("respInt", "編號只能為整數");
 	//				resp.getWriter().println(err.toString());
 	//				System.out.println(e.getMessage());
 				}
 			
-			if(thno!=null){
+			if(rsno!=null){
 				RespService tsv =new RespService();
 				try{
-				 tsv.delete(thno);
+				 tsv.delete(rsno);
 					}catch (Exception e) {
-					err.append("themeId", "無此編號");
+					err.append("respId", "無此編號");
 	//				resp.getWriter().println(err.toString());
 					}											
 				}else{
-				err.append("themeId", "2無此編號");
+				err.append("respId", "2無此編號");
 	
 				}				
 			} 
 		
 		PrintWriter out = resp.getWriter();
-		out.println(err.append("themeSu","success"));
+		out.println(err.append("respSu","success"));
 	}
 
 }

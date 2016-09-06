@@ -12,7 +12,7 @@ import hibernate.util.HibernateUtil;
 public class ThemeDAO implements Theme_interface {
 
 	@Override
-	public void insert(ThemeVO themeVO) {
+	public void insert(RespVO themeVO) {
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 		sion.beginTransaction();
@@ -26,7 +26,7 @@ public class ThemeDAO implements Theme_interface {
 	}
 
 	@Override
-	public void update(ThemeVO themeVO) {
+	public void update(RespVO themeVO) {
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
@@ -44,7 +44,7 @@ public class ThemeDAO implements Theme_interface {
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
-			ThemeVO themeVO= new ThemeVO();
+			RespVO themeVO= new RespVO();
 			themeVO.setTheme_id(theme_id);
 			sion.delete(themeVO);
 			sion.getTransaction().commit();;
@@ -57,12 +57,12 @@ public class ThemeDAO implements Theme_interface {
 	}
 
 	@Override
-	public ThemeVO findById(Integer theme_id) {
-		ThemeVO themeVO =null;
+	public RespVO findById(Integer theme_id) {
+		RespVO themeVO =null;
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
-			themeVO = (ThemeVO) sion.get(ThemeVO.class,theme_id );
+			themeVO = (RespVO) sion.get(RespVO.class,theme_id );
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
 				sion.getTransaction().rollback();
@@ -72,8 +72,8 @@ public class ThemeDAO implements Theme_interface {
 	}
 
 	@Override
-	public List<ThemeVO> findByTopic(String theme_topic) {
-		List<ThemeVO> topic = null;
+	public List<RespVO> findByTopic(String theme_topic) {
+		List<RespVO> topic = null;
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = sion.beginTransaction();
 		String topic2 ="%" +theme_topic+ "%";
@@ -93,8 +93,8 @@ public class ThemeDAO implements Theme_interface {
 		return topic;
 	}
 	@Override
-	public List<ThemeVO> getAll() {
-		List<ThemeVO> list =null;
+	public List<RespVO> getAll() {
+		List<RespVO> list =null;
 		Session session=HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
     	try {

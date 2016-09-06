@@ -2,16 +2,18 @@ package com.tourcan.resp.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class RespVO implements Serializable  {
 	
 	private Integer  resp_id;
 	private String resp_topic;
 	private String resp_article;
-	private String theme_catalog;
-	private Date resp_time;
+	private Timestamp resp_time;
 	private Integer mem_id;
 	private Integer theme_id;
+	
+	
 	public Integer getResp_id() {
 		return resp_id;
 	}
@@ -30,16 +32,10 @@ public class RespVO implements Serializable  {
 	public void setResp_article(String resp_article) {
 		this.resp_article = resp_article;
 	}
-	public String getTheme_catalog() {
-		return theme_catalog;
-	}
-	public void setTheme_catalog(String theme_catalog) {
-		this.theme_catalog = theme_catalog;
-	}
-	public Date getResp_time() {
+	public Timestamp getResp_time() {
 		return resp_time;
 	}
-	public void setResp_time(Date resp_time) {
+	public void setResp_time(Timestamp resp_time) {
 		this.resp_time = resp_time;
 	}
 	public Integer getMem_id() {

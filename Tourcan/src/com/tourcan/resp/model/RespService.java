@@ -22,8 +22,13 @@ public class RespService {
 	}
 
 
-	public void delete(RespVO respVO) {
-		dao.delete(respVO);
+	public List<RespVO> findByTopic(String resp_topic) {
+		return dao.findByTopic(resp_topic);
+	}
+
+
+	public void delete(Integer resp_id) {
+		dao.delete(resp_id);
 	}
 
 
