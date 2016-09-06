@@ -48,43 +48,41 @@
 					success : function(data) {
 						
 						$.each(data, function(respName, themeValue) {
+							var v2;
+							console.log((data.respInt))
+							console.log((data.respId))
 							console.log(data.respSu)
-							console.log(typeof(data.respInt))
-							console.log(typeof(data.respId))
-							console.log("111="+respName)
-							console.log("222="+themeValue)
-							     if(respName=="respSu") {
-							    	console.log("3="+respName);
-// 								$("#success").text("success");
-							    	if(themeValue=="success"&&themeValue!="無此編號"&&themeValue!="編號只能為整數"){
-									var msg = '<label class="error" for="respId">'+"success"+'</label>';
-									$('input[name="respid"]').addClass('inputTxtError').after(msg);
-									$("#resp_id").val("");
-								}
-								}
-							if(respName=="respInt"){
-							    if(themeValue=="編號只能為整數"||themeValue=="無此編號"||themeValue=="success" ){
+// 							if(respName=="respInt"){
+							    if(data.respInt=="編號只能為整數"&&data.respId=="無此編號"&&data.respSu=="success" ){
 // 									console.log(themeValue)
-							    	console.log("1="+themeValue);
 // 								    alert("查無編號!"); ||themeName=="themeId"||themeName=="themeSu"
 								    var msg = '<label class="error" for="respId">'+"編號只能為整數"+'</label>';
 								    resetErrors();
 									$('input[name="respid"]').addClass('inputTxtError').after(msg);
 									$("#resp_id").val("");
 									}
-							    } if(respName=="respId"){
+// 							    } 
+								if(data.respInt==v2&&data.respId=="無此編號"&&data.respSu=="success"){
 // 							    	console.log(respName.indexOf("respSu"))
-							    if(themeValue=="無此編號" ){
-							    	console.log("2="+themeValue);
+// 							    if(themeValue=="無此編號" ){
 // 							    	console.log(themeName);||themeName=="themeSu"||themeValue=="success"
-									resetErrors();
 									var msg = '<label class="error" for="respId">'+"無此編號"+'</label>';
+									resetErrors();
 									$('input[name="respid"]').addClass('inputTxtError').after(msg);
 									$("#resp_id").val("");
 
-							    }
+// 							    }
 							    }
  							    
+							     if(data.respInt==v2&&data.respId==v2&&data.respSu=="success") {
+// 								$("#success").text("success");
+// 							    	if(themeValue=="success"&&themeValue!="無此編號"&&themeValue!="編號只能為整數"){
+									var msg = '<label class="error" for="respId">'+"success"+'</label>';
+									resetErrors();
+									$('input[name="respid"]').addClass('inputTxtError').after(msg);
+									$("#resp_id").val("");
+// 								}
+								}
 					
 						});
 					

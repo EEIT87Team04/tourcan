@@ -45,35 +45,41 @@
 					url:"ThemeServlet?" + $.param({"theme_id" : theme_id}),
 					dataType : "json",
 					success : function(data) {
-						
+						console.log(data.themeInt);
+						console.log(data.themeId);
+						console.log(data.themeSu);
 						$.each(data, function(themeName, themeValue) {
-		 						console.log(themeValue);
-							if(themeName=="themeInt"){
-							    if(themeValue=="編號只能為整數"||themeValue=="無此編號"||themeValue=="success" ){
-									console.log(themeValue)
-							    	
+							var v2;
+// 		 						console.log(themeValue);
+							if(data.themeInt=="編號只能為整數"&&data.themeId=="2無此編號"&&data.themeSu=="success"){
+// 							    if(themeValue=="編號只能為整數"||themeValue=="無此編號"||themeValue=="success" ){
+// 									console.log(themeValue)							    	
 // 								    alert("查無編號!"); ||themeName=="themeId"||themeName=="themeSu"
-								    var msg = '<label class="error" for="themeId">'+themeValue+'</label>';
+								    var msg = '<label class="error" for="themeId">'+"編號只能為整數"+'</label>';
+								    resetErrors();
 									$('input[name="themeid"]').addClass('inputTxtError').after(msg);
 									$("#theme_id").val("");
-									}
-							    }else if(themeName=="themeId"){
-							    if(themeValue=="無此編號"||themeValue=="success" ){
+// 									}
+							    } 
+							if(data.themeInt==v2&&data.themeId=="無此編號"&&data.themeSu=="success"){
+// 							    if(themeValue=="無此編號"||themeValue=="success" ){
 // 							    	console.log(themeName);||themeName=="themeSu"
 									var msg = '<label class="error" for="themeId">'+themeValue+'</label>';
+									resetErrors();
 									$('input[name="themeid"]').addClass('inputTxtError').after(msg);
 									$("#theme_id").val("");
+// 							    }
 							    }
-							    }
-							    else if(themeName=="themeSu") {
-								$("#success").text("success");
-							    	if(themeValue=="success"){
-									console.log(themeName);
+							     if(data.themeInt==v2&&data.themeId==v2&&data.themeSu=="success") {
+// 								$("#success").text("success");
+// 							    	if(themeValue=="success"){
+// 									console.log(themeName);
 									var msg = '<label class="error" for="themeId">'+themeValue+'</label>';
+									resetErrors();
 									$('input[name="themeid"]').addClass('inputTxtError').after(msg);
 									$("#theme_id").val("");
+// 									}
 								}
-						}
 						
 					
 						});

@@ -45,7 +45,7 @@
 					<div class="form-group">
 						<label for="themeCatalog">catalog</label> <input type="number"
 							id="theme_catalog" name="theme_catalog" class="form-control"
-							placeholder="catalog" min=0>
+							placeholder="catalog" min=1>
 						</div>
 				
 				</div>

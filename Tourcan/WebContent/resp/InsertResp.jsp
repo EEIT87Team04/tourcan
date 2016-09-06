@@ -40,12 +40,12 @@
 					<div class="form-group" >
 						<label for="memId" >會員UId</label> <input type="text"
 							id="mem_uid" name="mem_uid" class="form-control"
-							placeholder="會員Id" min=-1>
+							placeholder="會員Id" >
 					</div>
 					<div class="form-group" >
 						<label for="themeID" >themeId</label> <input type="number"
 							id="theme_id" name="theme_id" class="form-control"
-							placeholder="theme_id" min=-1>
+							placeholder="theme_id" min=1>
 					</div>
 					
 				
