@@ -22,7 +22,7 @@ import com.tourcan.resp.model.RespVO;
 
 
 
-@WebServlet("/resp/respServlet")
+@WebServlet("/resp/RespServlet")
 public class RespServlet  extends HttpServlet{
   	private static final long serialVersionUID =1L;
   	
@@ -51,7 +51,7 @@ public class RespServlet  extends HttpServlet{
 				rsno =new Integer(req.getParameter("resp_id"));
 				 System.out.println(rsno);
 				} catch (Exception e) {
-					err.append("respid", "編號只能為整數");
+					err.append("respId", "編號只能為整數");
 					resp.getWriter().println(err.toString());
 //					System.out.println(e.getMessage());
 				}
@@ -68,15 +68,15 @@ public class RespServlet  extends HttpServlet{
 //				System.out.println(themeG);
 				resp.getWriter().println(themeG);
 				}catch (Exception e) {
-					err.append("respid", "無此編號");
+					err.append("respId", "無此編號");
 					resp.getWriter().println(err.toString());
 				}				
 				} else {				
-				err.append("respid", "無此編號");
+				err.append("respId", "無此編號");
 				resp.getWriter().println(err.toString());
 			    }
 				}else{
-				err.append("respid", "無此編號2");
+				err.append("respId", "無此編號2");
 
 				}
 			return;			
@@ -126,7 +126,8 @@ public class RespServlet  extends HttpServlet{
 	}
   		
 
-  	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+  	@SuppressWarnings("unused")
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
   		req.setCharacterEncoding("UTF-8");
   		resp.setCharacterEncoding("UTF-8");
@@ -135,6 +136,7 @@ public class RespServlet  extends HttpServlet{
 		JSONObject checkR =new  JSONObject();
 		Timestamp resptime =null;
 		Integer memId = null;
+		Integer themeid=null;
 		RespVO respVO=null;
 		try{
 			respVO = new Gson().fromJson(br,RespVO.class);
@@ -142,16 +144,17 @@ public class RespServlet  extends HttpServlet{
 			String respTopic= respVO.getResp_topic();
 //			System.out.println(themeTopic);
 			if(respTopic==null||respTopic.trim().isEmpty()||respTopic.trim().length()==0){
-			checkR.append("resp_topic","plz into resp");
+			checkR.append("resp_topic","plz into respTopic");
 			}
 			String resparticle = respVO.getResp_article();
 //			System.out.println("themearticle:"+themearticle);
 			if(resparticle==null||resparticle.trim().isEmpty()||resparticle.trim().length()==0){
-			checkR.append("resp_article", "plz into resp");
+			checkR.append("resp_article", "plz into resparticle");
 			}
 			resptime=new Timestamp(System.currentTimeMillis());
 //			System.out.println("themetime:"+themetime);
 			respVO.setResp_time(resptime);
+			themeid=respVO.getTheme_id();
 			memId= respVO.getMem_id();//抓出已建立的id
 			if(checkR.length()>0){
 				throw new Exception();

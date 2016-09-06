@@ -17,8 +17,8 @@ import org.springframework.http.converter.json.GsonBuilderUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tourcan.theme.model.RespService;
-import com.tourcan.theme.model.RespVO;
+import com.tourcan.theme.model.ThemeService;
+import com.tourcan.theme.model.ThemeVO;
 
 @WebServlet("/theme/ThemeServlet")
 public class ThemeServlet  extends HttpServlet{
@@ -56,8 +56,8 @@ public class ThemeServlet  extends HttpServlet{
 				// ***************************2.開始查詢資料*****************************************//*
 
 				if(thno!=null){
-				RespService tsv =new RespService();
-				RespVO thVO = tsv.findById(thno);
+				ThemeService tsv =new ThemeService();
+				ThemeVO thVO = tsv.findById(thno);
 //				System.out.println(thVO);
 				if(thVO !=null){
 				try{
@@ -92,8 +92,8 @@ public class ThemeServlet  extends HttpServlet{
 					err.append("themeTopic", "無此Topic");
 				}
 				// ***************************2.開始查詢資料*****************************************//*
-				RespService asv = new RespService();
-				List<RespVO> avo = asv.findByTopic(th_name);
+				ThemeService asv = new ThemeService();
+				List<ThemeVO> avo = asv.findByTopic(th_name);
 				
 				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 				String jsonG = gson.toJson(avo);
@@ -113,8 +113,8 @@ public class ThemeServlet  extends HttpServlet{
 			}
 
 		} else if (thstr == null && th_name == null) {
-			RespService asv = new RespService();
-			List<RespVO> avo = asv.getAll();
+			ThemeService asv = new ThemeService();
+			List<ThemeVO> avo = asv.getAll();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			String jsonG = gson.toJson(avo);
 			System.out.println(jsonG);
@@ -132,10 +132,10 @@ public class ThemeServlet  extends HttpServlet{
 		BufferedReader br = req.getReader();
 		JSONObject checkR =new  JSONObject();
 		Timestamp themetime =null;
-		Integer memId = null;
-		RespVO themeVO=null;
+		String memUid = null;
+		ThemeVO themeVO=null;
 		try{
-			themeVO = new Gson().fromJson(br,RespVO.class);
+			themeVO = new Gson().fromJson(br,ThemeVO.class);
 			
 			String themeTopic= themeVO.getTheme_topic();
 //			System.out.println(themeTopic);
@@ -153,12 +153,12 @@ public class ThemeServlet  extends HttpServlet{
 			if(themecatalog==null){
 				checkR.append("theme_catalog", "plz into catalog");	
 			}
-			memId= themeVO.getMem_id();//抓出已建立的id
+			memUid= themeVO.getMem_uid();//抓出已建立的id
 			if(checkR.length()>0){
 				throw new Exception();
 			}else{
-				RespService srv =new RespService();
-				srv.insert(themeTopic, themecatalog, themearticle, themetime, memId);
+				ThemeService srv =new ThemeService();
+				srv.insert(themeTopic, themecatalog, themearticle, themetime, memUid);
 				checkR.append("result", "success");
 				resp.getWriter().println(checkR.toString());
 			}
@@ -178,11 +178,11 @@ public class ThemeServlet  extends HttpServlet{
 		BufferedReader br = req.getReader();
 		Timestamp themetime =null;
 		Integer themeid=null;
-		Integer memId = null;
-		RespVO themeVO=null;
+		String memUid = null;
+		ThemeVO themeVO=null;
 		JSONObject checkR =new  JSONObject();
 		try{
-			themeVO = new Gson().fromJson(br,RespVO.class);
+			themeVO = new Gson().fromJson(br,ThemeVO.class);
 			
 			String themeTopic= themeVO.getTheme_topic();
 //			System.out.println(themeTopic);
@@ -202,11 +202,11 @@ public class ThemeServlet  extends HttpServlet{
 			themetime=new Timestamp(System.currentTimeMillis());
 			themeVO.setTheme_time(themetime);
 			themeid=themeVO.getTheme_id();
-			memId= themeVO.getMem_id();//抓出已建立的id
+			memUid= themeVO.getMem_uid();//抓出已建立的id
 			if(checkR.length()>0){
 				throw new Exception();
 			}else{
-				RespService srv =new RespService();
+				ThemeService srv =new ThemeService();
 				srv.update(themeVO);
 //				srv.insert(themeTopic, themecatalog, themearticle, themetime, memId);
 				checkR.append("result", "修改成功");
@@ -242,7 +242,7 @@ public class ThemeServlet  extends HttpServlet{
 				}
 			
 			if(thno!=null){
-				RespService tsv =new RespService();
+				ThemeService tsv =new ThemeService();
 				try{
 				 tsv.delete(thno);
 					}catch (Exception e) {

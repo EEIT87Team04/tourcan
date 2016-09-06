@@ -74,7 +74,7 @@
 			<tr>
 				<th>id</th>				
 				<th>topic</th>
-				<th>memUID</th>
+				<th>memid</th>
 				<th>catalog</th>
 			
 			
@@ -126,7 +126,7 @@ $(function(){
  					
 						var cell1 = $("<td></td>").text(themeValue.theme_id);
  						var cell2 = $("<td></td>").text(themeValue.theme_topic);
- 						var cell3 = $("<td></td>").text(themeValue.mem_uid);
+ 						var cell3 = $("<td></td>").text(themeValue.mem_id);
  						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
  						var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4]);
  						myBody.append(row);
@@ -144,7 +144,7 @@ $(function(){
 			$.each(data,function(idx,theme1){
 				var cell1 = $("<td></td>").text(theme1.theme_id);
 					var cell2 = $("<td></td>").text(theme1.theme_topic);
-					var cell3 = $("<td></td>").text(theme1.mem_uid);
+					var cell3 = $("<td></td>").text(theme1.mem_id);
 					var cell4 = $("<td></td>").text(theme1.theme_catalog);					
 					var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4]);
 					myBody.append(row);

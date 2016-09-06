@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 import com.google.gson.annotations.Expose;
 
-public class RespVO implements Serializable  {
+public class ThemeVO implements Serializable  {
 	@Expose
 	private Integer  theme_id;
 	@Expose
@@ -17,7 +17,7 @@ public class RespVO implements Serializable  {
 	@Expose
 	private Timestamp theme_time;
 	@Expose
-	private Integer mem_id;
+	private String mem_uid;
 	
 	public Timestamp getTheme_time() {
 		return theme_time;
@@ -49,14 +49,14 @@ public class RespVO implements Serializable  {
 	public void setTheme_catalog(Integer themecatalog) {
 		this.theme_catalog = themecatalog;
 	}
+	public String getMem_uid() {
+		return mem_uid;
+	}
+	public void setMem_uid(String mem_uid) {
+		this.mem_uid = mem_uid;
+	}
 
 	
-	public Integer getMem_id() {
-		return mem_id;
-	}
-	public void setMem_id(Integer mem_id) {
-		this.mem_id = mem_id;
-	}
-	
+
 	
 }

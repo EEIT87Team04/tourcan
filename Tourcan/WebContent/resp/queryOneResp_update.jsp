@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>query One Theme and Update</title>
+<title>query One Response and Update</title>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> 
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
@@ -33,20 +33,20 @@
 <div class="container">
 	<div>
 		<div>
-			<input type="button" value="New Theme" id="but1" /> 
-			<input type="button" value=" New Response" id="but2" />
+<!-- 			<input type="button" value="New Theme" id="but1" />  -->
+<!-- 			<input type="button" value=" New Response" id="but2" /> -->
 		</div>
 	</div>
 	<br>		
 	<div>
 		<div>
 			<div>
-				<form name="idCheckTheme" id="idCheckTheme">
+				<form name="idCheckesp" id="idCheckesp">
 					<div>
 						<div >
-							<label for="themeId">Search 編號Id</label> <input type="text"
-							class="form-control" id="theme_id" name="themeid"
-							placeholder="themeid" >
+							<label for="respId">Search 編號Id</label> <input type="text"
+							class="form-control" id="resp_id" name="respid"
+							placeholder="respid" >
 						</div>
 					</div>
 					<div class="col-md-6">
@@ -60,35 +60,35 @@
 				</form>
 			</div>
 		<div>
-			<form name="updateTheme" class="form-horizontal">
+			<form name="updateResp" class="form-horizontal">
 				<div>
 					<h2>Update Theme </h2>
 				</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="memId">會員UID</label>
+				<label  class="control-label col-sm-2" for="themeId"> 編號Id</label> 
 				<div class="col-sm-6"> 
-					<input class="form-control" type="text" id="mem_uid" name="mem_uid" placeholder="會員Id" min=-1>
+				<input type="text" class="form-control" id="theme_id" name="themeid" placeholder="themeid" >
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="memId">會員Id</label>
+				<div class="col-sm-6"> 
+					<input type="text" class="form-control"  id="mem_id" name="mem_id" placeholder="會員Id" min=-1>
 				</div>
 			</div>
 			<div class="form-group">			
-				<label class="control-label col-sm-2" for="themeTopic">themeTopic</label>
+				<label class="control-label col-sm-2" for="respTopic">respTopic</label>
 				<div class="col-sm-6">	
-					<input type="text" class="form-control" id="theme_topic" name="theme_topic" placeholder="themeTopic">
+					<input type="text" class="form-control" id="resp_topic" name="resp_topic" placeholder="respTopic">
 				</div>	
 			</div>
-			<div class="form-group">		
-				<label class="control-label col-sm-2" for="themeCatalog">catalog</label> 
-				<div class="col-sm-6">	
-					<input type="number" class="form-control" id="theme_catalog" name="theme_catalog" placeholder="catalog" min=0>
-				</div>
-			</div>								
 			<div>
-				<div id="theme_article">
+				<div id="resp_article">
 				
 				</div>
 			</div>
 			<div>
-				<textarea name="theme_article" id="theme_article2" class="form-control"></textarea>
+				<textarea name="resp_article" id="theme_article2" class="form-control"></textarea>
 			</div>
 			<div>
 				<button type="button" class="btn btn-danger form-control"
@@ -106,33 +106,33 @@ $(function(){
 		
 	$("#btnIdCheck").click(function() {
 		resetErrors();
-		var theme_id = $("#theme_id").val();
+		var resp_id = $("#resp_id").val();
 		
-		$.getJSON(("ThemeServlet"), {"theme_id" : theme_id}, function(data) {
+		$.getJSON(("RespServlet"), {"resp_id" : resp_id}, function(data) {
 //				console.log(data);
-			$.each(data, function(themeName, themeValue) {
-			    	$("#"+themeName).val(themeValue);
+			$.each(data, function(respName, respValue) {
+			    	$("#"+respName).val(themeValue);
 			    	
 
-					if(themeName=="theme_article"){
+					if(respName=="resp_article"){
 // 						console.log(themeValue);
-					$('#theme_article').summernote('code', themeValue);		
-					$('#theme_article2').summernote('code', themeValue);		
-					 var makrup = $('#theme_article').summernote('code');
+					$('#resp_article').summernote('code', respValue);		
+					$('#theme_article2').summernote('code', respValue);		
+					 var makrup = $('#resp_article').summernote('code');
 					 
-					 $("#theme_article").summernote('destroy');
+					 $("#resp_article").summernote('destroy');
 					}
 // 					if(themeName=="theme_id"){
 // 						console.log(themeValue);
 // 			 			$("#theme_id").prop("readonly", true);
 // 					}
 					
-					if(themeName=="themeId"){
+					if(respName=="respId"){
 // 						console.log(themeName);
-					    if(themeValue=="編號只能為整數" || themeValue=="無此編號"){
+					    if(respValue=="編號只能為整數" || respValue=="無此編號"){
 						    alert("查無編號!");
-						    var msg = '<label class="error" for="themeId">'+themeValue+'</label>';
-							$('input[name="themeid"]').addClass('inputTxtError').after(msg);
+						    var msg = '<label class="error" for="respId">'+themeValue+'</label>';
+							$('input[name="respid"]').addClass('inputTxtError').after(msg);
 						}
 			        
 					}
@@ -140,22 +140,22 @@ $(function(){
 	   });				
     });
 	$("#btnEdit").click(function(){
-		var theme_topic = $("#theme_topic").val();
-		console.log((theme_topic))	
+// 		var theme_topic = $("#theme_topic").val();
+// 		console.log((theme_topic))	
 		 $('#theme_article2').summernote({			 
 			 height:200
 			 });
-		 $("#theme_article").remove();
+		 $("#resp_article").remove();
 	})
 	
 	
 		$("#btnUpdate").click(function() {
 // 				resetErrors();				
-				var theme_id = $("#theme_id").val();				
-				var form = $(document.updateTheme).serializeArray();
-				var nameValue = $(document.updateTheme).serialize();
+				var resp_id = $("#resp_id").val();				
+				var form = $(document.updateResp).serializeArray();
+				var nameValue = $(document.updateResp).serialize();
 				json = {};
-				json["theme_id"]=+theme_id;
+				json["resp_id"]=+resp_id;
 				for (var i = 0; i < form.length; i++){
 // 					$("#theme_id").prop("readonly", true);
 					json[form[i].name] = form[i].value;				
@@ -165,21 +165,21 @@ $(function(){
 				
 				$.ajax({
 					"type":"PUT",
-					"url":"ThemeServlet?theme_id="+theme_id,
+					"url":"RespServlet?resp_id="+resp_id,
 					"dataType":"json",
 					"data":JSON.stringify(json),					
 					"success":function(data){
-					$.each(data,function(themeinx,themeValue){						
+					$.each(data,function(respinx,respValue){						
 							
-					if(themeValue=="修改成功"){
+					if(respValue=="修改成功"){
 								alert("修改成功!");
 							}							
-							if(themeValue=="修改失敗"){
+							if(respValue=="修改失敗"){
 								alert("修改失敗!");
 							}
 							
-							var msg = '<label class="error" for="'+themeinx+'">'+themeValue+'</label>';
-							$("input[name=" + themeinx + "], select[name=" + themeinx + "], textarea[name=" + themeValue + "]").addClass('inputTxtError').after(msg);																				
+							var msg = '<label class="error" for="'+respinx+'">'+respValue+'</label>';
+							$("input[name=" + respinx + "], select[name=" + respinx + "], textarea[name=" + respValue + "]").addClass('inputTxtError').after(msg);																				
 						});
 // 							console.log(JSON.stringify(json));
                         }					
@@ -191,7 +191,7 @@ $(function(){
 	 				
 	 				$.each(data,function(themeName,themeValue){
 	 				if(themeValue=="修改成功"){
-	 				document.idCheckTheme.reset();
+// 	 				document.idCheckResp.reset();
 // 	 				document.attUpdate.reset();
 // 	 				$("#att_id").prop("readonly", false);
 	 				}
