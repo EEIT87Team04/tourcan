@@ -10,7 +10,7 @@ public class TripVO implements java.io.Serializable {
 	private Integer trip_id;
 	private Timestamp trip_ctime;
 	private Integer trip_price;
-	private Integer mem_id;
+	private String mem_uid;
 
 	public String getTrip_name() {
 		return trip_name;
@@ -36,10 +36,10 @@ public class TripVO implements java.io.Serializable {
 	public void setTrip_price(Integer trip_price) {
 		this.trip_price = trip_price;
 	}
-	public Integer getMem_id() {
-		return mem_id;
+	public String getMem_uid() {
+		return mem_uid;
 	}
-	public void setMem_id(Integer mem_id) {
-		this.mem_id = mem_id;
+	public void setMem_uid(String mem_uid) {
+		this.mem_uid = mem_uid;
 	}
 }

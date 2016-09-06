@@ -135,7 +135,7 @@ public class TripServlet extends HttpServlet {
 		String tripName = null;
 		Timestamp tripCtime = null;
 		Integer tripPrice = null;
-		Integer memId = null;
+		String memUid = null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
 		TripVO tripVO = null;
@@ -156,13 +156,13 @@ public class TripServlet extends HttpServlet {
 			if (tripPrice == null || tripPrice < 0)
 				checkResult.append("trip_price", "預算金額錯誤。");
 
-			memId = tripVO.getMem_id(); // 抓出建立會員Id 且 不能修改
+			memUid = tripVO.getMem_uid(); // 抓出建立會員Id 且 不能修改
 
 			if (checkResult.length() > 0) {
 				throw new Exception();
 			} else {
 				TripService srv = new TripService();
-				srv.insertTrip(tripName, tripCtime, tripPrice, memId);
+				srv.insertTrip(tripName, tripCtime, tripPrice, memUid);
 				checkResult.append("result", "新增成功");
 				response.getWriter().println(checkResult.toString());
 			}
@@ -185,7 +185,7 @@ public class TripServlet extends HttpServlet {
 		Integer tripId = null;
 		Timestamp tripCtime = null;
 		Integer tripPrice = null;
-		Integer memId = null;
+		String memUid = null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
 		TripVO tripVO = null;
@@ -208,13 +208,13 @@ public class TripServlet extends HttpServlet {
 			if (tripPrice == null || tripPrice < 0)
 				checkResult.append("trip_price", "總預算金額錯誤。");
 
-			memId = tripVO.getMem_id(); // 抓出會員Id 且 不能修改
-			System.out.println(tripName + "," + tripId + "," + tripCtime + "," + tripPrice + "," + memId);
+			memUid = tripVO.getMem_uid(); // 抓出會員Id 且 不能修改
+//			System.out.println(tripName + "," + tripId + "," + tripCtime + "," + tripPrice + "," + memUid);
 			if (checkResult.length() > 0) {
 				throw new Exception();
 			} else {
 				TripService srv = new TripService();
-				srv.updateTrip(tripName, tripId, tripCtime, tripPrice, memId);
+				srv.updateTrip(tripName, tripId, tripCtime, tripPrice, memUid);
 				checkResult.append("result", "更新成功");
 				response.getWriter().println(checkResult.toString());
 			}

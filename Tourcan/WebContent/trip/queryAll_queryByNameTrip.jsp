@@ -43,7 +43,7 @@ text-decoration: underline;
 				<th>trip_name</th>
 				<th>trip_ctime</th>
 				<th>trip_price</th>
-				<th>mem_id</th>
+				<th>mem_uid</th>
 			</tr>
 			</thead>
 			<tbody></tbody>
@@ -71,7 +71,7 @@ $(function(){
 				var cell2 = $("<td></td>").text(trip.trip_name);
 				var cell3 = $("<td></td>").text(trip.trip_ctime);
 				var cell4 = $("<td></td>").text(trip.trip_price);
-				var cell5 = $("<td></td>").text(trip.mem_id);
+				var cell5 = $("<td></td>").text(trip.mem_uid);
 				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
 				myBody.append(row);
 				})
@@ -96,7 +96,7 @@ $(function(){
 				var cell2 = $("<td></td>").text(trip.trip_name);
 				var cell3 = $("<td></td>").text(trip.trip_ctime);
 				var cell4 = $("<td></td>").text(trip.trip_price);
-				var cell5 = $("<td></td>").text(trip.mem_id);
+				var cell5 = $("<td></td>").text(trip.mem_uid);
 				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
 				myBody.append(row);				
 				

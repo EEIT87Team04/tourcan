@@ -11,21 +11,21 @@ public class TripService {
 		dao = new TripDAO();
 	}
 
-	public TripVO insertTrip(String trip_name, Timestamp trip_ctime, Integer trip_price, Integer mem_id) {
+	public TripVO insertTrip(String trip_name, Timestamp trip_ctime, Integer trip_price, String mem_uid) {
 
 		TripVO tripVO = new TripVO();
 
 		tripVO.setTrip_name(trip_name);
 		tripVO.setTrip_ctime(trip_ctime);
 		tripVO.setTrip_price(trip_price);
-		tripVO.setMem_id(mem_id);
+		tripVO.setMem_uid(mem_uid);
 
 		dao.insert(tripVO);
 
 		return tripVO;
 	}
 
-	public TripVO updateTrip(String trip_name, Integer trip_id, Timestamp trip_ctime, Integer trip_price, Integer mem_id) {
+	public TripVO updateTrip(String trip_name, Integer trip_id, Timestamp trip_ctime, Integer trip_price, String mem_uid) {
 
 		TripVO tripVO = new TripVO();
 
@@ -33,7 +33,7 @@ public class TripService {
 		tripVO.setTrip_id(trip_id);
 		tripVO.setTrip_ctime(trip_ctime);
 		tripVO.setTrip_price(trip_price);
-		tripVO.setMem_id(mem_id);
+		tripVO.setMem_uid(mem_uid);
 
 		dao.update(tripVO);
 

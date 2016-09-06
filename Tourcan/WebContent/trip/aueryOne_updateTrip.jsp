@@ -78,8 +78,8 @@
 						id="trip_price" name="trip_price" placeholder="行程" min=0>
 					</div>
 					<div>
-					<label for="memId">會員Id</label> <input type="text" id="mem_id"
-						name="mem_id" placeholder="會員Id" min=-1 readonly>
+					<label for="memUid">會員Id</label> <input type="text" id="mem_uid"
+						name="mem_uid" placeholder="會員Id" min=-1 readonly>
 					</div>
 				</div>
 				<div>
