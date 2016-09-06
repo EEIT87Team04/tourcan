@@ -20,7 +20,7 @@
 </head>
 <body>
 	<div class="container">
-		<form name="addAtt">
+		<form name="TripAtt" class="form-inline">
 			<div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
 					<h1>行程規劃</h1>
@@ -30,16 +30,14 @@
 				<div class="col-sm-7">
 					<div class="row">
 						<div class="col-sm-9 form-group">
-							<label for="attName">景點名稱</label> <input type="text"
-								class="form-control" id="att_name" name="att_name"
-								placeholder="景點名稱">
+							<label for="attName">出發地點：</label> 
+							<input type="text" class="form-control" id="att_name" name="att_name" placeholder="地址或景點名稱">
+							<button type="button" class="btn btn-danger form-control" id="btnReset">送出</button>	
 						</div>
-						<div class="col-sm-3 form-group">
-							<label for="attEat">吃貨</label> <select class="form-control"
-								id="att_eat" name="att_eat">
-								<option value="false">否</option>
-								<option value="true">是</option>
-							</select>
+												<div class="col-sm-9 form-group">
+							<label for="attName">出發時間：</label> 
+							<input type="time" class="form-control" id="att_name" name="att_name" placeholder="地址或景點名稱">
+							<button type="button" class="btn btn-danger form-control" id="btnReset">送出</button>	
 						</div>
 					</div>
 
@@ -101,7 +99,7 @@
 					</div>
 
 					<div class="row">
-						<div class="col-sm-12 form-group">
+						<div class="col-sm-25 form-group">
 							<label for="電話">網址</label> <input type="text"
 								class="form-control" id="att_url" name="att_url"
 								placeholder="網址">
