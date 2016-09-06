@@ -40,6 +40,7 @@
 	<br>		
 	<div>
 		<div>
+			<h3>Search for themeID</h3>
 			<div>
 				<form name="idCheckTheme" id="idCheckTheme">
 					<div>

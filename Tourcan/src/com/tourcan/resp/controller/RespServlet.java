@@ -83,7 +83,6 @@ public class RespServlet  extends HttpServlet{
 		}
 			
 			String th_name = req.getParameter("resp_topic");
-//			System.out.println(th_name);
 		  if (th_name != null) {
 			try {
 				try {
@@ -96,11 +95,12 @@ public class RespServlet  extends HttpServlet{
 				// ***************************2.開始查詢資料*****************************************//*
 				RespService asv = new RespService();
 				List<RespVO> avo = asv.findByTopic(th_name);
+				System.out.println("2="+th_name);
 				
 				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 				String jsonG = gson.toJson(avo);
+				System.out.println(jsonG);
 				if(jsonG.length()<3){
-//				System.out.println(jsonG.length()<3);
 				// response.getWriter().write(jsonG);
 						err.append("respTopic", "無此Resp");
 						resp.getWriter().println(err.toString());
@@ -135,7 +135,7 @@ public class RespServlet  extends HttpServlet{
 		BufferedReader br = req.getReader();
 		JSONObject checkR =new  JSONObject();
 		Timestamp resptime =null;
-		Integer memId = null;
+		String memUid =null;
 		Integer themeid=null;
 		RespVO respVO=null;
 		try{
@@ -155,7 +155,7 @@ public class RespServlet  extends HttpServlet{
 //			System.out.println("themetime:"+themetime);
 			respVO.setResp_time(resptime);
 			themeid=respVO.getTheme_id();
-			memId= respVO.getMem_id();//抓出已建立的id
+			memUid= respVO.getMem_uid();//抓出已建立的id
 			if(checkR.length()>0){
 				throw new Exception();
 			}else{
@@ -181,7 +181,7 @@ public class RespServlet  extends HttpServlet{
 		Timestamp resptime =null;
 		Integer respid=null;
 		Integer themeid=null;
-		Integer memId = null;
+		String memUid =null;
 		RespVO respVO=null;
 		JSONObject checkR =new  JSONObject();
 		try{
@@ -203,7 +203,7 @@ public class RespServlet  extends HttpServlet{
 			respVO.setResp_time(resptime);
 			themeid=respVO.getTheme_id();
 			respid=respVO.getResp_id();
-			memId= respVO.getMem_id();//抓出已建立的id
+			memUid= respVO.getMem_uid();//抓出已建立的id
 			if(checkR.length()>0){
 				throw new Exception();
 			}else{
@@ -227,10 +227,8 @@ public class RespServlet  extends HttpServlet{
   		req.setCharacterEncoding("UTF-8");
   		resp.setCharacterEncoding("UTF-8");
   		resp.setContentType("application/json");
-		JSONObject err = new JSONObject();
-  		
-		String respstr = req.getParameter("resp_id");
-		
+		JSONObject err = new JSONObject();  		
+		String respstr = req.getParameter("resp_id");		
 		if(respstr!=null){
 			Integer rsno =null;
 			try {
@@ -239,19 +237,21 @@ public class RespServlet  extends HttpServlet{
 				} catch (Exception e) {
 					err.append("respInt", "編號只能為整數");
 	//				resp.getWriter().println(err.toString());
-	//				System.out.println(e.getMessage());
+					System.out.println(e.getMessage());
 				}
 			
 			if(rsno!=null){
-				RespService tsv =new RespService();
+				RespService rsv =new RespService();
 				try{
-				 tsv.delete(rsno);
+				 rsv.delete(rsno);
 					}catch (Exception e) {
 					err.append("respId", "無此編號");
-	//				resp.getWriter().println(err.toString());
+					System.out.println(e.getMessage());
+//					resp.getWriter().println(err.toString());
 					}											
 				}else{
-				err.append("respId", "2無此編號");
+				err.append("respId", "無此編號");
+//				System.out.println(e.getMessage());
 	
 				}				
 			} 

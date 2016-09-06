@@ -39,6 +39,7 @@
 	</div>
 	<br>		
 	<div>
+		<h3>Search for respID</h3>
 		<div>
 			<div>
 				<form name="idCheckesp" id="idCheckesp">
@@ -62,18 +63,18 @@
 		<div>
 			<form name="updateResp" class="form-horizontal">
 				<div>
-					<h2>Update Theme </h2>
+					<h2>Update Response </h2>
 				</div>
 			<div class="form-group">
 				<label  class="control-label col-sm-2" for="themeId"> 編號Id</label> 
 				<div class="col-sm-6"> 
-				<input type="text" class="form-control" id="theme_id" name="themeid" placeholder="themeid" >
+				<input type="text" class="form-control" id="theme_id" name="theme_id" placeholder="themeid" >
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="memId">會員Id</label>
+				<label class="control-label col-sm-2" for="memId">會員UID</label>
 				<div class="col-sm-6"> 
-					<input type="text" class="form-control"  id="mem_id" name="mem_id" placeholder="會員Id" min=-1>
+					<input type="text" class="form-control"  id="mem_uid" name="mem_uid" placeholder="會員Id" min=-1>
 				</div>
 			</div>
 			<div class="form-group">			
@@ -111,7 +112,7 @@ $(function(){
 		$.getJSON(("RespServlet"), {"resp_id" : resp_id}, function(data) {
 //				console.log(data);
 			$.each(data, function(respName, respValue) {
-			    	$("#"+respName).val(themeValue);
+			    	$("#"+respName).val(respValue);
 			    	
 
 					if(respName=="resp_article"){
@@ -150,7 +151,7 @@ $(function(){
 	
 	
 		$("#btnUpdate").click(function() {
-// 				resetErrors();				
+				resetErrors();				
 				var resp_id = $("#resp_id").val();				
 				var form = $(document.updateResp).serializeArray();
 				var nameValue = $(document.updateResp).serialize();

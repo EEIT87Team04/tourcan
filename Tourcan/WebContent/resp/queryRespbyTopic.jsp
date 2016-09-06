@@ -45,16 +45,16 @@
 <!-- 	</div> -->
 
 	<div>
-			<label for="themeTopic">Search ThemeTopice</label> <input type="text"
-			class="form-control" id="theme_topic" name="themetopic"
-			placeholder="themeTopic">
+			<label for="respTopic">Search RespTopice</label> <input type="text"
+			class="form-control" id="resp_topic" name="resptopic"
+			placeholder="respTopic">
 	</div>
-	<div>
-		<label for="themeAll">LIST ALL Theme</label>
-	</div>
-	<div>	
-		<button type="button" id="search3" class="btn btn-default">search all</button>
-	</div>
+<!-- 	<div> -->
+<!-- 		<label for="respAll">LIST ALL Theme</label> -->
+<!-- 	</div> -->
+<!-- 		<div>	 -->
+<!-- 			<button type="button" id="search3" class="btn btn-default">search all</button> -->
+<!-- 		</div> -->
 	<div id="d1"></div>
 	
 	<div class="row">
@@ -74,10 +74,8 @@
 			<tr>
 				<th>id</th>				
 				<th>topic</th>
-				<th>memid</th>
-				<th>catalog</th>
-			
-			
+				<th>memUID</th>
+				<th>themeID</th>
 				
 			</tr>
 			</thead>
@@ -92,7 +90,7 @@
 $(function(){
 	$("#btnIdCheck").click(function() {
 		resetErrors();
-		var theme_topic = $("#theme_topic").val();
+		var resp_topic = $("#resp_topic").val();
 		$('#tb1>tbody').empty();
 		$("#d1").empty();
 // 			if(attno2==null||attno2.trim().length==0){
@@ -104,16 +102,16 @@ $(function(){
 // 				$("#errid").remove();
 // 				$("#search1").after(errSpan);
 // 			}else{
-		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic},function(data){
+		$.getJSON(("RespServlet"),{"resp_topic" : resp_topic},function(data){
 // 			$("#errid").remove();
 			var myBody = $('#tb1>tbody');
-			$.each(data,function(themeName,themeValue){
-				if(themeName=="themeTopic"){
-						console.log(themeName);
-				    if(themeValue=="themeTopic error" || themeValue=="無此Topic"){
+			$.each(data,function(respName,respValue){
+				if(respName=="resp_topic"){
+						console.log(respName);
+				    if(respValue=="respTopic search error" || respValue=="無此Resp"){
 					    alert("查無編號!");
-					    var msg = '<label class="error" for="themeTopic">'+themeValue+'</label>';
-						$('input[name="themetopic"]').addClass('inputTxtError').after(msg);
+					    var msg = '<label class="error" for="respTopic">'+respValue+'</label>';
+						$('input[name="resptopic"]').addClass('inputTxtError').after(msg);
 					}
 		        
 				}else{
@@ -124,10 +122,10 @@ $(function(){
 // // 				$("#h3").setAttribute("style","color:red");
 // 						$("#d1").append(p1);
  					
-						var cell1 = $("<td></td>").text(themeValue.theme_id);
- 						var cell2 = $("<td></td>").text(themeValue.theme_topic);
- 						var cell3 = $("<td></td>").text(themeValue.mem_id);
- 						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
+						var cell1 = $("<td></td>").text(respValue.resp_id);
+ 						var cell2 = $("<td></td>").text(respValue.resp_topic);
+ 						var cell3 = $("<td></td>").text(respValue.mem_uid);
+ 						var cell4 = $("<td></td>").text(respValue.theme_id);						
  						var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4]);
  						myBody.append(row);
 }
@@ -137,21 +135,21 @@ $(function(){
 	})
 	
 	
-	$("#search3").click(function() {
-				$('#tb1>tbody').empty();
-		$.getJSON(("ThemeServlet"),function(data){
-			var myBody = $('#tb1>tbody');
-			$.each(data,function(idx,theme1){
-				var cell1 = $("<td></td>").text(theme1.theme_id);
-					var cell2 = $("<td></td>").text(theme1.theme_topic);
-					var cell3 = $("<td></td>").text(theme1.mem_id);
-					var cell4 = $("<td></td>").text(theme1.theme_catalog);					
-					var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4]);
-					myBody.append(row);
+// 	$("#search3").click(function() {
+// 				$('#tb1>tbody').empty();
+// 		$.getJSON(("ThemeServlet"),function(data){
+// 			var myBody = $('#tb1>tbody');
+// 			$.each(data,function(idx,resp1){
+// 					var cell1 = $("<td></td>").text(resp1.resp_id);
+// 					var cell2 = $("<td></td>").text(resp1.resp_topic);
+// 					var cell3 = $("<td></td>").text(resp1.mem_uid);
+// 					var cell4 = $("<td></td>").text(resp1.theme_id);					
+// 					var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4]);
+// 					myBody.append(row);
 				
-			})
-		})
-	});
+// 			})
+// 		})
+// 	});
 	function resetErrors() {
 	    $('form input, form select').removeClass('inputTxtError');
 	    $('label.error').remove();

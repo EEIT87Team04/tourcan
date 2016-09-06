@@ -41,8 +41,11 @@ public class RespDAO implements Resp_interface {
 	public void delete(Integer resp_id) {
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
+			System.out.println("i2="+resp_id);
 			sion.beginTransaction();
-			sion.delete(resp_id);
+			RespVO respVO= new RespVO();
+			respVO.setResp_id(resp_id);
+			sion.delete(respVO);
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
 				sion.getTransaction().rollback();
@@ -68,16 +71,19 @@ public class RespDAO implements Resp_interface {
 
 	@Override
 	public List<RespVO> findByTopic(String resp_topic) {
-		List<RespVO> topic = null;
+		List<RespVO> rtopic = null;
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tc= sion.beginTransaction();
-		String topic2 ="%" +resp_topic+ "%";
+		String topic3 ="%" +resp_topic+ "%";
+//		System.out.println(topic2);
 		try{
 //			sion.beginTransaction();
-			String QueryTopic ="FROM AttVO WHERE resp_topic like :resp_topic";
+			String QueryTopic ="FROM RespVO WHERE resp_topic like :resp_topic";
+			System.out.println(QueryTopic);
 			Query query =sion.createQuery(QueryTopic);
-			query.setParameter("resp_topic",topic2);
-			topic=query.list();
+			query.setParameter("resp_topic",topic3);
+			System.out.println(query);
+			rtopic=query.list();
 			tc.commit();
 //			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
@@ -85,7 +91,7 @@ public class RespDAO implements Resp_interface {
 				tc.rollback();
 				throw e;
 			}
-		return topic;
+		return rtopic;
 	}
 
 

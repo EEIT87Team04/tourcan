@@ -38,8 +38,8 @@
 						
 					</div>
 					<div class="form-group" >
-						<label for="memId" >會員Id</label> <input type="text"
-							id="mem_id" name="mem_id" class="form-control"
+						<label for="memId" >會員UId</label> <input type="text"
+							id="mem_uid" name="mem_uid" class="form-control"
 							placeholder="會員Id" min=-1>
 					</div>
 					<div class="form-group" >

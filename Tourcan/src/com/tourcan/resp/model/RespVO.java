@@ -4,13 +4,20 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import com.google.gson.annotations.Expose;
+
 public class RespVO implements Serializable  {
-	
+	@Expose
 	private Integer  resp_id;
+	@Expose
 	private String resp_topic;
+	@Expose
 	private String resp_article;
+	@Expose
 	private Timestamp resp_time;
-	private Integer mem_id;
+	@Expose
+	private String mem_uid;
+	@Expose
 	private Integer theme_id;
 	
 	
@@ -38,11 +45,12 @@ public class RespVO implements Serializable  {
 	public void setResp_time(Timestamp resp_time) {
 		this.resp_time = resp_time;
 	}
-	public Integer getMem_id() {
-		return mem_id;
+
+	public String getMem_uid() {
+		return mem_uid;
 	}
-	public void setMem_id(Integer mem_id) {
-		this.mem_id = mem_id;
+	public void setMem_uid(String mem_uid) {
+		this.mem_uid = mem_uid;
 	}
 	public Integer getTheme_id() {
 		return theme_id;
