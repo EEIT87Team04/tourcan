@@ -33,12 +33,12 @@ public class ThemeServlet  extends HttpServlet{
   		resp.setCharacterEncoding("UTF-8");
   		resp.setContentType("application/json");  		
 		// PrintWriter out = response.getWriter();
-		BufferedReader br = req.getReader();
-		StringBuffer sb = new StringBuffer(128);
-		String json;
-		while ((json = br.readLine()) != null)
-			sb.append(json);
-		json = sb.toString();
+//		BufferedReader br = req.getReader();
+//		StringBuffer sb = new StringBuffer(128);
+//		String json;
+//		while ((json = br.readLine()) != null)
+//			sb.append(json);
+//		json = sb.toString();
 		JSONObject err = new JSONObject(); 
 // ----------------Query one by attId----------------	
 	

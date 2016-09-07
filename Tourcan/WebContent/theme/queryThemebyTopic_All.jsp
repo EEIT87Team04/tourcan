@@ -76,7 +76,21 @@
 				<th>topic</th>
 				<th>memUID</th>
 				<th>catalog</th>
-			
+				<td>
+			<FORM METHOD="post" ACTION="mem.do">
+				<input type="submit" value="修改">
+				 <input type="hidden"name="mem_id" value="${MemVO.mem_id}">
+				  <input type="hidden"name="action" value="getOne_For_Update">
+			</FORM> 
+			</td>
+			<td>
+			<FORM METHOD="post" ACTION="mem.do" >
+				 <input	type="submit" value="刪除"    onclick="toDelete()" />
+				 <input type="hidden" name="memno" value="${MemVO.mem_id}"> 
+				  <input type="hidden"name="action" value="delete">
+				  <!--  <input type="hidden" onclick="toDelete()" >-->
+			</FORM>
+			</td>
 			
 				
 			</tr>
