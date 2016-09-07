@@ -71,7 +71,7 @@ public class TripServlet extends HttpServlet {
 		// ----------------findByName----------------
 
 		String tripName = request.getParameter("tripName");
-		List<TripVO> TripVO = null;
+		List<TripVO> tripVO = null;
 
 		if (method.equals("getByName")) {
 			JSONObject checkResult = new JSONObject();
@@ -83,10 +83,10 @@ public class TripServlet extends HttpServlet {
 					throw new Exception();
 				} else {
 					TripService tripSvc = new TripService();
-					TripVO = tripSvc.findByName(tripName);
-					if (TripVO.size() != 0) {
+					tripVO = tripSvc.findByName(tripName);
+					if (tripVO.size() != 0) {
 						Gson gson = new Gson();
-						String jsonG = gson.toJson(TripVO);
+						String jsonG = gson.toJson(tripVO);
 						// System.out.println(jsonG);
 						response.getWriter().println(jsonG);
 					} else {
@@ -108,10 +108,10 @@ public class TripServlet extends HttpServlet {
 			JSONObject checkResult = new JSONObject();
 			try {
 				TripService tripSvc = new TripService();
-				TripVO = tripSvc.getAll();
-				if (TripVO.size() != 0) {
+				tripVO = tripSvc.getAll();
+				if (tripVO.size() != 0) {
 					Gson gson = new Gson();
-					String jsonG = gson.toJson(TripVO);
+					String jsonG = gson.toJson(tripVO);
 					// System.out.println(jsonG);
 					response.getWriter().println(jsonG);
 				}

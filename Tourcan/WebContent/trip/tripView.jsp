@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,7 +13,7 @@
 <style type="text/css">
 #mapPreview {
 	height: 400px;
-	width: 500px;
+/* 	width: 500px; */
 	border: 2px solid #E0E0E0;
 }
 
@@ -57,7 +57,7 @@
 							<button type="button">送出</button>
 						</div>
 						<div class="col-sm-10 form-group">
-							<label for="attName">出發時間：</label> <input type="time">
+							<label for="attName">出發時間：</label> <input type="datetime-local">
 							<button type="button">送出</button>
 						</div>
 						<div class="col-sm-10 form-group">
@@ -83,7 +83,7 @@
 				</div>
 				<div class="col-sm-5">
 					<div class="row">
-						<div class="col-sm-12" id="mapPreview"></div>
+						<div class="col-sm-12 " id="mapPreview"></div>
 					</div>
 					<div class="row" style="margin-top: 20px">
 						<div class="col-sm-7 form-group">

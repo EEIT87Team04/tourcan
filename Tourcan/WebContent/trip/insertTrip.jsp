@@ -84,7 +84,7 @@
 				console.log(data);
 				$.each(data, function(errTrip, errMsg) {
 					if (errMsg == "新增成功") {
-						document.addTrip.reset();
+// 						document.addTrip.reset();
 						errMsgSpan.remove();
 					}
 					var errSpan = document.createElement("span");
