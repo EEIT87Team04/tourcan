@@ -176,7 +176,6 @@ text-decoration: underline;
 			var myBody = $('#tb1>tbody');
 			$.each(data,function(idx,att2){
 				var cell1 = $("<td></td>").text(att2.att_id);
-				var cell1 = $("<td></td>").text(att2.att_id);
 				var cell2 = $("<td></td>").text(att2.att_name);
 				var cell3 = $("<td></td>").text(att2.att_staytime);
 				var cell4 = $("<td></td>").text(att2.att_addr);
@@ -192,8 +191,8 @@ text-decoration: underline;
 				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9,cell10,cell11,cell12,cell13]);
 				myBody.append(row);				
 				
-			})
-		})
+			});
+		});
 	});
 // 	$("#search3").click(function() {
 // 		 url: "http://localhost:8080/Tourcan"

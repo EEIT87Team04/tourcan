@@ -108,6 +108,7 @@
 <!-- 		content code in here -->
 		</div>
 	</div>
+	
 	<script type="text/javascript">
 	$(function(){
 		$("#att").click(function(){
@@ -117,7 +118,12 @@
 			
 		});
 		
-		
+		$("#index").click(function(){
+			$("#content").load('index.htm',function(){
+				console.log('index.loaded');
+			});
+			
+		});
 		
 	});
 	</script>
