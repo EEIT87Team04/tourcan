@@ -132,10 +132,8 @@
 	</div>
 
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="js/jquery-3.1.0.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 		var coder, map, marker, checkTrigger, lastValue = "";
@@ -203,7 +201,7 @@
 
 			$("#btnSave").click(function() {
 				var errMsgSpan = $('form[name="addAtt"] span');
-				errMsgSpan.remove();
+				 $('form[name="addAtt"] span').remove();
 				var form = $(document.addAtt).serializeArray(), json = {};
 				for (var i = 0; i < form.length; i++) {
 					if (form[i].value.length > 0) {
@@ -216,7 +214,7 @@
 					$.each(data, function(errAtt, errMsg) {
 						if (errMsg == "新增成功") {
 							document.addAtt.reset();
-							errMsgSpan.remove();
+							 $('form[name="addAtt"] span').remove();
 						}
 						var errSpan = document.createElement("span");
 						var errText = document.createTextNode(errMsg);
@@ -234,7 +232,7 @@
 			});
 			$("#btnReset").click(function() {
 				document.addAtt.reset();
-				errMsgSpan.remove();
+				 $('form[name="addAtt"] span').remove();
 			});
 		});
 	</script>

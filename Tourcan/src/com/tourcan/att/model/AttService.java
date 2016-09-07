@@ -5,8 +5,7 @@ import java.util.List;
 import com.tourcan.region.model.RegionVO;
 
 public class AttService {
-
-	AttDAO_interface dao;
+	private AttDAO_interface dao;
 	
 	public AttService() {
 		dao = new AttDAO();
@@ -42,7 +41,6 @@ public class AttService {
 	}
 
 	public AttVO insert(AttVO attVO) {
-		AttDAO dao = new AttDAO();
 		try {
 			dao.insert(attVO);
 			return attVO;
@@ -93,9 +91,8 @@ public class AttService {
 	public List<AttVO> getAll(){
 		return dao.getAll();
 	}
-	public void deleteAtt(Integer att_id) {
-		dao.delete(att_id);
+	public void deleteAtt(Integer attId) {
+		dao.delete(attId);
 	}
-
 
 }
