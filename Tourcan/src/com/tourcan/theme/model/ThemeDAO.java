@@ -59,10 +59,12 @@ public class ThemeDAO implements Theme_interface {
 	@Override
 	public ThemeVO findById(Integer theme_id) {
 		ThemeVO themeVO =null;
+//		System.out.println("111=="+theme_id);
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
 			themeVO = (ThemeVO) sion.get(ThemeVO.class,theme_id );
+//			System.out.println(themeVO);
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
 				sion.getTransaction().rollback();

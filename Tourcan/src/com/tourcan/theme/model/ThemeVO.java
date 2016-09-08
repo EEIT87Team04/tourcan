@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import com.google.gson.annotations.Expose;
+import com.tourcan.resp.model.RespVO;
 
 public class ThemeVO implements Serializable  {
+	
+	private static final long serialVersionUID = 1L;
 	@Expose
 	private Integer  theme_id;
 	@Expose
@@ -19,6 +22,16 @@ public class ThemeVO implements Serializable  {
 	@Expose
 	private String mem_uid;
 	
+	private RespVO respVO;
+	
+	public ThemeVO(){};
+	
+	public RespVO getRespVO() {
+		return respVO;
+	}
+	public void setRespVO(RespVO respVO) {
+		this.respVO = respVO;
+	}
 	public Timestamp getTheme_time() {
 		return theme_time;
 	}

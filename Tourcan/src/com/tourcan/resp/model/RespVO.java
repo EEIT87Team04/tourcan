@@ -1,11 +1,14 @@
 package com.tourcan.resp.model;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.google.gson.annotations.Expose;
+import com.tourcan.theme.model.ThemeVO;
 
+@SuppressWarnings("serial")
 public class RespVO implements Serializable  {
 	@Expose
 	private Integer  resp_id;
@@ -20,7 +23,14 @@ public class RespVO implements Serializable  {
 	@Expose
 	private Integer theme_id;
 	
+	private Set<ThemeVO> themeno =new HashSet<ThemeVO>();
 	
+	public Set<ThemeVO> getThemeno() {
+		return themeno;
+	}
+	public void setThemeno(Set<ThemeVO> themeno) {
+		this.themeno = themeno;
+	}
 	public Integer getResp_id() {
 		return resp_id;
 	}

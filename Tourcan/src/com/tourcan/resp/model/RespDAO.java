@@ -1,10 +1,13 @@
 package com.tourcan.resp.model;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import com.tourcan.theme.model.ThemeVO;
 
 import hibernate.util.HibernateUtil;
 
@@ -56,19 +59,34 @@ public class RespDAO implements Resp_interface {
 
 	@Override
 	public RespVO findById(Integer resp_id) {
-		RespVO themeVO =null;
+		RespVO respVO =null;
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
 		try{
 			sion.beginTransaction();
-			themeVO = (RespVO) sion.get(RespVO.class,resp_id );
+			respVO = (RespVO) sion.get(RespVO.class,resp_id );
 			sion.getTransaction().commit();;
 			}catch (RuntimeException e) {
 				sion.getTransaction().rollback();
 				throw e;
 			}
-		return themeVO;
+		return respVO;
 	}
 
+	@Override
+	public RespVO findByThID(Integer theme_id) {
+		RespVO respVO =null;
+		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
+		try{
+			sion.beginTransaction();
+			respVO = (RespVO) sion.get(RespVO.class,theme_id );
+			sion.getTransaction().commit();;
+			}catch (RuntimeException e) {
+				sion.getTransaction().rollback();
+				throw e;
+			}
+		return respVO;
+	}
+	
 	@Override
 	public List<RespVO> findByTopic(String resp_topic) {
 		List<RespVO> rtopic = null;
@@ -93,6 +111,13 @@ public class RespDAO implements Resp_interface {
 			}
 		return rtopic;
 	}
+
+	@Override
+	public Set<ThemeVO> getThemesByID(Integer theme_id) {
+		Set<ThemeVO> set =findByThID(theme_id).getThemeno();
+		return set;
+	}
+
 
 
 

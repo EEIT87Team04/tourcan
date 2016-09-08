@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,22 +34,23 @@ public class ThemeServlet  extends HttpServlet{
   		req.setCharacterEncoding("UTF-8");
   		resp.setCharacterEncoding("UTF-8");
   		resp.setContentType("application/json");  		
-		// PrintWriter out = response.getWriter();
 //		BufferedReader br = req.getReader();
 //		StringBuffer sb = new StringBuffer(128);
 //		String json;
 //		while ((json = br.readLine()) != null)
 //			sb.append(json);
 //		json = sb.toString();
+//		System.out.println(json);
 		JSONObject err = new JSONObject(); 
 // ----------------Query one by attId----------------	
 	
 		String thstr = req.getParameter("theme_id");
+		System.out.println("no1="+thstr);
+		String th_name = req.getParameter("theme_topic");
 			if(thstr!=null){
 				Integer thno =null;
 			try {
 				 thno =new Integer(req.getParameter("theme_id"));
-				 System.out.println(thno);
 				} catch (Exception e) {
 					err.append("themeId", "編號只能為整數");
 					resp.getWriter().println(err.toString());
@@ -80,7 +83,6 @@ public class ThemeServlet  extends HttpServlet{
 			return;			
 		}
 			
-			String th_name = req.getParameter("theme_topic");
 //			System.out.println(th_name);
 		  if (th_name != null) {
 			try {
@@ -126,6 +128,78 @@ public class ThemeServlet  extends HttpServlet{
 
   	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		//--------------------------------getOne_For_Display----------------------------------
+		String action = req.getParameter("action");
+		if ("getOne_For_Display".equals(action)) { 
+			
+			List<String> errorMsgs1 = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setCharacterEncoding("UTF-8");
+			req.setAttribute("errorMsgs", errorMsgs1);
+			
+			try {
+				//***************************1.�����ШD�Ѽ� - ��J�榡�����~�B�z**********************//*
+				String str = req.getParameter("theme_id");
+				System.out.println("s_id="+str);
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs1.add("error");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs1.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/theme/test3.jsp");
+					failureView.forward(req, resp);
+					return;//�{�����_
+				}
+				
+				Integer memno = null;
+				try {
+					memno = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs1.add("error");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs1.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/theme/test3.jsp");
+					failureView.forward(req, resp);
+					return;//�{�����_
+				}
+				
+				//***************************2.�}�l�d�߸��*****************************************//*
+				
+				ThemeService tsv =new ThemeService();
+				ThemeVO themeVO1= tsv.findById(memno);
+				if (themeVO1 == null) {
+					errorMsgs1.add("�d�L���");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs1.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/theme/test3.jsp");
+					failureView.forward(req, resp);
+					return;//�{�����_
+				}
+				
+				//***************************3.�d�ߧ���,�ǳ����(Send the Success view)*************//*
+				req.setAttribute("themeVO", themeVO1); // ��Ʈw���X��empVO����,�s�Jreq
+				String url = "/theme/listOneTheme.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ���\��� listOneEmp.jsp
+				successView.forward(req, resp);
+				
+				//***************************��L�i�઺���~�B�z*************************************//*
+			} catch (Exception e) {
+				errorMsgs1.add("error:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/theme/test3.jsp");
+				failureView.forward(req, resp);
+			}
+		}
+
+  		
+  		
+		else{
   		req.setCharacterEncoding("UTF-8");
   		resp.setCharacterEncoding("UTF-8");
   		resp.setContentType("application/json");
@@ -168,6 +242,8 @@ public class ThemeServlet  extends HttpServlet{
 			e.printStackTrace();
 		}
 
+				
+		}
   	}
   	
   	@SuppressWarnings("unused")

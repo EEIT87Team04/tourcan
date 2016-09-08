@@ -48,11 +48,33 @@ $(function(){
 // 				updatab.setAttribute("value","");
 // 				updatab.appendChild(upMsg);
 // 				$("#d1").after(updatab)
+
+$.extend(
+{
+    redirectPost: function(location, args)
+    {
+        var form = $('<form></form>');
+        form.attr("method", "post");
+        form.attr("action", location);
+
+        $.each( args, function( key, value ) {
+            var field = $('<input></input>');
+			
+            field.attr("type", "hidden");
+            field.attr("name", key);
+            field.attr("value", value);
+
+            form.append(field);
+        });
+        $(form).appendTo('d1').submit();
+    }
+});
 				
+		var ara=[];
 	$.getJSON(("ThemeServlet"),function(data){
 		var myBody = $('#tb1>tbody');
 		$.each(data,function(idx,theme1){
-			
+			ara=new Array(theme1.theme_id);
 				var updatab=$("<button></button>").append(upMsg);
 				var deleteb=$("<button></button>").append(deMsg);
 				updatab.prop("value",theme1.theme_id);
@@ -67,33 +89,66 @@ $(function(){
 				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5,cell6]);
 				myBody.append(row);
 				
-			
-		});
-		
-		console.log($('td:eq(2)').val())
-	$("tbody >button").click(function(){
-// 		var theme_id= ($("#u"+theme1.theme_id).val())
-// 			json = {};
-// 				json["theme_id"]=+theme_id;
-// 			$.ajax({
-// 				"type":"PUT",
-// 				"url":"ThemeServlet?theme_id="+theme_id,
-// 				"dataType":"json",
-// 				"data":JSON.stringify(json),	
-// // 				"success":function(data){
-		
-// 				"complete":function(){location.href ="queryOneTheme_update.jsp"}//跳转页面
-// // 				})
-// 			   })
-			})
-	});
-	
-	
-	
-	
-	
-});
+			if(($("#u"+theme1.theme_id).val())==(theme1.theme_id)&&($("#u"+theme1.theme_id).val())!=null){
+					$("#u"+theme1.theme_id).click(function(){
+// 				console.log($("#u"+theme1.theme_id).val())
+					var theme_id= ($("#u"+theme1.theme_id).val())
+						json = {};
+		 				json["theme_id"]=+theme_id;
+// 		 				for (var i = 0; i < data; i++){
+// //		 					$("#theme_id").prop("readonly", true);
+// 							json[form[i].name] = form[i].value;				
 
+// 						}
+						console.log(JSON.stringify(json));
+						$.ajax({
+								"type":"Get",
+								"url":"ThemeServlet?theme_id="+theme_id,
+								"dataType":"json",
+								"data":JSON.stringify(json),	
+// 										"success":function(data){
+
+								"complete":function(data){location.href ="test2.jsp"}  //跳轉
+						// 				})
+									   })
+							.done(function(data)
+									{
+									 console.log("200.");
+		 						console.log("qqq="+theme_id)
+									 				
+								
+									})
+									
+									.fail(function(xhr) 
+									{
+								     console.log("ERR.");
+									});
+									   
+									   
+									   
+					})
+				}
+			});
+		console.log(ara)
+			// 		console.log($('td:eq(2)').val())
+			// 	$("tbody >button").click(function(){
+			// 		var theme_id= ($("#u"+theme1.theme_id).val())
+			// 			json = {};
+			// 				json["theme_id"]=+theme_id;
+			// 			$.ajax({
+			// 				"type":"PUT",
+			// 				"url":"ThemeServlet?theme_id="+theme_id,
+			// 				"dataType":"json",
+			// 				"data":JSON.stringify(json),	
+			// // 				"success":function(data){
+
+			// 				"complete":function(){location.href ="queryOneTheme_update.jsp"}//跳转页面
+			// // 				})
+			// 			   })
+			// 			})
+		});
+
+	});
 </script>
 
 

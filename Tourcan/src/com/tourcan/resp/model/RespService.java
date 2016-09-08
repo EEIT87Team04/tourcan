@@ -5,6 +5,8 @@ import java.util.List;
 
 public class RespService {
 
+
+
 	private Resp_interface dao;
 
 	public RespService() {
@@ -31,6 +33,9 @@ public class RespService {
 		dao.delete(resp_id);
 	}
 
+	public RespVO findByThID(Integer theme_id) {
+		return dao.findByThID(theme_id);
+	}
 
 	public RespVO findById(Integer resp_id) {
 		return dao.findById(resp_id);
