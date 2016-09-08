@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>刪除一筆行程資料</title>
+<title>刪除一筆行程明細</title>
 <script>
 	function disp_confirm() {
 		if (confirm("是否確認刪除?")) {
@@ -19,11 +19,11 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<form name="deleteTrip">
+	<form name="deleteTripitem">
 		<table border="1">
 			<tr>
-				<td>請輸入景點ID：</td>
-				<td><input type="text" name="tripId" id="tripId" size="45" /> 
+				<td>請輸入行程明細ID：</td>
+				<td><input type="text" name="tripitemId" id="tripitemId" size="45" /> 
 				<div style="color: red; font-size: 70%" id="error"></div></td>
 			</tr>
 		</table>
@@ -39,21 +39,21 @@
 	<script type="text/javascript">
 		$(function() {
 			$("#btnDelete").click(function() {
-				var tripId = $("#tripId").val();
+				var tripitemId = $("#tripitemId").val();
 				$.ajax({
 					type : "delete",
-					url:"TripServlet?" + $.param({"tripId" : tripId}),
+					url:"TripitemServlet?" + $.param({"tripitemId" : tripitemId}),
 					dataType : "json",
 					success : function(data) {
 // 						alert(data.errMsg)
 						if(data.errMsg!=null){
 							$("#success").empty();
 							$("#error").text(data.errMsg);
-							$("#tripId").val("");
+							$("#tripitemId").val("");
 						}else{
 							$("#error").empty();
 							$("#success").text("刪除成功");
-							$("#tripId").val("");
+							$("#tripitemId").val("");
 						}
 					}
 				})

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.jdt.internal.compiler.lookup.Scope.Substitutor;
+import org.hibernate.ejb.criteria.expression.function.SubstringFunction;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
@@ -42,24 +44,26 @@ public class TripitemServlet extends HttpServlet {
 
 		if (method.equals("getOneById")) {
 			JSONObject checkResult = new JSONObject();
-			Integer tripitemSerial = null;
+			Integer tripitemId = null;
 			TripitemVO tripitemVO = null;
 
 			try {
-				String id = request.getParameter("tripitemSerial");
-				// System.out.println(id);
+				String id = request.getParameter("tripitemId");
+//				 System.out.println(id);
 				if (id == null || id.trim().length() == 0) {
 					checkResult.append("checkResult", "請輸入行程明細ID");
 				} else {
 					try {
-						tripitemSerial = new Integer(id);
+						tripitemId = new Integer(id);
 					} catch (Exception e) {
 						// e.printStackTrace();
 						checkResult.append("checkResult", "行程明細ID格式不正確");
 					}
 				}
+//				System.out.println("tripitemId="+tripitemId);
 				TripitemService tripitemSvc = new TripitemService();
-				tripitemVO = tripitemSvc.findById(tripitemSerial);
+				tripitemVO = tripitemSvc.findById(tripitemId);
+				System.out.println(tripitemVO);
 				if (tripitemVO != null) {
 					JSONObject obj = new JSONObject(tripitemVO);
 					response.getWriter().println(obj.toString());
@@ -189,7 +193,7 @@ public class TripitemServlet extends HttpServlet {
 					tripitemVO.setTripitem_end(tripitemEnd);
 					
 					tripitemSvc.insert(tripitemVO); 
-					checkResult.append("result", "更新成功");
+					checkResult.append("result", "新增成功");
 					response.getWriter().println(checkResult.toString());
 				}
 				
@@ -207,48 +211,101 @@ public class TripitemServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		BufferedReader br = request.getReader();
+		StringBuffer sb = new StringBuffer(128);
+		String json;
+		while ((json = br.readLine()) != null)
+			sb.append(json);
+		json = sb.toString();
+		System.out.println(json);
 
-		String tripName = null;
-		Integer tripId = null;
-		Timestamp tripCtime = null;
-		Integer tripPrice = null;
-		String memUid = null;
+		Integer tripitemId=null;
+		Integer tripId=null;
+		Integer tripitemSerial=null;
+		Integer attId=null;
+		Integer hotelId=null;
+		Integer tripitemStaytime=null;
+		Time tripitemBegin = null;
+		Time tripitemEnd=null;
+		String tripitemTraffic=null;
+		String tripitemMemo=null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
-		TripVO tripVO = null;
+
 		try {
-			tripVO = new Gson().fromJson(br, TripVO.class);
+			JSONObject obj = new JSONObject(json); // received and parsed JSON
+			
+			tripitemId = new Integer(request.getParameter("tripitem_id"));
+			
+			tripId = obj.getInt("trip_id");
 
-			tripName = tripVO.getTrip_name();
-			if (tripName == null || tripName.trim().isEmpty()) {
-				checkResult.append("trip_name", "請輸入旅遊名稱。");
-			} else if (tripName.trim().length() >= 50) {
-				checkResult.append("trip_name", "旅遊名稱不得超過50個字");
+			attId = obj.getInt("att_id");
+			
+			hotelId = obj.getInt("hotel_id");
+			
+			tripitemSerial = obj.getInt("tripitem_serial");
+
+			try {
+				tripitemStaytime = obj.getInt("tripitem_staytime");
+				if (tripitemStaytime == null || tripitemStaytime < 0) {
+					throw new Exception();
+
+				}
+			} catch (Exception e) {
+				checkResult.append("tripitem_staytime", "請輸入逗留時間"); // do not need error in update
+				// e.printStackTrace();
+			}
+			
+			try {
+				String Begin = obj.getString("tripitem_begin").substring(0, 5);
+				if (Begin == null || Begin.trim().isEmpty()) {
+					throw new Exception();
+				}else{
+					tripitemBegin=Time.valueOf(Begin+":00");
+					obj.remove("tripitem_begin");
+//					obj.put("tripitem_begin", tripitemBegin);
+				}
+			} catch (Exception e) {	
+				checkResult.append("tripitem_begin", "請修改初始時間。");
+				 e.printStackTrace();
+			}
+			
+			tripitemEnd=new Time(tripitemBegin.getTime()+tripitemStaytime*60*1000);
+			obj.remove("tripitem_end");
+//			obj.append("tripitem_end", tripitemEnd);
+
+			try {
+				tripitemTraffic = obj.getString("tripitem_traffic");
+				if (tripitemTraffic == null || tripitemTraffic.trim().isEmpty()) {
+					throw new Exception();
+				}
+			} catch (Exception e) {
+				checkResult.append("tripitem_traffic", "請輸入交通資訊。");
+				// e.printStackTrace();
+			}
+			try {
+				tripitemMemo = obj.getString("tripitem_memo");
+			} catch (Exception e) {
+//				e.printStackTrace();
 			}
 
-			tripId = new Integer(request.getParameter("trip_id")); // 不能修改Id
-
-			// 抓出修改當下時間
-			tripCtime = new Timestamp(System.currentTimeMillis());
-
-			tripPrice = tripVO.getTrip_price();
-			if (tripPrice == null || tripPrice < 0)
-				checkResult.append("trip_price", "總預算金額錯誤。");
-
-			memUid = tripVO.getMem_uid(); // 抓出會員Id 且 不能修改
-//			System.out.println(tripName + "," + tripId + "," + tripCtime + "," + tripPrice + "," + memUid);
-			if (checkResult.length() > 0) {
-				throw new Exception();
-			} else {
-				TripService srv = new TripService();
-				srv.updateTrip(tripName, tripId, tripCtime, tripPrice, memUid);
-				checkResult.append("result", "更新成功");
-				response.getWriter().println(checkResult.toString());
-			}
+				
+				if (checkResult.length() > 0) {
+					throw new Exception();
+				} else {
+					TripitemService tripitemSvc = new TripitemService();
+					TripitemVO tripitemVO = new Gson().fromJson(obj.toString(), TripitemVO.class);
+					tripitemVO.setTripitem_begin(tripitemBegin);
+					tripitemVO.setTripitem_end(tripitemEnd);
+					
+					tripitemSvc.insert(tripitemVO); 
+					checkResult.append("result", "更新成功");
+					response.getWriter().println(checkResult.toString());
+				}
+				
 		} catch (Exception e) {
-			checkResult.append("result", "更新失敗。");
+			checkResult.append("result", "新增失敗。");
 			response.getWriter().println(checkResult.toString());
-			// e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -259,7 +316,7 @@ public class TripitemServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 
-		Integer tripId = null;
+		Integer tripitemId = null;
 
 		/***************************** 刪除一筆資料 ************************************************************************/
 
@@ -268,22 +325,22 @@ public class TripitemServlet extends HttpServlet {
 		 * 1.接收請求參數 - 輸入格式的錯誤處理
 		 **********************/
 		try {
-			String id = request.getParameter("tripId");
+			String id = request.getParameter("tripitemId");
 			System.out.println(id);
 			if (id == null || (id.trim()).length() == 0) {
-				errorMsgs.put("errMsg", "請輸入行程ID");
+				errorMsgs.put("errMsg", "請輸入行程明細ID");
 			} else {
 				try {
-					tripId = new Integer(id);
+					tripitemId = new Integer(id);
 				} catch (Exception e) {
-					errorMsgs.put("errMsg", "行程ID格式不正確");
+					errorMsgs.put("errMsg", "行程明細ID格式不正確");
 				}
 			}
 
 			/*************************** 2.開始刪除單筆資料 *****************************************/
-			TripService tripSvc = new TripService();
+			TripitemService tripitemSvc = new TripitemService();
 			try {
-				tripSvc.deleteTrip(tripId);
+				tripitemSvc.delete(tripitemId);
 			} catch (Exception e) {
 				errorMsgs.put("errMsg", "查無資料");
 			}
@@ -296,4 +353,3 @@ public class TripitemServlet extends HttpServlet {
 		response.getWriter().println(json.toString());
 	}
 }
-

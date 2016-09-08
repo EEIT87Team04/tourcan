@@ -123,7 +123,7 @@
 			});
 		});
 		$("#btnReset").click(function() {
-			document.addTrip.reset();
+			document.addTripitem.reset();
 			errMsgSpan.remove();
 		});
 	});

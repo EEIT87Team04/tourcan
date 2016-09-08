@@ -141,7 +141,7 @@
 			errMsgSpan.remove();
 			var form = $(document.updateTrip).serializeArray(), json = {};
 			console.log("form="+form);
-			json["att_id"]=+trip_id;
+			json["trip_id"]=trip_id;
 			for (var i = 0; i < form.length; i++) {
 				if (form[i].value.length > 0) {
 					json[form[i].name] = form[i].value;
