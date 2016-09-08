@@ -49,6 +49,19 @@
 								placeholder="會員Id" min=-1>
 						</div>
 					</div>
+					
+					<div >
+						<div >
+							<label for="questReply">回覆內容</label> <input type="text"
+								 id="quest_reply" name="quest_reply"
+								placeholder="回覆內容">
+						</div>
+						<div >
+							<label for="adminId">管理員Id</label> <input type="text"
+								 id="admin_id" name="admin_id"
+								placeholder="管理員Id" min=-1>
+						</div>
+					</div>
 
 					<div >
 						<div >

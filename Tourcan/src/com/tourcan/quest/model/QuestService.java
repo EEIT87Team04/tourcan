@@ -28,7 +28,7 @@ public class QuestService {
 		questVO.setQuest_qtime(quest_qtime);
 		questVO.setQuest_rtime(quest_rtime);
 		
-        dao.update(questVO);
+        dao.insert(questVO);
 		
 		return questVO;
 	}
