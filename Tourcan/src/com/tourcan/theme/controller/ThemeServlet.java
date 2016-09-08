@@ -19,6 +19,8 @@ import org.springframework.http.converter.json.GsonBuilderUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tourcan.resp.model.RespService;
+import com.tourcan.resp.model.RespVO;
 import com.tourcan.theme.model.ThemeService;
 import com.tourcan.theme.model.ThemeVO;
 
@@ -31,6 +33,9 @@ public class ThemeServlet  extends HttpServlet{
   	}
   	@Override
   	protected void doGet(HttpServletRequest req ,HttpServletResponse resp) throws ServletException,IOException  {
+
+  		
+  		
   		req.setCharacterEncoding("UTF-8");
   		resp.setCharacterEncoding("UTF-8");
   		resp.setContentType("application/json");  		
@@ -128,6 +133,7 @@ public class ThemeServlet  extends HttpServlet{
 
   	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+
 		//--------------------------------getOne_For_Display----------------------------------
 		String action = req.getParameter("action");
 		if ("getOne_For_Display".equals(action)) { 
@@ -168,11 +174,22 @@ public class ThemeServlet  extends HttpServlet{
 				}
 				
 				//***************************2.�}�l�d�߸��*****************************************//*
+//		  		RequestDispatcher rq= req.getRequestDispatcher("/resp/RespServlet");
+//				 req.setCharacterEncoding("UTF-8");
+//				RespVO respVO =new RespVO();
+//				String test ="a1";
+////				respVO.setMem_uid(test);
+////				respVO.getMem_uid();
+////				String aa=respVO.toString();
+//				rq.forward(req, resp);
+//				System.out.println(test);
+				RespService rsv =new RespService();
+				RespVO resVO1=rsv.findById(memno);
 				
 				ThemeService tsv =new ThemeService();
 				ThemeVO themeVO1= tsv.findById(memno);
 				if (themeVO1 == null) {
-					errorMsgs1.add("�d�L���");
+					errorMsgs1.add("error");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs1.isEmpty()) {
@@ -183,6 +200,7 @@ public class ThemeServlet  extends HttpServlet{
 				}
 				
 				//***************************3.�d�ߧ���,�ǳ����(Send the Success view)*************//*
+				req.setAttribute("resVO", resVO1);
 				req.setAttribute("themeVO", themeVO1); // ��Ʈw���X��empVO����,�s�Jreq
 				String url = "/theme/listOneTheme.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // ���\��� listOneEmp.jsp
@@ -195,10 +213,7 @@ public class ThemeServlet  extends HttpServlet{
 						.getRequestDispatcher("/theme/test3.jsp");
 				failureView.forward(req, resp);
 			}
-		}
-
-  		
-  		
+		}  		  		
 		else{
   		req.setCharacterEncoding("UTF-8");
   		resp.setCharacterEncoding("UTF-8");
@@ -210,9 +225,9 @@ public class ThemeServlet  extends HttpServlet{
 		ThemeVO themeVO=null;
 		try{
 			themeVO = new Gson().fromJson(br,ThemeVO.class);
-			
+			System.out.println(themeVO);
 			String themeTopic= themeVO.getTheme_topic();
-//			System.out.println(themeTopic);
+			System.out.println(themeTopic);
 			if(themeTopic==null||themeTopic.trim().isEmpty()||themeTopic.trim().length()==0){
 			checkR.append("theme_topic","plz into topic");
 			}

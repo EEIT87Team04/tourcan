@@ -113,8 +113,8 @@
 						json[form[i].name] = form[i].value;
 					}
 				}
+					console.log(json);
 				$.post("RespServlet", JSON.stringify(json)).done(function(data) {
-					console.log(data);
 					$.each(data, function(errAtt, errMsg) {
 						console.log(errMsg);
 						if (errMsg == "success") {

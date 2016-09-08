@@ -1,12 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ page import="com.tourcan.theme.model.*"%>
+<%@ page import="com.tourcan.resp.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%-- 此頁為script取值 ，應練習改用採用 EL 的寫法取值 --%>
 
 <%
 ThemeVO themeVO1 = (ThemeVO) request.getAttribute("themeVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
-
+RespVO respVO1 =(RespVO) request.getAttribute("resVO"); 
 %>
 
 
@@ -52,7 +53,10 @@ ThemeVO themeVO1 = (ThemeVO) request.getAttribute("themeVO"); //EmpServlet.java(
 	</div>
  <input type="button" value="回首頁" onclick="javascript:location.href='../index.jsp'"/>
 <div >
- <p>${themeVO.respVO.resp_id}</p>
+ <p>respid:</p><p><%=respVO1.getResp_id()%></p>
+ <p>topic:</p><p><%=respVO1.getResp_topic()%></p>
+ <p><%=respVO1.getMem_uid()%></p>
+ <p><%=respVO1.getTheme_id()%></p>
  
 </div> 
  </div>
