@@ -37,12 +37,12 @@ public class TripitemDAO implements TripitemDAO_interface {
 	}
 
 	@Override
-	public void delete(Integer tripitem_serial) {
+	public void delete(Integer tripitem_id) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			TripitemVO tripitemVO=new TripitemVO();
-			tripitemVO.setTripitem_serial(tripitem_serial);
+			tripitemVO.setTripitem_id(tripitem_id);
 			session.delete(tripitemVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
@@ -52,12 +52,12 @@ public class TripitemDAO implements TripitemDAO_interface {
 	}
 
 	@Override
-	public TripitemVO findById(Integer tripitem_serial) {
+	public TripitemVO findById(Integer tripitem_id) {
 		TripitemVO tripitemVO=null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			tripitemVO=(TripitemVO) session.get(TripitemVO.class, tripitem_serial);
+			tripitemVO=(TripitemVO) session.get(TripitemVO.class, tripitem_id);
 			session.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
@@ -73,7 +73,7 @@ public class TripitemDAO implements TripitemDAO_interface {
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			try {
 				session.beginTransaction();
-				Query query=session.createQuery("From TripitemVO order by tripitem_serial");
+				Query query=session.createQuery("From TripitemVO order by tripitem_id");
 				list=query.list();
 				session.getTransaction().commit();
 			} catch (RuntimeException ex) {

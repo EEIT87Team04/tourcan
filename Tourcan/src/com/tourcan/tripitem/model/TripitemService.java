@@ -20,12 +20,12 @@ public class TripitemService {
 		return tripitemVO;
 	}
 	
-	public void delete(Integer tripitem_serial) {
-		dao.delete(tripitem_serial);
+	public void delete(Integer tripitem_id) {
+		dao.delete(tripitem_id);
 	}
 	
-	public TripitemVO findById(Integer tripitem_serial){
-		return dao.findById(tripitem_serial);
+	public TripitemVO findById(Integer tripitem_id){
+		return dao.findById(tripitem_id);
 	}
 	
 	public List<TripitemVO> getAll(){

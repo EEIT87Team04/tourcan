@@ -5,10 +5,11 @@
 <hibernate-mapping>
     <class name="com.tourcan.tripitem.model.TripitemVO" table="tripitem" >
         
-        <id name="tripitem_serial" column="tripitem_serial">
+        <id name="tripitem_id" column="tripitem_id">
             <generator class="identity"/>
         </id>
         
+        <property name="tripitem_serial" column="tripitem_serial" />
         <property name="tripitem_traffic" column="tripitem_traffic" />
         <property name="tripitem_memo" column="tripitem_memo" />
         <property name="tripitem_staytime" column="tripitem_staytime" />
@@ -17,6 +18,7 @@
         <property name="trip_id" column="trip_id" />
         <property name="att_id" column="att_id" />
         <property name="hotel_id" column="hotel_id" />
+        
     
         
 <!--         <many-to-one name="regionVO" class="com.tourcan.region.model.RegionVO" lazy="false"> -->

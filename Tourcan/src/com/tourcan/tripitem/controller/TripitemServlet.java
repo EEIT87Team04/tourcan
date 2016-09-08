@@ -3,6 +3,7 @@ package com.tourcan.tripitem.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tourcan.trip.model.TripService;
 import com.tourcan.trip.model.TripVO;
 import com.tourcan.tripitem.model.TripitemService;
 import com.tourcan.tripitem.model.TripitemVO;
 
-@WebServlet("/tripitem/TripServlet")
+@WebServlet("/tripitem/TripitemServlet")
 public class TripitemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -103,67 +105,94 @@ public class TripitemServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		BufferedReader br = request.getReader();
+		StringBuffer sb = new StringBuffer(128);
+		String json;
+		while ((json = br.readLine()) != null)
+			sb.append(json);
+		json = sb.toString();
+		System.out.println(json);
 
-		String tripitemTraffic;
-		String tripitemMemo;
-		Integer tripitemStaytime;
-		Timestamp tripitemBegin;
-		Timestamp tripitemEnd;
-		Integer tripId;
-		Integer attId;
-		Integer hotelId;
+		Integer tripId=null;
+		Integer tripitemSerial=null;
+		Integer attId=null;
+		Integer hotelId=null;
+		Integer tripitemStaytime=null;
+		Time tripitemBegin = null;
+		Time tripitemEnd=null;
+		String tripitemTraffic=null;
+		String tripitemMemo=null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
-		TripitemVO tripitemVO = null;
+
 		try {
-			tripitemVO = new Gson().fromJson(br, TripitemVO.class);
+			JSONObject obj = new JSONObject(json); // received and parsed JSON
+			
+			tripId = obj.getInt("trip_id");
 
-			tripitemTraffic = tripitemVO.getTripitem_traffic();
-			if (tripitemTraffic == null || tripitemTraffic.trim().isEmpty()) 
+			attId = obj.getInt("att_id");
+			
+			hotelId = obj.getInt("hotel_id");
+			
+			tripitemSerial = obj.getInt("tripitem_serial");
+
+			try {
+				tripitemStaytime = obj.getInt("tripitem_staytime");
+				if (tripitemStaytime == null || tripitemStaytime < 0) {
+					throw new Exception();
+
+				}
+			} catch (Exception e) {
+				checkResult.append("tripitem_staytime", "請輸入逗留時間"); // do not need error in update
+				// e.printStackTrace();
+			}
+			
+			try {
+				String Begin = obj.getString("tripitem_begin");
+				if (Begin == null || Begin.trim().isEmpty()) {
+					throw new Exception();
+				}else{
+					tripitemBegin=Time.valueOf(Begin+":00");
+					obj.remove("tripitem_begin");
+//					obj.put("tripitem_begin", tripitemBegin);
+				}
+			} catch (Exception e) {
+				checkResult.append("tripitem_begin", "請輸入完整時間。");
+				 e.printStackTrace();
+			}
+			
+			tripitemEnd=new Time(tripitemBegin.getTime()+tripitemStaytime*60*1000);
+			obj.remove("tripitem_end");
+//			obj.append("tripitem_end", tripitemEnd);
+
+			try {
+				tripitemTraffic = obj.getString("tripitem_traffic");
+				if (tripitemTraffic == null || tripitemTraffic.trim().isEmpty()) {
+					throw new Exception();
+				}
+			} catch (Exception e) {
 				checkResult.append("tripitem_traffic", "請輸入交通資訊。");
-			
-			tripitemMemo = tripitemVO.getTripitem_memo();
-			if (tripitemMemo == null || tripitemMemo.trim().isEmpty()) 
-				checkResult.append("tripitem_memo", "註記未輸入。");			
-			
-			tripitemStaytime=tripitemVO.getTripitem_staytime();
-			if (tripitemStaytime == null || tripitemStaytime < -1)
-				checkResult.append("tripitem_staytime", "請輸入預計停留時間。");
-			
-			String beginTime=(request.getParameter("begin_time")).replace("T", " ");
-			tripitemBegin =Timestamp.valueOf(beginTime);
+				// e.printStackTrace();
+			}
+			try {
+				tripitemMemo = obj.getString("tripitem_memo");
+			} catch (Exception e) {
+//				e.printStackTrace();
+			}
+
 				
-			tripitemEnd = new Timestamp(System.currentTimeMillis());
-
-			
-			
-			
-			
-			
-			tripName = tripVO.getTrip_name();
-			if (tripName == null || tripName.trim().isEmpty()) {
-				checkResult.append("trip_name", "請輸入旅遊名稱。");
-			} else if (tripName.trim().length() >= 50) {
-				checkResult.append("trip_name", "旅遊名稱不得超過50個字");
-			}
-
-			// 抓出建立當下時間
-			tripCtime = new Timestamp(System.currentTimeMillis());
-
-			tripPrice = tripVO.getTrip_price();
-			if (tripPrice == null || tripPrice < 0)
-				checkResult.append("trip_price", "預算金額錯誤。");
-
-			memUid = tripVO.getMem_uid(); // 抓出建立會員Id 且 不能修改
-
-			if (checkResult.length() > 0) {
-				throw new Exception();
-			} else {
-				TripService srv = new TripService();
-				srv.insertTrip(tripName, tripCtime, tripPrice, memUid);
-				checkResult.append("result", "新增成功");
-				response.getWriter().println(checkResult.toString());
-			}
+				if (checkResult.length() > 0) {
+					throw new Exception();
+				} else {
+					TripitemService tripitemSvc = new TripitemService();
+					TripitemVO tripitemVO = new Gson().fromJson(obj.toString(), TripitemVO.class);
+					tripitemVO.setTripitem_begin(tripitemBegin);
+					tripitemVO.setTripitem_end(tripitemEnd);
+					
+					tripitemSvc.insert(tripitemVO); 
+					checkResult.append("result", "更新成功");
+					response.getWriter().println(checkResult.toString());
+				}
+				
 		} catch (Exception e) {
 			checkResult.append("result", "新增失敗。");
 			response.getWriter().println(checkResult.toString());
