@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
@@ -25,14 +26,14 @@
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active" id="attPreview">
 			<div id="attList">
-				<table id="tb1" class="table table-striped table table-hover">
+				<table id="tb1" class="table table-hover">
 					<thead>
 						<tr>
 							<th>編號</th>
 							<th>地點</th>
 							<!-- 							<th>staytime</th> -->
 							<th>地址</th>
-<!-- 							<th>price</th> -->
+							<!-- 							<th>price</th> -->
 							<!-- 							<th>phone</th> -->
 							<th>網址</th>
 							<!-- 							<th>eat</th> -->
@@ -55,9 +56,20 @@
 		<div role="tabpanel" class="tab-pane" id="searchAtt"></div>
 	</div>
 
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	
 	<div>
-		<input type="button" id="rdct" value="Redirect">
+		<a href="#abc" data-rel="popup" data-position-to="window"
+			class="ui-btn ui-corner-all ui-btn-inline ui-btn-a"
+			data-transition="slidedown" aria-haspopup="true" aria-owns="abc"
+			aria-expanded="false">Sign in</a>
 	</div>
+		<div data-role="popup"  id="abc" data-theme="a" class="ui-corner-all">
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+			Hey!<br>
+			This is the testing page context.
+		</div>
 	<script type="text/javascript">
 		$(function() {
 
@@ -66,32 +78,28 @@
 				var myBody = $('#tb1>tbody');
 				$.each(data,
 						function(idx, att2) {
-							
-							var ubtn = $("<button></button>").text("update");
-							var dbtn = $("<button></button>").text("delete");
-														
-							var cell1 = $("<td></td>").text(att2.att_id);
-							var cell2 = $("<td></td>").text(att2.att_name);
-							// 							var cell3 = $("<td></td>").text(att2.att_staytime);
-							var cell4 = $("<td></td>").text(att2.att_addr);
-// 							var cell5 = $("<td></td>").text(att2.att_price);
-							// 							var cell6 = $("<td></td>").text(att2.att_phone);
-							var cell7 = $("<td></td>").text(att2.att_url);
-							// 							var cell8 = $("<td></td>").text(att2.att_eat);
-							// 							var cell9 = $("<td></td>").text(att2.att_intro);
-							// 							var cell10 = $("<td></td>").text(att2.att_open);
-							// 							var cell11 = $("<td></td>").text(att2.att_lat);
-							// 							var cell12 = $("<td></td>").text(att2.att_lng);
-							var cell13 = $("<td></td>").text(att2.regionVO.region_name);
-							// 							var row = $("<tr></tr>").append(
-							// 									[ cell1, cell2, cell3, cell4, cell5, cell6,
-							// 											cell7, cell8, cell9, cell10,
-							// 											cell11, cell12, cell13 ]);
-							var cell14 = $("<td></td>").append(ubtn);
-							var cell15 = $("<td></td>").append(dbtn);
-							var row = $("<tr></tr>")
-									.append(
-											[ cell1, cell2, cell4, cell7, cell13, cell14, cell15 ]);
+
+							var ubtn = $("<a></a>").text("更新")
+										.attr("href","#"+att2.att_id)
+										.attr("data-rel","popup")
+										.attr("data-position-to","window")
+										.attr("class","ui-btn ui-corner-all ui-btn-inline ui-btn-a")
+										.attr("data-transition","slidedown")
+										.attr("aria-haspopup",true)
+										.attr("aria-owns",att2.att_id)
+										.attr("aria-expanded",false);
+// 							var form = $("<div></div>");
+
+							var itd = $("<td></td>").text(att2.att_id);
+							var ntd = $("<td></td>").text(att2.att_name);
+							var addtd = $("<td></td>").text(att2.att_addr);
+							var utd = $("<td></td>").text(att2.att_url);
+							var rntd = $("<td></td>").text(
+									att2.regionVO.region_name);
+							var udbtn = $("<td></td>").append(ubtn);
+							var row = $("<tr></tr>").append(
+									[ itd, ntd, addtd, utd, rntd,
+									  udbtn]);
 							myBody.append(row);
 
 						});
@@ -102,14 +110,9 @@
 				console.log("insert.loaded");
 			});
 			// 			Update page
-// 			$("#updateAtt").load('att/update.jsp', function() {
-// 				console.log("update.loaded");
-// 			});
-			
-			$("#rdct").click(function() {
-				$('#insertAtt').tab('show');
-
-			});
+			// 			$("#updateAtt").load('att/update.jsp', function() {
+			// 				console.log("update.loaded");
+			// 			});
 
 		});
 	</script>
