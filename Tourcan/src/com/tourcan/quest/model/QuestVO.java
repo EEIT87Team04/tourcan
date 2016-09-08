@@ -1,6 +1,8 @@
 package com.tourcan.quest.model;
 
-import java.sql.Date;
+
+
+import com.google.api.client.util.DateTime;
 
 public class QuestVO implements java.io.Serializable {
 
@@ -13,8 +15,8 @@ public class QuestVO implements java.io.Serializable {
 	private String quest_quiz;
 	private Integer admin_id;
 	private String quest_reply;
-	private Date quest_qtime;
-	private Date quest_rtime;
+	private DateTime quest_qtime;
+	private DateTime quest_rtime;
 	
 	public QuestVO() {
 	}
@@ -61,16 +63,16 @@ public class QuestVO implements java.io.Serializable {
 	public void setQuest_reply(String quest_reply) {
 		this.quest_reply = quest_reply;
 	}
-	public Date getQuest_qtime() {
+	public DateTime getQuest_qtime() {
 		return quest_qtime;
 	}
-	public void setQuest_qtime(Date quest_qtime) {
+	public void setQuest_qtime(DateTime quest_qtime) {
 		this.quest_qtime = quest_qtime;
 	}
-	public Date getQuest_rtime() {
+	public DateTime getQuest_rtime() {
 		return quest_rtime;
 	}
-	public void setQuest_rtime(Date quest_rtime) {
+	public void setQuest_rtime(DateTime quest_rtime) {
 		this.quest_rtime = quest_rtime;
 	}
 
