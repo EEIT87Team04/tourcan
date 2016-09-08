@@ -1,6 +1,7 @@
 package com.tourcan.quest.model;
 
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.google.api.client.util.DateTime;
@@ -13,14 +14,14 @@ public class QuestService {
 		dao = new QuestDAO();
 	}
 
-	public QuestVO insertQuest(Integer quest_catalog, String quest_topic, Integer mem_id, String quest_quiz,
-			Integer admin_id, String quest_reply, DateTime quest_qtime, DateTime quest_rtime) {
+	public QuestVO insertQuest(Integer quest_catalog, String quest_topic, Integer mem_uid, String quest_quiz,
+			Integer admin_id, String quest_reply, Timestamp quest_qtime, Timestamp quest_rtime) {
 		
 		QuestVO questVO = new QuestVO();
 		
 		questVO.setQuest_catalog(quest_catalog);
 		questVO.setQuest_topic(quest_topic);
-		questVO.setMem_id(mem_id);
+		questVO.setMem_uid(mem_uid);
 		questVO.setQuest_quiz(quest_quiz);
 		questVO.setAdmin_id(admin_id);
 		questVO.setQuest_reply(quest_reply);

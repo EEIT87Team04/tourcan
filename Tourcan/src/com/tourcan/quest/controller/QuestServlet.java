@@ -2,6 +2,7 @@ package com.tourcan.quest.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import com.google.gson.Gson;
 import com.tourcan.quest.model.QuestService;
 import com.tourcan.quest.model.QuestVO;
 
-@WebServlet("/QuestServlet")
+@WebServlet("/quest/QuestServlet")
 public class QuestServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -133,12 +134,12 @@ public class QuestServlet {
 
 		Integer questCatalog = null;
 		String questTopic = null;
-		Integer memId = null;
+		Integer memUid = null;
 		String questQuiz = null;
 		Integer adminId = null;
 		String questReply = null;
-		DateTime questQtime = null;
-		DateTime questRtime = null;
+		Timestamp questQtime = null;
+		Timestamp questRtime = null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
 		QuestVO questVO = null;
@@ -156,9 +157,9 @@ public class QuestServlet {
 				checkResult.append("getQuest_topic", "問題名稱不得超過50個字");
 			}
 
-			// memId = questVO.getMem_id();
-			// if (memId == null || memId < 0)
-			// checkResult.append("getMem_id", "會員ID錯誤。");
+			// memUid = questVO.getMem_uid();
+			// if (memUid == null || memUid < 0)
+			// checkResult.append("getMem_uid", "會員ID錯誤。");
 
 			questQuiz = questVO.getQuest_quiz();
 			if (questQuiz == null || questQuiz.trim().isEmpty())
@@ -173,17 +174,17 @@ public class QuestServlet {
 				checkResult.append("getQuest_reply", "問題回覆錯誤。");
 
 			// 抓出建立當下時間
-			questQtime = new DateTime(System.currentTimeMillis());
-			questRtime = new DateTime(System.currentTimeMillis());
+			questQtime = new Timestamp(System.currentTimeMillis());
+			questRtime = new Timestamp(System.currentTimeMillis());
 
-			memId = questVO.getMem_id(); // 抓出建立會員Id 且 不能修改
+			memUid = questVO.getMem_uid(); // 抓出建立會員Id 且 不能修改
 			adminId = questVO.getAdmin_id(); // 抓出回覆管理員Id 且 不能修改
 
 			if (checkResult.length() > 0) {
 				throw new Exception();
 			} else {
 				QuestService srv = new QuestService();
-				srv.insertQuest(questCatalog, questTopic, memId, questQuiz, adminId, questReply, questQtime,
+				srv.insertQuest(questCatalog, questTopic, memUid, questQuiz, adminId, questReply, questQtime,
 						questRtime);
 				checkResult.append("result", "新增成功");
 				response.getWriter().println(checkResult.toString());

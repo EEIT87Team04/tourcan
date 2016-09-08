@@ -2,7 +2,8 @@ package com.tourcan.quest.model;
 
 
 
-import com.google.api.client.util.DateTime;
+import java.sql.Timestamp;
+
 
 public class QuestVO implements java.io.Serializable {
 
@@ -11,12 +12,12 @@ public class QuestVO implements java.io.Serializable {
 	private Integer quest_catalog;
 	private String quest_topic;
 	private Integer quest_id;
-	private Integer mem_id;
+	private Integer mem_uid;
 	private String quest_quiz;
 	private Integer admin_id;
 	private String quest_reply;
-	private DateTime quest_qtime;
-	private DateTime quest_rtime;
+	private Timestamp quest_qtime;
+	private Timestamp quest_rtime;
 	
 	public QuestVO() {
 	}
@@ -39,11 +40,11 @@ public class QuestVO implements java.io.Serializable {
 	public void setQuest_id(Integer quest_id) {
 		this.quest_id = quest_id;
 	}
-	public Integer getMem_id() {
-		return mem_id;
+	public Integer getMem_uid() {
+		return mem_uid;
 	}
-	public void setMem_id(Integer mem_id) {
-		this.mem_id = mem_id;
+	public void setMem_uid(Integer mem_uid) {
+		this.mem_uid = mem_uid;
 	}
 	public String getQuest_quiz() {
 		return quest_quiz;
@@ -63,16 +64,16 @@ public class QuestVO implements java.io.Serializable {
 	public void setQuest_reply(String quest_reply) {
 		this.quest_reply = quest_reply;
 	}
-	public DateTime getQuest_qtime() {
+	public Timestamp getQuest_qtime() {
 		return quest_qtime;
 	}
-	public void setQuest_qtime(DateTime quest_qtime) {
+	public void setQuest_qtime(Timestamp quest_qtime) {
 		this.quest_qtime = quest_qtime;
 	}
-	public DateTime getQuest_rtime() {
+	public Timestamp getQuest_rtime() {
 		return quest_rtime;
 	}
-	public void setQuest_rtime(DateTime quest_rtime) {
+	public void setQuest_rtime(Timestamp quest_rtime) {
 		this.quest_rtime = quest_rtime;
 	}
 

@@ -15,6 +15,8 @@
         <property name="quest_reply" column="quest_reply" />
         <property name="quest_qtime" column="quest_qtime" />
         <property name="quest_rtime" column="quest_rtime" />
+        <property name="mem_uid" column="mem_uid" />
+        <property name="admin_id" column="admin_id" />
         
 <!--         <many-to-one name="memVO" class="com.tourcan.member.model.memVO" lazy="false"> -->
 <!--             <column name="mem_id" /> -->

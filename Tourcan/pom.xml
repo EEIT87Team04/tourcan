@@ -47,7 +47,7 @@
 			<artifactId>firebase-server-sdk</artifactId>
 			<version>[3.0.0,)</version>
 		</dependency>
-		
+
 
 		<!-- Google API -->
 		<dependency>
@@ -70,7 +70,7 @@
 			<artifactId>google-api-client-gson</artifactId>
 			<version>${googleapi.version}</version>
 		</dependency>
-		
+
 
 		<!-- spring -->
 		<dependency>
@@ -133,7 +133,7 @@
 		<!-- <artifactId>spring-webmvc</artifactId> -->
 		<!-- <version>${spring.version}</version> -->
 		<!-- </dependency> -->
-		
+
 
 		<!-- hibernate -->
 		<dependency>
@@ -199,6 +199,7 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.5.8</version>
 		</dependency>
+
 
 
 	</dependencies>
