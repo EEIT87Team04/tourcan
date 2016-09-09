@@ -39,6 +39,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 				<td><%=themeVO1.getTheme_id()%></td>
 				<td><%=themeVO1.getTheme_topic()%></td>
 				<td><%=themeVO1.getMem_uid()%></td>
+				
 				<td><%=themeVO1.getTheme_catalog()%></td>
 		
 			</tr>
@@ -77,7 +78,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 		<td>${RespVO.resp_id}</td>
  	</tr>	
 			<tr>
-				<th> resp_article</th>	
+				<th colspan="4"> resp_article</th>	
 			</tr>
  	<tr>
  		<td id="d2" colspan="4">${RespVO.resp_article }</td>

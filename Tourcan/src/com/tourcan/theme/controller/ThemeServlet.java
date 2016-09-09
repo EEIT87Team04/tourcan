@@ -39,13 +39,13 @@ public class ThemeServlet  extends HttpServlet{
   		req.setCharacterEncoding("UTF-8");
   		resp.setCharacterEncoding("UTF-8");
   		resp.setContentType("application/json");  		
-//		BufferedReader br = req.getReader();
-//		StringBuffer sb = new StringBuffer(128);
-//		String json;
-//		while ((json = br.readLine()) != null)
-//			sb.append(json);
-//		json = sb.toString();
-//		System.out.println(json);
+		BufferedReader br = req.getReader();
+		StringBuffer sb = new StringBuffer(128);
+		String json;
+		while ((json = br.readLine()) != null)
+			sb.append(json);
+		json = sb.toString();
+		System.out.println(json);
 		JSONObject err = new JSONObject(); 
 // ----------------Query one by attId----------------	
 	
@@ -135,130 +135,145 @@ public class ThemeServlet  extends HttpServlet{
 			throws ServletException, IOException {
 
 		//--------------------------------getOne_For_Display----------------------------------
-		String action = req.getParameter("action");
-		if ("getOne_For_Display".equals(action)) { 
-			
-			List<String> errorMsgs1 = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setCharacterEncoding("UTF-8");
-			req.setAttribute("errorMsgs", errorMsgs1);
-			
-			try {
-				//***************************1.�����ШD�Ѽ� - ��J�榡�����~�B�z**********************//*
-				String str = req.getParameter("theme_id");
-				System.out.println("s_id="+str);
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs1.add("error");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs1.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/theme/test3.jsp");
-					failureView.forward(req, resp);
-					return;//�{�����_
-				}
-				
-				Integer memno = null;
-				try {
-					memno = new Integer(str);
-				} catch (Exception e) {
-					errorMsgs1.add("error");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs1.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/theme/test3.jsp");
-					failureView.forward(req, resp);
-					return;//�{�����_
-				}
-				
-				//***************************2.�}�l�d�߸��*****************************************//*
-//		  		RequestDispatcher rq= req.getRequestDispatcher("/resp/RespServlet");
-//				 req.setCharacterEncoding("UTF-8");
-//				RespVO respVO =new RespVO();
-//				String test ="a1";
-////				respVO.setMem_uid(test);
-////				respVO.getMem_uid();
-////				String aa=respVO.toString();
-//				rq.forward(req, resp);
-//				System.out.println(test);
-				RespService rsv =new RespService();
-				List<RespVO> resVO1=rsv.findByThID(memno);
-				System.out.println("resVO1="+resVO1);
-				ThemeService tsv =new ThemeService();
-				ThemeVO themeVO1= tsv.findById(memno);
-				if (themeVO1 == null) {
-					errorMsgs1.add("error");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs1.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/theme/test3.jsp");
-					failureView.forward(req, resp);
-					return;//�{�����_
-				}
-				
-				//***************************3.�d�ߧ���,�ǳ����(Send the Success view)*************//*
-				req.setAttribute("list", resVO1);
-				req.setAttribute("themeVO", themeVO1); // ��Ʈw���X��empVO����,�s�Jreq
-				String url = "/theme/listOneTheme.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ���\��� listOneEmp.jsp
-				successView.forward(req, resp);
-				
-				//***************************��L�i�઺���~�B�z*************************************//*
-			} catch (Exception e) {
-				errorMsgs1.add("error:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/theme/test3.jsp");
-				failureView.forward(req, resp);
-			}
-		}  		  		
-		else{
   		req.setCharacterEncoding("UTF-8");
-  		resp.setCharacterEncoding("UTF-8");
-  		resp.setContentType("application/json");
-		BufferedReader br = req.getReader();
-		JSONObject checkR =new  JSONObject();
-		Timestamp themetime =null;
-		String memUid = null;
-		ThemeVO themeVO=null;
-		try{
-			themeVO = new Gson().fromJson(br,ThemeVO.class);
-			System.out.println(themeVO);
-			String themeTopic= themeVO.getTheme_topic();
-			System.out.println(themeTopic);
-			if(themeTopic==null||themeTopic.trim().isEmpty()||themeTopic.trim().length()==0){
-			checkR.append("theme_topic","plz into topic");
-			}
-			String themearticle = themeVO.getTheme_article();
-//			System.out.println("themearticle:"+themearticle);
-			if(themearticle==null||themearticle.trim().isEmpty()||themearticle.trim().length()==0){
-			checkR.append("theme_article", "plz into article");
-			}
-			themetime=new Timestamp(System.currentTimeMillis());
-//			System.out.println("themetime:"+themetime);
-			Integer themecatalog =themeVO.getTheme_catalog();
-			if(themecatalog==null){
-				checkR.append("theme_catalog", "plz into catalog");	
-			}
-			memUid= themeVO.getMem_uid();//抓出已建立的id
-			if(checkR.length()>0){
-				throw new Exception();
+//  		if(action==null){
+//			System.out.println("11=");
+			
+//	  		resp.setCharacterEncoding("UTF-8");
+	  		resp.setContentType("application/json");
+			BufferedReader br = req.getReader();
+			StringBuffer sb = new StringBuffer(128);
+			String n1=null;
+			String json;
+			while ((json = br.readLine()) != null)
+				sb.append(json);
+			json = sb.toString();
+			
+			if(json.indexOf("getOne")>-1){
+			System.out.println("000="+json);
+			if(json.length()>36){
+//			System.out.println(json.length());			
+			System.out.println(json.substring(9, 11));
+			n1=json.substring(9, 11);
 			}else{
-				ThemeService srv =new ThemeService();
-				srv.insert(themeTopic, themecatalog, themearticle, themetime, memUid);
-				checkR.append("result", "success");
-				resp.getWriter().println(checkR.toString());
+			System.out.println(json.substring(9, 10));
+			n1=json.substring(9, 10);
 			}
-		}catch (Exception e) {
-			checkR.append("result", "faill");
-			resp.getWriter().println(checkR.toString());
-			e.printStackTrace();
-		}
-
+			System.out.println("n1:"+n1);
+			 { 
+				System.out.println("qqqqqqqqqq");
+				List<String> errorMsgs1 = new LinkedList<String>();
+//				req.setCharacterEncoding("UTF-8");
+				req.setAttribute("errorMsgs", errorMsgs1);
 				
-		}
+				try {
+					
+					String str = n1;
+					System.out.println("s_id="+str);
+					if (str == null || (str.trim()).length() == 0) {
+						errorMsgs1.add("error");
+					}
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs1.isEmpty()) {
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/theme/showAllTheme.jsp");
+						failureView.forward(req, resp);
+						return;
+					}
+					
+					Integer memno = null;
+					try {
+						memno = new Integer(str);
+					} catch (Exception e) {
+						errorMsgs1.add("error");
+					}
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs1.isEmpty()) {
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/theme/showAllTheme.jsp");
+						failureView.forward(req, resp);
+						return;
+					}
+					RespService rsv =new RespService();
+					List<RespVO> resVO1=rsv.findByThID(memno);
+//					System.out.println("resVO1="+resVO1);
+					ThemeService tsv =new ThemeService();
+					ThemeVO themeVO1= tsv.findById(memno);
+					if (themeVO1 == null) {
+						errorMsgs1.add("error");
+					}
+					// Send the use back to the form, if there were errors
+					if (!errorMsgs1.isEmpty()) {
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/theme/showAllTheme.jsp");
+						failureView.forward(req, resp);
+						return;//�{�����_
+					}
+					
+					//***************************3.�d�ߧ���,�ǳ����(Send the Success view)*************//*
+					req.setAttribute("list", resVO1);
+					req.setAttribute("themeVO", themeVO1); // ��Ʈw���X��empVO����,�s�Jreq
+					String url = "/theme/listOneTheme.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // ���\��� listOneEmp.jsp
+					successView.forward(req, resp);
+					
+					//***************************��L�i�઺���~�B�z*************************************//*
+				} catch (Exception e) {
+					errorMsgs1.add("error:" + e.getMessage());
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/theme/showAllTheme.jsp");
+					failureView.forward(req, resp);
+				}
+			}  		  		
+			
+			
+			}else{
+			JSONObject checkR =new  JSONObject();
+			Timestamp themetime =null;
+			String memUid = null;
+			ThemeVO themeVO=null;
+			try{
+				themeVO = new Gson().fromJson(br,ThemeVO.class);
+				System.out.println("22="+themeVO);
+				String themeTopic= themeVO.getTheme_topic();
+				System.out.println("33="+themeTopic);
+				if(themeTopic==null||themeTopic.trim().isEmpty()||themeTopic.trim().length()==0){
+				checkR.append("theme_topic","plz into topic");
+				}
+				String themearticle = themeVO.getTheme_article();
+//				System.out.println("themearticle:"+themearticle);
+				if(themearticle==null||themearticle.trim().isEmpty()||themearticle.trim().length()==0){
+				checkR.append("theme_article", "plz into article");
+				}
+				themetime=new Timestamp(System.currentTimeMillis());
+//				System.out.println("themetime:"+themetime);
+				Integer themecatalog =themeVO.getTheme_catalog();
+				if(themecatalog==null){
+					checkR.append("theme_catalog", "plz into catalog");	
+				}
+				memUid= themeVO.getMem_uid();//抓出已建立的id
+				if(checkR.length()>0){
+					throw new Exception();
+				}else{
+					ThemeService srv =new ThemeService();
+					srv.insert(themeTopic, themecatalog, themearticle, themetime, memUid);
+					checkR.append("result", "success");
+					resp.getWriter().println(checkR.toString());
+				}
+			}catch (Exception e) {
+				checkR.append("result", "faill");
+				resp.getWriter().println(checkR.toString());
+				e.printStackTrace();
+			}
+			}
+//  		}
+					
+		
+//			if ("getOne_For_Display".equals(action))  String action = req.getParameter("action"); 
+			
+//			System.out.println(action);
+		
+		
   	}
   	
   	@SuppressWarnings("unused")

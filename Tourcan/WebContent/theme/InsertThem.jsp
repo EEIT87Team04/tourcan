@@ -46,6 +46,7 @@
 						<label for="themeCatalog">catalog</label> <input type="number"
 							id="theme_catalog" name="theme_catalog" class="form-control"
 							placeholder="catalog" min=1>
+<!-- 							<input type="hidden" name="action" value="qq"> -->
 						</div>
 				
 				</div>
@@ -112,7 +113,7 @@
 						json[form[i].name] = form[i].value;
 					}
 				}
-				$.post("ThemeServlet", JSON.stringify(json)).done(function(data) {
+				$.post("ThemeServlet",action="aaa" ,JSON.stringify(json)).done(function(data) {
 					console.log(data);
 					$.each(data, function(errAtt, errMsg) {
 						console.log(errMsg);
