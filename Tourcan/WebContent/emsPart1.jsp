@@ -78,24 +78,4 @@
 				</span>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<div class="contentBox"></div>
-			</div>
-			<div class="row" style="margin: 15px 15px">
-				<br>
-			</div>
-		</div>
-	</div>
-	<script type="text/javascript">
-		$(function() {
-			$("#iBtnList :button").each(function(){
-				btns = $(this).attr("id");
-				$("#"+ btns).click(function(){
-// 					console.log($(this).attr("id"));
-					$(location).attr("href", "/Tourcan/"+$(this).attr("id")+"/list.jsp");
-				});
-			});
-			
-		});
-	</script>
-</body>
-</html>
+				<div class="contentBox">

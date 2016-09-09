@@ -1,0 +1,94 @@
+@CHARSET "UTF-8";
+html {
+	height: 100%;
+}
+
+body {
+	background: url("/Tourcan/images/emsBG.jpg") no-repeat center fixed;
+	background-size: cover;
+	height: 100%;
+}
+
+.liTxt {
+	font-family: '微軟正黑體';
+	color: #ffffff;
+	margin-left: 10px;
+}
+
+.icon {
+	width: 28px;
+	height: 28px;
+}
+
+.listContainer {
+	margin: auto;
+	width: 1600px;
+	/* 	background-color: rgba(255,255,255,0.5); */
+	border: thin 1px;
+	height: 100%;
+}
+
+.iconBtn {
+	background-color: rgba(255, 255, 255, 0);
+	border-radius: 15px;
+	width: 100%;
+	border: none;
+	color: white;
+	padding: 15px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 24px;
+	margin: 10px 0px;
+	cursor: pointer;
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+}
+
+.shadowBtn:hover {
+	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0
+		rgba(0, 0, 0, 0.19);
+}
+
+.contentBox {
+	margin: 5px;
+	width:100%;
+	height:725px;
+	background-color: rgba(255, 255, 255, 0.3);
+	border:dotted 3px;
+	border-color: rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+}
+
+.upNdelBtns{
+	background-color: rgba(255, 255, 255, 0);
+	border-radius: 8px;
+	width: 60px;
+	border: none;
+	color: black;
+	padding: 5px 5px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 5px;
+/* 	cursor: pointer; */
+/* 	-webkit-transition-duration: 0.4s; */
+/* 	transition-duration: 0.4s; */
+}
+.previous_link,.page_link,.next_link{
+	color:black;
+	font-size: 20px;
+	text-align: center;
+}
+.tableList{
+	color:black;
+	font-size: 16px;
+	font-style:inherit;
+	font-family: '微軟正黑體';
+	text-align:inherit;	
+	vertical-align: middle;
+}
+#mapPreview {
+	height: 292px;
+}
