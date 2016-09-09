@@ -33,7 +33,7 @@ public class RespService {
 		dao.delete(resp_id);
 	}
 
-	public RespVO findByThID(Integer theme_id) {
+	public List<RespVO> findByThID(Integer theme_id) {
 		return dao.findByThID(theme_id);
 	}
 

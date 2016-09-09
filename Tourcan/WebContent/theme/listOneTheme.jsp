@@ -51,21 +51,46 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 	<!-- </textarea> -->
 	
 	</div>
- <input type="button" value="回首頁" onclick="javascript:location.href='../index.jsp'"/>
+<!--  <input type="button" value="回首頁" onclick="javascript:location.href='../index.jsp'"/> -->
+<br>
+<br>
 <div >
- <p>respid:</p><p><%=respVO1.getResp_id()%></p>
- <p>topic:</p><p><%=respVO1.getResp_topic()%></p>
- <p><%=respVO1.getMem_uid()%></p>
- <p>getTheme_id:</p><p><%=respVO1.getTheme_id()%></p>
- 
+<%--  <p>Theme_id: <%=respVO1.getTheme_id()%></p> --%>
+<%--  <p>topic:  <%=respVO1.getResp_topic()%></p> --%>
+<%--  <p>Mem_uid: <%=respVO1.getMem_uid()%></p> --%>
+<%--  <p>respid: <%=respVO1.getResp_id()%></p> --%>
+ <table class="table table-bordered">
+ <c:forEach var="RespVO" items="${list}">
+ <thead>
+			<tr >
+				<th>theme_id</th>				
+				<th>resp_topic</th>
+				<th>mem_uid</th>
+				<th>resp_id</th>
+				
+			</tr>
+		</thead>
+	<tr>
+		<td>${RespVO.theme_id}</td>
+		<td>${RespVO.resp_topic}</td>
+		<td>${RespVO.mem_uid}</td>
+		<td>${RespVO.resp_id}</td>
+ 	</tr>	
+			<tr>
+				<th> resp_article</th>	
+			</tr>
+ 	<tr>
+ 		<td id="d2" colspan="4">${RespVO.resp_article }</td>
+ 	</tr>
+ </c:forEach>
+ </table>
 </div> 
- </div>
 
 
  <script type="text/javascript">
 	 $('#div1').summernote('code', themeValue);
  
- 
+// 	 $('#div1').summernote('code', themeValue);
  
  </script>
  

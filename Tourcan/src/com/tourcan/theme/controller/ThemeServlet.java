@@ -184,8 +184,8 @@ public class ThemeServlet  extends HttpServlet{
 //				rq.forward(req, resp);
 //				System.out.println(test);
 				RespService rsv =new RespService();
-				RespVO resVO1=rsv.findByThID(memno);
-				
+				List<RespVO> resVO1=rsv.findByThID(memno);
+				System.out.println("resVO1="+resVO1);
 				ThemeService tsv =new ThemeService();
 				ThemeVO themeVO1= tsv.findById(memno);
 				if (themeVO1 == null) {
@@ -200,7 +200,7 @@ public class ThemeServlet  extends HttpServlet{
 				}
 				
 				//***************************3.�d�ߧ���,�ǳ����(Send the Success view)*************//*
-				req.setAttribute("resVO", resVO1);
+				req.setAttribute("list", resVO1);
 				req.setAttribute("themeVO", themeVO1); // ��Ʈw���X��empVO����,�s�Jreq
 				String url = "/theme/listOneTheme.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // ���\��� listOneEmp.jsp

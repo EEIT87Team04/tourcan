@@ -73,15 +73,24 @@ public class RespDAO implements Resp_interface {
 	}
 
 	@Override
-	public RespVO findByThID(Integer theme_id) {
-		RespVO respVO =null;
+	public List<RespVO> findByThID(Integer theme_id) {
+		List<RespVO> respVO =null;
 		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tc =sion.beginTransaction();
+		Integer t1= theme_id;
 		try{
-			sion.beginTransaction();
-			respVO = (RespVO) sion.get(RespVO.class,theme_id );
-			sion.getTransaction().commit();;
+			
+//			sion.beginTransaction();
+//			sion.getTransaction().commit();
+			Query query =sion.createQuery("FROM RespVO WHERE theme_id=:theme_id");
+			System.out.println("rethid="+query);
+			query.setParameter("theme_id",t1);
+			respVO=query.list();
+			
+			tc.commit();
+			
 			}catch (RuntimeException e) {
-				sion.getTransaction().rollback();
+				tc.rollback();
 				throw e;
 			}
 		return respVO;
@@ -97,10 +106,10 @@ public class RespDAO implements Resp_interface {
 		try{
 //			sion.beginTransaction();
 			String QueryTopic ="FROM RespVO WHERE resp_topic like :resp_topic";
-			System.out.println(QueryTopic);
+//			System.out.println(QueryTopic);
 			Query query =sion.createQuery(QueryTopic);
 			query.setParameter("resp_topic",topic3);
-			System.out.println(query);
+//			System.out.println(query);
 			rtopic=query.list();
 			tc.commit();
 //			sion.getTransaction().commit();;
@@ -112,11 +121,11 @@ public class RespDAO implements Resp_interface {
 		return rtopic;
 	}
 
-	@Override
-	public Set<ThemeVO> getThemesByID(Integer theme_id) {
-		Set<ThemeVO> set =findByThID(theme_id).getThemeno();
-		return set;
-	}
+//	@Override
+//	public Set<ThemeVO> getThemesByID(Integer theme_id) {
+//		Set<ThemeVO> set =findById(resp_id).
+//		return set;
+//	}
 
 
 

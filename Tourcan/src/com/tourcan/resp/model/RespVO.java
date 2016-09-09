@@ -23,14 +23,14 @@ public class RespVO implements Serializable  {
 	@Expose
 	private Integer theme_id;
 	
-	private Set<ThemeVO> themeno =new HashSet<ThemeVO>();
-	
-	public Set<ThemeVO> getThemeno() {
-		return themeno;
-	}
-	public void setThemeno(Set<ThemeVO> themeno) {
-		this.themeno = themeno;
-	}
+//	private Set<ThemeVO> themeno =new HashSet<ThemeVO>();
+//	
+//	public Set<ThemeVO> getThemeno() {
+//		return themeno;
+//	}
+//	public void setThemeno(Set<ThemeVO> themeno) {
+//		this.themeno = themeno;
+//	}
 	public Integer getResp_id() {
 		return resp_id;
 	}
