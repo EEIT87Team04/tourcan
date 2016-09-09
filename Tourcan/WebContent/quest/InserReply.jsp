@@ -86,19 +86,19 @@
 			<div>
 				<div >
 				    <div >
-						<div class="form-group" id=div_questCatalog>
-				           <label for="questCatalog">問題分類:</label> <input type="number"
-					        class="form-control" id="quest_catalog" name="quest_catalog" placeholder="問題分類" min=1>
-			            </div>
-			            <div class="form-group" id=div_quest_topic>
-				           <label for="pwd">主題:</label> <input type="text"
-					       class="form-control" id="quest_topic" name="quest_topic" placeholder="問題名稱">
-			            </div>
-			            <div class="form-group" id=div_quest_quiz>
-				           <label for="questQuiz">問題內容:</label> <textarea
-					        class="form-control"  id="quest_quiz" name="quest_quiz" placeholder="問題內容"></textarea>
-			            </div>
-					</div>
+<!-- 						<div class="form-group" id=div_questCatalog> -->
+<!-- 				           <label for="questCatalog">問題分類:</label> <input type="number" -->
+<!-- 					        class="form-control" id="quest_catalog" name="quest_catalog" placeholder="問題分類" min=1> -->
+<!-- 			            </div> -->
+<!-- 			            <div class="form-group" id=div_quest_topic> -->
+<!-- 				           <label for="pwd">主題:</label> <input type="text" -->
+<!-- 					       class="form-control" id="quest_topic" name="quest_topic" placeholder="問題名稱"> -->
+<!-- 			            </div> -->
+<!-- 			            <div class="form-group" id=div_quest_quiz> -->
+<!-- 				           <label for="questQuiz">問題內容:</label> <textarea -->
+<!-- 					        class="form-control"  id="quest_quiz" name="quest_quiz" placeholder="問題內容"></textarea> -->
+<!-- 			            </div> -->
+<!-- 					</div> -->
 
 
 <!-- 						<div > -->
@@ -107,18 +107,18 @@
 <!-- 								placeholder="會員Id" min=-1> -->
 <!-- 						</div> -->
 					
-<!-- 					<div > -->
-<!-- 						<div > -->
-<!-- 							<label for="questReply">回覆內容</label> <input type="text" -->
-<!-- 								 id="quest_reply" name="quest_reply" -->
-<!-- 								placeholder="回覆內容"> -->
-<!-- 						</div> -->
-<!-- 						<div > -->
-<!-- 							<label for="adminId">管理員Id</label> <input type="text" -->
-<!-- 								 id="admin_id" name="admin_id" -->
-<!-- 								placeholder="管理員Id" min=-1> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
+					<div >
+						<div >
+							<label for="questReply">回覆內容</label> <input type="text"
+								 id="quest_reply" name="quest_reply"
+								placeholder="回覆內容">
+						</div>
+						<div >
+							<label for="adminId">管理員Id</label> <input type="text"
+								 id="admin_id" name="admin_id"
+								placeholder="管理員Id" min=-1>
+						</div>
+					</div>
 
 					<div >
 						<div id=div_btnInsert>
