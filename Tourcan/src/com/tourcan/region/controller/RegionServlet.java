@@ -9,33 +9,41 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.tourcan.region.model.RegionDAO_JDBC;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.tourcan.region.model.RegionDAO;
+import com.tourcan.region.model.RegionHibernateDAO;
 
-/**
- * Servlet implementation class RegionServlet
- */
-@WebServlet("/RegionServlet")
+@WebServlet("/att/RegionServlet")
 public class RegionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public RegionServlet() {
+	ApplicationContext context;
+
+	public RegionServlet() {
         super();
     }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		RegionDAO_JDBC dao = new RegionDAO_JDBC();
-		dao.getAll();
-		PrintWriter out = response.getWriter();
-//		System.out.println(new JSONArray(dao.getAll()).toString());
-		out.println(new JSONArray(dao.getAll()).toString());
+	
+	@Override
+	public void init() throws ServletException {
+		context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		RegionDAO dao = context.getBean(RegionHibernateDAO.class);
+		PrintWriter out = response.getWriter();
+		out.println(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(dao.getAll()));
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
 }

@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>Tourcan</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
-  <servlet>
-    <servlet-name>GoogleSignInLogger</servlet-name>
-    <servlet-class>experimental.GoogleSignIn</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GoogleSignInLogger</servlet-name>
-    <url-pattern>/GoogleLogger</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>FirebaseSignInLogger</servlet-name>
-    <servlet-class>experimental.FirebaseSignIn</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FirebaseSignInLogger</servlet-name>
-    <url-pattern>/FirebaseLogger</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>Tourcan</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/Beans.xml</param-value>
+	</context-param>
+	<resource-ref>
+		<description>DB Connection</description>
+		<res-ref-name>jdbc/SQLServer</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<servlet>
+		<servlet-name>GoogleSignInLogger</servlet-name>
+		<servlet-class>experimental.GoogleSignIn</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GoogleSignInLogger</servlet-name>
+		<url-pattern>/GoogleLogger</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>FirebaseSignInLogger</servlet-name>
+		<servlet-class>experimental.FirebaseSignIn</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FirebaseSignInLogger</servlet-name>
+		<url-pattern>/FirebaseLogger</url-pattern>
+	</servlet-mapping>
+	<listener>
+	<listener-class>
+	org.springframework.web.context.ContextLoaderListener
+	</listener-class>
+	</listener>
 </web-app>

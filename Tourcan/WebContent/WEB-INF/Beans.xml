@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+<!-- 		<property name="dataSource"> -->
+<!-- 		<bean class="org.springframework.jndi.JndiObjectFactoryBean"> -->
+<!-- 		<property name="jndiName" value="java:comp/env/jdbc/SQLServer" /> -->
+<!-- 		</bean> -->
+<!-- 		</property> -->
+		<!-- <property name="dataSource"> -->
+		<!-- <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
+		<!-- <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
+			/> -->
+		<!-- <property name="url" value="jdbc:sqlserver://localhost:1433;DatabaseName=tourcan" 
+			/> -->
+		<!-- <property name="username" value="sa" /> -->
+		<!-- <property name="password" value="P@ssw0rd" /> -->
+		<!-- </bean> -->
+		<!-- </property> -->
+		<property name="dataSource">
+			<bean class="com.mchange.v2.c3p0.ComboPooledDataSource"
+				destroy-method="close">
+				<property name="driverClass"
+					value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+				<property name="jdbcUrl"
+					value="jdbc:sqlserver://localhost:1433;DatabaseName=tourcan" />
+				<property name="user" value="sa" />
+				<property name="password" value="sa123456" />
+			</bean>
+		</property>
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+	</bean>
+	
+	<bean id="jsonArray" class="org.json.JSONArray" scope="prototype" />
+	<bean id="gsonInstance" class="com.google.gson.Gson" />
+	
+<!-- 	<bean id="attDAO" class="com.tourcan.att.model.AttHibernateDAO"> -->
+<!-- 		<property name="sessionFactory" ref="sessionFactory"></property> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="attVO" class="com.tourcan.att.model.AttVO" scope="prototype" /> -->
+
+<!-- 	<bean id="hotelDAO" class="com.tourcan.hotel.model.HotelHibernateDAO"> -->
+<!-- 		<property name="sessionFactory" ref="sessionFactory"></property> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="hotelVO" class="com.tourcan.hotel.model.HotelVO" scope="prototype" /> -->
+	
+	<bean id="regionDAO" class="com.tourcan.region.model.RegionHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="regionVO" class="com.tourcan.region.model.RegionVO" scope="prototype" />
+
+</beans>
