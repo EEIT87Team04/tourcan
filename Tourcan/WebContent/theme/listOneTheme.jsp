@@ -56,7 +56,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
  <p>respid:</p><p><%=respVO1.getResp_id()%></p>
  <p>topic:</p><p><%=respVO1.getResp_topic()%></p>
  <p><%=respVO1.getMem_uid()%></p>
- <p><%=respVO1.getTheme_id()%></p>
+ <p>getTheme_id:</p><p><%=respVO1.getTheme_id()%></p>
  
 </div> 
  </div>

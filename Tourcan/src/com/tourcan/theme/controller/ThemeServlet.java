@@ -184,7 +184,7 @@ public class ThemeServlet  extends HttpServlet{
 //				rq.forward(req, resp);
 //				System.out.println(test);
 				RespService rsv =new RespService();
-				RespVO resVO1=rsv.findById(memno);
+				RespVO resVO1=rsv.findByThID(memno);
 				
 				ThemeService tsv =new ThemeService();
 				ThemeVO themeVO1= tsv.findById(memno);
