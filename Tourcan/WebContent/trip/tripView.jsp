@@ -67,7 +67,7 @@
 								value="walk">步行
 						</div>
 					</div>
-					<input type="button" class="row div2 col-sm-12" value="+新增行程...">
+					<input type="button" class="row div2 col-sm-12" id="addTripBtn" value="+新增行程...">
 				</div>
 				<div style = "display:none" class="row">
 					<div class="col-sm-4 form-group">
@@ -144,6 +144,37 @@
 					});
 				}, 300);
 			}
+		}
+		
+		$(function(){
+			$('#addTripBtn').click(function(){
+				var tripitemDiv = document.createElement("div");
+			})
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		})
+			
+			
+			
+			
+			
+			
+			
 		}
 	</script>
 	<script
