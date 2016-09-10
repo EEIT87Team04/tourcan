@@ -16,11 +16,25 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Show all test3</title>
+<title>Show all Theme and update</title>
 </head>
 <body bgcolor='white'>
 <div class="container">
-	<table  class="table table-bordered">
+	<div class="row" >
+		
+		<div class="col-md-9">
+			<h1>討論區主題列表</h1>
+		</div>
+		
+		
+		<div class="col-md-3 ">
+			<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">發表新主題</button>
+<%-- 		<p><%=request.getContextPath()%> --%> 
+		</div>
+		
+	</div>
+
+	<table  class="table table-hover">
 		<thead>
 			<tr >
 				<th>id</th>				
@@ -42,7 +56,7 @@
 						<input type="hidden"name="action" value="getOne_For_Display">				
 						</FORM>
 					 </td>
-					<td>
+					 <td>
 						<FORM METHOD="post" ACTION="ThemeServlet">
 						<input class="btn btn-default" type="submit" value="${ThemeVO.theme_topic}">
 						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">

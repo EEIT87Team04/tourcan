@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			<div class="from-grop">
-				<label for="">ThemeArticle</label>
+				<label for="">RespArticle</label>
 				<div id="d2"></div>
 				<textarea name="resp_article" id="resp_article" class="form-control"></textarea>
 <!-- 				<div id="theme_article" ></div> -->

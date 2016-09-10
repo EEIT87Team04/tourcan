@@ -4,7 +4,7 @@
 <html  >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Create Theme</title>
+<title>Insert Theme</title>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> 
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
@@ -16,8 +16,8 @@
 <div class="container">
 	<div>
 		<div>
-			<input type="button" value="New Theme" id="but1" /> 
-			<input type="button" value=" New Response" id="but2" />
+<!-- 			<input type="button" value="New Theme" id="but1" />  -->
+<!-- 			<input type="button" value=" New Response" id="but2" /> -->
 		</div>
 	</div>	
 	<div>	
@@ -25,7 +25,7 @@
 		<form name="addTheme">
 			<div class="row">
 				<div  class="col-sm-6 col-sm-offset-3">
-					<h2>Create New Theme</h2>
+					<h2>Insert New Theme</h2>
 				</div>
 			</div>
 			<div>
@@ -113,7 +113,7 @@
 						json[form[i].name] = form[i].value;
 					}
 				}
-				$.post("ThemeServlet",action="aaa" ,JSON.stringify(json)).done(function(data) {
+				$.post("ThemeServlet" ,JSON.stringify(json)).done(function(data) {
 					console.log(data);
 					$.each(data, function(errAtt, errMsg) {
 						console.log(errMsg);

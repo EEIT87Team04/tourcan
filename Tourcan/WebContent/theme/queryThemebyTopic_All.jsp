@@ -76,21 +76,21 @@
 				<th>topic</th>
 				<th>memUID</th>
 				<th>catalog</th>
-				<td>
-			<FORM METHOD="post" ACTION="mem.do">
-				<input type="submit" value="修改">
-				 <input type="hidden"name="mem_id" value="${MemVO.mem_id}">
-				  <input type="hidden"name="action" value="getOne_For_Update">
-			</FORM> 
-			</td>
-			<td>
-			<FORM METHOD="post" ACTION="mem.do" >
-				 <input	type="submit" value="刪除"    onclick="toDelete()" />
-				 <input type="hidden" name="memno" value="${MemVO.mem_id}"> 
-				  <input type="hidden"name="action" value="delete">
-				  <!--  <input type="hidden" onclick="toDelete()" >-->
-			</FORM>
-			</td>
+<!-- 				<td> -->
+<!-- 			<FORM METHOD="post" ACTION="mem.do"> -->
+<!-- 				<input type="submit" value="修改"> -->
+<%-- 				 <input type="hidden"name="mem_id" value="${MemVO.mem_id}"> --%>
+<!-- 				  <input type="hidden"name="action" value="getOne_For_Update"> -->
+<!-- 			</FORM>  -->
+<!-- 			</td> -->
+<!-- 			<td> -->
+<!-- 			<FORM METHOD="post" ACTION="mem.do" > -->
+<!-- 				 <input	type="submit" value="刪除"    onclick="toDelete()" /> -->
+<%-- 				 <input type="hidden" name="memno" value="${MemVO.mem_id}">  --%>
+<!-- 				  <input type="hidden"name="action" value="delete"> -->
+<!-- 				   <input type="hidden" onclick="toDelete()" > -->
+<!-- 			</FORM> -->
+<!-- 			</td> -->
 			
 				
 			</tr>
@@ -138,8 +138,8 @@ $(function(){
 // // 				$("#h3").setAttribute("style","color:red");
 // 						$("#d1").append(p1);
  					
-						var cell1 = $("<td></td>").text(themeValue.theme_id);
- 						var cell2 = $("<td></td>").text(themeValue.theme_topic);
+						var cell1 = $("<td/>").text(themeValue.theme_id);
+ 						var cell2 = $("<td/>").text(themeValue.theme_topic);
  						var cell3 = $("<td></td>").text(themeValue.mem_uid);
  						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
  						var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4]);
@@ -147,7 +147,7 @@ $(function(){
 }
 				})
 		})
-// 	}
+//  	}
 	})
 	
 	
@@ -156,8 +156,8 @@ $(function(){
 		$.getJSON(("ThemeServlet"),function(data){
 			var myBody = $('#tb1>tbody');
 			$.each(data,function(idx,theme1){
-				var cell1 = $("<td></td>").text(theme1.theme_id);
-					var cell2 = $("<td></td>").text(theme1.theme_topic);
+					var cell1 = $("<td/>").text(theme1.theme_id);
+					var cell2 = $("<td/>").text(theme1.theme_topic);
 					var cell3 = $("<td></td>").text(theme1.mem_uid);
 					var cell4 = $("<td></td>").text(theme1.theme_catalog);					
 					var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4]);
