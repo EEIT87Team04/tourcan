@@ -216,6 +216,8 @@
 			document.addAtt.reset();
 			$('form[name="addAtt"] span').remove();
 		});
+		
+		
 	});
 </script>
 <script

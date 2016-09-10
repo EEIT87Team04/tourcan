@@ -5,8 +5,6 @@
 <head>
 <link rel="stylesheet" href="/Tourcan/css/emsBasic.css" />
 <link rel="stylesheet"
-	href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-<link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Tourcan 後台管理系統</title>
@@ -17,8 +15,7 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<div class="listContainer" id="iBtnList">
-		<div class="col-md-2"
-			style="background-color: rgba(255, 255, 255, 0.5); height: 100%;">
+		<div class="col-md-2 listBox">
 			<div class="row" style="margin: 15px 15px">
 				<button id="index" class="iconBtn shadowBtn">
 					<img class="icon" src="/Tourcan/icons/EMS/list.png"><span
@@ -74,7 +71,8 @@
 				<div style="float: left;" id="pageBtns"></div>
 				<span
 					style="float: right; font-family: Arial; font-size: 16px; color: rgb(255, 255, 255);">
-					<img src="/Tourcan/icons/EMS/suit-and-bow-tie.png"> Welcome, Admin
+					<img src="/Tourcan/icons/EMS/suit-and-bow-tie.png"> Welcome,
+					Admin
 				</span>
 			</div>
 			<div class="row" style="margin: 15px 15px">

@@ -7,7 +7,7 @@
 	</div>
 	<script type="text/javascript">
 		$(function() {
-			$("#iBtnList :button").each(function(){
+			$(".iconBtn").each(function(){
 				btns = $(this).attr("id");
 				$("#"+ btns).click(function(){
 // 					console.log($(this).attr("id"));

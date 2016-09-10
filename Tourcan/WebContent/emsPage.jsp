@@ -17,8 +17,7 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<div class="listContainer" id="iBtnList">
-		<div class="col-md-2"
-			style="background-color: rgba(255, 255, 255, 0.5); height: 100%;">
+		<div class="col-md-2 listBox">
 			<div class="row" style="margin: 15px 15px">
 				<button id="index" class="iconBtn shadowBtn">
 					<img class="icon" src="/Tourcan/icons/EMS/list.png"><span
@@ -87,7 +86,7 @@
 	</div>
 	<script type="text/javascript">
 		$(function() {
-			$("#iBtnList :button").each(function(){
+			$(".iconBtn").each(function(){
 				btns = $(this).attr("id");
 				$("#"+ btns).click(function(){
 // 					console.log($(this).attr("id"));

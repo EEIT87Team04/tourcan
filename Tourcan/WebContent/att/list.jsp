@@ -3,27 +3,78 @@
 <!DOCTYPE html>
 <jsp:include page="/emsPart1.jsp" />
 <center>
-	<input type='hidden' id='current_page' />  
-	<input type='hidden' id='show_per_page' />  
-	<table id="attList" class="table table-hover tableList" >
-	<thead>
-		<tr>
-			<th>編號</th>
-			<th>地區</th>
-			<th>地名</th>
-			<th>網址</th>
-			<th>更新</th>
-			<th>刪除</th>
-		</tr>
- 	</thead>
- 	<tbody id="dataList">
- 	
- 	</tbody>
+	<input type='hidden' id='current_page' /> <input type='hidden'
+		id='show_per_page' />
+	<table id="attList" class="table table-hover tableList">
+		<thead>
+			<tr>
+				<th>編號</th>
+				<th>地區</th>
+				<th>地名</th>
+				<th>網址</th>
+				<th>更新</th>
+				<th>刪除</th>
+			</tr>
+		</thead>
+		<tbody id="dataList">
+
+		</tbody>
 	</table>
 	<ul id='page_navigation' class="pagination pagination-lg"></ul>
+	
+	<div id="delPop" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="close">×</span>
+				<h2>刪除此景點</h2>
+			</div>
+			<div class="modal-body">
+				<h3>是否要刪除此景點?</h3>
+				<input type="hidden" id="tgValue">
+				<label>景點：</label><span id="attName"></span>
+			</div>
+			<div class="modal-footer">
+				<button id="cancelDel" class="celNcmitBtns">取消</button>
+				<button id="commitDel" class="celNcmitBtns">刪除</button>
+			</div>
+		</div>
+	</div>
+	<div id="delPop" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="close">×</span>
+				<h2>刪除此景點</h2>
+			</div>
+			<div class="modal-body">
+				<h3>是否要刪除此景點?</h3>
+				<input type="hidden" id="tgValue">
+				<label>景點：</label><span id="attName"></span>
+			</div>
+			<div class="modal-footer">
+				<button id="cancelDel" class="celNcmitBtns">取消</button>
+				<button id="commitDel" class="celNcmitBtns">刪除</button>
+			</div>
+		</div>
+	</div>
+
 </center>
 <script>
 	$(function() {
+		
+		//↓↓↓↓↓↓↓↓↓Popup Window↓↓↓↓↓↓↓↓↓
+			var delPop = $("#delPop");
+			$(".close,#cancelDel").click(function(e){
+				e.stopPropagation();
+				delPop.css("display","none");
+			});
+			$(window).click(function(e){
+				e.stopPropagation();
+// 				console.log(e.target.id);
+				if(e.target.id=="delPop")
+				{delPop.css("display","none");}
+			});	
+		//↑↑↑↑↑↑↑↑↑↑↑Popup Window↑↑↑↑↑↑↑↑↑↑↑
+			
 		$.getJSON('AttServlet', function(data) {
 			$.each(data, function(index, att) {
 				var row = $("<tr/>");
@@ -31,13 +82,42 @@
 				var regName = $("<td/>").text(att.regionVO.region_name);
 				var name = $("<td/>").text(att.att_name);
 				var url = $("<td/>").text(att.att_url);
-				var ubtn = $("<td/>").append($("<button/>").addClass("upNdelBtns").text("更新").val(att.att_id));
-				var dbtn = $("<td/>").append($("<button/>").addClass("upNdelBtns").text("刪除").val(att.att_id));
+				var ubtn = $("<td/>").append($("<button/>").addClass("upNdelBtns").addClass("shadowBtn").text("更新").val(att.att_id));
+				var del = $("<button/>").addClass("upNdelBtns").addClass("shadowBtn").text("刪除").attr("id","del" + att.att_id).val(att.att_id);
+				var dbtn = $("<td/>").append(del);
 				var table = $("#attList >tbody");
 				
 				table.append(row.append([id,regName,name,url,ubtn,dbtn]));
+		//↓↓↓↓↓↓↓↓↓Popup Window↓↓↓↓↓↓↓↓↓
+		//For delete function
+			$("#del" + att.att_id).click(function(e){
+				e.stopPropagation();
+				$("#tgValue").val($(this).val());
+				$("#attName").text(att.att_name);
+				delPop.css("display","block");
+			});	
+			$("#commitDel").click(function(){
+				console.log($("#tgValue").val());
+				$.ajax({
+					type : "delete",
+					url:"AttServlet?" + $.param({"attId" : $("#tgValue").val()}),
+// 					dataType : "json"
+				}).done(function(){
+					console.log("succeed");
+				}).fail(function(){
+					console.log("failed");
+				}); 	
+				delPop.css("display","none");
+				window.location.reload();
 			});
+		//For update function
+		
+		
+		//↑↑↑↑↑↑↑↑↑↑↑Popup Window↑↑↑↑↑↑↑↑↑↑↑
+		});
 			
+			
+		//----------Pagination-----------	
 	    //how much items per page to show  
 	    var show_per_page = 10;  
 	    //getting the amount of elements inside content div  
@@ -58,13 +138,14 @@
 	        - links to specific pages 
 	        - link to next page 
 	    */  
-	    var navigation_html = '<li><a class="previous_link" href="javascript:previous();">Prev</a></li>';  
+// 	    var navigation_html = '<li><a class="previous_link" href="javascript:previous();">Prev</a></li>';
+        var navigation_html = "";
 	    var current_link = 0;  
 	    while(number_of_pages > current_link){  
 	        navigation_html += '<li><a class="page_link" href="javascript:go_to_page(' + current_link +')" longdesc="' + current_link +'">'+ (current_link + 1) +'</a></li>';  
 	        current_link++;  
 	    }  
-	    navigation_html += '<li><a class="next_link" href="javascript:next();">Next</a></li>';  
+// 	    navigation_html += '<li><a class="next_link" href="javascript:next();">Next</a></li>';  
 	  
 	    $('#page_navigation').html(navigation_html);  
 	  
@@ -78,8 +159,6 @@
 	    $('#attList tbody').children().slice(0, show_per_page).css('display', 'table-row');  
 			
 		});
-	
-				
 	});
 		
 	function previous(){  

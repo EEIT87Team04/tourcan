@@ -105,7 +105,7 @@ public class AttDAO implements AttDAO_interface {
 		Transaction tx = session.beginTransaction();
     	try {
 //			session.beginTransaction();
-			Query query =session.createQuery("from AttVO order by att_id");
+			Query query =session.createQuery("from AttVO order by att_id DESC");
 			list=query.list();
 			tx.commit();
 //			session.beginTransaction().commit();
