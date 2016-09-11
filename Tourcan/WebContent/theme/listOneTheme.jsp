@@ -141,15 +141,17 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 				
 				</div>
 			</div>
-			<div class="from-grop">
 				
 				<div id="d2"></div>
 					<textarea name="resp_article" id="resp_article" class="form-control"></textarea>
+			<div class="from-inline">
+				<div class="col-md-3" > 
+					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/showAllTheme.jsp'">回到所有主題</button>
+			
+				</div>  
+				<div class="col-md-3 col-sm-offset-6" >
+					<button type="button" class="btn btn-success form-control" id="btnInsert"  > 確定回覆</button>
 				</div>
-			  
-			<div></div>
-			<div class="col-md-3 col-sm-offset-8" >
-				<button type="button" class="btn btn-success form-control" id="btnInsert">確定回覆</button>
 			</div>
 		</form>
 	</div>	
@@ -160,7 +162,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 	 $('#resp_article').summernote({
 		 height:200
 		 });
-	 $('#div1').summernote('code', themeValue);
+	 $('#div2').summernote('code');
 	 
 	 $(function() {
 			
@@ -175,7 +177,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 					}
 				}
 					console.log(json);
-				$.post("RespServlet", JSON.stringify(json)).done(function(data) {
+				$.post("../resp/RespServlet", JSON.stringify(json)).done(function(data) {
 					$.each(data, function(errAtt, errMsg) {
 						console.log(errMsg);
 						if (errMsg == "success") {
@@ -194,6 +196,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 					});
 					console.log("200.");
 					var makrup = $('#resp_article').summernote('code');
+					window.location.reload();
 // 					$('#theme_article').summernote('destroy');
 // 					$( "#theme_article" ).remove();
 				}).fail(function(xhr) {
