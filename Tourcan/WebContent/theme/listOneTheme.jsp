@@ -16,7 +16,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 <html>
 <head>
 <title> listOneTheme.jsp</title>
- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
   <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
@@ -79,7 +79,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 	<%--  <p>topic:  <%=respVO1.getResp_topic()%></p> --%>
 	<%--  <p>Mem_uid: <%=respVO1.getMem_uid()%></p> --%>
 	<%--  <p>respid: <%=respVO1.getResp_id()%></p> --%>
-	 <table class="table table-hover" style=" border:dashed 1px black">
+	 <table class="table table-hover" >
 		 <c:forEach var="RespVO" items="${list}">
 		 	<thead style="padding: 10px">
 					<tr  class="success">
@@ -146,7 +146,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 					<textarea name="resp_article" id="resp_article" class="form-control"></textarea>
 			<div class="from-inline">
 				<div class="col-md-3" > 
-					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/showAllTheme.jsp'">回到所有主題</button>
+					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/listAllTheme.jsp'">回到所有主題</button>
 			
 				</div>  
 				<div class="col-md-3 col-sm-offset-6" >

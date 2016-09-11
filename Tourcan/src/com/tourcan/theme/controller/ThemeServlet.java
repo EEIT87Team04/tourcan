@@ -172,7 +172,7 @@ public class ThemeServlet extends HttpServlet {
 					}
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs1.isEmpty()) {
-						RequestDispatcher failureView = req.getRequestDispatcher("/theme/showAllTheme.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
 						failureView.forward(req, resp);
 						return;
 					}
@@ -185,7 +185,7 @@ public class ThemeServlet extends HttpServlet {
 					}
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs1.isEmpty()) {
-						RequestDispatcher failureView = req.getRequestDispatcher("/theme/showAllTheme.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
 						failureView.forward(req, resp);
 						return;
 					}
@@ -199,7 +199,7 @@ public class ThemeServlet extends HttpServlet {
 					}
 					// Send the use back to the form, if there were errors
 					if (!errorMsgs1.isEmpty()) {
-						RequestDispatcher failureView = req.getRequestDispatcher("/theme/showAllTheme.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
 						failureView.forward(req, resp);
 						return;
 					}
@@ -216,7 +216,7 @@ public class ThemeServlet extends HttpServlet {
 					// ***************************��L�i�઺���~�B�z*************************************//*
 				} catch (Exception e) {
 					errorMsgs1.add("error:" + e.getMessage());
-					RequestDispatcher failureView = req.getRequestDispatcher("/theme/showAllTheme.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
 					failureView.forward(req, resp);
 				}
 			}
