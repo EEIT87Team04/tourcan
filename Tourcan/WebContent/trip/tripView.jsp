@@ -50,7 +50,7 @@
 	border: 2px solid #E0E0E0;
 	margin-bottom: 5px;
 	padding-top: 3px;
-	text-align:center;
+	text-align:center; 
 }
 
 .divAtt {
@@ -66,7 +66,7 @@
 	border: 2px solid #E0E0E0;
 	margin-bottom: 5px;
 	padding-top: 3px;
-	text-align:center;
+/* 	text-align:center; */
 }
 </style>
 <script
@@ -170,7 +170,7 @@
 			</div>
 			<div class="col-sm-5">
 				<div class="row">
-					<div class="col-sm-12 " id="mapPreview"></div>
+					<div class="col-sm-12" id="mapPreview"></div>
 				</div>
 				<div class="row" style="margin-top: 20px">
 					<div class="col-sm-7 form-group">
@@ -183,6 +183,9 @@
 			</div>
 		</div>
 	</div>
+
+	<div><a href=""></a></div>
+
 
 	<div id="sortable">
 		<div>Item 1</div>
@@ -271,39 +274,43 @@
 						attDiv.setAttribute("class","col-sm-12 divAtt form-group");
 						var imgDiv=document.createElement("div");
 						imgDiv.setAttribute("class","row col-sm-3");
-						var imgText = document.createTextNode("圖片");
-						imgDiv.appendChild(imgText);
+// 						var imgText = document.createTextNode("圖片");
+// 						imgDiv.appendChild(imgText);
+						var urlA=document.createElement("a");
+						urlA.setAttribute("href",att.att_url);
+						urlA.setAttribute("target","_new");
 						var attLabel =document.createElement("label");
 						var attText = document.createTextNode(att.att_name);
 						attLabel.appendChild(attText);
-						imgDiv.appendChild(attLabel);
-						var introLabel=document.createElement("label");
-						introLabel.setAttribute("class","row col-sm-2");
-						var introText=document.createTextNode("簡介:");
-						introLabel.appendChild(introText);
+						urlA.appendChild(attLabel);
+						imgDiv.appendChild(urlA);
+						var openLabel=document.createElement("label");
+						openLabel.setAttribute("class","row col-sm-3");
+						var openText=document.createTextNode("開放時間:");
+						openLabel.appendChild(openText);
 						var contentH5=document.createElement("h5");
-						contentH5.setAttribute("class","row col-sm-7");
-						contentH5.setAttribute("style","word-break: break-all; margin-right: 5px");
-						var contentText=document.createTextNode(att.att_intro.substr(0,110)+"...");
+						contentH5.setAttribute("class","row col-sm-6");
+						contentH5.setAttribute("style","word-break: break-all; margin-right:5px; text-align:left");
+						var contentText=document.createTextNode(att.att_open);
 						contentH5.appendChild(contentText);
 						var butDiv=document.createElement("div");
 						butDiv.setAttribute("class","row");
-						var butInput=document.createElement("input");
-						butInput.setAttribute("type","button");
-						butInput.setAttribute("id","detail");
-						butInput.setAttribute("value","詳情");
-						butInput.setAttribute("style","margin-right:5px;");
+// 						var butInput=document.createElement("input");
+// 						butInput.setAttribute("type","button");
+// 						butInput.setAttribute("id","detail");
+// 						butInput.setAttribute("value","詳情");
+// 						butInput.setAttribute("style","margin-right:5px;");
 						var checkInput=document.createElement("input");
 						checkInput.setAttribute("type","checkbox");
 						checkInput.setAttribute("value",att.att_name);
 						checkInput.setAttribute("name","attCheck");
 						checkInput.setAttribute("style","");
-						butDiv.appendChild(butInput);
+// 						butDiv.appendChild(butInput);
 						butDiv.appendChild(checkInput);
 						attDiv.appendChild(imgDiv);
-						attDiv.appendChild(introLabel);
+						attDiv.appendChild(openLabel);
 						attDiv.appendChild(contentH5);
-						attDiv.appendChild(butDiv);
+						attDiv.appendChild(butDiv);	
 						attForm.appendChild(attDiv);
 						
 					})
