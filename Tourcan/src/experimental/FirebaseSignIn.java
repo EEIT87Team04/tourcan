@@ -67,7 +67,17 @@ public class FirebaseSignIn extends HttpServlet implements OnSuccessListener<Fir
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String idTokenString = req.getParameter("idtoken");
-		FirebaseAuth.getInstance().verifyIdToken(idTokenString).addOnSuccessListener(this);
+		// FirebaseAuth.getInstance().verifyIdToken(idTokenString).addOnSuccessListener(this);
+		FirebaseAuth.getInstance().verifyIdToken(idTokenString)
+				.addOnSuccessListener(new OnSuccessListener<FirebaseToken>() {
+					@Override
+					public void onSuccess(FirebaseToken result) {
+						for (Entry<String, Object> e : result.getClaims().entrySet()) {
+							System.out.format("%16s : %s --%s\n", e.getKey(), e.getValue(),
+									e.getValue().getClass().getSimpleName());
+						}
+					}
+				});
 
 		PrintWriter out = resp.getWriter();
 		out.println("test");
@@ -82,16 +92,9 @@ public class FirebaseSignIn extends HttpServlet implements OnSuccessListener<Fir
 	@Override
 	public void onSuccess(FirebaseToken result) {
 		this.result = result;
-
-		// System.out.println("Uid :" + result.getUid());
-		// System.out.println("Issuer :" + result.getIssuer());
-		// System.out.println("Name :" + result.getName());
-		// System.out.println("Email :" + result.getEmail());
-		// System.out.println("Picture :" + result.getPicture());
-		// System.out.println("Claims :" + result.getClaims());
 		for (Entry<String, Object> e : result.getClaims().entrySet()) {
 			System.out.println(e.getKey() + "\t: " + e.getValue() + " (" + e.getValue().getClass().getName() + ")");
 		}
-		System.out.println(new Date(1000 * (Long) result.getClaims().get("exp")).after(new Date())); //should be true if valid.
+		System.out.println(new Date(1000 * (Long) result.getClaims().get("exp")).after(new Date()));																									// valid.
 	}
 }

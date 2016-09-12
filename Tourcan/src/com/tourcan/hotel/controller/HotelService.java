@@ -75,8 +75,9 @@ public class HotelService {
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Response insertHotel(HotelVO vo) {
-		HashMap<String, String> msg = null;
+		HashMap<String, Object> msg = null;
 		// for general message, such as OK, failure
 		HashMap<String, String> err = null;
 		// for column-specific message, such as hotel_name is invalid.
@@ -84,13 +85,13 @@ public class HotelService {
 		if (vo.getHotel_id() != null) {
 			if ((dao.findById(vo.getHotel_id())) == null) {
 				// 404 Not found
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "failure");
 				msg.put("error", "id not exist.");
 				return Response.status(Status.NOT_FOUND).entity(msg).build();
 			} else {
 				// 409 Conflict
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "failure");
 				msg.put("error", "id already exist.");
 				return Response.status(Status.CONFLICT).entity(msg).build();
@@ -98,7 +99,7 @@ public class HotelService {
 		}
 
 		err = new HashMap<String, String>();
-		
+
 		// hotel_name
 		if (vo.getHotel_name() == null) {
 			err.put("hotel_name", "can't be empty.");
@@ -174,22 +175,22 @@ public class HotelService {
 		// update database
 		if (err.size() > 0) {
 			// 400 Bad request
-			msg = new HashMap<String, String>();
+			msg = new HashMap<String, Object>();
 			msg.put("result", "validation-error");
 			msg.put("error", "invalid user input.");
-			msg.put("validation", err.toString());
+			msg.put("validation", err);
 			return Response.status(Status.BAD_REQUEST).entity(msg).build();
 		} else {
 			try {
 				dao.insert(vo);
 				// 201 Created
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "success");
 				return Response.status(Status.CREATED).entity(msg).build();
 			} catch (Exception e) {
 				e.printStackTrace();
 				// 500 Internal server error
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "failure");
 				msg.put("error", "insert unsuccessful.");
 				return Response.status(Status.INTERNAL_SERVER_ERROR).entity(msg).build();
@@ -199,6 +200,7 @@ public class HotelService {
 
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Response updateHotel(HotelVO vo) {
 		HashMap<String, String> msg = null;
 		// for general message, such as OK, failure

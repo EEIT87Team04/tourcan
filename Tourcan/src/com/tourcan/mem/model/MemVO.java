@@ -10,12 +10,12 @@ public class MemVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// TODO rebuild DB to fit new design: mem_uid as primary key
-	private Integer mem_id; //replaced with mem_uid
+//	private Integer mem_id; //replaced with mem_uid
 	private String mem_lname;
 	private String mem_fname;
 	private String mem_nick;
-	private String mem_account; // replaced with Firebase
-	private String mem_pwd; // replaced with Firebase
+//	private String mem_account; // replaced with Firebase
+//	private String mem_pwd; // replaced with Firebase
 	private String mem_email;
 	private String mem_mobile;
 	private byte[] mem_photo;
@@ -25,13 +25,13 @@ public class MemVO implements java.io.Serializable {
 	private Date mem_regtime;
 	private String mem_uid;
 
-	public Integer getMem_id() {
-		return mem_id;
-	}
-
-	public void setMem_id(Integer mem_id) {
-		this.mem_id = mem_id;
-	}
+//	public Integer getMem_id() {
+//		return mem_id;
+//	}
+//
+//	public void setMem_id(Integer mem_id) {
+//		this.mem_id = mem_id;
+//	}
 
 	public String getMem_lname() {
 		return mem_lname;
@@ -57,21 +57,21 @@ public class MemVO implements java.io.Serializable {
 		this.mem_nick = mem_nick;
 	}
 
-	public String getMem_account() {
-		return mem_account;
-	}
-
-	public void setMem_account(String mem_account) {
-		this.mem_account = mem_account;
-	}
-
-	public String getMem_pwd() {
-		return mem_pwd;
-	}
-
-	public void setMem_pwd(String mem_pwd) {
-		this.mem_pwd = mem_pwd;
-	}
+//	public String getMem_account() {
+//		return mem_account;
+//	}
+//
+//	public void setMem_account(String mem_account) {
+//		this.mem_account = mem_account;
+//	}
+//
+//	public String getMem_pwd() {
+//		return mem_pwd;
+//	}
+//
+//	public void setMem_pwd(String mem_pwd) {
+//		this.mem_pwd = mem_pwd;
+//	}
 
 	public String getMem_email() {
 		return mem_email;

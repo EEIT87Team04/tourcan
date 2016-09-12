@@ -3,7 +3,6 @@ package com.tourcan.mem.controller;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,7 +20,7 @@ import com.tourcan.mem.model.MemDAO;
 import com.tourcan.mem.model.MemVO;
 import com.tourcan.util.ApplicationContextUtils;
 
-@Path("member")
+@Path("members")
 public class MemService {
 	MemDAO dao = (MemDAO) ApplicationContextUtils.getContext().getBean("memDAO");
 
@@ -31,7 +30,7 @@ public class MemService {
 	// public Response queryById(@PathParam("id") Integer id) {
 	// MemVO vo;
 	// if ((vo = dao.findById(id)) == null) {
-	// HashMap<String, String> msg = new HashMap<String, String>();
+	// HashMap<String, Object> msg = new HashMap<String, Object>();
 	// msg.put("result", "failure");
 	// msg.put("error", "id not exist.");
 	// return Response.status(Status.NOT_FOUND).entity(msg).build();
@@ -47,7 +46,7 @@ public class MemService {
 	public Response queryByUid(@PathParam("uid") String uid) {
 		MemVO vo;
 		if ((vo = dao.findByUid(uid)) == null) {
-			HashMap<String, String> msg = new HashMap<String, String>();
+			HashMap<String, Object> msg = new HashMap<String, Object>();
 			msg.put("result", "failure");
 			msg.put("error", "uid not exist.");
 			return Response.status(Status.NOT_FOUND).entity(msg).build();
@@ -63,7 +62,7 @@ public class MemService {
 	public Response queryByName(@PathParam("name") String name) {
 		List<MemVO> vos;
 		if ((vos = dao.findByName(name)) == null) {
-			HashMap<String, String> msg = new HashMap<String, String>();
+			HashMap<String, Object> msg = new HashMap<String, Object>();
 			msg.put("result", "failure");
 			msg.put("error", "no matched entry exist.");
 			return Response.status(Status.NOT_FOUND).entity(msg).build();
@@ -78,7 +77,7 @@ public class MemService {
 	public Response queryAll() {
 		List<MemVO> vos = dao.getAll();
 		if ((vos = dao.getAll()) == null) {
-			HashMap<String, String> msg = new HashMap<String, String>();
+			HashMap<String, Object> msg = new HashMap<String, Object>();
 			msg.put("result", "failure");
 			msg.put("error", "no data.");
 			return Response.status(Status.NOT_FOUND).entity(msg).build();
@@ -88,10 +87,14 @@ public class MemService {
 		}
 	}
 
+	/**
+	 * possible return: CONFLICT, BAD_REQUEST, CREATED and INTERNAL_SERVER_ERROR
+	 */
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Response insertMem(MemVO vo) {
-		HashMap<String, String> msg = null;
+		HashMap<String, Object> msg = null;
 		// for general message, such as OK, failure
 		HashMap<String, String> err = new HashMap<String, String>();
 		// for column-specific message, such as hotel_name is invalid.
@@ -102,13 +105,13 @@ public class MemService {
 		} else {
 			if ((dao.findByUid(vo.getMem_uid())) == null) {
 				// 404 Not found - that is what we want.
-				// msg = new HashMap<String, String>();
+				// msg = new HashMap<String, Object>();
 				// msg.put("result", "failure");
 				// msg.put("error", "uid not exist.");
 				// return Response.status(Status.NOT_FOUND).entity(msg).build();
 			} else {
 				// 409 Conflict
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "failure");
 				msg.put("error", "id already exist.");
 				return Response.status(Status.CONFLICT).entity(msg).build();
@@ -137,21 +140,24 @@ public class MemService {
 
 		// mem_nick
 		if (vo.getMem_nick() == null) {
-			vo.setMem_nick("");
+			// vo.setMem_nick("");
 		} else {
-			if (vo.getMem_nick().trim().length() == 0)
-				err.put("mem_nick", "can't be empty.");
+			// if (vo.getMem_nick().trim().length() == 0)
+			// err.put("mem_nick", "can't be empty.");
 			if (vo.getMem_nick().trim().length() > 20)
 				err.put("mem_nick", "too long.");
 		}
 
 		// mem_sex
 		if (vo.getMem_sex() == null) {
-			err.put("mem_sex", "must provide.");
+			// err.put("mem_sex", "must provide.");
+			// vo.setMem_sex(0);
 		} else {
 			// TODO handle allowed value. (ISO/IEC5218, maybe a new entity?)
-			if (vo.getMem_sex() <= -1)
+			if (vo.getMem_sex() == 0 || vo.getMem_sex() == 1 || vo.getMem_sex() == 2 || vo.getMem_sex() == 9) {
+			} else {
 				err.put("mem_sex", "invalid input.");
+			}
 		}
 
 		// region_id
@@ -170,33 +176,45 @@ public class MemService {
 
 		// mem_account
 		// if use firebase, this column become unnecessary.
-		if (vo.getMem_account() == null) {
-			vo.setMem_account(UUID.randomUUID().toString());
-		} else {
-			if (vo.getMem_account().trim().length() == 0)
-				err.put("mem_account", "can't be empty.");
-			if (vo.getMem_account().trim().length() > 40)
-				err.put("mem_account", "too long.");
-		}
+		// if (vo.getMem_account() == null) {
+		// vo.setMem_account(UUID.randomUUID().toString());
+		// } else {
+		// if (vo.getMem_account().trim().length() == 0)
+		// err.put("mem_account", "can't be empty.");
+		// if (vo.getMem_account().trim().length() > 40)
+		// err.put("mem_account", "too long.");
+		// }
 
 		// mem_pwd
 		// if use firebase, this column become unnecessary.
-		if (vo.getMem_pwd() == null) {
-			vo.setMem_pwd(UUID.randomUUID().toString());
-		} else {
-			if (vo.getMem_pwd().trim().length() == 0)
-				err.put("mem_pwd", "can't be empty.");
-		}
+		// if (vo.getMem_pwd() == null) {
+		// vo.setMem_pwd(UUID.randomUUID().toString());
+		// } else {
+		// if (vo.getMem_pwd().trim().length() == 0)
+		// err.put("mem_pwd", "can't be empty.");
+		// }
 
 		// mem_id
 		// if use firebase, this column become unnecessary.
-		if (vo.getMem_id() == null) {
-		} else {
-		}
+		// if (vo.getMem_id() == null) {
+		// } else {
+		// }
 
 		// mem_regtime
 		// register time should be the time when data inserted.
-		vo.setMem_regtime(new Date());
+		if (vo.getMem_regtime() == null) {
+			// err.put("mem_regtime", "must provide.");
+			vo.setMem_regtime(new Date());
+		} else {
+			if (vo.getMem_regtime().after(new Date())) {
+				// Welcome back, Doctor Brown.
+				err.put("mem_regtime", "invalid date.");
+			}
+			if (vo.getMem_bdate() != null && !vo.getMem_bdate().before(vo.getMem_regtime())) {
+				// data can be after, before or EQUAL
+				err.put("mem_regtime", "can't be earlier than birthday.");
+			}
+		}
 
 		// mem_email
 		// newsletter only, nothing to do with login which handled by firebase.
@@ -225,22 +243,22 @@ public class MemService {
 		// update database
 		if (err.size() > 0) {
 			// 400 Bad request
-			msg = new HashMap<String, String>();
+			msg = new HashMap<String, Object>();
 			msg.put("result", "validation-error");
 			msg.put("error", "invalid user input.");
-			msg.put("validation", err.toString());
+			msg.put("validation", err);
 			return Response.status(Status.BAD_REQUEST).entity(msg).build();
 		} else {
 			try {
 				dao.insert(vo);
 				// 201 Created
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "success");
 				return Response.status(Status.CREATED).entity(msg).build();
 			} catch (Exception e) {
 				e.printStackTrace();
 				// 500 Internal server error
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "failure");
 				msg.put("error", "insert unsuccessful.");
 				return Response.status(Status.INTERNAL_SERVER_ERROR).entity(msg).build();
@@ -248,10 +266,14 @@ public class MemService {
 		}
 	}
 
+	/**
+	 * possible return: NOT_FOUND, BAD_REQUEST, OK and INTERNAL_SERVER_ERROR
+	 */
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Response updateMem(MemVO vo) {
-		HashMap<String, String> msg = null;
+		HashMap<String, Object> msg = null;
 		// for general message, such as OK, failure
 		HashMap<String, String> err = new HashMap<String, String>();
 		// for column-specific message, such as hotel_name is invalid.
@@ -262,13 +284,13 @@ public class MemService {
 		} else {
 			if ((dao.findByUid(vo.getMem_uid())) == null) {
 				// 404 Not found
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "failure");
 				msg.put("error", "uid not exist.");
 				return Response.status(Status.NOT_FOUND).entity(msg).build();
 			} else {
 				// 409 Conflict
-				// msg = new HashMap<String, String>();
+				// msg = new HashMap<String, Object>();
 				// msg.put("result", "failure");
 				// msg.put("error", "id already exist.");
 				// return Response.status(Status.CONFLICT).entity(msg).build();
@@ -297,21 +319,25 @@ public class MemService {
 
 		// mem_nick
 		if (vo.getMem_nick() == null) {
-			err.put("mem_nick", "must provide.");
+			// err.put("mem_nick", "must provide.");
+			// vo.setMem_nick("");
 		} else {
-			if (vo.getMem_nick().trim().length() == 0)
-				err.put("mem_nick", "can't be empty.");
+			// if (vo.getMem_nick().trim().length() == 0)
+			// err.put("mem_nick", "can't be empty.");
 			if (vo.getMem_nick().trim().length() > 20)
 				err.put("mem_nick", "too long.");
 		}
 
 		// mem_sex
 		if (vo.getMem_sex() == null) {
-			err.put("mem_sex", "must provide.");
+			// err.put("mem_sex", "must provide.");
+			// vo.setMem_sex(0);
 		} else {
 			// TODO handle allowed value. (ISO/IEC5218, maybe a new entity?)
-			if (vo.getMem_sex() <= -1)
+			if (vo.getMem_sex() == 0 || vo.getMem_sex() == 1 || vo.getMem_sex() == 2 || vo.getMem_sex() == 9) {
+			} else {
 				err.put("mem_sex", "invalid input.");
+			}
 		}
 
 		// region_id
@@ -334,37 +360,37 @@ public class MemService {
 
 		// mem_account
 		// if use firebase, this column become unnecessary.
-		if (vo.getMem_account() == null) {
-			err.put("mem_account", "must provide.");
-		} else {
-			if (vo.getMem_account().trim().length() == 0)
-				err.put("mem_account", "can't be empty.");
-			if (vo.getMem_account().trim().length() > 40)
-				err.put("mem_account", "too long.");
-		}
+		// if (vo.getMem_account() == null) {
+		// err.put("mem_account", "must provide.");
+		// } else {
+		// if (vo.getMem_account().trim().length() == 0)
+		// err.put("mem_account", "can't be empty.");
+		// if (vo.getMem_account().trim().length() > 40)
+		// err.put("mem_account", "too long.");
+		// }
 
 		// mem_pwd
 		// if use firebase, this column become unnecessary.
-		if (vo.getMem_pwd() == null) {
-			err.put("mem_pwd", "must provide.");
-		} else {
-			if (vo.getMem_pwd().trim().length() == 0)
-				err.put("mem_pwd", "can't be empty.");
-		}
+		// if (vo.getMem_pwd() == null) {
+		// err.put("mem_pwd", "must provide.");
+		// } else {
+		// if (vo.getMem_pwd().trim().length() == 0)
+		// err.put("mem_pwd", "can't be empty.");
+		// }
 
 		// mem_id
 		// if use firebase, this column become unnecessary.
-		if (vo.getMem_id() == null) {
-		} else {
-		}
+		// if (vo.getMem_id() == null) {
+		// } else {
+		// }
 
 		// mem_regtime
 		// register time should be the time when data inserted.
 		if (vo.getMem_regtime() == null) {
 			err.put("mem_regtime", "must provide.");
+			// vo.setMem_regtime(new Date());
 		} else {
 			if (vo.getMem_bdate().after(new Date())) {
-				// Welcome back, Doctor Brown.
 				err.put("mem_regtime", "invalid date.");
 			}
 			if (vo.getMem_bdate() != null && vo.getMem_bdate().after(vo.getMem_regtime())) {
@@ -400,22 +426,22 @@ public class MemService {
 		// update database
 		if (err.size() > 0) {
 			// 400 Bad request
-			msg = new HashMap<String, String>();
+			msg = new HashMap<String, Object>();
 			msg.put("result", "validation-error");
 			msg.put("error", "invalid user input.");
-			msg.put("validation", err.toString());
+			msg.put("validation", err);
 			return Response.status(Status.BAD_REQUEST).entity(msg).build();
 		} else {
 			try {
 				dao.update(vo);
 				// 200 OK
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "success");
 				return Response.status(Status.OK).entity(msg).build();
 			} catch (Exception e) {
 				e.printStackTrace();
 				// 500 Internal server error
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "failure");
 				msg.put("error", "update unsuccessful.");
 				return Response.status(Status.INTERNAL_SERVER_ERROR).entity(msg).build();
@@ -427,11 +453,11 @@ public class MemService {
 	@Path("{uid}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response deleteMemByUid(@PathParam("uid") String uid) {
-		HashMap<String, String> msg = null;
+		HashMap<String, Object> msg = null;
 		MemVO vo;
 		if ((vo = dao.findByUid(uid)) == null) {
 			// 404 Not found
-			msg = new HashMap<String, String>();
+			msg = new HashMap<String, Object>();
 			msg.put("result", "failure");
 			msg.put("error", "id not exist.");
 			return Response.status(Status.NOT_FOUND).entity(msg).build();
@@ -441,13 +467,13 @@ public class MemService {
 			try {
 				dao.delete(vo);
 				// 200 OK
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "success");
 				return Response.status(Status.OK).entity(msg).build();
 			} catch (Exception e) {
 				e.printStackTrace();
 				// 500 Internal server error
-				msg = new HashMap<String, String>();
+				msg = new HashMap<String, Object>();
 				msg.put("result", "failure");
 				msg.put("error", "delete unsuccessful.");
 				return Response.status(Status.INTERNAL_SERVER_ERROR).entity(msg).build();

@@ -1,0 +1,175 @@
+﻿http://www.trirand.com/jqgridwiki/doku.php?id=wiki:options
+http://www.trirand.com/jqgridwiki/doku.php?id=wiki:colmodel_options
+http://www.trirand.com/jqgridwiki/doku.php?id=wiki:first_grid
+
+$.jgrid.defaults.width = 900;
+	$.jgrid.defaults.styleUI = 'Bootstrap';
+	var serviceProvider = "${contextPath}/api/members";
+
+	$(function() {
+		var region;
+		var sexMapping = {
+			0 : "不提供",
+			1 : "男",
+			2 : "女",
+			9 : "其他"
+		};
+
+		$.ajax({
+			url : "${contextPath}/RegionServlet",
+			method : "GET"
+		}).done(function(data) {
+			region = data;
+
+			var regionArray = {};
+			for (var i = 0; i < region.length; i++) {
+				regionArray[region[i].region_id] = region[i].region_name;
+			}
+
+			$("#jqGrid").jqGrid({
+				colModel : [ {
+					label : 'Uid',
+					name : 'mem_uid',
+					width : 240,
+					key : true
+				}, {
+					label : '暱稱',
+					name : 'mem_nick',
+					editable : true,
+					width : 72
+				}, {
+					label : '姓',
+					name : 'mem_lname',
+					editable : true,
+					width : 72
+				}, {
+					label : '名',
+					name : 'mem_fname',
+					editable : true,
+					width : 72
+				}, {
+					label : 'e-mail',
+					name : 'mem_email',
+					editable : true,
+					width : 180
+				}, {
+					label : '註冊日期',
+					name : 'mem_regtime',
+					editable : true,
+					width : 96,
+					sorttype : 'date',
+					datefmt : 'YYYY-mm-dd'
+				}, {
+					label : '居住地',
+					name : 'region_id',
+					editable : true,
+					width : 64,
+					edittype : "select",
+					editoptions : {
+						value : regionArray
+					}
+				}, {
+					label : '生日',
+					name : 'mem_bdate',
+					editable : true,
+					width : 96,
+					sorttype : 'date',
+					datefmt : 'YYYY-mm-dd'
+				}, {
+					label : 'Mobile',
+					name : 'mem_mobile',
+					editable : true,
+					width : 96
+				}, {
+					label : '性別',
+					name : 'mem_sex',
+					editable : true,
+					width : 64,
+					edittype : "select",
+					editoptions : {
+						value : sexMapping
+					}
+				} ],
+				viewrecords : true,
+				shrinkToFit : false,
+				//width : 780,
+				height : 300,
+				rowNum : 20,
+				pager : "#jqGridPager",
+				//caption : "Registered member on our site.",
+				//styleUI : 'Bootstrap',
+				datatype : 'local',
+				editurl : 'clientArray'
+			});
+			$('#jqGrid').navGrid('#jqGridPager',
+			// the buttons to appear on the toolbar of the grid
+			{
+				edit : true,
+				add : false,
+				del : true,
+				search : false,
+				refresh : false,
+				view : false,
+				position : "left",
+				cloneToTop : false
+			},
+			// options for the Edit Dialog
+			{
+				editCaption : "The Edit Dialog",
+				closeAfterEdit : true,
+				recreateForm : true,
+				checkOnUpdate : true,
+				checkOnSubmit : true,
+				errorTextFormat : function(data) {
+					return 'Error: ' + data.responseText
+				}
+			},
+			// options for the Delete Dailog
+			{
+				errorTextFormat : function(data) {
+					return 'Error: ' + data.responseText
+				}
+			});
+
+		}).then(fetchGridData);
+
+		function fetchGridData() {
+			var gridArrayData = [];
+			// show loading message
+			$("#jqGrid")[0].grid.beginReq();
+			$.ajax({
+				url : "${contextPath}/api/members",
+				method : "GET"
+			}).done(function(member) {
+				//var member = memberAjax[0];
+				//var sexData = {0:"不提供",1:"男",2:"女",9:"其他"};
+				for (var i = 0; i < member.length; i++) {
+					var item = member[i];
+					var bdate = new Date(item.mem_bdate);
+					bdate = $.datepicker.formatDate('yy-mm-dd', bdate);
+					var regtime = new Date(item.mem_regtime);
+					regtime = $.datepicker.formatDate('yy-mm-dd', regtime);
+					gridArrayData.push({
+						mem_bdate : bdate,
+						mem_email : item.mem_email,
+						mem_fname : item.mem_fname,
+						mem_lname : item.mem_lname,
+						mem_mobile : item.mem_mobile,
+						mem_nick : item.mem_nick,
+						mem_regtime : regtime,
+						mem_sex : sexMapping[item.mem_sex],
+						mem_uid : item.mem_uid,
+						region_id : region[item.region_id].region_name
+					});
+				}
+				// set the new data
+				$("#jqGrid").jqGrid('setGridParam', {
+					data : gridArrayData
+				});
+				// hide the show message
+				$("#jqGrid")[0].grid.endReq();
+				// refresh the grid
+				$("#jqGrid").trigger('reloadGrid');
+			});
+		} //fetchGridData
+	});

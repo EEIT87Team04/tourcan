@@ -24,7 +24,7 @@ public class FirebaseAppUtils implements ServletContextAware {
 		if (firebaseApp == null) {
 			FirebaseApp.initializeApp(
 					new FirebaseOptions.Builder().setServiceAccount(context.getResourceAsStream(firebaseCfg)).build());
-			System.out.println("FirebaseApp init...");
+			// System.out.println("FirebaseApp init...");
 		}
 		return firebaseApp;
 	}

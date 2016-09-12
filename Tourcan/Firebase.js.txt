@@ -17,6 +17,6 @@ firebase.auth().onAuthStateChanged(function(result){console.log(result)});
 
 
 
-
+firebase.auth().signInWithPopup(provider).then(function(result){console.log(result)},function(error){console.log(error)});
 
 

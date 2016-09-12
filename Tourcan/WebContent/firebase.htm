@@ -93,14 +93,12 @@
 			firePopup();
 		});
 		$(".signin-github").click(function() {
-			provider = new firebase.auth.FacebookAuthProvider();
+			provider = new firebase.auth.GithubAuthProvider();
 			provider.addScope('user:email');
 			firePopup();
 		});
 		$(".signin-twitter").click(function() {
-			provider = new firebase.auth.FacebookAuthProvider();
-			provider.addScope('email');
-			provider.addScope('user_friends');
+			provider = new firebase.auth.TwitterAuthProvider();
 			firePopup();
 		});
 		$(".signout").click(function() {

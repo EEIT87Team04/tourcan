@@ -102,7 +102,7 @@ public class MemHibernateDAO implements MemDAO {
 		System.out.println("------ INSERT ------");
 
 		vo = context.getBean(MemVO.class);
-		vo.setMem_account("tomcatuser");
+//		vo.setMem_account("tomcatuser");
 		vo.setMem_bdate(new Date(new java.util.Date().getTime() - 12 * 365 * 86400 * 1000));
 		vo.setMem_regtime(new Date(new java.util.Date().getTime()));
 		vo.setMem_email("tomcat@example.com");
@@ -110,7 +110,7 @@ public class MemHibernateDAO implements MemDAO {
 		vo.setMem_lname("Apache");
 		vo.setMem_mobile("+12185654096");
 		vo.setMem_nick("neko");
-		vo.setMem_pwd("66666666");
+//		vo.setMem_pwd("66666666");
 		vo.setMem_sex(2);
 		vo.setRegion_id(1);
 		vo.setMem_uid(uid);
@@ -121,7 +121,7 @@ public class MemHibernateDAO implements MemDAO {
 
 		vo = dao.findByUid(uid);
 		if (vo != null) {
-			System.out.println(vo.getMem_id() + vo.getMem_lname() + vo.getMem_fname() + vo.getMem_email());
+			System.out.println(vo.getMem_uid() + vo.getMem_lname() + vo.getMem_fname() + vo.getMem_email());
 		} else
 			System.out.println("User not exist.");
 		
@@ -137,7 +137,7 @@ public class MemHibernateDAO implements MemDAO {
 		vos = dao.getAll();
 		if (vos.size() > 0)
 			for (MemVO vo0 : vos)
-				System.out.println(vo0.getMem_id() + vo0.getMem_lname() + vo0.getMem_fname() + vo0.getMem_email());
+				System.out.println(vo0.getMem_uid() + vo0.getMem_lname() + vo0.getMem_fname() + vo0.getMem_email());
 		else
 			System.out.println("Ain't Nobody Here but Us Chickens.");
 		vos = null;
@@ -146,7 +146,7 @@ public class MemHibernateDAO implements MemDAO {
 
 		vo = dao.findByUid(uid);
 		if (vo != null) {
-			System.out.println(vo.getMem_id() + vo.getMem_lname() + vo.getMem_fname() + vo.getMem_email());
+			System.out.println(vo.getMem_uid() + vo.getMem_lname() + vo.getMem_fname() + vo.getMem_email());
 //			dao.delete(vo);
 //			System.out.println("------ DELETE ------");
 		} else
@@ -157,7 +157,7 @@ public class MemHibernateDAO implements MemDAO {
 		vos = dao.findByName("pac");
 		if (vos.size() > 0)
 			for (MemVO vo0 : vos)
-				System.out.println(vo0.getMem_id() + vo0.getMem_lname() + vo0.getMem_fname() + vo0.getMem_email());
+				System.out.println(vo0.getMem_uid() + vo0.getMem_lname() + vo0.getMem_fname() + vo0.getMem_email());
 		else
 			System.out.println("Ain't Nobody Here but Us Chickens.");
 		vos = null;
