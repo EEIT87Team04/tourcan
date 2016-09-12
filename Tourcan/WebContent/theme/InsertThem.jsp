@@ -122,6 +122,7 @@
 							errMsgSpan.remove();
 							
 						}
+						console.log("errMsg"+errMsg)
 						var errSpan = document.createElement("span");
 						var errText = document.createTextNode(errMsg);
 						var errId = 'err' + errAtt;
