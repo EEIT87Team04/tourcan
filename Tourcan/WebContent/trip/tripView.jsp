@@ -50,6 +50,7 @@
 	border: 2px solid #E0E0E0;
 	margin-bottom: 5px;
 	padding-top: 3px;
+	text-align:center;
 }
 
 .divAtt {
@@ -59,6 +60,14 @@
 	margin: 3px;
 	padding-top: 3px;
 	height: 100px;
+}
+
+.div5 {
+	background-color: #FFFFDF;
+	border: 2px solid #E0E0E0;
+	margin-bottom: 5px;
+	padding-top: 3px;
+	text-align:center;
 }
 </style>
 <script
@@ -110,6 +119,38 @@
 						</select> <input type="text" class="form-control" id="attname"
 							name="attname" placeholder="直接查詢景點名稱">
 						<button type="button" id="search">查詢</button>
+					</div>
+				</div>
+				<div id="sortable">
+					<div class="row div5 col-sm-12" id="div3">
+						<div class="col-sm-12 form-group">
+							<label>選擇縣市：</label> <select class="form-control" id="region_id"
+								name="region_id">
+								<option value="0">請選擇</option>
+							</select> <label>類型：</label> <select class="form-control" id="tripType"
+								name="tripType">
+								<option value="0">請選擇</option>
+								<option value="1">景點</option>
+								<option value="2">住宿</option>
+							</select> <input type="text" class="form-control" id="attname"
+								name="attname" placeholder="直接查詢景點名稱">
+							<button type="button" id="search">查詢</button>
+						</div>
+					</div>
+					<div class="row div5 col-sm-12" id="div3">
+						<div class="col-sm-12 form-group">
+							<label>選擇縣市：</label> <select class="form-control" id="region_id"
+								name="region_id">
+								<option value="0">請選擇</option>
+							</select> <label>類型：</label> <select class="form-control" id="tripType"
+								name="tripType">
+								<option value="0">請選擇</option>
+								<option value="1">景點</option>
+								<option value="2">住宿</option>
+							</select> <input type="text" class="form-control" id="attname"
+								name="attname" placeholder="直接查詢景點名稱">
+							<button type="button" id="search">查詢</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -221,9 +262,9 @@
 				$.getJSON(("../att/AttServlet"),{"attname":attname},function(data){
 // 					console.log("data="+data);
 					$.each(data,function(idx,att){
-						console.log("idx="+idx);
-						console.log("att="+att);
-						console.log("test");
+// 						console.log("idx="+idx);
+// 						console.log("att="+att);
+// 						console.log("test");
 						var attDiv=document.createElement("div");
 						attDiv.setAttribute("class","col-sm-12 divAtt form-group");
 						var imgDiv=document.createElement("div");
@@ -241,7 +282,7 @@
 						var contentH5=document.createElement("h5");
 						contentH5.setAttribute("class","row col-sm-7");
 						contentH5.setAttribute("style","word-break: break-all; margin-right: 5px");
-						var contentText=document.createTextNode(att.att_intro.substr(0,100)+"...");
+						var contentText=document.createTextNode(att.att_intro.substr(0,110)+"...");
 						contentH5.appendChild(contentText);
 						var butDiv=document.createElement("div");
 						butDiv.setAttribute("class","row col-sm-2");
@@ -252,7 +293,7 @@
 						butInput.setAttribute("style","margin-top:35px;margin-right:5px");
 						var checkInput=document.createElement("input");
 						checkInput.setAttribute("type","checkbox");
-						checkInput.setAttribute("value"," ");
+						checkInput.setAttribute("value",att.att_name);
 						checkInput.setAttribute("name","attCheck");
 						checkInput.setAttribute("style","margin-top:35px");
 						butDiv.appendChild(butInput);
@@ -263,16 +304,33 @@
 						attDiv.appendChild(butDiv);
 						attForm.appendChild(attDiv);
 						
-// 						document.createTextNode(body.substr(0,150)+"...");
 					})
+					var sendBtn=document.createElement("input");
+					sendBtn.setAttribute("type","button");
+					sendBtn.setAttribute("id","sendBtn");
+					sendBtn.setAttribute("value","送出");
+					sendBtn.setAttribute("style","margin:5px");
+					attForm.appendChild(sendBtn);
 					$("#div3").after(attForm);
+					
+				    $("#sendBtn").click(function(){
+				    	var selected=[];
+				        $("input[name='attCheck']:checked").each(function(){
+				           selected.push($(this).val());
+						   	
+				       	});
+				          alert("景點名稱 : " + selected.join());
+				   });
 				})
 			});
 			
-			  $( function() {
-			    $( "#sortable" ).sortable();
-			    $( "#sortable" ).disableSelection();
-			  } );
+			
+			
+			
+
+			
+		  	
+			  
 			
 			
 			
@@ -301,7 +359,12 @@
 			
 			
 	</script>
-
+	<script >
+		$(function(){
+			$( "#sortable" ).sortable();
+		  	$( "#sortable" ).disableSelection();
+		})
+	</script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&callback=initMap"
 		async defer></script>
