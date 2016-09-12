@@ -182,8 +182,8 @@
 		</form>
 	</div>
 
-	<script src="js/jquery-3.1.0.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="../js/jquery-3.1.0.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 		var coder, map, marker, checkTrigger, lastValue = "";
@@ -256,7 +256,7 @@
 				resetErrors();
 				var att_id = $("#att_id").val();
 // 				console.log(att_id);
-				$.getJSON(("AttServlet"), {"att_id" : att_id}, function(data) {
+				$.getJSON(("AttServlet"), {"att_id" : att_id,"method":"getAttID"}, function(data) {
 // 					console.log(data);
 					$.each(data, function(attName, attValue) {
 // 						console.log("att_id:"+att_id);

@@ -43,15 +43,16 @@ public class AttServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		BufferedReader br = request.getReader();
-		StringBuffer sb = new StringBuffer(128);
-		String json;
-		while ((json = br.readLine()) != null)
-			sb.append(json);
-		json = sb.toString();
-
+//		BufferedReader br = request.getReader();
+//		StringBuffer sb = new StringBuffer(128);
+//		String json;
+//		while ((json = br.readLine()) != null)
+//			sb.append(json);
+//		json = sb.toString();
+		String method= request.getParameter("method");
 		JSONObject err = new JSONObject();
 
+		if(method.equals("getAttID")){
 		// Query by att_id
 		 String attIdStr=request.getParameter("att_id");
 		 if(attIdStr != null){
@@ -89,13 +90,12 @@ public class AttServlet extends HttpServlet {
 		 }
 		 return;
 		 }
-		 
+		}else if(method.equals("getByName")){
 		// ----------------Query one by attname----------------
-		String att_name = request.getParameter("attname");
-		if (att_name != null) {
 			// ***************************1.接收請求參數 -
 			// 輸入格式的錯誤處理**********************//*
 			try {
+				String att_name = request.getParameter("attname");
 				try {
 					if (att_name == null || (att_name.trim()).length() == 0) {
 						throw new Exception();
@@ -123,7 +123,7 @@ public class AttServlet extends HttpServlet {
 				err.append("errmsg", "search error");
 				response.getWriter().println(err.toString());
 			}
-		} else if (attIdStr == null && att_name == null) {
+		} else if (method.equals("getAll")) {
 			AttService asv = new AttService();
 			List<AttVO> avo = asv.getAll();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
