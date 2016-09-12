@@ -118,21 +118,16 @@ public class PhotoServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
 
-		String method = request.getParameter("action");
-
-//		if ("post".equals(method)) {
-			session.removeAttribute("attid");
-			session.removeAttribute("photo");
-			session.removeAttribute("result");
-			String uri = request.getParameter("uri");
 			Integer att_id = null;
 			// Integer hotel_id = null;
 			PhotoService src = new PhotoService();
-
+			JSONObject result = new JSONObject();
+			
+			System.out.println(request.getParameter("att_id"));
 			try {
 				String attId = request.getParameter("att_id");
 				if (attId.trim().length() > 0) {
@@ -143,7 +138,7 @@ public class PhotoServlet extends HttpServlet {
 							throw new Exception();
 						}
 					} catch (Exception e) {
-						session.setAttribute("attid", "無效景點編號");
+						result.append("attid", "無效景點編號");
 						throw e;
 					}
 				}
@@ -154,9 +149,9 @@ public class PhotoServlet extends HttpServlet {
 				// e.printStackTrace();
 				// }
 
-				Part photoFile = request.getPart("photo");
+				Part photoFile = request.getPart("imgs");
 				if (photoFile.getSize() <= 0) {
-					session.setAttribute("photo", "請載入圖片");
+					result.append("photo", "請載入圖片");
 					throw new Exception();
 				}
 				byte[] photo_file = new byte[(int) photoFile.getSize()];
@@ -171,12 +166,12 @@ public class PhotoServlet extends HttpServlet {
 					src.insert(photo_file);
 					// src.insert(photo_file, att_id, hotel_id);
 				}
-				session.setAttribute("result", "新增成功");
-				response.sendRedirect(uri);
+				result.append("result", "新增成功");
+				response.getWriter().println(result.toString());
 			} catch (Exception e) {
-				session.setAttribute("result", "新增失敗");
-				response.sendRedirect(uri);
-				// e.printStackTrace();
+				result.append("result", "新增失敗");
+				response.getWriter().println(result.toString());
+				 e.printStackTrace();
 			}
 //		} else if ("put".equals(method)) {
 //			session.removeAttribute("attid");
