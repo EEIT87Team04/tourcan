@@ -15,12 +15,13 @@ public class AttDAO implements AttDAO_interface {
 	private static final String Get_Img_Name="SELECT att_id FROM AttVO where att_name=?"; 
 	
 	@Override
-	public void insert(AttVO attVO) {
+	public Integer insert(AttVO attVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			session.saveOrUpdate(attVO);
 			session.getTransaction().commit();
+			return attVO.getAtt_id();
 		} catch (RuntimeException e) {
 			System.out.println(e.getMessage());
 			session.getTransaction().rollback();

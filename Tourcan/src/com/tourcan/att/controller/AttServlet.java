@@ -207,7 +207,8 @@ public class AttServlet extends HttpServlet {
 				throw new Exception();
 			} else {
 				AttService srv = new AttService();
-				srv.insert(attVO);
+				Integer att_id = srv.insert(attVO);
+				checkResult.append("att_id", att_id);
 				checkResult.append("result", "新增成功");
 				response.getWriter().println(checkResult.toString());
 			}

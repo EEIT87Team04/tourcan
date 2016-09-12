@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import com.tourcan.att.model.AttService;
 import com.tourcan.photo.model.PhotoService;
 
-@WebServlet("/photo/PhotoServlet")
+@WebServlet("/att/PhotoServlet")
 @MultipartConfig
 public class PhotoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -124,7 +124,7 @@ public class PhotoServlet extends HttpServlet {
 
 		String method = request.getParameter("action");
 
-		if ("post".equals(method)) {
+//		if ("post".equals(method)) {
 			session.removeAttribute("attid");
 			session.removeAttribute("photo");
 			session.removeAttribute("result");
@@ -178,61 +178,61 @@ public class PhotoServlet extends HttpServlet {
 				response.sendRedirect(uri);
 				// e.printStackTrace();
 			}
-		} else if ("put".equals(method)) {
-			session.removeAttribute("attid");
-			session.removeAttribute("photo");
-			session.removeAttribute("result");
-			String uri = request.getParameter("uri");
-			Integer att_id = null;
-			// Integer hotel_id = null;
-			PhotoService src = new PhotoService();
-
-			try {
-				String attId = request.getParameter("att_id");
-				if (attId.trim().length() > 0) {
-					try {
-						att_id = new Integer(attId);
-						AttService attSrc = new AttService();
-						if (attSrc.getOne(att_id) == null) {
-							throw new Exception();
-						}
-					} catch (Exception e) {
-						session.setAttribute("attid", "無效景點編號");
-						throw e;
-					}
-				}
-
-				// try {
-				// hotel_id = new Integer(request.getParameter("hotel_id"));
-				// } catch (Exception e) {
-				// e.printStackTrace();
-				// }
-
-				Part photoFile = request.getPart("photo");
-				if (photoFile.getSize() <= 0) {
-					session.setAttribute("photo", "請載入圖片");
-					throw new Exception();
-				}
-				byte[] photo_file = new byte[(int) photoFile.getSize()];
-				InputStream is = photoFile.getInputStream();
-				BufferedInputStream bis = new BufferedInputStream(is);
-				bis.read(photo_file);
-				if (att_id != null) {
-					src.insertByAttId(photo_file, att_id);
-				}
-				// else if(hotel_id!=null){}
-				else {
-					src.insert(photo_file);
-					// src.insert(photo_file, att_id, hotel_id);
-				}
-				session.setAttribute("result", "新增成功");
-				response.sendRedirect(uri);
-			} catch (Exception e) {
-				session.setAttribute("result", "新增失敗");
-				response.sendRedirect(uri);
-				// e.printStackTrace();
-			}
-		}
+//		} else if ("put".equals(method)) {
+//			session.removeAttribute("attid");
+//			session.removeAttribute("photo");
+//			session.removeAttribute("result");
+//			String uri = request.getParameter("uri");
+//			Integer att_id = null;
+//			// Integer hotel_id = null;
+//			PhotoService src = new PhotoService();
+//
+//			try {
+//				String attId = request.getParameter("att_id");
+//				if (attId.trim().length() > 0) {
+//					try {
+//						att_id = new Integer(attId);
+//						AttService attSrc = new AttService();
+//						if (attSrc.getOne(att_id) == null) {
+//							throw new Exception();
+//						}
+//					} catch (Exception e) {
+//						session.setAttribute("attid", "無效景點編號");
+//						throw e;
+//					}
+//				}
+//
+//				// try {
+//				// hotel_id = new Integer(request.getParameter("hotel_id"));
+//				// } catch (Exception e) {
+//				// e.printStackTrace();
+//				// }
+//
+//				Part photoFile = request.getPart("photo");
+//				if (photoFile.getSize() <= 0) {
+//					session.setAttribute("photo", "請載入圖片");
+//					throw new Exception();
+//				}
+//				byte[] photo_file = new byte[(int) photoFile.getSize()];
+//				InputStream is = photoFile.getInputStream();
+//				BufferedInputStream bis = new BufferedInputStream(is);
+//				bis.read(photo_file);
+//				if (att_id != null) {
+//					src.insertByAttId(photo_file, att_id);
+//				}
+//				// else if(hotel_id!=null){}
+//				else {
+//					src.insert(photo_file);
+//					// src.insert(photo_file, att_id, hotel_id);
+//				}
+//				session.setAttribute("result", "新增成功");
+//				response.sendRedirect(uri);
+//			} catch (Exception e) {
+//				session.setAttribute("result", "新增失敗");
+//				response.sendRedirect(uri);
+//				// e.printStackTrace();
+//			}
+//		}
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)

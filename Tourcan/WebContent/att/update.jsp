@@ -182,8 +182,8 @@
 		</form>
 	</div>
 
-	<script src="js/jquery-3.1.0.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+<!-- 	<script src="js/jquery-3.1.0.min.js"></script> -->
+<!-- 	<script src="js/bootstrap.min.js"></script> -->
 
 	<script type="text/javascript">
 		var coder, map, marker, checkTrigger, lastValue = "";
@@ -249,10 +249,10 @@
 					console.log('attPrice is not a integer.');
 				}
 			});
-			
-			$("#btnIdCheck").click(function() {
 
-				
+			
+// 			---------------------------------------------------------------------
+			$("#btnIdCheck").click(function() {
 				resetErrors();
 				var att_id = $("#att_id").val();
 // 				console.log(att_id);
@@ -267,10 +267,10 @@
 				            }
 							
 							if(attName=="regionVO"){
-								console.log(attName);
+// 								console.log(attName);
 								$.each(data.regionVO, function(regionVOName, regionVOValue) {
-									console.log(regionVOName);
-									console.log(regionVOValue);
+// 									console.log(regionVOName);
+// 									console.log(regionVOValue);
 								    if(regionVOName=="region_id"){
 								    $("#region_id option[value="+ regionVOValue +"]").prop("selected",true);
 								    }
@@ -278,12 +278,12 @@
 							}
 							
 							if(attName=="att_id"){
-								console.log(attName);
+// 								console.log(attName);
 					 			$("#att_id").prop("readonly", true);
 							}
 							
 							if(attName=="attId"){
-								console.log(attName);
+// 								console.log(attName);
 							    if(attValue=="編號只能為整數" || attValue=="無此編號"){
 								    alert("查無編號!");
 								    var msg = '<label class="error" for="attId">'+attValue+'</label>';
@@ -294,6 +294,7 @@
 					});
 			   });
 		    });
+// 			---------------------------------------------------------------------
 				
 				
 			$("#btnReset").click(function() {
