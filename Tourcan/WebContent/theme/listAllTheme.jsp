@@ -22,13 +22,26 @@
 <div class="container">
 	<div class="row" >
 		
-		<div class="col-md-9">
+		<div class="col-md-6">
 			<h1>討論區主題列表</h1>
 		</div>
 		
+<!-- 		<div class="col-md-4 "> -->
+			
 		
-		<div class="col-md-3 ">
-			<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">發表新主題</button>
+<!-- 		</div> -->
+		<div class="col-md-6 ">
+			<form class=form-inline>
+				<div class="col-md-8">
+					<div class="form-group">
+						<input type="text" class="form-control" id="theme_topic" name="theme_topic" placeholder="themeTopic">
+					</div>
+					<button type="button" class="btn btn-success form-control" id="btnTopicCheck">TopicSearch</button>
+				</div>
+			</form>
+			<div class="col-md-4">
+				<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">發表新主題</button>
+			</div>	
 <%-- 		<p><%=request.getContextPath()%> --%> 
 		</div>
 		
@@ -95,12 +108,16 @@
 
 $(function(){
 	
-	//----------Pagination-----------	
+	
+	
+	
+	
+	//----------Pagination-------------------------------------------------	
 	//how much items per page to show  
 	var show_per_page = 10;  
 	//getting the amount of elements inside content div  
 	var number_of_items = $('#themeList tbody').children().length;
-	console.log(number_of_items);
+// 	console.log(number_of_items);
 	//calculate the number of pages we are going to have  
 	var number_of_pages = Math.ceil(number_of_items/show_per_page);  
 	
@@ -179,6 +196,37 @@ $(function(){
 
 
 
+// 	$("#btnTopicCheck").click(function() {
+// // 		resetErrors();
+// 		var theme_topic = $("#theme_topic").val();
+// 		$('#themeList>tbody').empty();
+// 		$("#d1").empty();
+	
+// 		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic},function(data){
+// // 			$("#errid").remove();
+// 			var myBody = $('#themeList>tbody');
+// 			$.each(data,function(themeName,themeValue){
+// 				if(themeName=="themeTopic"){
+// 						console.log(themeName);
+// 				    if(themeValue=="themeTopic error" || themeValue=="無此Topic"){
+// 					    alert("查無編號!");
+// 					    var msg = '<label class="error" for="themeTopic">'+themeValue+'</label>';
+// 						$('input[name="themetopic"]').addClass('inputTxtError').after(msg);
+// 					}
+		        
+// 				}else{
+// 						var cell1 = $("<td/>").text(themeValue.theme_id);
+// 						var cell2 = $("<td/>").text(themeValue.theme_topic);
+// 						var input1= $("<input/>").attr("class","btn btn-default").attr("type","submit").attr("value","${ThemeVO.theme_topic}");
+// 						var form  = $("<form/>").attr("METHOD","post").attr("ACTION","ThemeServlet").apend([input1]);
+// 						var cell3 = $("<td></td>").text(themeValue.mem_uid);
+// 						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
+// 						var row = $("<tr></tr>").append([cell1,form,cell3,cell4]);
+// 						myBody.append(row);
+// 					}
+// 			})
+// 	})
+// })
 
 </script>
 </body>

@@ -39,12 +39,12 @@ public class ThemeServlet extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/json");
 		BufferedReader br = req.getReader();
-		StringBuffer sb = new StringBuffer(128);
-		String json;
-		while ((json = br.readLine()) != null)
-			sb.append(json);
-		json = sb.toString();
-		System.out.println(json);
+//		StringBuffer sb = new StringBuffer(128);
+//		String json;
+//		while ((json = br.readLine()) != null)
+//			sb.append(json);
+//		json = sb.toString();
+//		System.out.println(json);
 		JSONObject err = new JSONObject();
 		// ----------------Query one by attId----------------
 
@@ -145,15 +145,18 @@ public class ThemeServlet extends HttpServlet {
 		while ((strj = br.readLine()) != null)
 			sb.append(strj);
 		strj = sb.toString();
-		// System.out.println(strj);
+		 System.out.println(strj.length());
+		 System.out.println("strj"+strj);
 		if (strj.indexOf("getOne") > -1) {
 			System.out.println("000=" + strj);
-			if (strj.length() > 36) {
+			if ( strj.length() <39 &&strj.length()>37) {
 //				System.out.println("1111");
+				System.out.println(strj.substring(9, 12));
+				n1 = strj.substring(9, 12);
+			} else if(strj.length() <38&&strj.length()>36 ){
 				System.out.println(strj.substring(9, 11));
 				n1 = strj.substring(9, 11);
-			} else {
-				System.out.println(strj.substring(9, 10));
+			}else{
 				n1 = strj.substring(9, 10);
 			}
 //			System.out.println("n1:" + n1);
