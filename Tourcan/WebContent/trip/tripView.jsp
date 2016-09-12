@@ -59,7 +59,6 @@
 	border-radius: 20px;
 	margin: 3px;
 	padding-top: 3px;
-	height: 100px;
 }
 
 .div5 {
@@ -105,7 +104,7 @@
 					</div>
 				</div>
 				<input type="button" class="row div2 col-sm-12" id="addTripBtn"
-					value="+新增行程..." style="display: inline">
+					value="+新增行程..." style="display: block">
 				<div class="row div3 col-sm-12" style="display: none" id="div3">
 					<div class="col-sm-12 form-group">
 						<label>選擇縣市：</label> <select class="form-control" id="region_id"
@@ -116,7 +115,10 @@
 							<option value="0">請選擇</option>
 							<option value="1">景點</option>
 							<option value="2">住宿</option>
-						</select> <input type="text" class="form-control" id="attname"
+						</select> 
+					</div>
+					<div class="col-sm-12 form-group">
+						<label>景點查詢：</label><input type="text" class="form-control" id="attname"
 							name="attname" placeholder="直接查詢景點名稱">
 						<button type="button" id="search">查詢</button>
 					</div>
@@ -239,7 +241,7 @@
 		$(function(){
 			$('#addTripBtn').click(function(){
 				$("#addTripBtn").css("display","none");
-				$("#div3").css("display","inline");
+				$("#div3").css("display","block");
 			});
 			
 			$.get("../att/RegionServlet").done(
@@ -285,17 +287,17 @@
 						var contentText=document.createTextNode(att.att_intro.substr(0,110)+"...");
 						contentH5.appendChild(contentText);
 						var butDiv=document.createElement("div");
-						butDiv.setAttribute("class","row col-sm-2");
+						butDiv.setAttribute("class","row");
 						var butInput=document.createElement("input");
 						butInput.setAttribute("type","button");
 						butInput.setAttribute("id","detail");
 						butInput.setAttribute("value","詳情");
-						butInput.setAttribute("style","margin-top:35px;margin-right:5px");
+						butInput.setAttribute("style","margin-right:5px;");
 						var checkInput=document.createElement("input");
 						checkInput.setAttribute("type","checkbox");
 						checkInput.setAttribute("value",att.att_name);
 						checkInput.setAttribute("name","attCheck");
-						checkInput.setAttribute("style","margin-top:35px");
+						checkInput.setAttribute("style","");
 						butDiv.appendChild(butInput);
 						butDiv.appendChild(checkInput);
 						attDiv.appendChild(imgDiv);
@@ -323,28 +325,6 @@
 				   });
 				})
 			});
-			
-			
-			
-			
-
-			
-		  	
-			  
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 			
