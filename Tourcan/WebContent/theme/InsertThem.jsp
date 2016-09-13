@@ -4,13 +4,14 @@
 <html  >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert Theme</title>
+<title>發表新主題</title>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> 
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-<!--     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>    -->
   <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+  <script src="../lang/summernote-zh-TW.js"></script>
+  
 </head>
 <body>
 <div class="container">
@@ -25,15 +26,14 @@
 		<form name="addTheme">
 			<div class="row">
 				<div  class="col-sm-6 col-sm-offset-3">
-					<h2>Insert New Theme</h2>
+					<h2>發表新主題</h2>
 				</div>
 			</div>
 			<div>
 				<div class="form-inline">
 				
 					<div class="form-group">
-						<label for="themeTopic"  >themeTopic</label>
-						
+						<label for="themeTopic"  >主題名稱</label>						
 						<input type="text" id="theme_topic" name="theme_topic"  class="form-control"	placeholder="themeTopic">
 						
 					</div>
@@ -42,30 +42,30 @@
 							id="mem_uid" name="mem_uid" class="form-control"
 							placeholder="會員Id" >
 					</div>
-					<div class="form-group">
-						<label for="themeCatalog">catalog</label> <input type="number"
-							id="theme_catalog" name="theme_catalog" class="form-control"
-							placeholder="catalog" min=1>
-<!-- 							<input type="hidden" name="action" value="qq"> -->
-						</div>
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="themeCatalog">catalog</label> <input type="number" -->
+<!-- 							id="theme_catalog" name="theme_catalog" class="form-control" -->
+<!-- 							placeholder="catalog" min=1> -->
+<!-- <!-- 							<input type="hidden" name="action" value="qq"> -->
+<!-- 						</div> -->
 				
 				</div>
 			</div>
 			<div class="from-grop">
-				<label for="">ThemeArticle</label>
+				<label for="">內容:</label>
 				<div id="d2"></div>
 				<textarea name="theme_article" id="theme_article" class="form-control"></textarea>
-<!-- 				<div id="theme_article" ></div> -->
-			
-			
-		<!-- 	<button type="submit" class="btn btn-primary">Save all</button> -->
-		<!-- 	<button type="button" class="btn btn-primary" id="canel">Cancel</button> -->
+
 			</div>
 			  
 <!-- 			<button id="save" class="btn btn-primary"  type="submit">Save </button> -->
-			<div></div>
-			<div class="col-md-3 col-sm-offset-8" >
-				<button type="button" class="btn btn-success form-control" id="btnInsert">Save</button>
+			<div class="form-inline">
+				<div class="col-md-3">
+					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/listAllTheme.jsp'">回到所有主題</button>
+				</div>
+				<div class="col-md-3 col-sm-offset-6" >
+					<button type="button" class="btn btn-success form-control" id="btnInsert">確認新增</button>
+				</div>
 			</div>
 <!-- 			<div class="col-md-3"> -->
 <!-- 				<button id="cancel" class="btn btn-danger form-control"  type="button">Cancel</button> -->
@@ -75,32 +75,20 @@
 			<div id="result"></div>
 		</div>
 		</form>
-<!-- 			<button id="show" class="btn" onclick="show()" type="button">show</button> -->
-<!-- 			<button id="edit" class="btn btn-primary" onclick="edit()" type="button">Edit 1</button> -->
+
 	</div>	
 </div>
 
-
-
-<!-- 	<script src="../js/jquery-3.1.0.min.js"></script> -->
-<!-- 	<script src="https://cdn.quilljs.com/1.0.0-rc.4/quill.js"></script> -->
-
-<!--   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script> -->
-<!--     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>  -->
   
 	<script type="text/javascript">
-	
-// 	$('#summernote').summernote({
-// 		  height: 300,                 // set editor height
-// 		  width:  800,
-// 		  minHeight: 100,             // set minimum height of editor
-// 		  maxHeight: 1000,             // set maximum height of editor
-// 		  focus: true                  // set focus to editable area after initializing summernote
-// 		});
-// 		 focus: true
+
+	//----------summernote---------------
 		 $('#theme_article').summernote({
-			 height:200
+			 height:200,
+			 lang: 'zh-TW', // default: 'en-US'
+			 placeholder:"在此編輯內容"
 			 });
+	//----------End---------------------
 	 $(function() {
 	
 		 $("#btnInsert").click(function() {
@@ -120,9 +108,11 @@
 						if (errMsg == "success") {
 							document.addTheme.reset();
 							errMsgSpan.remove();
+							alert("新增成功 即將跳轉畫面");
+							location.href="listAllTheme.jsp";
 							
 						}
-						console.log("errMsg"+errMsg)
+// 						console.log("errMsg"+errMsg)
 						var errSpan = document.createElement("span");
 						var errText = document.createTextNode(errMsg);
 						var errId = 'err' + errAtt;
@@ -135,7 +125,9 @@
 					console.log("200.");
 					var makrup = $('#theme_article').summernote('code');
 // 					$('#theme_article').summernote('destroy');
-// 					$( "#theme_article" ).remove();
+					$( "#theme_article" ).remove();
+				
+					
 				}).fail(function(xhr) {
 					console.log("ERR.");
 				});

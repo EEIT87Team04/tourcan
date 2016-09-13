@@ -21,13 +21,14 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
   <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+  <script src="../lang/summernote-zh-TW.js"></script>
 </head>
 <body >
 <div class="container" style="padding: 10px">
 	<div class="row" >
 		
 		<div class="col-md-9">
-			<h1>討論區</h1>
+			<h1>　討論區</h1>
 		</div>
 		
 		
@@ -44,7 +45,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 <!-- 						<th>ThemeID</th>				 -->
 						<th class="col-md-4">主題:</th>
 						<th class="col-md-3">memUID</th>
-						<th class="col-md-3">分類:</th>
+<!-- 						<th class="col-md-3">分類:</th> -->
 						
 					</tr>
 				</thead>
@@ -53,7 +54,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 <%-- 						<td><%=themeVO1.getTheme_id()%></td> --%>
 						<td><%=themeVO1.getTheme_topic()%></td>
 						<td><%=themeVO1.getMem_uid()%></td>				
-						<td><%=themeVO1.getTheme_catalog()%></td>
+<%-- 						<td><%=themeVO1.getTheme_catalog()%></td> --%>
 					</tr>
 					<tr class="warning">
 						<th colspan="4"> 主題內容:</th>	
@@ -159,11 +160,15 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 </div>
 
  <script type="text/javascript">
+ 
+	//----------summernote---------------
 	 $('#resp_article').summernote({
-		 height:200
+		 height:200,
+		 lang: 'zh-TW', // default: 'en-US'
+		 placeholder:"在此編輯內容"
 		 });
 	 $('#div2').summernote('code');
-	 
+	//----------End---------------------
 	 $(function() {
 			
 		 $("#btnInsert").click(function() {
@@ -183,7 +188,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 						if (errMsg == "success") {
 							document.addResp.reset();
 							errMsgSpan.remove();
-							
+							window.location.reload();
 						}
 						var errSpan = document.createElement("span");
 						var errText = document.createTextNode(errMsg);
@@ -196,12 +201,12 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 					});
 					console.log("200.");
 					var makrup = $('#resp_article').summernote('code');
-					window.location.reload();
 // 					$('#theme_article').summernote('destroy');
 // 					$( "#theme_article" ).remove();
 				}).fail(function(xhr) {
 					console.log("ERR.");
 				});
+					
 			});
 	 
 	 });

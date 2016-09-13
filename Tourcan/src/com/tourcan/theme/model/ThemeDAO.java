@@ -101,7 +101,7 @@ public class ThemeDAO implements Theme_interface {
 		Transaction tx = session.beginTransaction();
     	try {
 //			session.beginTransaction();
-			Query query =session.createQuery("from ThemeVO order by theme_id");
+			Query query =session.createQuery("from ThemeVO order by theme_id DESC");
 			list=query.list();
 			tx.commit();
 //			session.beginTransaction().commit();

@@ -15,8 +15,8 @@ public class ThemeVO implements Serializable  {
 	private String theme_article;
 	@Expose
 	private String theme_topic;
-	@Expose
-	private Integer theme_catalog;
+//	@Expose
+//	private Integer theme_catalog;
 	@Expose
 	private Timestamp theme_time;
 	@Expose
@@ -56,12 +56,12 @@ public class ThemeVO implements Serializable  {
 	public void setTheme_topic(String theme_topic) {
 		this.theme_topic = theme_topic;
 	}
-	public Integer getTheme_catalog() {
-		return theme_catalog;
-	}
-	public void setTheme_catalog(Integer themecatalog) {
-		this.theme_catalog = themecatalog;
-	}
+//	public Integer getTheme_catalog() {
+//		return theme_catalog;
+//	}
+//	public void setTheme_catalog(Integer themecatalog) {
+//		this.theme_catalog = themecatalog;
+//	}
 	public String getMem_uid() {
 		return mem_uid;
 	}

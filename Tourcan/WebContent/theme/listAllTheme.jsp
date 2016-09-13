@@ -16,7 +16,7 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Show all Theme and update</title>
+<title>討論區主題列表</title>
 </head>
 <body >
 <div class="container">
@@ -34,9 +34,9 @@
 			<form class=form-inline>
 				<div class="col-md-8">
 					<div class="form-group">
-						<input type="text" class="form-control" id="theme_topic" name="theme_topic" placeholder="themeTopic">
+						<label for="themeTopic">TopicSearch</label><input type="text" class="form-control" id="theme_topic" name="themetopic" placeholder="themeTopic">
+					<button type="button" class="btn btn-success form-control" id="btnTopicCheck">搜尋</button>
 					</div>
-					<button type="button" class="btn btn-success form-control" id="btnTopicCheck">TopicSearch</button>
 				</div>
 			</form>
 			<div class="col-md-4">
@@ -55,7 +55,7 @@
 				<th>id</th>				
 				<th>topic</th>
 				<th>memUID</th>
-				<th>catalog</th>
+<!-- 				<th>catalog</th> -->
 <!-- 				<th>修改</th> -->
 <!-- 				<th>刪除</th>	 -->
 		
@@ -79,7 +79,7 @@
 					</FORM>
 					</td>
 					<td>${ThemeVO.mem_uid}</td>
-					<td>${ThemeVO.theme_catalog}</td>
+<%-- 					<td>${ThemeVO.theme_catalog}</td> --%>
 					
 	<!-- 				<td> -->
 	<!-- 				<FORM METHOD="post" ACTION="ThemeServlet"> -->
@@ -107,7 +107,40 @@
 <script type="text/javascript">
 
 $(function(){
+	$("#btnTopicCheck").click(function() {
+// 		resetErrors();
+		var theme_topic = $("#theme_topic").val();
+		$('#themeList>tbody').empty();
+		$("#d1").empty();
 	
+		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic},function(data){
+// 			$("#errid").remove();
+			var myBody = $('#themeList>tbody');
+			$.each(data,function(themeName,themeValue){
+				if(themeName=="themeTopic"){
+						console.log(themeName);
+				    if(themeValue=="themeTopic error" || themeValue=="無此Topic"){
+					    alert("查無編號!");
+					    var msg = '<label class="error" for="themeTopic">'+themeValue+'</label>';
+						$('input[name="themetopic"]').addClass('inputTxtError').after(msg);
+					}
+		        
+				}else{
+						var cell1 = $("<td/>").text(themeValue.theme_id);
+						var cell2 = $("<td/>").text(themeValue.theme_topic);
+						var input3= $("<input/>").attr("type",'hidden').attr('name',"action").attr("value","getOne_For_Display");
+						var input2= $("<input/>").attr("type",'hidden').attr('name',"theme_id").attr("value",themeValue.theme_id);
+						var input1= $("<input/>").attr("class","btn btn-default").attr("type","submit").attr("value",themeValue.theme_topic);
+						var form  = $("<form/>").attr("METHOD","post").attr("ACTION","ThemeServlet").append([input1,input2,input3]);
+						var cell5 = $("<td/>").append([form])
+						var cell3 = $("<td></td>").text(themeValue.mem_uid);
+// 						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
+						var row = $("<tr></tr>").append([cell1,cell5,cell3]);
+						myBody.append(row);
+					}
+			})
+	})
+})
 	
 	
 	
@@ -193,40 +226,10 @@ $(function(){
 	    //update the current page input field  
 	    $('#themeList tbody').val(page_num);  
 	}  
-
-
-
-// 	$("#btnTopicCheck").click(function() {
-// // 		resetErrors();
-// 		var theme_topic = $("#theme_topic").val();
-// 		$('#themeList>tbody').empty();
-// 		$("#d1").empty();
+	//----------End_Pagination-------
 	
-// 		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic},function(data){
-// // 			$("#errid").remove();
-// 			var myBody = $('#themeList>tbody');
-// 			$.each(data,function(themeName,themeValue){
-// 				if(themeName=="themeTopic"){
-// 						console.log(themeName);
-// 				    if(themeValue=="themeTopic error" || themeValue=="無此Topic"){
-// 					    alert("查無編號!");
-// 					    var msg = '<label class="error" for="themeTopic">'+themeValue+'</label>';
-// 						$('input[name="themetopic"]').addClass('inputTxtError').after(msg);
-// 					}
-		        
-// 				}else{
-// 						var cell1 = $("<td/>").text(themeValue.theme_id);
-// 						var cell2 = $("<td/>").text(themeValue.theme_topic);
-// 						var input1= $("<input/>").attr("class","btn btn-default").attr("type","submit").attr("value","${ThemeVO.theme_topic}");
-// 						var form  = $("<form/>").attr("METHOD","post").attr("ACTION","ThemeServlet").apend([input1]);
-// 						var cell3 = $("<td></td>").text(themeValue.mem_uid);
-// 						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
-// 						var row = $("<tr></tr>").append([cell1,form,cell3,cell4]);
-// 						myBody.append(row);
-// 					}
-// 			})
-// 	})
-// })
+
+
 
 </script>
 </body>

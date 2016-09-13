@@ -12,7 +12,7 @@
         <property name="theme_time" column="theme_time" />
         <property name="theme_topic" column="theme_topic" />
         <property name="theme_article" column="theme_article" />
-        <property name="theme_catalog" column="theme_catalog" />
+<!--         <property name="theme_catalog" column="theme_catalog" /> -->
         <property name="mem_uid" column="mem_uid" />
         
         

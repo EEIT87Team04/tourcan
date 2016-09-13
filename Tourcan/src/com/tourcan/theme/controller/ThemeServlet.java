@@ -145,16 +145,16 @@ public class ThemeServlet extends HttpServlet {
 		while ((strj = br.readLine()) != null)
 			sb.append(strj);
 		strj = sb.toString();
-		 System.out.println(strj.length());
-		 System.out.println("strj"+strj);
+//		 System.out.println(strj.length());
+//		 System.out.println("strj"+strj);
 		if (strj.indexOf("getOne") > -1) {
 			System.out.println("000=" + strj);
 			if ( strj.length() <39 &&strj.length()>37) {
 //				System.out.println("1111");
-				System.out.println(strj.substring(9, 12));
+//				System.out.println(strj.substring(9, 12));
 				n1 = strj.substring(9, 12);
 			} else if(strj.length() <38&&strj.length()>36 ){
-				System.out.println(strj.substring(9, 11));
+//				System.out.println(strj.substring(9, 11));
 				n1 = strj.substring(9, 11);
 			}else{
 				n1 = strj.substring(9, 10);
@@ -245,16 +245,16 @@ public class ThemeServlet extends HttpServlet {
 				}
 				themetime = new Timestamp(System.currentTimeMillis());
 				// System.out.println("themetime:"+themetime);
-				Integer themecatalog = themeVO.getTheme_catalog();
-				if (themecatalog == null) {
-					checkR.append("theme_catalog", "plz into catalog");
-				}
+//				Integer themecatalog = themeVO.getTheme_catalog();
+//				if (themecatalog == null) {
+//					checkR.append("theme_catalog", "plz into catalog");
+//				}
 				memUid = themeVO.getMem_uid();// 抓出已建立的id
 				if (checkR.length() > 0) {
 					throw new Exception();
 				} else {
 					ThemeService srv = new ThemeService();
-					srv.insert(themeTopic, themecatalog, themearticle, themetime, memUid);
+					srv.insert(themeTopic, themearticle, themetime, memUid);
 					checkR.append("result", "success");
 					resp.getWriter().println(checkR.toString());
 				}
@@ -298,10 +298,10 @@ public class ThemeServlet extends HttpServlet {
 				checkR.append("theme_article", "plz into article");
 			}
 			// System.out.println("themetime:"+themetime);
-			Integer themecatalog = themeVO.getTheme_catalog();
-			if (themecatalog == null) {
-				checkR.append("theme_catalog", "plz into catalog");
-			}
+//			Integer themecatalog = themeVO.getTheme_catalog();
+//			if (themecatalog == null) {
+//				checkR.append("theme_catalog", "plz into catalog");
+//			}
 			themetime = new Timestamp(System.currentTimeMillis());
 			themeVO.setTheme_time(themetime);
 			themeid = themeVO.getTheme_id();
