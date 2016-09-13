@@ -33,13 +33,12 @@
 				<property name="jdbcUrl"
 					value="jdbc:sqlserver://localhost:1433;DatabaseName=tourcan" />
 				<property name="user" value="sa" />
-				<property name="password" value="P@ssw0rd" />
+				<property name="password" value="sa123456" />
 			</bean>
 		</property>
-		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+		<property name="configLocation" value="classpath:hibernate.spring.cfg.xml" />
 	</bean>
-
-
+	
 	<bean id="jsonArray" class="org.json.JSONArray" scope="prototype" />
 	<bean id="gsonInstance" class="com.google.gson.Gson" />
 
@@ -62,7 +61,11 @@
 	<bean id="regionDAO" class="com.tourcan.region.model.RegionHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<bean id="regionVO" class="com.tourcan.region.model.RegionVO"
-		scope="prototype" />
+	<bean id="regionVO" class="com.tourcan.region.model.RegionVO" scope="prototype" />
+	
+	<bean id="attDAO" class="com.tourcan.att.model.AttDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="attVO" class="com.tourcan.att.model.AttVO" scope="prototype" />
 
 </beans>

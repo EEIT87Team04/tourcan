@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tourcan.region.model.RegionDAO;
 import com.tourcan.region.model.RegionHibernateDAO;
 
-@WebServlet("/RegionServlet")
+@WebServlet("/att/RegionServlet")
 public class RegionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ApplicationContext context;
@@ -33,7 +34,8 @@ public class RegionServlet extends HttpServlet {
 		response.setContentType("application/json");
 		RegionDAO dao = context.getBean(RegionHibernateDAO.class);
 		PrintWriter out = response.getWriter();
-		out.println(context.getBean(Gson.class).toJson(dao.getAll()));
+		// out.println(context.getBean(Gson.class).toJson(dao.getAll()));
+		out.println(new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(dao.getAll()));
 	}
 
 	@Override

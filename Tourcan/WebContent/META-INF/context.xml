@@ -2,7 +2,7 @@
 <!DOCTYPE xml>
 <Context displayName="JSP Servlet Example" docBase="example" path="/example" reloadable="true">
   <Resource name="jdbc/SQLServer" type="javax.sql.DataSource"
-      username="sa" password="P@ssw0rd"
+      username="sa" password="sa123456" auth="Container" 
       driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
       url="jdbc:sqlserver://localhost:1433;DatabaseName=tourcan"
       maxActive="8"

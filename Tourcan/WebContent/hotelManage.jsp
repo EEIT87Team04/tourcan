@@ -173,7 +173,7 @@
 	<script type="text/javascript">
 		var coder, map, marker, checkTrigger, lastValue = "";
 		var tmp, regionList, hotelList;
-		var serviceProvider = "api/hotels";
+		var serviceProvider = "${contextPath}/api/hotels";
 		//var serviceProvider = "HotelServlet";
 		var gmbase = "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&size=640x240&markers=color:blue%7C";
 
@@ -289,7 +289,7 @@
 		}
 		function refreshView() {
 			$.when($.ajax({
-				url : "RegionServlet",
+				url : "${contextPath}/att/RegionServlet",
 				method : "GET",
 				contentType : "application/json; charset=UTF-8",
 				dataType : "json"

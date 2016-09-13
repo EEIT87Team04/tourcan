@@ -1,46 +1,82 @@
 package com.tourcan.att.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Expose;
+import com.tourcan.region.model.RegionVO;
 
 public class AttVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-//	private Integer att_area;
-	@SerializedName("attName")
+	// private Integer att_area;
+	// @SerializedName("attName")
+	@Expose
 	private String att_name;
-	@SerializedName("attId")
+
+	// @SerializedName("attId")
+	@Expose
 	private Integer att_id;
-	@SerializedName("attStaytime")
+
+	// @SerializedName("attStaytime")
+	@Expose
 	private Integer att_staytime;
-	@SerializedName("regionId")
+
+	// @SerializedName("regionId")
+	@Expose
 	private Integer region_id;
-	@SerializedName("attAddr")
+
+	@Expose
+	private RegionVO regionVO;
+
+	// @SerializedName("attAddr")
+	@Expose
 	private String att_addr;
-	@SerializedName("attPrice")
+
+	// @SerializedName("attPrice")
+	@Expose
 	private Double att_price;
-	@SerializedName("attPhone")
+
+	// @SerializedName("attPhone")
+	@Expose
 	private String att_phone;
-	@SerializedName("attUrl")
+
+	// @SerializedName("attUrl")
+	@Expose
 	private String att_url;
-	@SerializedName("attEat")
+
+	// @SerializedName("attEat")
+	@Expose
 	private Boolean att_eat;
-	@SerializedName("attIntro")
+
+	// @SerializedName("attIntro")
+	@Expose
 	private String att_intro;
-	@SerializedName("attOpen")
+
+	// @SerializedName("attOpen")
+	@Expose
 	private String att_open;
-	@SerializedName("attLat")
+
+	// @SerializedName("attLat")
+	@Expose
 	private Double att_lat;
-	@SerializedName("attLng")
+
+	// @SerializedName("attLng")
+	@Expose
 	private Double att_lng;
 
-//	public Integer getAtt_area() {
-//		return att_area;
-//	}
-//
-//	public void setAtt_area(Integer att_area) {
-//		this.att_area = att_area;
-//	}
+	public AttVO() {
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public RegionVO getRegionVO() {
+		return regionVO;
+	}
+
+	public void setRegionVO(RegionVO regionVO) {
+		this.regionVO = regionVO;
+	}
 
 	public String getAtt_name() {
 		return att_name;
@@ -64,14 +100,6 @@ public class AttVO implements java.io.Serializable {
 
 	public void setAtt_staytime(Integer att_staytime) {
 		this.att_staytime = att_staytime;
-	}
-
-	public Integer getRegion_id() {
-		return region_id;
-	}
-
-	public void setRegion_id(Integer region_id) {
-		this.region_id = region_id;
 	}
 
 	public String getAtt_addr() {
@@ -144,6 +172,14 @@ public class AttVO implements java.io.Serializable {
 
 	public void setAtt_lng(Double att_lng) {
 		this.att_lng = att_lng;
+	}
+
+	public Integer getRegion_id() {
+		return region_id;
+	}
+
+	public void setRegion_id(Integer region_id) {
+		this.region_id = region_id;
 	}
 
 }

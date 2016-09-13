@@ -2,7 +2,7 @@
  * 
  */
 $.ajax({
-	url : baseurl + "/RegionServlet",
+	url : baseurl + "/att/RegionServlet",
 	method : "GET",
 	contentType : "application/json; charset=UTF-8",
 	dataType : "json"

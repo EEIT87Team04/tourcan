@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+//import hibernate.util.HibernateUtil;
 
 public class RegionHibernateDAO implements RegionDAO {
 
@@ -112,5 +113,4 @@ public class RegionHibernateDAO implements RegionDAO {
 
 		((ConfigurableApplicationContext) context).close();
 	}
-
 }

@@ -169,7 +169,7 @@
 	<script type="text/javascript">
 		$(function() {
 			$.ajax({
-				url : "${contextPath}" + "/RegionServlet",
+				url : "${contextPath}/att/RegionServlet",
 				method : "GET",
 				contentType : "application/json; charset=UTF-8",
 				dataType : "json"

@@ -7,7 +7,7 @@
 	<session-factory>
 
  		<!-- JNDI連線池 (Apache Tomcat 連線池DBCP)設定 -->
-		<property name="hibernate.connection.datasource">java:/comp/env/jdbc/TestDB</property>
+		<property name="hibernate.connection.datasource">java:/comp/env/jdbc/SQLServer</property>
         
 		<!--SQL方言,以下使用SQLServer -->
 		<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
