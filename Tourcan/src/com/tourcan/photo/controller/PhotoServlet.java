@@ -123,6 +123,7 @@ public class PhotoServlet extends HttpServlet {
 		response.setContentType("application/json");
 
 			Integer att_id = null;
+			String uri = request.getParameter("uri");
 			// Integer hotel_id = null;
 			PhotoService src = new PhotoService();
 			JSONObject result = new JSONObject();
@@ -167,10 +168,12 @@ public class PhotoServlet extends HttpServlet {
 					// src.insert(photo_file, att_id, hotel_id);
 				}
 				result.append("result", "新增成功");
-				response.getWriter().println(result.toString());
+//				response.getWriter().println(result.toString());
+				response.sendRedirect(uri);
 			} catch (Exception e) {
 				result.append("result", "新增失敗");
-				response.getWriter().println(result.toString());
+//				response.getWriter().println(result.toString());
+				response.sendRedirect(uri);
 				 e.printStackTrace();
 			}
 //		} else if ("put".equals(method)) {

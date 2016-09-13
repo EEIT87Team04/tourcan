@@ -110,9 +110,18 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 col-sm-offset-3" id="result"></div>
+			<div class="col-sm-6 col-sm-offset-3" id="result">
+			</div>
 		</div>
 	</form>
+	<div id="photo" style="display: none">
+	<form method="post" action="PhotoServlet" id="photoUpload" name="photoUpload" enctype="multipart/form-data">
+	<input type="hidden" name="att_id" id="attId">
+	<input type="hidden" name="uri" id="uri" value="${pageContext.request.requestURI}">
+	<input type="file" name="imgs" id="imgs" style="display: inline;">
+	<input type="button" id="photoSubmit" value="上傳檔案" style="display: inline;">
+	</form>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -208,33 +217,28 @@
 						
 						if(errAtt=="att_id")
 						{
-// 							console.log(errAtt);
 // 							console.log(errMsg[0]);
-							att_id=errMsg[0];
-							console.log(att_id);
-							$("#upload").click();
-							var imgupload = $("<input/>").attr("type","file").attr("id","fileupload").attr("name","imgs").css("display","inline").css("class","upNdelBtns");
-							var uplBtn = $("<button/>").attr("id","upload").text("傳送圖片").css("display","inline");
-							var imgDiv = $("<div/>").append($("<h5/>").text("選擇上傳圖片")).append(imgupload).append(uplBtn);
-							$("#result").append(imgDiv);
+							$("#attId").val(errMsg[0]);
+							$("#photo").css("display","initial");
  						}
 					});
 					console.log("200.");
 					
-					$('#fileupload').fileupload({
-						dataType: 'json',
-						url:"PhotoServlet?att_id=" + att_id,
-						limitMultiFileUploads:1,
-						limitMultiFileUploadSize:5000000,
-						replaceFileInput:false,
-						singleFileUploads:true,
-						add:function(e, data){
-							$("#upload").off('click').one('click',function(){
-								data.submit().success(function (result, textStatus) {alert(textStatus);});
-// 								document.addAtt.reset();
-							});
-						}
-					});
+// 					$('#fileupload').fileupload({
+// 						type:'post',						
+// 						dataType: 'json',
+// 						url:"PhotoServlet?att_id=" + att_id,
+// 						limitMultiFileUploads:1,
+// 						limitMultiFileUploadSize:5000000,
+// 						replaceFileInput:false,
+// 						singleFileUploads:true,
+// 						add:function(e, data){
+// 							$("#upload").off('click').one('click',function(){
+// 								data.submit();
+// // 								document.addAtt.reset();
+// 							});
+// 						}
+// 					});
 				}).fail(function(xhr) {
 					console.log("ERR.");
 				});
@@ -243,8 +247,10 @@
 				document.addAtt.reset();
 				 $('form[name="addAtt"] span').remove();
 			});
+			$("#photoSubmit").click(function(){
+				$("#photoUpload").submit();
+			});
 		});
-		
 	</script>
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&callback=initMap"
