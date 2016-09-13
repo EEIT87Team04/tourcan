@@ -95,7 +95,7 @@ public class ThemeServlet extends HttpServlet {
 						throw new Exception();
 					}
 				} catch (Exception e) {
-					err.append("themeTopic", "無此Topic");
+					err.append("themeTopic", "無此主題");
 				}
 				// ***************************2.開始查詢資料*****************************************//*
 				ThemeService asv = new ThemeService();
@@ -106,7 +106,7 @@ public class ThemeServlet extends HttpServlet {
 				if (jsonG.length() < 3) {
 					// System.out.println(jsonG.length()<3);
 					// response.getWriter().write(jsonG);
-					err.append("themeTopic", "無此Topic");
+					err.append("themeTopic", "無此主題");
 					resp.getWriter().println(err.toString());
 				} else {
 					resp.getWriter().println(jsonG.toString());
@@ -114,7 +114,7 @@ public class ThemeServlet extends HttpServlet {
 				}
 				// ***************************其他可能的錯誤處理*************************************//*
 			} catch (Exception e) {
-				err.append("themeTopic", "themeTopic search error");
+				err.append("themeTopic", "搜尋失敗 請連絡客服或等會再試");
 				resp.getWriter().println(err.toString());
 			}
 
@@ -236,12 +236,12 @@ public class ThemeServlet extends HttpServlet {
 				String themeTopic = themeVO.getTheme_topic();
 				// System.out.println("33="+themeTopic);
 				if (themeTopic == null || themeTopic.trim().isEmpty() || themeTopic.trim().length() == 0) {
-					checkR.append("theme_topic", "plz into topic");
+					checkR.append("theme_topic", "請輸入主題名稱");
 				}
 				String themearticle = themeVO.getTheme_article();
 				// System.out.println("themearticle:"+themearticle);
 				if (themearticle == null || themearticle.trim().isEmpty() || themearticle.trim().length() == 0) {
-					checkR.append("theme_article", "plz into article");
+					checkR.append("theme_article", "請輸入內容");
 				}
 				themetime = new Timestamp(System.currentTimeMillis());
 				// System.out.println("themetime:"+themetime);
@@ -290,12 +290,12 @@ public class ThemeServlet extends HttpServlet {
 			String themeTopic = themeVO.getTheme_topic();
 			// System.out.println(themeTopic);
 			if (themeTopic == null || themeTopic.trim().isEmpty() || themeTopic.trim().length() == 0) {
-				checkR.append("theme_topic", "plz into topic");
+				checkR.append("theme_topic", "請輸入主題名稱");
 			}
 			String themearticle = themeVO.getTheme_article();
 			// System.out.println("themearticle:"+themearticle);
 			if (themearticle == null || themearticle.trim().isEmpty() || themearticle.trim().length() == 0) {
-				checkR.append("theme_article", "plz into article");
+				checkR.append("theme_article", "請輸入內容");
 			}
 			// System.out.println("themetime:"+themetime);
 //			Integer themecatalog = themeVO.getTheme_catalog();

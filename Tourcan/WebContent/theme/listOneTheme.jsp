@@ -165,7 +165,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 	 $('#resp_article').summernote({
 		 height:200,
 		 lang: 'zh-TW', // default: 'en-US'
-		 placeholder:"在此編輯內容"
+		 placeholder:"請在此編輯內容"
 		 });
 	 $('#div2').summernote('code');
 	//----------End---------------------

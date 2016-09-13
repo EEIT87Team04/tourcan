@@ -7,15 +7,14 @@ public class AttVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-//	private Integer att_area;
-	@Expose
-	private Integer att_id;
 	@Expose
 	private String att_name;
 	@Expose
+	private Integer att_id;
+	@Expose
 	private Integer att_staytime;
 	@Expose
-	private Integer region_id;
+	private RegionVO regionVO;
 	@Expose
 	private String att_addr;
 	@Expose
@@ -35,32 +34,21 @@ public class AttVO implements java.io.Serializable {
 	@Expose
 	private Double att_lng;
 	@Expose
-	private RegionVO regionVO;
-//	public Integer getAtt_area() {
-//		return att_area;
-//	}
-//
-//	public void setAtt_area(Integer att_area) {
-//		this.att_area = att_area;
-//	}
+	private Integer region_id;
 
 	public AttVO() {
 	}
 	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public RegionVO getRegionVO() {
 		return regionVO;
 	}
 
 	public void setRegionVO(RegionVO regionVO) {
 		this.regionVO = regionVO;
-	}
-	
-
-	public Integer getAtt_id() {
-		return att_id;
-	}
-	public void setAtt_id(Integer att_id) {
-		this.att_id = att_id;
 	}
 
 	public String getAtt_name() {
@@ -71,6 +59,13 @@ public class AttVO implements java.io.Serializable {
 		this.att_name = att_name;
 	}
 
+	public Integer getAtt_id() {
+		return att_id;
+	}
+
+	public void setAtt_id(Integer att_id) {
+		this.att_id = att_id;
+	}
 
 	public Integer getAtt_staytime() {
 		return att_staytime;
@@ -78,14 +73,6 @@ public class AttVO implements java.io.Serializable {
 
 	public void setAtt_staytime(Integer att_staytime) {
 		this.att_staytime = att_staytime;
-	}
-
-	public Integer getRegion_id() {
-		return region_id;
-	}
-
-	public void setRegion_id(Integer region_id) {
-		this.region_id = region_id;
 	}
 
 	public String getAtt_addr() {
@@ -158,6 +145,14 @@ public class AttVO implements java.io.Serializable {
 
 	public void setAtt_lng(Double att_lng) {
 		this.att_lng = att_lng;
+	}
+	
+	public Integer getRegion_id() {
+		return region_id;
+	}
+
+	public void setRegion_id(Integer region_id) {
+		this.region_id = region_id;
 	}
 
 }

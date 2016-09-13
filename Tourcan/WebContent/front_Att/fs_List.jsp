@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.tourcan.theme.model.*"%>
+<%@ page import="com.tourcan.att.model.*"%>
 <%@ page import="java.util.*" %>
 <%
-	ThemeService tsv =new ThemeService();
-	List<ThemeVO> list =tsv.getAll();
+	AttService tsv =new AttService();
+	List<AttVO> list =tsv.getAll();
 	pageContext.setAttribute("list",list);
 
 %>
@@ -39,9 +39,9 @@
 					</div>
 				</div>
 			</form>
-			<div class="col-md-4">
-				<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">發表新主題</button>
-			</div>	
+<!-- 			<div class="col-md-4"> -->
+<%-- 				<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">發表新主題</button> --%>
+<!-- 			</div>	 -->
 <%-- 		<p><%=request.getContextPath()%> --%> 
 		</div>
 		
@@ -49,12 +49,13 @@
 <input type='hidden' id='current_page' /> <input type='hidden'
 		id='show_per_page' />
 
-	<table id="themeList" class="table table-hover tableList">
+	<table id="AttList" class="table table-hover tableList">
 		<thead>
 			<tr >
-				<th>id</th>				
-				<th>topic</th>
-				<th>memUID</th>
+				<th>AttID</th>				
+				<th>AttName</th>
+				<th>AttAddr</th>
+				<th>AttOpen</th>
 <!-- 				<th>catalog</th> -->
 <!-- 				<th>修改</th> -->
 <!-- 				<th>刪除</th>	 -->
@@ -62,40 +63,25 @@
 			</tr>
 		</thead>
 		<tbody id="dataList">
-			<c:forEach var="ThemeVO" items="${list}">
+			<c:forEach var="AttVO" items="${list}">
 				<tr >
 					<td >
-						<FORM METHOD="post" ACTION="ThemeServlet">
-						<input class="btn btn-primary" type="submit" value="${ThemeVO.theme_id}">
-						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">
+						<FORM METHOD="get" ACTION="AttServlet">
+						<input class="btn btn-primary" type="submit" value="${AttVO.att_id}">
+						<input type="hidden"name="att_id" value="${AttVO.att_id}">
 						<input type="hidden"name="action" value="getOne_For_Display">				
 						</FORM>
 					 </td>
 					 <td>
-						<FORM METHOD="post" ACTION="ThemeServlet">
-						<input class="btn btn-default" type="submit" value="${ThemeVO.theme_topic}">
-						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">
+						<FORM METHOD="get" ACTION="AttServlet">
+						<input class="btn btn-default" type="submit" value="${AttVO.att_name}">
+						<input type="hidden"name="att_id" value="${AttVO.att_id}">
 						<input type="hidden"name="action" value="getOne_For_Display">
 					</FORM>
 					</td>
-					<td>${ThemeVO.mem_uid}</td>
-<%-- 					<td>${ThemeVO.theme_catalog}</td> --%>
-					
-	<!-- 				<td> -->
-	<!-- 				<FORM METHOD="post" ACTION="ThemeServlet"> -->
-	<!-- 					<input type="submit" value="修改"> -->
-	<%-- 					 <input type="hidden"name="theme_id" value="${ThemeVO.theme_id}"> --%>
-	<!-- 					  <input type="hidden"name="action" value="getOne_For_Update"> -->
-	<!-- 				</FORM>  -->
-	<!-- 				</td> -->
-		<!-- 			<td> -->
-		<!-- 			<FORM METHOD="post" ACTION="mem.do" > -->
-		<!-- 				 <input	type="submit" value="刪除"    onclick="toDelete()" /> -->
-	<%-- 					 <input type="hidden" name="memno" value="${ThemeVO.theme_id}">  --%>
-		<!-- 				  <input type="hidden"name="action" value="delete"> -->
-		<!-- 				   <input type="hidden" onclick="toDelete()" > -->
-		<!-- 			</FORM> -->
-		<!-- 			</td> -->
+					<td>${AttVO.att_addr}</td>
+					<td>${AttVO.att_open}</td>
+
 					
 				</tr>
 			</c:forEach>
@@ -107,40 +93,40 @@
 <script type="text/javascript">
 
 $(function(){
-	$("#btnTopicCheck").click(function() {
-// 		resetErrors();
-		var theme_topic = $("#theme_topic").val();
-		$('#themeList>tbody').empty();
-		$("#d1").empty();
+// 	$("#btnTopicCheck").click(function() {
+// // 		resetErrors();
+// 		var theme_topic = $("#theme_topic").val();
+// 		$('#themeList>tbody').empty();
+// 		$("#d1").empty();
 	
-		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic},function(data){
-// 			$("#errid").remove();
-			var myBody = $('#themeList>tbody');
-			$.each(data,function(themeName,themeValue){
-				if(themeName=="themeTopic"){
-						console.log(themeName);
-				    if(themeValue=="themeTopic error" || themeValue=="無此Topic"){
-					    alert("查無編號!");
-					    var msg = '<label class="error" for="themeTopic">'+themeValue+'</label>';
-						$('input[name="themetopic"]').addClass('inputTxtError').after(msg);
-					}
+// 		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic},function(data){
+// // 			$("#errid").remove();
+// 			var myBody = $('#themeList>tbody');
+// 			$.each(data,function(themeName,themeValue){
+// 				if(themeName=="themeTopic"){
+// 						console.log(themeName);
+// 				    if(themeValue=="themeTopic error" || themeValue=="無此Topic"){
+// 					    alert("查無編號!");
+// 					    var msg = '<label class="error" for="themeTopic">'+themeValue+'</label>';
+// 						$('input[name="themetopic"]').addClass('inputTxtError').after(msg);
+// 					}
 		        
-				}else{
-						var cell1 = $("<td/>").text(themeValue.theme_id);
-						var cell2 = $("<td/>").text(themeValue.theme_topic);
-						var input3= $("<input/>").attr("type",'hidden').attr('name',"action").attr("value","getOne_For_Display");
-						var input2= $("<input/>").attr("type",'hidden').attr('name',"theme_id").attr("value",themeValue.theme_id);
-						var input1= $("<input/>").attr("class","btn btn-default").attr("type","submit").attr("value",themeValue.theme_topic);
-						var form  = $("<form/>").attr("METHOD","post").attr("ACTION","ThemeServlet").append([input1,input2,input3]);
-						var cell5 = $("<td/>").append([form])
-						var cell3 = $("<td></td>").text(themeValue.mem_uid);
-// 						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
-						var row = $("<tr></tr>").append([cell1,cell5,cell3]);
-						myBody.append(row);
-					}
-			})
-	})
-})
+// 				}else{
+// 						var cell1 = $("<td/>").text(themeValue.theme_id);
+// 						var cell2 = $("<td/>").text(themeValue.theme_topic);
+// 						var input3= $("<input/>").attr("type",'hidden').attr('name',"action").attr("value","getOne_For_Display");
+// 						var input2= $("<input/>").attr("type",'hidden').attr('name',"theme_id").attr("value",themeValue.theme_id);
+// 						var input1= $("<input/>").attr("class","btn btn-default").attr("type","submit").attr("value",themeValue.theme_topic);
+// 						var form  = $("<form/>").attr("METHOD","post").attr("ACTION","ThemeServlet").append([input1,input2,input3]);
+// 						var cell5 = $("<td/>").append([form])
+// 						var cell3 = $("<td></td>").text(themeValue.mem_uid);
+// // 						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
+// 						var row = $("<tr></tr>").append([cell1,cell5,cell3]);
+// 						myBody.append(row);
+// 					}
+// 				})
+// 			})
+// 		})
 	
 	
 	
@@ -149,7 +135,7 @@ $(function(){
 	//how much items per page to show  
 	var show_per_page = 10;  
 	//getting the amount of elements inside content div  
-	var number_of_items = $('#themeList tbody').children().length;
+	var number_of_items = $('#AttList tbody').children().length;
 // 	console.log(number_of_items);
 	//calculate the number of pages we are going to have  
 	var number_of_pages = Math.ceil(number_of_items/show_per_page);  
@@ -181,10 +167,10 @@ $(function(){
 	$('#page_navigation .page_link:first').addClass('active_page');  
 	
 	//hide all the elements inside content div  
-	$('#themeList tbody').children().css('display', 'none');  
+	$('#AttList tbody').children().css('display', 'none');  
 	
 	//and show the first n (show_per_page) elements  
-	$('#themeList tbody').children().slice(0, show_per_page).css('display', 'table-row');  
+	$('#AttList tbody').children().slice(0, show_per_page).css('display', 'table-row');  
 		
 	});
 	
@@ -217,14 +203,14 @@ $(function(){
 	    end_on = start_from + show_per_page;  
 	  
 	    //hide all children elements of content div, get specific items and show them  
-	    $('#themeList tbody').children().css('display', 'none').slice(start_from, end_on).css('display', 'table-row');  
+	    $('#AttList tbody').children().css('display', 'none').slice(start_from, end_on).css('display', 'table-row');  
 	  
 	    /*get the page link that has longdesc attribute of the current page and add active_page class to it 
 	    and remove that class from previously active page link*/  
 	    $('.page_link[longdesc=' + page_num +']').addClass('active_page').siblings('.active_page').removeClass('active_page');  
 	  
 	    //update the current page input field  
-	    $('#themeList tbody').val(page_num);  
+	    $('#AttList tbody').val(page_num);  
 	}  
 	//----------End_Pagination-------
 	

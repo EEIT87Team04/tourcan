@@ -86,7 +86,7 @@
 		 $('#theme_article').summernote({
 			 height:200,
 			 lang: 'zh-TW', // default: 'en-US'
-			 placeholder:"在此編輯內容"
+			 placeholder:"請在此編輯內容"
 			 });
 	//----------End---------------------
 	 $(function() {
@@ -110,6 +110,7 @@
 							errMsgSpan.remove();
 							alert("新增成功 即將跳轉畫面");
 							location.href="listAllTheme.jsp";
+					        $( "#theme_article" ).remove();
 							
 						}
 // 						console.log("errMsg"+errMsg)
@@ -125,7 +126,6 @@
 					console.log("200.");
 					var makrup = $('#theme_article').summernote('code');
 // 					$('#theme_article').summernote('destroy');
-					$( "#theme_article" ).remove();
 				
 					
 				}).fail(function(xhr) {
