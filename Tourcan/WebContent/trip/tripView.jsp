@@ -38,7 +38,7 @@
 }
 
 .div3 {
-	background-color: #FFECEC;
+	background-color: #F0F0F0;
 	border: 2px solid #E0E0E0;
 	border-radius: 20px;
 	margin-bottom: 5px;
@@ -50,7 +50,9 @@
 	border: 2px solid #E0E0E0;
 	margin-bottom: 5px;
 	padding-top: 3px;
-	text-align:center; 
+	text-align:center;
+	height: 400PX; 
+	overflow:scroll;
 }
 
 .divAtt {
@@ -107,20 +109,22 @@
 					value="+新增行程..." style="display: block">
 				<div class="row div3 col-sm-12" style="display: none" id="div3">
 					<div class="col-sm-12 form-group">
-						<label>選擇縣市：</label> <select class="form-control" id="region_id"
-							name="region_id">
+						<label>選擇縣市：</label> 
+						<select class="form-control" id="region_id" name="region_id">
 							<option value="0">請選擇</option>
-						</select> <label>類型：</label> <select class="form-control" id="tripType"
-							name="tripType">
+						</select> 
+						<label>類型：</label> 
+						<select class="form-control" id="tripType" name="tripType">
 							<option value="0">請選擇</option>
 							<option value="1">景點</option>
 							<option value="2">住宿</option>
 						</select> 
+					    <button type="button" id="searchRegion">查詢</button>
 					</div>
 					<div class="col-sm-12 form-group">
-						<label>景點查詢：</label><input type="text" class="form-control" id="attname"
-							name="attname" placeholder="直接查詢景點名稱">
-						<button type="button" id="search">查詢</button>
+						<label>景點查詢：</label>
+						<input type="text" class="form-control" id="attname" name="attname" placeholder="直接查詢景點名稱">
+						<button type="button" id="searchAtt">查詢</button>
 					</div>
 				</div>
 				<div id="sortable">
@@ -129,13 +133,14 @@
 							<label>選擇縣市：</label> <select class="form-control" id="region_id"
 								name="region_id">
 								<option value="0">請選擇</option>
-							</select> <label>類型：</label> <select class="form-control" id="tripType"
-								name="tripType">
+							</select> 
+							<label>類型：</label> 
+							<select class="form-control" id="tripType" name="tripType">
 								<option value="0">請選擇</option>
 								<option value="1">景點</option>
 								<option value="2">住宿</option>
-							</select> <input type="text" class="form-control" id="attname"
-								name="attname" placeholder="直接查詢景點名稱">
+							</select> 
+							<input type="text" class="form-control" id="attname" name="attname" placeholder="直接查詢景點名稱">
 							<button type="button" id="search">查詢</button>
 						</div>
 					</div>
@@ -242,40 +247,53 @@
 		}
 		
 		$(function(){
+			
+			//新增行程
 			$('#addTripBtn').click(function(){
 				$("#addTripBtn").css("display","none");
 				$("#div3").css("display","block");
 			});
 			
+			//加入縣市
 			$.get("../att/RegionServlet").done(
 					function(list) {
 						regionList = list;
 						var frag = document.createDocumentFragment();
 						for (var i = 1; i < list.length; i++)
-							frag.appendChild(new Option(list[i].region_name,
-									list[i].region_id));
+							frag.appendChild(new Option(list[i].region_name,list[i].region_id));
 						$("#region_id").append(frag);
 					}).fail(function(xhr) {
 				console.log("Get region list unsuccessful.");
 			});
 			
-			$("#search").click(function() {
+			//列出所有選擇區域之景點類型form表單
+			$("#searchRegion").click(function(){
+				var regionId=$('#region_id').val();
+				var tripType=$('#tripType').val();
+				var nullSpan1=null;
 				$("form").remove();
-				var attname = $("#attname").val(); 
-				var attForm=document.createElement("form");
-				attForm.setAttribute("class","row div4 col-sm-12");
-				$.getJSON(("../att/AttServlet"),{"attname":attname},function(data){
-// 					console.log("data="+data);
+				$("#nullSpan1").remove();
+				$("#nullSpan2").remove();
+// 				console.log(regionId);
+// 				console.log(tripType);
+				//沒有選擇區域及類型之錯誤驗證
+				if(regionId == 0 || tripType ==0){
+					var nullSpan1=$("<span></span>").attr("style","color:red;font-size:70%").attr("id","nullSpan1").text("請選擇區域及類型")
+					$("#searchRegion").after(nullSpan1);
+				//選擇區域及景點類型之判斷
+				}else if(regionId != 0 && tripType ==1){
+					var attForm=document.createElement("form");
+					attForm.setAttribute("class","row div4 col-sm-12");
+					$.get(("../att/AttServlet"),{"regionId":regionId,"method":"getByRegionId"},function(data){
+					console.log("data="+data);
 					$.each(data,function(idx,att){
-// 						console.log("idx="+idx);
-// 						console.log("att="+att);
-// 						console.log("test");
+						console.log("idx="+idx);
+						console.log("att="+att);
+						console.log("test");
 						var attDiv=document.createElement("div");
 						attDiv.setAttribute("class","col-sm-12 divAtt form-group");
 						var imgDiv=document.createElement("div");
 						imgDiv.setAttribute("class","row col-sm-3");
-// 						var imgText = document.createTextNode("圖片");
-// 						imgDiv.appendChild(imgText);
 						var urlA=document.createElement("a");
 						urlA.setAttribute("href",att.att_url);
 						urlA.setAttribute("target","_new");
@@ -295,24 +313,102 @@
 						contentH5.appendChild(contentText);
 						var butDiv=document.createElement("div");
 						butDiv.setAttribute("class","row");
-// 						var butInput=document.createElement("input");
-// 						butInput.setAttribute("type","button");
-// 						butInput.setAttribute("id","detail");
-// 						butInput.setAttribute("value","詳情");
-// 						butInput.setAttribute("style","margin-right:5px;");
 						var checkInput=document.createElement("input");
 						checkInput.setAttribute("type","checkbox");
 						checkInput.setAttribute("value",att.att_name);
 						checkInput.setAttribute("name","attCheck");
-						checkInput.setAttribute("style","");
-// 						butDiv.appendChild(butInput);
+// 						checkInput.setAttribute("style","");
 						butDiv.appendChild(checkInput);
 						attDiv.appendChild(imgDiv);
 						attDiv.appendChild(openLabel);
 						attDiv.appendChild(contentH5);
 						attDiv.appendChild(butDiv);	
 						attForm.appendChild(attDiv);
-						
+					})
+					var sendBtn=document.createElement("input");
+					sendBtn.setAttribute("type","button");
+					sendBtn.setAttribute("id","sendBtn");
+					sendBtn.setAttribute("value","加入選取行程");
+					sendBtn.setAttribute("style","margin:5px");
+					attForm.appendChild(sendBtn);
+					$("#div3").after(attForm);
+					
+					//景點選單送出
+				    $("#sendBtn").click(function(){
+						$("#addTripBtn").css("display","block");
+						$("#div3").css("display","none");
+
+				    	var selected=[];
+				        $("input[name='attCheck']:checked").each(function(){
+				           selected.push($(this).val());
+				       	});
+				        alert("景點名稱 : " + selected.join());
+						$("#div3 input").val("");
+						$("#region_id option[value='0']").prop("selected",true);
+						$("#tripType option[value='0']").prop("selected",true);
+						$("form").remove();
+				    });
+				  })
+				}
+			});
+			
+			
+			$("#searchAtt").click(function() {
+				$("form").remove();
+				$("#nullSpan1").remove();
+				$("#nullSpan2").remove();
+				//判斷attname是否輸入
+				var attname = $("#attname").val();
+				if(attname.trim().length==0){
+					var nullSpan2=$("<span></span>").attr("style","color:red;font-size:70%").attr("id","nullSpan2").text("請輸入景點名稱")
+					$("#searchAtt").after(nullSpan2);
+				}else{
+				//列出所有查詢之景點form表單
+				var attForm=document.createElement("form");
+				attForm.setAttribute("class","row div4 col-sm-12");
+				$.get(("../att/AttServlet"),{"attname":attname,"method":"getByName"},function(data){
+					console.log("data="+data);
+					if(data<1){
+						alert("1");
+					}else{
+					$.each(data,function(idx,att){
+// 						console.log("idx="+idx);
+// 						console.log("att="+att);
+// 						console.log("test");
+						var attDiv=document.createElement("div");
+						attDiv.setAttribute("class","col-sm-12 divAtt form-group");
+						var imgDiv=document.createElement("div");
+						imgDiv.setAttribute("class","row col-sm-3");
+						var urlA=document.createElement("a");
+						urlA.setAttribute("href",att.att_url);
+						urlA.setAttribute("target","_new");
+						var attLabel =document.createElement("label");
+						var attText = document.createTextNode(att.att_name);
+						attLabel.appendChild(attText);
+						urlA.appendChild(attLabel);
+						imgDiv.appendChild(urlA);
+						var openLabel=document.createElement("label");
+						openLabel.setAttribute("class","row col-sm-3");
+						var openText=document.createTextNode("開放時間:");
+						openLabel.appendChild(openText);
+						var contentH5=document.createElement("h5");
+						contentH5.setAttribute("class","row col-sm-6");
+						contentH5.setAttribute("style","word-break: break-all; margin-right:5px; text-align:left");
+						var contentText=document.createTextNode(att.att_open);
+						contentH5.appendChild(contentText);
+						var butDiv=document.createElement("div");
+						butDiv.setAttribute("class","row");
+						var checkInput=document.createElement("input");
+						checkInput.setAttribute("type","checkbox");
+						checkInput.setAttribute("value",att.att_name);
+						checkInput.setAttribute("name","attCheck");
+// 						checkInput.setAttribute("style","");
+						butDiv.appendChild(checkInput);
+						attDiv.appendChild(imgDiv);
+						attDiv.appendChild(openLabel);
+						attDiv.appendChild(contentH5);
+						attDiv.appendChild(butDiv);	
+						attForm.appendChild(attDiv);
 					})
 					var sendBtn=document.createElement("input");
 					sendBtn.setAttribute("type","button");
@@ -322,28 +418,26 @@
 					attForm.appendChild(sendBtn);
 					$("#div3").after(attForm);
 					
+					//景點選單送出
 				    $("#sendBtn").click(function(){
+						$("#addTripBtn").css("display","block");
+						$("#div3").css("display","none");
+
 				    	var selected=[];
 				        $("input[name='attCheck']:checked").each(function(){
 				           selected.push($(this).val());
-						   	
 				       	});
-				          alert("景點名稱 : " + selected.join());
+				        alert("景點名稱 : " + selected.join());
+						$("#div3 input").val("");
+						$("#region_id option[value='0']").prop("selected",true);
+						$("#tripType option[value='0']").prop("selected",true);
+						$("form").remove();
 				   });
+					}
 				})
-			});
-			
-			
-			
-			
-			
-		});
-			
-			
-			
-			
-			
-			
+			  }
+		   });
+	    });
 			
 	</script>
 	<script >

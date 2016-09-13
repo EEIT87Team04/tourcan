@@ -91,8 +91,13 @@ public class AttService {
 	public List<AttVO> getAll(){
 		return dao.getAll();
 	}
+	
 	public void deleteAtt(Integer attId) {
 		dao.delete(attId);
+	}
+	
+	public List<AttVO> getByRegionId(Integer region_id){
+		return dao.findByRegionId(region_id);
 	}
 
 }
