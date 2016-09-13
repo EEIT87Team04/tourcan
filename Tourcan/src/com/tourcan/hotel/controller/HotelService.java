@@ -1,8 +1,11 @@
 package com.tourcan.hotel.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,6 +14,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -19,8 +23,15 @@ import com.tourcan.hotel.model.HotelDAO;
 import com.tourcan.hotel.model.HotelVO;
 import com.tourcan.util.ApplicationContextUtils;
 
-@Path("hotels")
+@Path("/")
 public class HotelService {
+
+	@Context
+	HttpServletRequest request;
+
+	@Context
+	HttpServletResponse response;
+
 	HotelDAO dao = (HotelDAO) ApplicationContextUtils.getContext().getBean("hotelDAO");
 
 	@GET
@@ -41,7 +52,24 @@ public class HotelService {
 	}
 
 	@GET
-	@Path("{name}")
+	@Path("{id: [0-9]+}")
+	@Produces({ MediaType.TEXT_HTML })
+	public void queryById_static(@PathParam("id") Integer id) {
+		try {
+			response.getWriter().println("Hello World");
+			response.getWriter().println("Hello World");
+			response.getWriter().println("Hello World");
+			response.getWriter().println("Hello World");
+			response.getWriter().println("Hello World");
+			response.getWriter().println("Hello World");
+			response.flushBuffer();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@GET
+	@Path("/name/{name}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response queryByName(@PathParam("name") String name) {
 		List<HotelVO> vos;
@@ -57,6 +85,22 @@ public class HotelService {
 		}
 	}
 
+	@GET
+	@Path("/region/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response queryByRegion(@PathParam("id") Integer region_id) {
+		List<HotelVO> vos;
+		if ((vos = dao.findByRegionId(region_id)) == null) {
+			// 404 Not found
+			HashMap<String, String> msg = new HashMap<String, String>();
+			msg.put("result", "failure");
+			msg.put("error", "no matched entry exist.");
+			return Response.status(Status.NOT_FOUND).entity(msg).build();
+		} else {
+			// 200 OK
+			return Response.status(Status.OK).entity(vos).build();
+		}
+	}
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response queryAll() {

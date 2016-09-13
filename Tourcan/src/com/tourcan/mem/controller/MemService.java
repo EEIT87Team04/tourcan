@@ -20,25 +20,9 @@ import com.tourcan.mem.model.MemDAO;
 import com.tourcan.mem.model.MemVO;
 import com.tourcan.util.ApplicationContextUtils;
 
-@Path("members")
+@Path("/")
 public class MemService {
 	MemDAO dao = (MemDAO) ApplicationContextUtils.getContext().getBean("memDAO");
-
-	// @GET
-	// @Path("{id: [0-9]+}")
-	// @Produces({ MediaType.APPLICATION_JSON })
-	// public Response queryById(@PathParam("id") Integer id) {
-	// MemVO vo;
-	// if ((vo = dao.findById(id)) == null) {
-	// HashMap<String, Object> msg = new HashMap<String, Object>();
-	// msg.put("result", "failure");
-	// msg.put("error", "id not exist.");
-	// return Response.status(Status.NOT_FOUND).entity(msg).build();
-	// } else {
-	// // 200 OK
-	// return Response.status(Status.OK).entity(vo).build();
-	// }
-	// }
 
 	@GET
 	@Path("{uid}")

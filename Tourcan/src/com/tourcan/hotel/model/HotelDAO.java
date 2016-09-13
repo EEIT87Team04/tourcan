@@ -8,5 +8,6 @@ public interface HotelDAO {
 	public void delete(HotelVO hotelVO);
 	public HotelVO findById(Integer hotel_id);
 	public List<HotelVO> findByName(String hotel_name);
+	public List<HotelVO> findByRegionId(Integer region_id);
 	public List<HotelVO> getAll();
 }

@@ -55,6 +55,19 @@ public class HotelHibernateDAO implements HotelDAO {
 		tx.commit();
 		return vo;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<HotelVO> findByRegionId(Integer region_id) {
+		Session session = factory.getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from HotelVO where region_id = :region_id");
+		query.setParameter("region_id", region_id);
+		List<HotelVO> vo = query.list();
+		session.flush();
+		tx.commit();
+		return vo;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import hibernate.util.HibernateUtil;
@@ -13,6 +14,12 @@ public class AttDAO implements AttDAO_interface {
 
 	private static int STMT_SHIFT = 0; // 1 for JDBC, 0 for Hibernate
 	private static final String Get_Img_Name="SELECT att_id FROM AttVO where att_name=?"; 
+
+	private SessionFactory factory;
+
+	public void setSessionFactory(SessionFactory factory) {
+		this.factory = factory;
+	}
 	
 	@Override
 	public Integer insert(AttVO attVO) {
