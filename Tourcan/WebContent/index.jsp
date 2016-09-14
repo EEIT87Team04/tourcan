@@ -3,6 +3,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link href='//fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+<script src="//s3-ap-northeast-1.amazonaws.com/justfont-user-script/jf-44849.js"></script>
+<!-- class name: .dath7 -->
+<!-- fontfamily: dath7 -->
+<!-- both can change -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,10 +72,10 @@
     <!-- Header -->
     <header id="top" class="header">
         <div class="text-vertical-center">
-            <h1 class="frontText">Start Bootstrap</h1>
-            <h3 class="frontText">Free Bootstrap Themes &amp; Templates</h3>
+            <h1 class="frontText">Tourcan</h1>
+            <h2 class="frontText dath7">我的旅遊易開罐，不管想去哪玩都很容易！</h2>
             <br>
-            <a href="#about" class="btn btn-dark btn-lg">Find Out More</a>
+            <a href="#about" class="btn btn-dark btn-lg dath7">馬上開始</a>
         </div>
     </header>
 
@@ -78,9 +83,11 @@
     <section id="about" class="about">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Stylish Portfolio is the perfect theme for your next project!</h2>
-                    <p class="lead">This theme features some wonderful photography courtesy of <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a>.</p>
+                <div class="col-lg-12 text-center dath7">
+                    <h2>簡介</h2>
+                    <p class="lead dath7" style="text-align:justify;">　　短暫的假期不知該往何處去，想出門走走放鬆、減壓，反被行程規劃磨盡了耐心和精力。當有一個把美食、住宿與交通都能集合在內的網站，讓行程規劃不在困擾著你，既有的行程模式，景點、美食與住宿通通幫您想好。還想要來點驚喜的你，還有 TourCan 獨特的隨選行程，讓你隨時為自己準備一場精彩的旅程！
+<!--                     <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a> -->
+                    </p>
                 </div>
             </div>
             <!-- /.row -->

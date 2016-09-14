@@ -1,6 +1,7 @@
 @CHARSET "UTF-8";
 
 .frontText{
+/* 	font-family:dath7; */
 	color:white;
 	text-shadow: 4px 4px rgba(0,0,0,0.35);
 }
