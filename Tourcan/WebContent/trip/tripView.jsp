@@ -274,8 +274,8 @@
 				$("form").remove();
 				$("#nullSpan1").remove();
 				$("#nullSpan2").remove();
-// 				console.log(regionId);
-// 				console.log(tripType);
+				console.log(regionId);
+				console.log(tripType);
 				//沒有選擇區域及類型之錯誤驗證
 				if(regionId == 0 || tripType ==0){
 					var nullSpan1=$("<span></span>").attr("style","color:red;font-size:70%").attr("id","nullSpan1").text("請選擇區域及類型")

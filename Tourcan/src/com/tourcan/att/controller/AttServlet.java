@@ -166,6 +166,7 @@ public class AttServlet extends HttpServlet {
 			} catch (Exception e) {
 				checkResult.append("false", "查詢失敗");
 				response.getWriter().println(checkResult.toString());
+				e.printStackTrace();
 			}
 		}
 	}
