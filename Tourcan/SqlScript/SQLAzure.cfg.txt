@@ -1,0 +1,7 @@
+tourcan-sql.database.windows.net
+tourcan
+SA_eeit87
+TourCan_8704
+Chinese_Taiwan_Stroke_CI_AS
+
+jdbc:sqlserver://tourcan-sql.database.windows.net:1433;database=tourcan;user=SA_eeit87@tourcan-sql;password={your_password_here};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;

@@ -9,11 +9,12 @@
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<!-- <property name="dataSource"> -->
-		<!-- <bean class="org.springframework.jndi.JndiObjectFactoryBean"> -->
-		<!-- <property name="jndiName" value="java:comp/env/jdbc/SQLServer" /> -->
-		<!-- </bean> -->
-		<!-- </property> -->
+		<property name="dataSource">
+			<bean class="org.springframework.jndi.JndiObjectFactoryBean">
+				<property name="jndiName" value="java:comp/env/jdbc/SQLServer" />
+			</bean>
+		</property>
+
 		<!-- <property name="dataSource"> -->
 		<!-- <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
 		<!-- <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
@@ -24,17 +25,19 @@
 		<!-- <property name="password" value="sa123456" /> -->
 		<!-- </bean> -->
 		<!-- </property> -->
-		<property name="dataSource">
-			<bean class="com.mchange.v2.c3p0.ComboPooledDataSource"
-				destroy-method="close">
-				<property name="driverClass"
-					value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-				<property name="jdbcUrl"
-					value="jdbc:sqlserver://localhost:1433;DatabaseName=tourcan" />
-				<property name="user" value="sa" />
-				<property name="password" value="sa123456" />
-			</bean>
-		</property>
+
+		<!-- <property name="dataSource"> -->
+		<!-- <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" -->
+		<!-- destroy-method="close"> -->
+		<!-- <property name="driverClass" -->
+		<!-- value="com.microsoft.sqlserver.jdbc.SQLServerDriver" /> -->
+		<!-- <property name="jdbcUrl" -->
+		<!-- value="jdbc:sqlserver://localhost:1433;DatabaseName=tourcan" /> -->
+		<!-- <property name="user" value="sa" /> -->
+		<!-- <property name="password" value="sa123456" /> -->
+		<!-- </bean> -->
+		<!-- </property> -->
+
 		<property name="configLocation" value="classpath:hibernate.spring.cfg.xml" />
 	</bean>
 
