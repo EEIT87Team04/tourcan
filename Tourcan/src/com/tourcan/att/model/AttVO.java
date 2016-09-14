@@ -65,7 +65,7 @@ public class AttVO implements java.io.Serializable {
 
 	public AttVO() {
 	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -173,7 +173,7 @@ public class AttVO implements java.io.Serializable {
 	public void setAtt_lng(Double att_lng) {
 		this.att_lng = att_lng;
 	}
-
+	
 	public Integer getRegion_id() {
 		return region_id;
 	}

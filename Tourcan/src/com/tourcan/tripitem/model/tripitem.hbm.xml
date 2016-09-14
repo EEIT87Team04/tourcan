@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.tourcan.tripitem.model.TripitemVO" table="tripitem" >
+        
+        <id name="tripitem_id" column="tripitem_id">
+            <generator class="identity"/>
+        </id>
+        
+        <property name="tripitem_serial" column="tripitem_serial" />
+        <property name="tripitem_traffic" column="tripitem_traffic" />
+        <property name="tripitem_memo" column="tripitem_memo" />
+        <property name="tripitem_staytime" column="tripitem_staytime" />
+        <property name="tripitem_begin" column="tripitem_begin" />
+        <property name="tripitem_end" column="tripitem_end" />
+        <property name="trip_id" column="trip_id" />
+        <property name="att_id" column="att_id" />
+        <property name="hotel_id" column="hotel_id" />
+        
+    
+        
+<!--         <many-to-one name="regionVO" class="com.tourcan.region.model.RegionVO" lazy="false"> -->
+<!--             <column name="region_id" /> -->
+<!--         </many-to-one> -->
+        
+    </class>
+</hibernate-mapping>
+

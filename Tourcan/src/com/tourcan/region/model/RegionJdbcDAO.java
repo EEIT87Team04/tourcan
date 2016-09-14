@@ -18,8 +18,8 @@ public class RegionJdbcDAO implements RegionDAO {
 
 	private static int STMT_SHIFT = 1; // 1 for JDBC, 0 for Hibernate
 	// private boolean manual_mode = false;
-//	private Connection conn = null;
-//	private PreparedStatement pstmt = null;
+	// private Connection conn = null;
+	// private PreparedStatement pstmt = null;
 
 	// SQL statements
 	private static final String INSERT_STMT = "INSERT INTO region ( " + "region_name, region_area ) "

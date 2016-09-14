@@ -13,14 +13,14 @@ import hibernate.util.HibernateUtil;
 public class AttDAO implements AttDAO_interface {
 
 	private static int STMT_SHIFT = 0; // 1 for JDBC, 0 for Hibernate
-	private static final String Get_Img_Name="SELECT att_id FROM AttVO where att_name=?"; 
+	private static final String Get_Img_Name = "SELECT att_id FROM AttVO where att_name=?";
 
 	private SessionFactory factory;
 
 	public void setSessionFactory(SessionFactory factory) {
 		this.factory = factory;
 	}
-	
+
 	@Override
 	public Integer insert(AttVO attVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -38,13 +38,13 @@ public class AttDAO implements AttDAO_interface {
 
 	@Override
 	public AttVO findById(Integer att_id) {
-		AttVO attVO=null;
-		Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-		try{
+		AttVO attVO = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
 			session.beginTransaction();
-			attVO = (AttVO)session.get(AttVO.class,att_id);
+			attVO = (AttVO) session.get(AttVO.class, att_id);
 			session.getTransaction().commit();
-		}catch(RuntimeException e){
+		} catch (RuntimeException e) {
 			session.getTransaction().rollback();
 			throw e;
 		}
@@ -56,7 +56,7 @@ public class AttDAO implements AttDAO_interface {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			AttVO attVO=new AttVO();
+			AttVO attVO = new AttVO();
 			attVO.setAtt_id(attId);
 			session.delete(attVO);
 			session.getTransaction().commit();
@@ -64,66 +64,85 @@ public class AttDAO implements AttDAO_interface {
 			session.getTransaction().rollback();
 			throw ex;
 		}
-		
+
 	}
 
 	@Override
-	 public void update(AttVO attVO) {
-	  Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-	  try{
-	   session.beginTransaction();
-	   session.saveOrUpdate(attVO);
-	   session.getTransaction().commit();
-	  }catch(RuntimeException e){
-	   session.getTransaction().rollback();
-	   throw e;
-	  }
-	  
-	 }
-	
+	public void update(AttVO attVO) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(attVO);
+			session.getTransaction().commit();
+		} catch (RuntimeException e) {
+			session.getTransaction().rollback();
+			throw e;
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<AttVO> findByName(String att_name) {
-//		List<AttVO> name=null;
-    	List<AttVO> attname=null;
-    	Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-    	Transaction tx = session.beginTransaction(); 
-    	//System.out.println("s2="+att_name);
-    	String s2= "%" + att_name + "%";
+		// List<AttVO> name=null;
+		List<AttVO> attname = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		// System.out.println("s2="+att_name);
+		String s2 = "%" + att_name + "%";
 		try {
-//			session.beginTransaction();
+			// session.beginTransaction();
 			String queryByName = "FROM AttVO WHERE att_name like :att_name";
 			Query qry = session.createQuery(queryByName);
 			qry.setParameter("att_name", s2);
 			attname = qry.list();
 			tx.commit();
-//			session.beginTransaction().commit();
-			} catch (RuntimeException e) {
+			// session.beginTransaction().commit();
+		} catch (RuntimeException e) {
 			tx.rollback();
-//				session.beginTransaction().rollback();
-				throw e;
-				
-			}
+			// session.beginTransaction().rollback();
+			throw e;
+
+		}
 		return attname;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<AttVO> getAll() {
-		List<AttVO> list =null;
-		Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+		List<AttVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
-    	try {
-//			session.beginTransaction();
-			Query query =session.createQuery("from AttVO order by att_id DESC");
-			list=query.list();
+		try {
+			// session.beginTransaction();
+			Query query = session.createQuery("from AttVO order by att_id DESC");
+			list = query.list();
 			tx.commit();
-//			session.beginTransaction().commit();
+			// session.beginTransaction().commit();
 		} catch (RuntimeException e) {
 			tx.rollback();
-//			session.beginTransaction().rollback();
+			// session.beginTransaction().rollback();
 			throw e;
-			
+
 		}
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AttVO> findByRegionId(Integer region_id) {
+		List<AttVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("FROM AttVO WHERE region_id=:region_id");
+			query.setParameter("region_id", region_id);
+			list = query.list();
+			session.beginTransaction().commit();
+		} catch (RuntimeException e) {
+			session.beginTransaction().rollback();
+			throw e;
+		}
+		return list;
+	}
 }

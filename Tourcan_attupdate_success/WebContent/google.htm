@@ -1,0 +1,52 @@
+﻿<html>
+<head>
+<title>Demo Site</title>
+<meta name="google-signin-client_id"
+	content="370795963240-3rr3nug80mgjiea92n00qjk5siboabii.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js?onload=renderButton"
+	async defer></script>
+<script>
+	function onSuccess(googleUser) {
+		var profile = googleUser.getBasicProfile();
+		var id_token = googleUser.getAuthResponse().id_token;
+		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		console.log('Name: ' + profile.getName());
+		console.log('Image URL: ' + profile.getImageUrl());
+		console.log('Email: ' + profile.getEmail());
+		console.log('id_token: ' + id_token);
+		
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', 'http://localhost:8080/test_LoginAPI/GoogleLogger');
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.onload = function() {
+		  console.log('Signed in as: ' + xhr.responseText);
+		};
+		xhr.send('idtoken=' + id_token);
+		
+	}
+	function onFailure(googleUser) {
+	}
+	function signOut() {
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(function() {
+			console.log('User signed out.');
+		});
+	}
+	function renderButton() {
+		gapi.signin2.render('my-signin2', {
+			'scope' : 'profile email',
+			'width' : 240,
+			'height' : 50,
+			'longtitle' : true,
+			'theme' : 'light',
+			'onsuccess' : onSuccess,
+			'onfailure' : onFailure
+		});
+	}
+</script>
+</head>
+<body>
+	<div id="my-signin2" ></div>
+	<a href="#" onclick="signOut();">Sign out</a>
+</body>
+</html>

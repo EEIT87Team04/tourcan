@@ -3,7 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
 	<bean id="applicationContextUtils" class="com.tourcan.util.ApplicationContextUtils" />
 	<bean id="firebaseAppUtils" class="com.tourcan.util.FirebaseAppUtils"
 		init-method="getApp" />
@@ -22,7 +21,7 @@
 		<!-- <property name="url" value="jdbc:sqlserver://localhost:1433;DatabaseName=tourcan" 
 			/> -->
 		<!-- <property name="username" value="sa" /> -->
-		<!-- <property name="password" value="P@ssw0rd" /> -->
+		<!-- <property name="password" value="sa123456" /> -->
 		<!-- </bean> -->
 		<!-- </property> -->
 		<property name="dataSource">
@@ -38,15 +37,10 @@
 		</property>
 		<property name="configLocation" value="classpath:hibernate.spring.cfg.xml" />
 	</bean>
-	
+
 	<bean id="jsonArray" class="org.json.JSONArray" scope="prototype" />
 	<bean id="gsonInstance" class="com.google.gson.Gson" />
 
-	<!-- <bean id="attDAO" class="com.tourcan.att.model.AttHibernateDAO"> -->
-	<!-- <property name="sessionFactory" ref="sessionFactory"></property> -->
-	<!-- </bean> -->
-	<!-- <bean id="attVO" class="com.tourcan.att.model.AttVO" scope="prototype" 
-		/> -->
 
 	<bean id="memDAO" class="com.tourcan.mem.model.MemHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
@@ -61,8 +55,10 @@
 	<bean id="regionDAO" class="com.tourcan.region.model.RegionHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<bean id="regionVO" class="com.tourcan.region.model.RegionVO" scope="prototype" />
-	
+	<bean id="regionVO" class="com.tourcan.region.model.RegionVO"
+		scope="prototype" />
+
+	<!-- <bean id="attDAO" class="com.tourcan.att.model.AttHibernateDAO"> -->
 	<bean id="attDAO" class="com.tourcan.att.model.AttDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>

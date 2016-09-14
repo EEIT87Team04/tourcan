@@ -40,58 +40,59 @@ public class AttServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		BufferedReader br = request.getReader();
-		StringBuffer sb = new StringBuffer(128);
-		String json;
-		while ((json = br.readLine()) != null)
-			sb.append(json);
-		json = sb.toString();
-
+//		BufferedReader br = request.getReader();
+//		StringBuffer sb = new StringBuffer(128);
+//		String json;
+//		while ((json = br.readLine()) != null)
+//			sb.append(json);
+//		json = sb.toString();
+		String method= request.getParameter("method");
 		JSONObject err = new JSONObject();
 
+		if(method.equals("getAttID")){
 		// Query by att_id
-		String attIdStr = request.getParameter("att_id");
-		if (attIdStr != null) {
-			Integer attId = null;
-			try {
-				attId = new Integer(request.getParameter("att_id"));
-			} catch (Exception e) {
-				err.append("attId", "編號只能為整數");
-				response.getWriter().println(err.toString());
-				// e.printStackTrace();
-			}
-
-			if (attId != null) {
-				AttService asv = new AttService();
-				AttVO attVO = asv.getOneMem(attId);
-
-				if (attVO != null) {
-					try {
-						Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-						String attVOGson = gson.toJson(attVO);
-						response.getWriter().println(attVOGson);
-					} catch (Exception e) {
-						err.append("attId", "無此編號");
-						response.getWriter().println(err.toString());
-						// e.printStackTrace();
-					}
-				} else {
-					err.append("attId", "無此編號");
-					response.getWriter().println(err.toString());
-				}
-
-			} else {
-				err.append("attId", "無此編號");
-			}
-			return;
-		}
-
+		 String attIdStr=request.getParameter("att_id");
+		 if(attIdStr != null){
+		 Integer attId = null;
+		 try {
+		 attId = new Integer(request.getParameter("att_id"));
+		 } catch (Exception e) {
+		 err.append("attId", "編號只能為整數");
+		 response.getWriter().println(err.toString());
+		 // e.printStackTrace();
+		 }
+		
+		 if (attId != null) {
+		 AttService asv = new AttService();
+		 AttVO attVO = asv.getOneMem(attId);
+		
+		 if (attVO != null) {
+		 try {
+		 Gson gson = new
+		 GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		 String attVOGson = gson.toJson(attVO);
+		 response.getWriter().println(attVOGson);
+		 } catch (Exception e) {
+		 err.append("attId", "無此編號");
+		 response.getWriter().println(err.toString());
+		 // e.printStackTrace();
+		 }
+		 } else {
+		 err.append("attId", "無此編號");
+		 response.getWriter().println(err.toString());
+		 }
+		
+		 } else {
+		 err.append("attId", "無此編號");
+		 }
+		 return;
+		 }
+		}else if(method.equals("getByName")){
 		// ----------------Query one by attname----------------
-		String att_name = request.getParameter("attname");
-		if (att_name != null) {
 			// ***************************1.接收請求參數 -
 			// 輸入格式的錯誤處理**********************//*
 			try {
+				String att_name = request.getParameter("attname");
 				try {
 					if (att_name == null || (att_name.trim()).length() == 0) {
 						throw new Exception();
@@ -119,14 +120,52 @@ public class AttServlet extends HttpServlet {
 				err.append("errmsg", "search error");
 				response.getWriter().println(err.toString());
 			}
-		} else if (attIdStr == null && att_name == null) {
+		} else if (method.equals("getAll")) {
 			AttService asv = new AttService();
 			List<AttVO> avo = asv.getAll();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			String jsonG = gson.toJson(avo);
 			System.out.println(jsonG);
 			response.getWriter().println(jsonG.toString());
-			// return;
+//			return;
+		}else if (method.equals("getByRegionId")){
+			// ----------------Query by regionId----------------
+			// ***************************1.接收請求參數 -輸入格式的錯誤處理**********************/
+			JSONObject checkResult = new JSONObject();
+			Integer regionId = null;
+			List<AttVO> attVO = null;
+
+			try {
+				String id = request.getParameter("regionId");
+				 System.out.println(id);
+				if (id == null || id.trim().length() == 0) {
+					checkResult.append("checkResult", "請選擇區域");
+				} else {
+					try {
+						regionId = new Integer(id);
+						System.out.println(regionId);
+					} catch (Exception e) {
+						// e.printStackTrace();
+						checkResult.append("checkResult", "區域ID格式不正確");
+					}
+				}
+				AttService attSvc = new AttService();
+				 System.out.println("test");
+				 attVO = attSvc.getByRegionId(regionId);
+				 System.out.println("attVO");
+				if (attVO.size() != 0) {
+					Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+					String jsonG = gson.toJson(attVO);
+					 System.out.println(jsonG);
+					response.getWriter().println(jsonG);
+				} else {
+					checkResult.append("result", "查無資料");
+					response.getWriter().println(checkResult.toString());
+				}
+			} catch (Exception e) {
+				checkResult.append("false", "查詢失敗");
+				response.getWriter().println(checkResult.toString());
+			}
 		}
 	}
 
@@ -210,8 +249,8 @@ public class AttServlet extends HttpServlet {
 				throw new Exception();
 			} else {
 				AttService srv = new AttService();
-				Integer att_id = srv.insert(attVO);
-				checkResult.append("att_id", att_id);
+				srv.insert(attVO);
+				checkResult.append("att_id", attVO.getAtt_id());
 				checkResult.append("result", "新增成功");
 				response.getWriter().println(checkResult.toString());
 			}
