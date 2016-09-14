@@ -144,12 +144,12 @@ public class RespServlet  extends HttpServlet{
 			String respTopic= respVO.getResp_topic();
 //			System.out.println(themeTopic);
 			if(respTopic==null||respTopic.trim().isEmpty()||respTopic.trim().length()==0){
-			checkR.append("resp_topic","plz into respTopic");
+			checkR.append("resp_topic","請輸入回覆主題");
 			}
 			String resparticle = respVO.getResp_article();
 //			System.out.println("themearticle:"+themearticle);
 			if(resparticle==null||resparticle.trim().isEmpty()||resparticle.trim().length()==0){
-			checkR.append("resp_article", "plz into resparticle");
+			checkR.append("resp_article", "請輸入回覆內容");
 			}
 			resptime=new Timestamp(System.currentTimeMillis());
 //			System.out.println("themetime:"+themetime);

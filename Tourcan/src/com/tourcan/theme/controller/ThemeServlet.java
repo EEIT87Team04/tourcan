@@ -133,6 +133,7 @@ public class ThemeServlet extends HttpServlet {
 
 		// --------------------------------getOne_For_Display----------------------------------
 		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
 		// if(action==null){
 		// System.out.println("11=");
 
