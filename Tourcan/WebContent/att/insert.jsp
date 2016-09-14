@@ -224,21 +224,6 @@
 					});
 					console.log("200.");
 					
-// 					$('#fileupload').fileupload({
-// 						type:'post',						
-// 						dataType: 'json',
-// 						url:"PhotoServlet?att_id=" + att_id,
-// 						limitMultiFileUploads:1,
-// 						limitMultiFileUploadSize:5000000,
-// 						replaceFileInput:false,
-// 						singleFileUploads:true,
-// 						add:function(e, data){
-// 							$("#upload").off('click').one('click',function(){
-// 								data.submit();
-// // 								document.addAtt.reset();
-// 							});
-// 						}
-// 					});
 				}).fail(function(xhr) {
 					console.log("ERR.");
 				});

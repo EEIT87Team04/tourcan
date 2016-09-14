@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tourcan.att.model.AttService;
 import com.tourcan.att.model.AttVO;
+import com.tourcan.photo.model.PhotoService;
 import com.tourcan.region.model.RegionVO;
 
 @WebServlet("/att/AttServlet")
@@ -484,8 +485,15 @@ public class AttServlet extends HttpServlet {
 
 			/*************************** 2.開始刪除單筆資料 *****************************************/
 			AttService attSvc = new AttService();
+			PhotoService pSvc = new PhotoService(); 
+			JSONObject photo = pSvc.getByAttId(attId);
 			try {
+				if(photo.length()>0)
+				{
+					pSvc.deleteByAttId(attId);
+				}
 				attSvc.deleteAtt(attId);
+				
 			} catch (Exception e) {
 				errorMsgs.put("errMsg", "查無資料");
 			}

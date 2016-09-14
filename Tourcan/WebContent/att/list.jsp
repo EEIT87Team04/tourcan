@@ -330,7 +330,7 @@
 			});	
 		//↑↑↑↑↑↑↑↑↑↑↑Popup Window↑↑↑↑↑↑↑↑↑↑↑
 			
-		$.getJSON('AttServlet', function(data) {
+		$.getJSON('AttServlet?method=getAll', function(data) {
 			$.each(data, function(index, att) {
 				var row = $("<tr/>");
 				var id = $("<td/>").text(att.att_id);
@@ -371,7 +371,7 @@
 				e.stopPropagation();
 				
 				
-					$.getJSON(("AttServlet"), {"att_id" : $(this).val()}, function(data) {
+					$.getJSON(("AttServlet"), {"att_id" : $(this).val(),"method":"getAttID"}, function(data) {
 					resetErrors();
 						$.each(data, function(attName, attValue) {
 						    	console.log($("#"+attName).val(attValue));
