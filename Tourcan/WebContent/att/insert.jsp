@@ -110,116 +110,148 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6 col-sm-offset-3" id="result"></div>
+			<div class="col-sm-6 col-sm-offset-3" id="result">
+			</div>
 		</div>
 	</form>
+	<div id="photo" style="display: none">
+	<form method="post" action="PhotoServlet" id="photoUpload" name="photoUpload" enctype="multipart/form-data">
+	<input type="hidden" name="att_id" id="attId">
+	<input type="hidden" name="uri" id="uri" value="${pageContext.request.requestURI}">
+	<input type="file" name="imgs" id="imgs" style="display: inline;">
+	<input type="button" id="photoSubmit" value="上傳檔案" style="display: inline;">
+	</form>
+	</div>
 </div>
 
-
-<!-- 	<script src="js/jquery-3.1.0.min.js"></script> -->
-<!-- 	<script src="js/bootstrap.min.js"></script> -->
-
 <script type="text/javascript">
-	var coder, map, marker, checkTrigger, lastValue = "";
-	var regionList;
+		var coder, map, marker, checkTrigger, lastValue = "";
+		var regionList;
 
-	function initMap() {
-		var initPos = new google.maps.LatLng(25.042485, 121.543543);
-		coder = new google.maps.Geocoder();
-		map = new google.maps.Map(document.getElementById('mapPreview'), {
-			center : initPos,
-			zoom : 15,
-			scrollwheel : false
-		});
-		marker = new google.maps.Marker({
-			map : map,
-			position : initPos,
-			draggable : true
-		});
-		marker.addListener("position_changed", function() {
-			document.getElementById("att_lat").value = marker.getPosition()
-					.lat();
-			document.getElementById("att_lng").value = marker.getPosition()
-					.lng();
-		});
-		document.getElementById("att_name").addEventListener("input", queryMap);
-		document.getElementById("att_addr").addEventListener("input", queryMap);
-	}
-	function queryMap() {
-		if (lastValue != this.value) {
-			lastValue = this.value;
-			clearTimeout(checkTrigger);
-			checkTrigger = setTimeout(function() {
-				coder.geocode({
-					address : lastValue
-				}, function(r, s) {
-					if (s === google.maps.GeocoderStatus.OK) {
-						map.panTo(r[0].geometry.location);
-						marker.setPosition(r[0].geometry.location);
-					}
-				});
-			}, 300);
+		function initMap() {
+			var initPos = new google.maps.LatLng(25.042485, 121.543543);
+			coder = new google.maps.Geocoder();
+			map = new google.maps.Map(document.getElementById('mapPreview'), {
+				center : initPos,
+				zoom : 15,
+				scrollwheel : false
+			});
+			marker = new google.maps.Marker({
+				map : map,
+				position : initPos,
+				draggable : true
+			});
+			marker.addListener("position_changed", function() {
+				document.getElementById("att_lat").value = marker.getPosition()
+						.lat();
+				document.getElementById("att_lng").value = marker.getPosition()
+						.lng();
+			});
+			document.getElementById("att_name").addEventListener("input",
+					queryMap);
+			document.getElementById("att_addr").addEventListener("input",
+					queryMap);
 		}
-	}
-
-	$(function() {
-		$.get("RegionServlet").done(
-				function(list) {
-					regionList = list;
-					var frag = document.createDocumentFragment();
-					for (var i = 1; i < list.length; i++)
-						frag.appendChild(new Option(list[i].region_name,
-								list[i].region_id));
-					$("#region_id").append(frag);
-				}).fail(function(xhr) {
-			console.log("Get region list unsuccessful.");
-		});
-
-		$('#att_price').change(function() {
-			if ($(this).val() % 1 != 0) {
-				console.log('attPrice is not a integer.');
+		function queryMap() {
+			if (lastValue != this.value) {
+				lastValue = this.value;
+				clearTimeout(checkTrigger);
+				checkTrigger = setTimeout(function() {
+					coder.geocode({
+						address : lastValue
+					}, function(r, s) {
+						if (s === google.maps.GeocoderStatus.OK) {
+							map.panTo(r[0].geometry.location);
+							marker.setPosition(r[0].geometry.location);
+						}
+					});
+				}, 300);
 			}
-		});
+		}
 
-		$("#btnSave").click(function() {
-			var errMsgSpan = $('form[name="addAtt"] span');
-			$('form[name="addAtt"] span').remove();
-			var form = $(document.addAtt).serializeArray(), json = {};
-			for (var i = 0; i < form.length; i++) {
-				if (form[i].value.length > 0) {
-					json[form[i].name] = form[i].value;
+			var att_id;
+		$(function() {
+			$.get("RegionServlet").done(
+					function(list) {
+						regionList = list;
+						var frag = document.createDocumentFragment();
+						for (var i = 1; i < list.length; i++)
+							frag.appendChild(new Option(list[i].region_name,
+									list[i].region_id));
+						$("#region_id").append(frag);
+					}).fail(function(xhr) {
+				console.log("Get region list unsuccessful.");
+			});
+			
+			$('#att_price').change(function() {
+				if ($(this).val() % 1 != 0) {
+					console.log('attPrice is not a integer.');
 				}
-			}
-			json["regionVO"] = regionList[json.region_id];
+			});
 
-			$.post("AttServlet", JSON.stringify(json)).done(function(data) {
-				$.each(data, function(errAtt, errMsg) {
-					if (errMsg == "新增成功") {
-						document.addAtt.reset();
-						$('form[name="addAtt"] span').remove();
+			$("#btnSave").click(function() {
+				var errMsgSpan = $('form[name="addAtt"] span');
+				 $('form[name="addAtt"] span').remove();
+				var form = $(document.addAtt).serializeArray(), json = {};
+				for (var i = 0; i < form.length; i++) {
+					if (form[i].value.length > 0) {
+						json[form[i].name] = form[i].value;
 					}
-					var errSpan = document.createElement("span");
-					var errText = document.createTextNode(errMsg);
-					var errId = 'err' + errAtt;
-					errSpan.appendChild(errText);
-					errSpan.setAttribute("style", "color:red");
-					errSpan.setAttribute("id", errId);
-					$('#' + errId).remove();
-					$('#' + errAtt).after(errSpan);
+				}
+				json["regionVO"] = regionList[json.region_id];
+
+				$.post("AttServlet", JSON.stringify(json)).done(function(data) {
+					$.each(data, function(errAtt, errMsg) {
+						if (errMsg == "新增成功") {
+							 $('form[name="addAtt"] span').remove();
+						}
+						var errSpan = $("<span/>").text(errMsg);
+// 						var errText = document.createTextNode(errMsg);
+						var errId = 'err' + errAtt;
+// 						errSpan.appendChild(errText);
+						errSpan.attr("style", "color:red");
+						errSpan.attr("id", errId);
+						
+						$('#' + errId).remove();
+						$('#' + errAtt).after(errSpan);
+						
+						if(errAtt=="att_id")
+						{
+// 							console.log(errMsg[0]);
+							$("#attId").val(errMsg[0]);
+							$("#photo").css("display","initial");
+ 						}
+					});
+					console.log("200.");
+					
+// 					$('#fileupload').fileupload({
+// 						type:'post',						
+// 						dataType: 'json',
+// 						url:"PhotoServlet?att_id=" + att_id,
+// 						limitMultiFileUploads:1,
+// 						limitMultiFileUploadSize:5000000,
+// 						replaceFileInput:false,
+// 						singleFileUploads:true,
+// 						add:function(e, data){
+// 							$("#upload").off('click').one('click',function(){
+// 								data.submit();
+// // 								document.addAtt.reset();
+// 							});
+// 						}
+// 					});
+				}).fail(function(xhr) {
+					console.log("ERR.");
 				});
-				console.log("200.");
-			}).fail(function(xhr) {
-				console.log("ERR.");
+			});
+			$("#btnReset").click(function() {
+				document.addAtt.reset();
+				 $('form[name="addAtt"] span').remove();
+			});
+			$("#photoSubmit").click(function(){
+				$("#photoUpload").submit();
 			});
 		});
-		$("#btnReset").click(function() {
-			document.addAtt.reset();
-			$('form[name="addAtt"] span').remove();
-		});
-		
-		
-	});
-</script>
+	</script>
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&callback=initMap"
 	async defer></script>
