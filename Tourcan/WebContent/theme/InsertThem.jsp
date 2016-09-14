@@ -15,14 +15,7 @@
 </head>
 <body>
 <div class="container">
-	<div>
-		<div>
-<!-- 			<input type="button" value="New Theme" id="but1" />  -->
-<!-- 			<input type="button" value=" New Response" id="but2" /> -->
-		</div>
-	</div>	
 	<div>	
-<!-- 		<form id="postForm" action="ThemeServlet" method="post"> -->
 		<form name="addTheme">
 			<div class="row">
 				<div  class="col-sm-6 col-sm-offset-3">
@@ -42,12 +35,6 @@
 							id="mem_uid" name="mem_uid" class="form-control"
 							placeholder="會員Id" >
 					</div>
-<!-- 					<div class="form-group"> -->
-<!-- 						<label for="themeCatalog">catalog</label> <input type="number" -->
-<!-- 							id="theme_catalog" name="theme_catalog" class="form-control" -->
-<!-- 							placeholder="catalog" min=1> -->
-<!-- <!-- 							<input type="hidden" name="action" value="qq"> -->
-<!-- 						</div> -->
 				
 				</div>
 			</div>
@@ -58,7 +45,6 @@
 
 			</div>
 			  
-<!-- 			<button id="save" class="btn btn-primary"  type="submit">Save </button> -->
 			<div class="form-inline">
 				<div class="col-md-3">
 					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/listAllTheme.jsp'">回到所有主題</button>
@@ -67,10 +53,6 @@
 					<button type="button" class="btn btn-success form-control" id="btnInsert">確認新增</button>
 				</div>
 			</div>
-<!-- 			<div class="col-md-3"> -->
-<!-- 				<button id="cancel" class="btn btn-danger form-control"  type="button">Cancel</button> -->
-<!-- 			</div> -->
-<!-- 		</form> -->
 		<div>
 			<div id="result"></div>
 		</div>
@@ -113,7 +95,6 @@
 					        $( "#theme_article" ).remove();
 							
 						}
-// 						console.log("errMsg"+errMsg)
 						var errSpan = document.createElement("span");
 						var errText = document.createTextNode(errMsg);
 						var errId = 'err' + errAtt;
@@ -125,14 +106,11 @@
 					});
 					console.log("200.");
 					var makrup = $('#theme_article').summernote('code');
-// 					$('#theme_article').summernote('destroy');
-				
 					
 				}).fail(function(xhr) {
 					console.log("ERR.");
 				});
 			});
-	 
 	 });
 	 
 	 
@@ -146,13 +124,7 @@
 		  $('.theme_article').summernote('destroy');
 		};
 	
-	
-	
-	
 	</script>
-	
-	
-	
 	
 </body>
 </html>

@@ -42,10 +42,8 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 		<table  class="table table-hover">
 				<thead >
 					<tr class="success"  >
-<!-- 						<th>ThemeID</th>				 -->
 						<th class="col-md-4">主題:</th>
 						<th class="col-md-3">memUID</th>
-<!-- 						<th class="col-md-3">分類:</th> -->
 						
 					</tr>
 				</thead>
@@ -65,37 +63,22 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 			</tbody>
 		</table>
 	
-<!-- 		<div id="div1"> -->
-<!-- 		<!-- <textarea id="testa1"> --> 
-<%-- 			<%=themeVO1.getTheme_article()%>	 --%>
-<!-- 		<!-- </textarea> --> 
-		
-<!-- 		</div> -->
 	</div>
-<!--  <input type="button" value="回首頁" onclick="javascript:location.href='../index.jsp'"/> -->
 
 <br>
 	<div >
-	<%--  <p>Theme_id: <%=respVO1.getTheme_id()%></p> --%>
-	<%--  <p>topic:  <%=respVO1.getResp_topic()%></p> --%>
-	<%--  <p>Mem_uid: <%=respVO1.getMem_uid()%></p> --%>
-	<%--  <p>respid: <%=respVO1.getResp_id()%></p> --%>
 	 <table class="table table-hover" >
 		 <c:forEach var="RespVO" items="${list}">
 		 	<thead style="padding: 10px">
 					<tr  class="success">
-<!-- 						<th>resp_id</th> -->
 						<th>回覆標題</th>
 						<th>mem_uid</th>
-<!-- 						<th>theme_id</th>										 -->
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-	<%-- 					<td>${RespVO.resp_id}</td> --%>
 						<td>${RespVO.resp_topic}</td>
 						<td>${RespVO.mem_uid}</td>
-	<%-- 					<td>${RespVO.theme_id}</td> --%>
 				 	</tr>	
 						<tr class="warning">
 							<th colspan="4"> 回覆內容:</th>	
@@ -161,67 +144,55 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 
  <script type="text/javascript">
  
-	//----------summernote---------------
-	 $('#resp_article').summernote({
-		 height:200,
-		 lang: 'zh-TW', // default: 'en-US'
-		 placeholder:"請在此編輯內容"
-		 });
-	 $('#div2').summernote('code');
-	//----------End---------------------
-	 $(function() {
-			
-		 $("#btnInsert").click(function() {
-				var errMsgSpan = $('form[name="addResp"] span');
-				errMsgSpan.remove();
-				var form = $(document.addResp).serializeArray(), json = {};
-				for (var i = 0; i < form.length; i++) {
-					
-					if (form[i].value.length > 0) {
-						json[form[i].name] = form[i].value;
-					}
-				}
-					console.log(json);
-				$.post("../resp/RespServlet", JSON.stringify(json)).done(function(data) {
-					$.each(data, function(errAtt, errMsg) {
-						console.log(errMsg);
-						if (errMsg == "success") {
-							document.addResp.reset();
-							errMsgSpan.remove();
-							window.location.reload();
+		//----------summernote---------------
+		 $('#resp_article').summernote({
+			 height:200,
+			 lang: 'zh-TW', // default: 'en-US'
+			 placeholder:"請在此編輯內容"
+			 });
+		 $('#div2').summernote('code');
+		//----------End---------------------
+		 $(function() {
+				
+			 $("#btnInsert").click(function() {
+					var errMsgSpan = $('form[name="addResp"] span');
+					errMsgSpan.remove();
+					var form = $(document.addResp).serializeArray(), json = {};
+					for (var i = 0; i < form.length; i++) {
+						
+						if (form[i].value.length > 0) {
+							json[form[i].name] = form[i].value;
 						}
-						var errSpan = document.createElement("span");
-						var errText = document.createTextNode(errMsg);
-						var errId = 'err' + errAtt;
-						errSpan.appendChild(errText);
-						errSpan.setAttribute("style", "color:red");
-						errSpan.setAttribute("id", errId);
-						$('#' + errId).remove();
-						$('#' + errAtt).after(errSpan);
+					}
+						console.log(json);
+					$.post("../resp/RespServlet", JSON.stringify(json)).done(function(data) {
+						$.each(data, function(errAtt, errMsg) {
+							console.log(errMsg);
+							if (errMsg == "success") {
+								document.addResp.reset();
+								errMsgSpan.remove();
+								window.location.reload();
+							}
+							var errSpan = document.createElement("span");
+							var errText = document.createTextNode(errMsg);
+							var errId = 'err' + errAtt;
+							errSpan.appendChild(errText);
+							errSpan.setAttribute("style", "color:red");
+							errSpan.setAttribute("id", errId);
+							$('#' + errId).remove();
+							$('#' + errAtt).after(errSpan);
+						});
+						console.log("200.");
+						var makrup = $('#resp_article').summernote('code');
+					}).fail(function(xhr) {
+						console.log("ERR.");
 					});
-					console.log("200.");
-					var makrup = $('#resp_article').summernote('code');
-// 					$('#theme_article').summernote('destroy');
-// 					$( "#theme_article" ).remove();
-				}).fail(function(xhr) {
-					console.log("ERR.");
+						
 				});
-					
-			});
+		 
+		 });
+	
+	 </script>
 	 
-	 });
-
-
-
-
-
-
-
- 
- </script>
- 
- 
- 
- 
-</body>
+	</body>
 </html>

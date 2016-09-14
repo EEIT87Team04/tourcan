@@ -26,10 +26,6 @@
 			<h1>討論區主題列表</h1>
 		</div>
 		
-<!-- 		<div class="col-md-4 "> -->
-			
-		
-<!-- 		</div> -->
 		<div class="col-md-6 ">
 			<form class=form-inline>
 				<div class="col-md-8">
@@ -55,9 +51,6 @@
 				<th>id</th>				
 				<th>topic</th>
 				<th>memUID</th>
-<!-- 				<th>catalog</th> -->
-<!-- 				<th>修改</th> -->
-<!-- 				<th>刪除</th>	 -->
 		
 			</tr>
 		</thead>
@@ -79,23 +72,6 @@
 					</FORM>
 					</td>
 					<td>${ThemeVO.mem_uid}</td>
-<%-- 					<td>${ThemeVO.theme_catalog}</td> --%>
-					
-	<!-- 				<td> -->
-	<!-- 				<FORM METHOD="post" ACTION="ThemeServlet"> -->
-	<!-- 					<input type="submit" value="修改"> -->
-	<%-- 					 <input type="hidden"name="theme_id" value="${ThemeVO.theme_id}"> --%>
-	<!-- 					  <input type="hidden"name="action" value="getOne_For_Update"> -->
-	<!-- 				</FORM>  -->
-	<!-- 				</td> -->
-		<!-- 			<td> -->
-		<!-- 			<FORM METHOD="post" ACTION="mem.do" > -->
-		<!-- 				 <input	type="submit" value="刪除"    onclick="toDelete()" /> -->
-	<%-- 					 <input type="hidden" name="memno" value="${ThemeVO.theme_id}">  --%>
-		<!-- 				  <input type="hidden"name="action" value="delete"> -->
-		<!-- 				   <input type="hidden" onclick="toDelete()" > -->
-		<!-- 			</FORM> -->
-		<!-- 			</td> -->
 					
 				</tr>
 			</c:forEach>
@@ -108,13 +84,11 @@
 
 $(function(){
 	$("#btnTopicCheck").click(function() {
-// 		resetErrors();
 		var theme_topic = $("#theme_topic").val();
 		$('#themeList>tbody').empty();
 		$("#d1").empty();
 	
 		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic},function(data){
-// 			$("#errid").remove();
 			var myBody = $('#themeList>tbody');
 			$.each(data,function(themeName,themeValue){
 				if(themeName=="themeTopic"){
@@ -134,7 +108,6 @@ $(function(){
 						var form  = $("<form/>").attr("METHOD","post").attr("ACTION","ThemeServlet").append([input1,input2,input3]);
 						var cell5 = $("<td/>").append([form])
 						var cell3 = $("<td></td>").text(themeValue.mem_uid);
-// 						var cell4 = $("<td></td>").text(themeValue.theme_catalog);						
 						var row = $("<tr></tr>").append([cell1,cell5,cell3]);
 						myBody.append(row);
 					}
