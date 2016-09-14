@@ -133,14 +133,17 @@ public class AttDAO implements AttDAO_interface {
 	public List<AttVO> findByRegionId(Integer region_id) {
 		List<AttVO> list = null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
 		try {
-			session.beginTransaction();
+//			session.beginTransaction();
 			Query query = session.createQuery("FROM AttVO WHERE region_id=:region_id");
 			query.setParameter("region_id", region_id);
 			list = query.list();
-			session.beginTransaction().commit();
+			tx.commit();
+//			session.beginTransaction().commit();
 		} catch (RuntimeException e) {
-			session.beginTransaction().rollback();
+			tx.rollback();
+//			session.beginTransaction().rollback();
 			throw e;
 		}
 		return list;
