@@ -18,6 +18,7 @@
 
     <!-- Custom CSS -->
     <link href="/Tourcan/css/stylish-portfolio.css" rel="stylesheet">
+    <link href="/Tourcan/css/tourcanFront.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -31,7 +32,6 @@
     <![endif]-->
 
 </head>
-
 <body>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -67,8 +67,8 @@
     <!-- Header -->
     <header id="top" class="header">
         <div class="text-vertical-center">
-            <h1>Start Bootstrap</h1>
-            <h3>Free Bootstrap Themes &amp; Templates</h3>
+            <h1 class="frontText">Start Bootstrap</h1>
+            <h3 class="frontText">Free Bootstrap Themes &amp; Templates</h3>
             <br>
             <a href="#about" class="btn btn-dark btn-lg">Find Out More</a>
         </div>
