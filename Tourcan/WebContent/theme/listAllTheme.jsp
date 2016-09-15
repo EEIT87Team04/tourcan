@@ -7,6 +7,7 @@
 	List<ThemeVO> list =tsv.getAll();
 	pageContext.setAttribute("list",list);
 
+		
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -58,17 +59,19 @@
 			<c:forEach var="ThemeVO" items="${list}">
 				<tr >
 					<td >
-						<FORM METHOD="post" ACTION="ThemeServlet">
+						<FORM METHOD="get" ACTION="ThemeServlet">
 						<input class="btn btn-primary" type="submit" value="${ThemeVO.theme_id}">
 						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">
-						<input type="hidden"name="action" value="getOne_For_Display">				
+						<input type="hidden"name="mem_uid" value="${ThemeVO.mem_uid}">
+						<input type="hidden"name="method" value="getOne_For_Display">				
 						</FORM>
 					 </td>
 					 <td>
-						<FORM METHOD="post" ACTION="ThemeServlet">
+						<FORM METHOD="get" ACTION="ThemeServlet">
 						<input class="btn btn-default" type="submit" value="${ThemeVO.theme_topic}">
 						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">
-						<input type="hidden"name="action" value="getOne_For_Display">
+						<input type="hidden"name="mem_uid" value="${ThemeVO.mem_uid}">
+						<input type="hidden"name="method" value="getOne_For_Display">
 					</FORM>
 					</td>
 					<td>${ThemeVO.mem_uid}</td>

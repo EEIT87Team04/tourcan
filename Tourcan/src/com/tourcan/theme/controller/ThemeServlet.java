@@ -13,12 +13,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tourcan.mem.controller.MemService;
+import com.tourcan.mem.model.MemVO;
 import com.tourcan.resp.model.RespService;
 import com.tourcan.resp.model.RespVO;
 import com.tourcan.theme.model.ThemeService;
@@ -38,17 +41,68 @@ public class ThemeServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/json");
-		BufferedReader br = req.getReader();
+//		BufferedReader br = req.getReader();
 //		StringBuffer sb = new StringBuffer(128);
 //		String json;
 //		while ((json = br.readLine()) != null)
 //			sb.append(json);
 //		json = sb.toString();
 //		System.out.println(json);
+		String method = req.getParameter("method");
 		JSONObject err = new JSONObject();
-		// ----------------Query one by attId----------------
-
 		String thstr = req.getParameter("theme_id");
+		String muid =req.getParameter("mem_uid");
+		// ----------------Query one by attId----------------
+		if(method.equals("getOne_For_Display")){
+//			System.out.println(thstr);
+//			System.out.println(muid);
+			try {
+
+
+				Integer memno = null;
+				try {
+					memno = new Integer(thstr);
+				} catch (Exception e) {
+					throw new Exception();
+				}
+				// Send the use back to the form, if there were errors
+				
+				
+				RespService rsv = new RespService();
+				List<RespVO> resVO1 = rsv.findByThID(memno);
+				
+//				MemService msv =new MemService();
+				Response r = new MemService().queryByUid(muid);
+				
+				// System.out.println("resVO1="+resVO1);
+				ThemeService tsv = new ThemeService();
+				ThemeVO themeVO1 = tsv.findById(memno);
+				if (themeVO1 == null) {
+				}
+				// Send the use back to the form, if there were errors
+
+				// ***************************3.�d�ߧ���,�ǳ����(Send the
+				// Success view)*************//*
+//				System.out.println("aaaaaaaaaa"+r);
+				req.setAttribute("list", resVO1);
+				req.setAttribute("data",r.getEntity());
+				req.setAttribute("themeVO", themeVO1); // ��Ʈw���X��empVO����,�s�Jreq
+				String url = "/theme/listOneTheme.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ���\���
+																				// listOneEmp.jsp
+				successView.forward(req, resp);
+
+				// ***************************��L�i�઺���~�B�z*************************************//*
+			} catch (Exception e) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
+				failureView.forward(req, resp);
+			}
+			
+			
+			
+			
+			
+		}else{
 		System.out.println("no1=" + thstr);
 		String th_name = req.getParameter("theme_topic");
 		if (thstr != null) {
@@ -126,7 +180,7 @@ public class ThemeServlet extends HttpServlet {
 			System.out.println(jsonG);
 			resp.getWriter().println(jsonG.toString());
 		}
-
+		}
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -146,86 +200,90 @@ public class ThemeServlet extends HttpServlet {
 		while ((strj = br.readLine()) != null)
 			sb.append(strj);
 		strj = sb.toString();
-//		 System.out.println(strj.length());
+		 System.out.println(strj.length());
 //		 System.out.println("strj"+strj);
-		if (strj.indexOf("getOne") > -1) {
-			System.out.println("000=" + strj);
-			if ( strj.length() <39 &&strj.length()>37) {
-//				System.out.println("1111");
-//				System.out.println(strj.substring(9, 12));
-				n1 = strj.substring(9, 12);
-			} else if(strj.length() <38&&strj.length()>36 ){
-//				System.out.println(strj.substring(9, 11));
-				n1 = strj.substring(9, 11);
-			}else{
-				n1 = strj.substring(9, 10);
-			}
-//			System.out.println("n1:" + n1);
-			{
-//				System.out.println("qqqqqqqqqq");
-				List<String> errorMsgs1 = new LinkedList<String>();
-				// req.setCharacterEncoding("UTF-8");
-				req.setAttribute("errorMsgs", errorMsgs1);
-
-				try {
-
-					String str = n1;
-//					System.out.println("s_id=" + str);
-					if (str == null || (str.trim()).length() == 0) {
-						errorMsgs1.add("error");
-					}
-					// Send the use back to the form, if there were errors
-					if (!errorMsgs1.isEmpty()) {
-						RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
-						failureView.forward(req, resp);
-						return;
-					}
-
-					Integer memno = null;
-					try {
-						memno = new Integer(str);
-					} catch (Exception e) {
-						errorMsgs1.add("error");
-					}
-					// Send the use back to the form, if there were errors
-					if (!errorMsgs1.isEmpty()) {
-						RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
-						failureView.forward(req, resp);
-						return;
-					}
-					RespService rsv = new RespService();
-					List<RespVO> resVO1 = rsv.findByThID(memno);
-					// System.out.println("resVO1="+resVO1);
-					ThemeService tsv = new ThemeService();
-					ThemeVO themeVO1 = tsv.findById(memno);
-					if (themeVO1 == null) {
-						errorMsgs1.add("error");
-					}
-					// Send the use back to the form, if there were errors
-					if (!errorMsgs1.isEmpty()) {
-						RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
-						failureView.forward(req, resp);
-						return;
-					}
-
-					// ***************************3.�d�ߧ���,�ǳ����(Send the
-					// Success view)*************//*
-					req.setAttribute("list", resVO1);
-					req.setAttribute("themeVO", themeVO1); // ��Ʈw���X��empVO����,�s�Jreq
-					String url = "/theme/listOneTheme.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url); // ���\���
-																					// listOneEmp.jsp
-					successView.forward(req, resp);
-
-					// ***************************��L�i�઺���~�B�z*************************************//*
-				} catch (Exception e) {
-					errorMsgs1.add("error:" + e.getMessage());
-					RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
-					failureView.forward(req, resp);
-				}
-			}
-
-		} else {
+//		if (strj.indexOf("getOne") > -1) {
+//			System.out.println("000=" + strj);
+//			if ( strj.length()>37) {
+////				System.out.println("1111");
+////				System.out.println(strj.substring(9, 12));
+//				n1 = strj.substring(9, 12);
+//			} else if(strj.length() <38&&strj.length()>36 ){
+////				System.out.println(strj.substring(9, 11));
+//				n1 = strj.substring(9, 11);
+//			}else{
+//				n1 = strj.substring(9, 10);
+//			}
+////			System.out.println("n1:" + n1);
+//			{
+////				System.out.println("qqqqqqqqqq");
+//				List<String> errorMsgs1 = new LinkedList<String>();
+//				// req.setCharacterEncoding("UTF-8");
+//				req.setAttribute("errorMsgs", errorMsgs1);
+//
+//				try {
+//
+//					String str = n1;
+////					System.out.println("s_id=" + str);
+//					if (str == null || (str.trim()).length() == 0) {
+//						errorMsgs1.add("error");
+//					}
+//					// Send the use back to the form, if there were errors
+//					if (!errorMsgs1.isEmpty()) {
+//						RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
+//						failureView.forward(req, resp);
+//						return;
+//					}
+//
+//					Integer memno = null;
+//					try {
+//						memno = new Integer(str);
+//					} catch (Exception e) {
+//						errorMsgs1.add("error");
+//					}
+//					// Send the use back to the form, if there were errors
+//					if (!errorMsgs1.isEmpty()) {
+//						RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
+//						failureView.forward(req, resp);
+//						return;
+//					}
+//					RespService rsv = new RespService();
+//					List<RespVO> resVO1 = rsv.findByThID(memno);
+//					
+//					MemService msv =new MemService();
+////					MemVO mvo = msv.q
+//					// System.out.println("resVO1="+resVO1);
+//					ThemeService tsv = new ThemeService();
+//					ThemeVO themeVO1 = tsv.findById(memno);
+//					if (themeVO1 == null) {
+//						errorMsgs1.add("error");
+//					}
+//					// Send the use back to the form, if there were errors
+//					if (!errorMsgs1.isEmpty()) {
+//						RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
+//						failureView.forward(req, resp);
+//						return;
+//					}
+//
+//					// ***************************3.�d�ߧ���,�ǳ����(Send the
+//					// Success view)*************//*
+//					req.setAttribute("list", resVO1);
+//					
+//					req.setAttribute("themeVO", themeVO1); // ��Ʈw���X��empVO����,�s�Jreq
+//					String url = "/theme/listOneTheme.jsp";
+//					RequestDispatcher successView = req.getRequestDispatcher(url); // ���\���
+//																					// listOneEmp.jsp
+//					successView.forward(req, resp);
+//
+//					// ***************************��L�i�઺���~�B�z*************************************//*
+//				} catch (Exception e) {
+//					errorMsgs1.add("error:" + e.getMessage());
+//					RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
+//					failureView.forward(req, resp);
+//				}
+//			}
+//
+//		} else {
 			JSONObject checkR = new JSONObject();
 			Timestamp themetime = null;
 			String memUid = null;
@@ -264,7 +322,7 @@ public class ThemeServlet extends HttpServlet {
 				resp.getWriter().println(checkR.toString());
 				e.printStackTrace();
 			}
-		}
+//		}
 		// }
 
 		// if ("getOne_For_Display".equals(action)) String action =

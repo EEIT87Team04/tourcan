@@ -173,7 +173,7 @@
 	<script type="text/javascript">
 		var coder, map, marker, checkTrigger, lastValue = "";
 		var tmp, regionList, hotelList;
-		var serviceProvider = "${contextPath}/api/hotels";
+		var serviceProvider = "${contextPath}/hotels";
 		//var serviceProvider = "HotelServlet";
 		var gmbase = "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&size=640x240&markers=color:blue%7C";
 
@@ -229,6 +229,7 @@
 						contentType : "application/json; charset=UTF-8",
 						dataType : "json"
 					}).done(function(data) {
+						console.log(typeof($(this).attr("data-target")));
 				document.new_data.hotel_id.value = data.hotel_id;
 				document.new_data.hotel_name.value = data.hotel_name;
 				document.new_data.region_id.value = data.region_id;

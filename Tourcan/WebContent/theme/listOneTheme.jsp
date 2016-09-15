@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ page import="com.tourcan.theme.model.*"%>
 <%@ page import="com.tourcan.resp.model.*"%>
+<%@ page import="com.tourcan.mem.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%-- 此頁為script取值 ，應練習改用採用 EL 的寫法取值 --%>
@@ -8,6 +9,7 @@
 <%
 ThemeVO themeVO1 = (ThemeVO) request.getAttribute("themeVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 RespVO respVO1 =(RespVO) request.getAttribute("resVO"); 
+MemVO memVO1 =(MemVO) request.getAttribute("data");
 
 %>
 
@@ -36,7 +38,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 			<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">發表新主題</button>
 <%-- 		<p><%=request.getContextPath()%> --%> 
 		</div>
-		
+<%-- 		<p><%=memVO1.getMem_lname() %><%=memVO1.getMem_fname() %></p> --%>
 	</div>
 	<div style="border: solid 1px;">
 		<table  class="table table-hover">
@@ -51,8 +53,8 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 					<tr >
 <%-- 						<td><%=themeVO1.getTheme_id()%></td> --%>
 						<td><%=themeVO1.getTheme_topic()%></td>
-						<td><%=themeVO1.getMem_uid()%></td>				
-<%-- 						<td><%=themeVO1.getTheme_catalog()%></td> --%>
+						<td><%=memVO1.getMem_lname() %><%=memVO1.getMem_fname() %></td>				
+<%-- 						<td><%=themeVO1.getTheme_catalog()%></td> ,<%=memVO1.getMem_fname()  --%>
 					</tr>
 					<tr class="warning">
 						<th colspan="4"> 主題內容:</th>	
@@ -78,7 +80,7 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 				<tbody>
 					<tr>
 						<td>${RespVO.resp_topic}</td>
-						<td>${RespVO.mem_uid}</td>
+<%-- 						<td>${RespVO.mem_uid}</td> --%>
 				 	</tr>	
 						<tr class="warning">
 							<th colspan="4"> 回覆內容:</th>	
