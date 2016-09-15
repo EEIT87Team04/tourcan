@@ -5,3 +5,17 @@
 	color:white;
 	text-shadow: 4px 4px rgba(0,0,0,0.35);
 }
+
+.front-bg-color{
+	background: url(/Tourcan/images/front/icons/front_iconbg.png) no-repeat;
+	background-color: rgb(153,69,36);	
+}
+.front_icon{
+	width: 76px;
+	height:76px;
+}
+.front_icon:hover{
+	width: 96px;
+	height: 96px;
+}
+

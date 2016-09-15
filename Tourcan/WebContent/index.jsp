@@ -49,7 +49,7 @@
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
             <li class="sidebar-brand">
-                <a href="#top" onclick=$("#menu-close").click();>Start Bootstrap</a>
+                <a href="#top" onclick=$("#menu-close").click();>Tourcan</a>
             </li>
             <li>
                 <a href="#top" onclick=$("#menu-close").click();>Home</a>
@@ -61,7 +61,7 @@
                 <a href="#services" onclick=$("#menu-close").click();>Services</a>
             </li>
             <li>
-                <a href="#portfolio" onclick=$("#menu-close").click();>Portfolio</a>
+                <a href="#portfolio" onclick=$("#menu-close").click();>Recommend</a>
             </li>
             <li>
                 <a href="#contact" onclick=$("#menu-close").click();>Contact</a>
@@ -97,7 +97,7 @@
 
     <!-- Services -->
     <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
-    <section id="services" class="services bg-primary">
+    <section id="services" class="services front-bg-color">
         <div class="container">
             <div class="row text-center">
                 <div class="col-lg-10 col-lg-offset-1">
@@ -107,53 +107,49 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-cloud fa-stack-1x text-primary"></i>
+                                <a href="#"><img src="/Tourcan/images/front/icons/map-location.png"  class="front_icon"></a>
                             </span>
                                 <h4>
-                                    <strong>Service Name</strong>
+                                    <strong class="dath7 frontIcon">景　　點</strong>
                                 </h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <a href="#" class="btn btn-light">Learn More</a>
+                                <p class="dath7" style="text-align:center;">好玩有趣的台灣景點一覽無遺，<br>讓您輕鬆玩遍全台灣！</p>
+<!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-compass fa-stack-1x text-primary"></i>
+                                <a href="#"><img src="/Tourcan/images/front/icons/windows.png" class="front_icon"></a>
                             </span>
                                 <h4>
-                                    <strong>Service Name</strong>
+                                    <strong class="dath7">住　　宿</strong>
                                 </h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <a href="#" class="btn btn-light">Learn More</a>
+                                <p class="dath7" style="text-align:center;">找一個小憩的美好空間，<br>蓄滿精力再出發！</p>
+<!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-flask fa-stack-1x text-primary"></i>
+                                <a href="#"><img src="/Tourcan/images/front/icons/food.png" class="front_icon"></a>
                             </span>
                                 <h4>
-                                    <strong>Service Name</strong>
+                                    <strong class="dath7" >美　　食</strong>
                                 </h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <a href="#" class="btn btn-light">Learn More</a>
+                                <p class="dath7" style="text-align:center;">台灣佳餚吃不完，<br>藏身巷弄中的美食也不要錯過！</p>
+<!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-shield fa-stack-1x text-primary"></i>
+                               <a href="#"><img src="/Tourcan/images/front/icons/suitcase.png" class="front_icon"></a>
                             </span>
                                 <h4>
-                                    <strong>Service Name</strong>
+                                     <strong class="dath7" >規劃行程</strong>
                                 </h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <a href="#" class="btn btn-light">Learn More</a>
+                                <p class="dath7" style="text-align:center;">美好的旅程自己描繪，<br>現在就開始！</p>
+<!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
                             </div>
                         </div>
                     </div>
@@ -166,12 +162,56 @@
         <!-- /.container -->
     </section>
 
+
+<!-- commercial slide -->
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="/Tourcan/images/front/taiwan1.jpg">
+      <div class="carousel-caption">
+        1
+      </div>
+    </div>
+    <div class="item">
+      <img src="/Tourcan/images/front/taiwan2.jpg">
+      <div class="carousel-caption">
+        2
+      </div>
+    </div>
+    <div class="item">
+      <img src="/Tourcan/images/front/taiwan3.jpg">
+      <div class="carousel-caption">
+        3
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
     <!-- Callout -->
-    <aside class="callout">
-        <div class="text-vertical-center">
-            <h1>Vertically Centered Text</h1>
-        </div>
-    </aside>
+<!--     <aside class="callout"> -->
+<!--         <div class="text-vertical-center frontText"> -->
+<!--             <h1 class="dath7">Tourcan 熱門推薦</h1> -->
+<!--         </div> -->
+<!--     </aside> -->
 
     <!-- Portfolio -->
     <section id="portfolio" class="portfolio">
@@ -344,6 +384,7 @@
         that.off('mouseleave', onMapMouseleaveHandler);
         that.find('iframe').css("pointer-events", "none");
     }
+    
     var onMapClickHandler = function(event) {
             var that = $(this);
             // Disable the click handler until the user leaves the map area
@@ -353,6 +394,7 @@
             // Handle the mouse leave event
             that.on('mouseleave', onMapMouseleaveHandler);
         }
+    
         // Enable map zooming with mouse scroll when the user clicks the map
     $('.map').on('click', onMapClickHandler);
     </script>
