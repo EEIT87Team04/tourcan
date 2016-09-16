@@ -86,6 +86,26 @@
 <script type="text/javascript">
 
 $(function(){
+	var serviceProvider = "${contextPath}/members";
+	var umd = "t3L6KuZlh4W4X3IIzexqIzTFtGh1";
+	console.log(serviceProvider);
+	$.ajax(
+			{
+				url:serviceProvider+"/t3L6KuZlh4W4X3IIzexqIzTFtGh1",
+				method:"Get",
+				contentType:"application/json ; charset=UTF-8",
+// 				data:{uid:"t3L6KuZlh4W4X3IIzexqIzTFtGh1"},
+				dataType:"json"	,
+				success:function(data){
+							console.log(data) 
+// 							console.log("index"+attName)
+// 							console.log(attValue)
+						
+				}
+						
+	})
+		
+
 	$("#btnTopicCheck").click(function() {
 		var theme_topic = $("#theme_topic").val();
 		$('#themeList>tbody').empty();
