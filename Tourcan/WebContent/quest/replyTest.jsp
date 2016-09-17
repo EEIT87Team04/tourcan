@@ -40,7 +40,7 @@
 	font-size: 18px;
 }
 
-#div_quest_quiz{
+#div_quest_reply{
     margin: auto;
     width: 46%;
 	border: 1px solid #d4d4d4;
@@ -54,7 +54,7 @@
 	font-size: 18px;
 }
 
-#quest_quiz{
+#quest_reply{
     height: 130px;
     line-height: 18px;
     display: block;
@@ -80,25 +80,25 @@
 		<form name="addQuest">
 			<div >
 				<div>
-					<h1 id=div_title>Please Send Your Question To Us</h1>
+					<h1 id=div_title>Please Reply To Users</h1>
 				</div>
 			</div>
 			<div>
 				<div >
 				    <div >
-<!-- 						<div class="form-group" id=div_questCatalog> -->
-<!-- 				           <label for="questCatalog">問題分類:</label> <input type="number" -->
-<!-- 					        class="form-control" id="quest_catalog" name="quest_catalog" placeholder="問題分類" min=1> -->
-<!-- 			            </div> -->
-<!-- 			            <div class="form-group" id=div_quest_topic> -->
-<!-- 				           <label for="pwd">主題:</label> <input type="text" -->
-<!-- 					       class="form-control" id="quest_topic" name="quest_topic" placeholder="問題名稱"> -->
-<!-- 			            </div> -->
-<!-- 			            <div class="form-group" id=div_quest_quiz> -->
-<!-- 				           <label for="questQuiz">問題內容:</label> <textarea -->
-<!-- 					        class="form-control"  id="quest_quiz" name="quest_quiz" placeholder="問題內容"></textarea> -->
-<!-- 			            </div> -->
-<!-- 					</div> -->
+						<div class="form-group" id=div_questCatalog>
+				           <label for="questCatalog">問題分類:</label> <input type="number"
+					        class="form-control" id="quest_catalog" name="quest_catalog" placeholder="問題分類" min=1>
+			            </div>
+			            <div class="form-group" id=div_quest_topic>
+				           <label for="questTopic">主題:</label> <input type="text"
+					       class="form-control" id="quest_topic" name="quest_topic" placeholder="問題名稱">
+			            </div>
+			            <div class="form-group" id=div_quest_reply>
+				           <label for="questReply">回覆內容:</label> <textarea
+					        class="form-control"  id="quest_reply" name="quest_reply" placeholder="回覆內容"></textarea>
+			            </div>
+					</div>
 
 
 <!-- 						<div > -->
@@ -107,18 +107,18 @@
 <!-- 								placeholder="會員Id" min=-1> -->
 <!-- 						</div> -->
 					
-					<div >
-						<div >
-							<label for="questReply">回覆內容</label> <input type="text"
-								 id="quest_reply" name="quest_reply"
-								placeholder="回覆內容">
-						</div>
-						<div >
-							<label for="adminId">管理員Id</label> <input type="text"
-								 id="admin_id" name="admin_id"
-								placeholder="管理員Id" min=-1>
-						</div>
-					</div>
+<!-- 					<div > -->
+<!-- 						<div > -->
+<!-- 							<label for="questReply">回覆內容</label> <input type="text" -->
+<!-- 								 id="quest_reply" name="quest_reply" -->
+<!-- 								placeholder="回覆內容"> -->
+<!-- 						</div> -->
+<!-- 						<div > -->
+<!-- 							<label for="adminId">管理員Id</label> <input type="text" -->
+<!-- 								 id="admin_id" name="admin_id" -->
+<!-- 								placeholder="管理員Id" min=-1> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 
 					<div >
 						<div id=div_btnInsert>
@@ -135,6 +135,7 @@
 			<div >
 				<div  id="result"></div>
 			</div>
+			<input type="hidden" method="insertQuest" />
 		</form>
 	</div>
 
@@ -154,10 +155,10 @@
 				}
 				console.log(json);
 			}
-			$.post("QuestServlet", JSON.stringify(json)).done(function(data) {
+			$.post("ReplyServlet", JSON.stringify(json)).done(function(data) {
 				console.log(data);
 				$.each(data, function(errTrip, errMsg) {
-					if (errMsg == "新增成功") {
+					if (errMsg == "回覆成功") {
 						document.addQuest.reset();
 						errMsgSpan.remove();
 					}

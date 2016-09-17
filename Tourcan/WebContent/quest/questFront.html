@@ -4,6 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <title>問題單</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
@@ -162,11 +165,14 @@
 	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
-
-	<div class="container">
+    <div class="container">
 		<div class="page-header">
 			<h1 id="timeline">問題單</h1>
+			<button type="button" class="btn btn-primary" id="quest_getAll">查詢全部</button>
+            <button type="button" class="btn btn-info" id="quest_cancel">取消查詢</button>
 		</div>
+	</div>
+	<div class="container" id="replyOne">
 		<ul class="timeline">
 			<li>
 				<div class="timeline-badge">
@@ -226,6 +232,41 @@
 			
 		</ul>
 	</div>
+	
+	<script type="text/javascript">
+	$(function(){
+	    $('#replyOne').hide();	
+		$("#quest_getAll").click(function() {
+			        $('#replyOne').show();
+					$('#replyOne>tbody').empty();
+					var questId = 1; 
+					$.get(("QuestServlet"),{"questId":questId,"method":"getOneById"},function(data){
+						$.each(data,function(questName,questValue){
+// 								$("#"+questName).val(questValue);
+                            console.log(questName);
+							if(questName=="quest_reply"){
+								console.log(questValue);
+							}
+						})
+					})
+		
+		})
+		
+		$("#quest_cancel").click(function() {
+			$('#replyAll').hide();
+			
+			
+			
+			
+			
+		})
+		
+		
+		
+		})
+		</script>
+
 
 </body>
 </html>
+

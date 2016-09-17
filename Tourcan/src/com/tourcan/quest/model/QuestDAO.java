@@ -84,6 +84,26 @@ public class QuestDAO implements QuestDAO_interface {
 		}
 		return list;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<QuestVO> findByUid(Integer mem_uid) {
+		List<QuestVO> list=null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		String likeString="%" + mem_uid + "%";
+		try {
+			session.beginTransaction();
+			String queryByUid="From QuestVO WHERE mem_uid like :mem_uid";
+			Query query=session.createQuery(queryByUid);
+			query.setParameter("mem_uid", likeString);
+			list=query.list();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

@@ -91,7 +91,7 @@
 					        class="form-control" id="quest_catalog" name="quest_catalog" placeholder="問題分類" min=1>
 			            </div>
 			            <div class="form-group" id=div_quest_topic>
-				           <label for="pwd">主題:</label> <input type="text"
+				           <label for="questTopic">主題:</label> <input type="text"
 					       class="form-control" id="quest_topic" name="quest_topic" placeholder="問題名稱">
 			            </div>
 			            <div class="form-group" id=div_quest_quiz>
@@ -135,6 +135,7 @@
 			<div >
 				<div  id="result"></div>
 			</div>
+			<input type="hidden" method="insertQuest" />
 		</form>
 	</div>
 

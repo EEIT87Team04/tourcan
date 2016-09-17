@@ -19,11 +19,11 @@ import com.google.gson.Gson;
 import com.tourcan.quest.model.QuestService;
 import com.tourcan.quest.model.QuestVO;
 
-@WebServlet("/quest/QuestServlet")
-public class QuestServlet extends HttpServlet {
+@WebServlet("/quest/ReplyServlet")
+public class ReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public QuestServlet() {
+	public ReplyServlet() {
 		super();
 	}
 
@@ -101,42 +101,7 @@ public class QuestServlet extends HttpServlet {
 				response.getWriter().println(checkResult.toString());
 			}
 		}
-		// ----------------findByUid----------------
 
-//		List<QuestVO> questVO = null;
-
-		if (method.equals("getAllByUid")) {
-			JSONObject checkResult = new JSONObject();
-			Integer memUid = null;
-			
-			try {
-				String id = request.getParameter("memUid");
-				// System.out.println(id);
-				if (id == null || id.trim().length() == 0) {
-					checkResult.append("checkResult", "請輸入memUid");
-				} else {
-					try {
-						memUid = new Integer(id);
-					} catch (Exception e) {
-						// e.printStackTrace();
-						checkResult.append("checkResult", "問題ID格式不正確");
-					}
-				}
-				QuestService questSvc = new QuestService();
-				questVO = questSvc.findByUid(memUid);
-				if (questVO != null) {
-					JSONObject obj = new JSONObject(questVO);
-					response.getWriter().println(obj.toString());
-				} else {
-					checkResult.append("checkResult", "查無資料");
-					response.getWriter().println(checkResult.toString());
-				}
-			} catch (Exception e) {
-				checkResult.append("false", "查詢失敗");
-				response.getWriter().println(checkResult.toString());
-			}
-		}
-		
 		// ----------------getAll----------------
 
 		if (method.equals("getAll")) {
@@ -179,6 +144,7 @@ public class QuestServlet extends HttpServlet {
 		JSONObject checkResult = new JSONObject(); // checking result
 		QuestVO questVO = null;
 		try {
+			System.out.println("1");
 			questVO = new Gson().fromJson(br, QuestVO.class);
 
 			questCatalog = questVO.getQuest_catalog();
@@ -196,23 +162,23 @@ public class QuestServlet extends HttpServlet {
 //			 if (memUid == null || memUid < 0)
 //			 checkResult.append("getMem_uid", "會員ID錯誤。");
 
-			questQuiz = questVO.getQuest_quiz();
-			if (questQuiz == null || questQuiz.trim().isEmpty())
-				checkResult.append("getQuest_quiz", "問題內容錯誤。");
+//			questQuiz = questVO.getQuest_quiz();
+//			if (questQuiz == null || questQuiz.trim().isEmpty())
+//				checkResult.append("getQuest_quiz", "問題內容錯誤。");
+			questQuiz="Already Sent";
 
 //			 adminId = questVO.getAdmin_id();
 //			 if (adminId == null || adminId < 0)
 //			 checkResult.append("getAdmin_id", "管理員ID錯誤。");
 
-//			questReply = questVO.getQuest_reply();
-//			if (questReply == null || questReply.trim().isEmpty())
-//				checkResult.append("getQuest_reply", "問題回覆錯誤。");
+			questReply = questVO.getQuest_reply();
+			if (questReply == null || questReply.trim().isEmpty())
+				checkResult.append("getQuest_reply", "問題回覆錯誤。");
 
 			// 抓出建立當下時間
 			memUid = 1;
 			questQtime = new Timestamp(System.currentTimeMillis());
-			questReply = null;
-			questRtime = null;
+			questRtime = new Timestamp(System.currentTimeMillis());
 
 //			memUid = questVO.getMem_uid(); // 抓出建立會員Id 且 不能修改
 			adminId = 1; // 抓出回覆管理員Id 且 不能修改
@@ -223,11 +189,11 @@ public class QuestServlet extends HttpServlet {
 				QuestService srv = new QuestService();
 				srv.insertQuest(questCatalog, questTopic, memUid, questQuiz, adminId, questReply, questQtime,
 						questRtime);
-				checkResult.append("result", "新增成功");
+				checkResult.append("result", "回覆成功");
 				response.getWriter().println(checkResult.toString());
 			}
 		} catch (Exception e) {
-			checkResult.append("result", "新增失敗。");
+			checkResult.append("result", "回覆失敗。");
 			response.getWriter().println(checkResult.toString());
 			e.printStackTrace();
 		}

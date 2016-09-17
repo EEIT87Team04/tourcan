@@ -45,6 +45,10 @@ public class QuestService {
 		return dao.findByName(quest_topic);
 	}
 	
+	public List<QuestVO> findByUid(Integer mem_uid){
+		return dao.findByUid(mem_uid);
+	}
+	
 	public List<QuestVO> getAll(){
 		return dao.getAll();
 	}
