@@ -257,8 +257,10 @@
 				$('#replyAll>tbody').empty();
 				var memUid=1;
 		    $.getJSON(("QuestServlet"),{"memUid":memUid,"method":"getAllByUid"},function(data){
-			var myBody = $('#replyAll>tbody');
+		    	console.log(memUid);
+		    	var myBody = $('#replyAll>tbody');
 			$.each(data,function(idx,data){
+				console.log(data);
 			var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
 			var but2=$('<button class="btn btn-warning btn-xs" id="quest_editCancel">取消查看</button>');
 				var cell1 = $("<td></td>").text(data.quest_id);
@@ -280,228 +282,228 @@
 		})
 		
 
-//        $("#replyAll").on('click','.btn-success',function(){
-// //             $('#replyOne').show();
-//             quest_replyValue=null;
-//             $('#replyOne').remove();
-// 		    var rowClosest = $(this).closest("tr");              
-// 		    var questId = rowClosest.find("td:eq(0)").text();     // Finds the 1st <td> element
-// 		    console.log(questId);
-// 		    $.get(("QuestServlet"),{"questId":questId,"method":"getOneById"},function(data){
-// 			     $.each(data,function(questName,questValue){
-// // 		   	   	    console.log(questName+" : "+questValue);
-// 				    if(questName=="quest_reply"){
-//                         quest_replyValue=questValue;
-// 				    	console.log(quest_replyValue);
-// 				    }
-// 				    if(questName=="quest_quiz"){
-// 				    	quest_quizValue=questValue;
-// 				    	console.log(quest_quizValue);		
-// 				    }
-// 				    if(questName=="quest_qtime"){
-// 				    	quest_qtimeValue=questValue;
-// 				    	console.log(quest_qtimeValue);		
-// 				    }
-// 				    if(questName=="quest_rtime"){
-// 				    	quest_rtimeValue=questValue;
-// 				    	console.log(quest_rtimeValue);		
-// 				    }
+       $("#replyAll").on('click','.btn-success',function(){
+//             $('#replyOne').show();
+            quest_replyValue=null;
+            $('#replyOne').remove();
+		    var rowClosest = $(this).closest("tr");              
+		    var questId = rowClosest.find("td:eq(0)").text();     // Finds the 1st <td> element
+		    console.log(questId);
+		    $.get(("QuestServlet"),{"questId":questId,"method":"getOneById"},function(data){
+			     $.each(data,function(questName,questValue){
+// 		   	   	    console.log(questName+" : "+questValue);
+				    if(questName=="quest_reply"){
+                        quest_replyValue=questValue;
+				    	console.log(quest_replyValue);
+				    }
+				    if(questName=="quest_quiz"){
+				    	quest_quizValue=questValue;
+				    	console.log(quest_quizValue);		
+				    }
+				    if(questName=="quest_qtime"){
+				    	quest_qtimeValue=questValue;
+				    	console.log(quest_qtimeValue);		
+				    }
+				    if(questName=="quest_rtime"){
+				    	quest_rtimeValue=questValue;
+				    	console.log(quest_rtimeValue);		
+				    }
 
-// 			     })
-// 			        if(typeof quest_replyValue === "undefined" ||quest_replyValue == null){
-// 			        var frag = document.createDocumentFragment();
-// 		  			var div_head = document.createElement("div");
-// // 		  			div_head.className="container";
-// 		  			div_head.setAttribute("id","replyOne");
+			     })
+			        if(typeof quest_replyValue === "undefined" ||quest_replyValue == null){
+			        var frag = document.createDocumentFragment();
+		  			var div_head = document.createElement("div");
+// 		  			div_head.className="container";
+		  			div_head.setAttribute("id","replyOne");
 		  			
-// 		  			var ul_afterHead= document.createElement("ul");
-// 		  			ul_afterHead.className="timeline";
-// 		  			div_head.appendChild(ul_afterHead);
-		  			
-		  			
-// 		  			var li_afterUl=document.createElement("li");
-// 		  			ul_afterHead.appendChild(li_afterUl);
+		  			var ul_afterHead= document.createElement("ul");
+		  			ul_afterHead.className="timeline";
+		  			div_head.appendChild(ul_afterHead);
 		  			
 		  			
-// 		  			var div_afterLi1 = document.createElement("div");
-// 		  			div_afterLi1.className="timeline-badge";
-// 		  			li_afterUl.appendChild(div_afterLi1);
+		  			var li_afterUl=document.createElement("li");
+		  			ul_afterHead.appendChild(li_afterUl);
 		  			
-// 		  			var i_afterDiv = document.createElement("i");
-// 		  			i_afterDiv.className="glyphicon glyphicon-check";
-// 		  			div_afterLi1.appendChild(i_afterDiv);
 		  			
-// 		  			var div_afterLi2 = document.createElement("div");
-// 		  			div_afterLi2.className="timeline-panel";
-// 		  			li_afterUl.appendChild(div_afterLi2);
+		  			var div_afterLi1 = document.createElement("div");
+		  			div_afterLi1.className="timeline-badge";
+		  			li_afterUl.appendChild(div_afterLi1);
 		  			
-// 		  			var div_afterDiv2 = document.createElement("div");
-// 		  			div_afterDiv2.className="timeline-heading";
-// 		  			div_afterLi2.appendChild(div_afterDiv2);
+		  			var i_afterDiv = document.createElement("i");
+		  			i_afterDiv.className="glyphicon glyphicon-check";
+		  			div_afterLi1.appendChild(i_afterDiv);
 		  			
-// 		  			var h4_afterDiv2_1 = document.createElement("h4");
-// 		  			h4_afterDiv2_1.className="timeline-title";
-// 		  			var txt_h4=document.createTextNode("會員提問");
-// 		  			h4_afterDiv2_1.appendChild(txt_h4);
-// 		  			div_afterDiv2.appendChild(h4_afterDiv2_1);
+		  			var div_afterLi2 = document.createElement("div");
+		  			div_afterLi2.className="timeline-panel";
+		  			li_afterUl.appendChild(div_afterLi2);
 		  			
-// 		  			var p_afterDiv2_1 = document.createElement("p");
-// 		  			div_afterDiv2.appendChild(p_afterDiv2_1);
+		  			var div_afterDiv2 = document.createElement("div");
+		  			div_afterDiv2.className="timeline-heading";
+		  			div_afterLi2.appendChild(div_afterDiv2);
 		  			
-// 		  			var small_afterP = document.createElement("small");
-// 		  			small_afterP.className="text-muted";
+		  			var h4_afterDiv2_1 = document.createElement("h4");
+		  			h4_afterDiv2_1.className="timeline-title";
+		  			var txt_h4=document.createTextNode("會員提問");
+		  			h4_afterDiv2_1.appendChild(txt_h4);
+		  			div_afterDiv2.appendChild(h4_afterDiv2_1);
 		  			
-// 		  			var i_afterP = document.createElement("i");
-// 		  			i_afterP.className="glyphicon glyphicon-time";
-// 		  			small_afterP.appendChild(i_afterP);
-// 		  			small_afterP.setAttribute("style","word-break: break-all");
-// 		  			var txt_small=document.createTextNode(quest_qtimeValue);  //須拿提問時間
-// 		  			small_afterP.appendChild(txt_small);
-// 		  			p_afterDiv2_1.appendChild(small_afterP);
+		  			var p_afterDiv2_1 = document.createElement("p");
+		  			div_afterDiv2.appendChild(p_afterDiv2_1);
+		  			
+		  			var small_afterP = document.createElement("small");
+		  			small_afterP.className="text-muted";
+		  			
+		  			var i_afterP = document.createElement("i");
+		  			i_afterP.className="glyphicon glyphicon-time";
+		  			small_afterP.appendChild(i_afterP);
+		  			small_afterP.setAttribute("style","word-break: break-all");
+		  			var txt_small=document.createTextNode(quest_qtimeValue);  //須拿提問時間
+		  			small_afterP.appendChild(txt_small);
+		  			p_afterDiv2_1.appendChild(small_afterP);
 					
-// 		  			var div2_afterDiv2 = document.createElement("div");
-// 		  			div2_afterDiv2.className="timeline-body";
-// 		  			div_afterLi2.appendChild(div2_afterDiv2);
+		  			var div2_afterDiv2 = document.createElement("div");
+		  			div2_afterDiv2.className="timeline-body";
+		  			div_afterLi2.appendChild(div2_afterDiv2);
 		  			
-// 		  			var p_afterDiv2_2 = document.createElement("p");
-// 		  			p_afterDiv2_2.setAttribute("style","word-break: break-all");
-// 		  			var txt_p=document.createTextNode(quest_quizValue);       //須拿提問內容
-// 		  			p_afterDiv2_2.appendChild(txt_p);
-// 		  			div2_afterDiv2.appendChild(p_afterDiv2_2);
+		  			var p_afterDiv2_2 = document.createElement("p");
+		  			p_afterDiv2_2.setAttribute("style","word-break: break-all");
+		  			var txt_p=document.createTextNode(quest_quizValue);       //須拿提問內容
+		  			p_afterDiv2_2.appendChild(txt_p);
+		  			div2_afterDiv2.appendChild(p_afterDiv2_2);
 		  			
-// 		  			frag.appendChild(div_head);
+		  			frag.appendChild(div_head);
 		  			
-// 		  			rowClosest.after(frag);
-// 			        }else{
-// 			        	// Question div
-// 	                    var frag = document.createDocumentFragment();
-// 			  			var div_head = document.createElement("div");
-// // 			  			div_head.className="container";
-// 			  			div_head.setAttribute("id","replyOne");
+		  			rowClosest.after(frag);
+			        }else{
+			        	// Question div
+	                    var frag = document.createDocumentFragment();
+			  			var div_head = document.createElement("div");
+// 			  			div_head.className="container";
+			  			div_head.setAttribute("id","replyOne");
 			  			
-// 			  			var ul_afterHead= document.createElement("ul");
-// 			  			ul_afterHead.className="timeline";
-// 			  			div_head.appendChild(ul_afterHead);
-			  			
-			  			
-// 			  			var li_afterUl=document.createElement("li");
-// 			  			ul_afterHead.appendChild(li_afterUl);
+			  			var ul_afterHead= document.createElement("ul");
+			  			ul_afterHead.className="timeline";
+			  			div_head.appendChild(ul_afterHead);
 			  			
 			  			
-// 			  			var div_afterLi1 = document.createElement("div");
-// 			  			div_afterLi1.className="timeline-badge";
-// 			  			li_afterUl.appendChild(div_afterLi1);
+			  			var li_afterUl=document.createElement("li");
+			  			ul_afterHead.appendChild(li_afterUl);
 			  			
-// 			  			var i_afterDiv = document.createElement("i");
-// 			  			i_afterDiv.className="glyphicon glyphicon-check";
-// 			  			div_afterLi1.appendChild(i_afterDiv);
 			  			
-// 			  			var div_afterLi2 = document.createElement("div");
-// 			  			div_afterLi2.className="timeline-panel";
-// 			  			li_afterUl.appendChild(div_afterLi2);
+			  			var div_afterLi1 = document.createElement("div");
+			  			div_afterLi1.className="timeline-badge";
+			  			li_afterUl.appendChild(div_afterLi1);
 			  			
-// 			  			var div_afterDiv2 = document.createElement("div");
-// 			  			div_afterDiv2.className="timeline-heading";
-// 			  			div_afterLi2.appendChild(div_afterDiv2);
+			  			var i_afterDiv = document.createElement("i");
+			  			i_afterDiv.className="glyphicon glyphicon-check";
+			  			div_afterLi1.appendChild(i_afterDiv);
 			  			
-// 			  			var h4_afterDiv2_1 = document.createElement("h4");
-// 			  			h4_afterDiv2_1.className="timeline-title";
-// 			  			var txt_h4=document.createTextNode("會員提問");
-// 			  			h4_afterDiv2_1.appendChild(txt_h4);
-// 			  			div_afterDiv2.appendChild(h4_afterDiv2_1);
+			  			var div_afterLi2 = document.createElement("div");
+			  			div_afterLi2.className="timeline-panel";
+			  			li_afterUl.appendChild(div_afterLi2);
 			  			
-// 			  			var p_afterDiv2_1 = document.createElement("p");
-// 			  			div_afterDiv2.appendChild(p_afterDiv2_1);
+			  			var div_afterDiv2 = document.createElement("div");
+			  			div_afterDiv2.className="timeline-heading";
+			  			div_afterLi2.appendChild(div_afterDiv2);
 			  			
-// 			  			var small_afterP = document.createElement("small");
-// 			  			small_afterP.className="text-muted";
+			  			var h4_afterDiv2_1 = document.createElement("h4");
+			  			h4_afterDiv2_1.className="timeline-title";
+			  			var txt_h4=document.createTextNode("會員提問");
+			  			h4_afterDiv2_1.appendChild(txt_h4);
+			  			div_afterDiv2.appendChild(h4_afterDiv2_1);
 			  			
-// 			  			var i_afterP = document.createElement("i");
-// 			  			i_afterP.className="glyphicon glyphicon-time";
-// 			  			small_afterP.appendChild(i_afterP);
-// 			  			small_afterP.setAttribute("style","word-break: break-all");
-// 			  			var txt_small=document.createTextNode(quest_qtimeValue);  //須拿提問時間
-// 			  			small_afterP.appendChild(txt_small);
-// 			  			p_afterDiv2_1.appendChild(small_afterP);
+			  			var p_afterDiv2_1 = document.createElement("p");
+			  			div_afterDiv2.appendChild(p_afterDiv2_1);
+			  			
+			  			var small_afterP = document.createElement("small");
+			  			small_afterP.className="text-muted";
+			  			
+			  			var i_afterP = document.createElement("i");
+			  			i_afterP.className="glyphicon glyphicon-time";
+			  			small_afterP.appendChild(i_afterP);
+			  			small_afterP.setAttribute("style","word-break: break-all");
+			  			var txt_small=document.createTextNode(quest_qtimeValue);  //須拿提問時間
+			  			small_afterP.appendChild(txt_small);
+			  			p_afterDiv2_1.appendChild(small_afterP);
 						
-// 			  			var div2_afterDiv2 = document.createElement("div");
-// 			  			div2_afterDiv2.className="timeline-body";
-// 			  			div_afterLi2.appendChild(div2_afterDiv2);
+			  			var div2_afterDiv2 = document.createElement("div");
+			  			div2_afterDiv2.className="timeline-body";
+			  			div_afterLi2.appendChild(div2_afterDiv2);
 			  			
-// 			  			var p_afterDiv2_2 = document.createElement("p");
-// 			  			p_afterDiv2_2.setAttribute("style","word-break: break-all");
-// 			  			var txt_p=document.createTextNode(quest_quizValue);       //須拿提問內容
-// 			  			p_afterDiv2_2.appendChild(txt_p);
-// 			  			div2_afterDiv2.appendChild(p_afterDiv2_2);
+			  			var p_afterDiv2_2 = document.createElement("p");
+			  			p_afterDiv2_2.setAttribute("style","word-break: break-all");
+			  			var txt_p=document.createTextNode(quest_quizValue);       //須拿提問內容
+			  			p_afterDiv2_2.appendChild(txt_p);
+			  			div2_afterDiv2.appendChild(p_afterDiv2_2);
 			  			
-// 			  			// Reply div
-// 			  			var li2_afterUl=document.createElement("li");
-// 			  			li2_afterUl.className="timeline-inverted";
-// 			  			ul_afterHead.appendChild(li2_afterUl);
+			  			// Reply div
+			  			var li2_afterUl=document.createElement("li");
+			  			li2_afterUl.className="timeline-inverted";
+			  			ul_afterHead.appendChild(li2_afterUl);
 			  			
-// 			  			var div1_afterLi2 = document.createElement("div");
-// 			  			div1_afterLi2.className="timeline-badge warning";
-// 			  			li2_afterUl.appendChild(div1_afterLi2);
+			  			var div1_afterLi2 = document.createElement("div");
+			  			div1_afterLi2.className="timeline-badge warning";
+			  			li2_afterUl.appendChild(div1_afterLi2);
 			  			
-// 			  			var i2_afterDiv = document.createElement("i");
-// 			  			i2_afterDiv.className="glyphicon glyphicon-credit-card";
-// 			  			div1_afterLi2.appendChild(i2_afterDiv);
+			  			var i2_afterDiv = document.createElement("i");
+			  			i2_afterDiv.className="glyphicon glyphicon-credit-card";
+			  			div1_afterLi2.appendChild(i2_afterDiv);
 			  			
-// 			  			var div2_afterLi2 = document.createElement("div");
-// 			  			div2_afterLi2.className="timeline-panel";
-// 			  			li2_afterUl.appendChild(div2_afterLi2);
+			  			var div2_afterLi2 = document.createElement("div");
+			  			div2_afterLi2.className="timeline-panel";
+			  			li2_afterUl.appendChild(div2_afterLi2);
 			  			
-// 			  			var div_afterLi2Div2 = document.createElement("div");
-// 			  			div_afterLi2Div2.className="timeline-heading";
-// 			  			div2_afterLi2.appendChild(div_afterLi2Div2);
+			  			var div_afterLi2Div2 = document.createElement("div");
+			  			div_afterLi2Div2.className="timeline-heading";
+			  			div2_afterLi2.appendChild(div_afterLi2Div2);
 			  			
-// 			  			var h42_afterDiv2_1 = document.createElement("h4");
-// 			  			h42_afterDiv2_1.className="timeline-title";
-// 			  			var txt_h42=document.createTextNode("管理員回覆");
-// 			  			h42_afterDiv2_1.appendChild(txt_h42);
-// 			  			div_afterLi2Div2.appendChild(h42_afterDiv2_1);
+			  			var h42_afterDiv2_1 = document.createElement("h4");
+			  			h42_afterDiv2_1.className="timeline-title";
+			  			var txt_h42=document.createTextNode("管理員回覆");
+			  			h42_afterDiv2_1.appendChild(txt_h42);
+			  			div_afterLi2Div2.appendChild(h42_afterDiv2_1);
 			  			
-// 			  			var p2_afterDiv2_1 = document.createElement("p");
-// 	                    div_afterLi2Div2.appendChild(p2_afterDiv2_1);
+			  			var p2_afterDiv2_1 = document.createElement("p");
+	                    div_afterLi2Div2.appendChild(p2_afterDiv2_1);
 			  			
-// 			  			var small2_afterP = document.createElement("small");
-// 			  			small2_afterP.className="text-muted";
+			  			var small2_afterP = document.createElement("small");
+			  			small2_afterP.className="text-muted";
 			  			
-// 			  			var i2_afterP = document.createElement("i");
-// 			  			i2_afterP.className="glyphicon glyphicon-time";
-// 			  			small2_afterP.appendChild(i_afterP);
-// 			  			small2_afterP.setAttribute("style","word-break: break-all");
-// 			  			var txt2_small=document.createTextNode(quest_rtimeValue);  //須拿回覆時間
-// 			  			small2_afterP.appendChild(txt2_small);
-// 			  			p2_afterDiv2_1.appendChild(small2_afterP);
+			  			var i2_afterP = document.createElement("i");
+			  			i2_afterP.className="glyphicon glyphicon-time";
+			  			small2_afterP.appendChild(i_afterP);
+			  			small2_afterP.setAttribute("style","word-break: break-all");
+			  			var txt2_small=document.createTextNode(quest_rtimeValue);  //須拿回覆時間
+			  			small2_afterP.appendChild(txt2_small);
+			  			p2_afterDiv2_1.appendChild(small2_afterP);
 			  			
-// 			  			var div2_afterLi2Div2 = document.createElement("div");
-// 			  			div2_afterLi2Div2.className="timeline-body";
-// 			  			div2_afterLi2.appendChild(div2_afterLi2Div2);
+			  			var div2_afterLi2Div2 = document.createElement("div");
+			  			div2_afterLi2Div2.className="timeline-body";
+			  			div2_afterLi2.appendChild(div2_afterLi2Div2);
 			  			
-// 			  			var p2_afterDiv2_2 = document.createElement("p");
-// 			  			p2_afterDiv2_2.setAttribute("style","word-break: break-all");
-// 			  			var txt2_p=document.createTextNode(quest_replyValue);       //須拿回覆內容
-// 			  			p2_afterDiv2_2.appendChild(txt2_p);
-// 			  			div2_afterLi2Div2.appendChild(p2_afterDiv2_2);
+			  			var p2_afterDiv2_2 = document.createElement("p");
+			  			p2_afterDiv2_2.setAttribute("style","word-break: break-all");
+			  			var txt2_p=document.createTextNode(quest_replyValue);       //須拿回覆內容
+			  			p2_afterDiv2_2.appendChild(txt2_p);
+			  			div2_afterLi2Div2.appendChild(p2_afterDiv2_2);
 			  			
-// 			  			frag.appendChild(div_head);
+			  			frag.appendChild(div_head);
 			  			
-// 			  			rowClosest.after(frag);
+			  			rowClosest.after(frag);
 			  			
-// 			        }
-// 		    })
+			        }
+		    })
 		    
   			
-//           $(".btn-warning").click(function() {
-// 		     $('#replyOne').remove();
-// 	      })
-//        })
+          $(".btn-warning").click(function() {
+		     $('#replyOne').remove();
+	      })
+       })
     
 	
-// 	   $("#quest_cancel").click(function() {
-// 		   $('#replyAll').hide();
-// 	   })
+	   $("#quest_cancel").click(function() {
+		   $('#replyAll').hide();
+	   })
 	
 // // 	   //分页
 // // 	   $("#demo1").paginate({

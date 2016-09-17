@@ -6,6 +6,7 @@
   <title>Question BackStagew</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../js/jquery-3.1.0.min.js"></script>  
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!--   <link href="/Tourcan/css/style.css" rel="stylesheet"> -->
 <!--   <script src="/Tourcan/js/jquery.paginate.js"></script> -->
@@ -159,6 +160,23 @@
 	margin-top: 5px;
 }
 
+.modal-header, h4_1, .close {
+    background-color: #5cb85c;
+    color:white !important;
+    text-align: center;
+    font-size: 30px;
+}
+
+.modal-footer {
+    background-color: #f9f9f9;
+}
+
+#quest_reply{
+    height: 100px;
+    line-height: 18px;
+    display: block;
+    font-size: 18px;
+}
 
 </style>
  
@@ -247,7 +265,47 @@
 			
 <!-- 		</ul> -->
 <!-- 	</div> -->
-<script src="../js/jquery-3.1.0.min.js"></script>  
+
+<div class="container">
+  <!-- Trigger the modal with a button -->
+<!-- <button type="button" class="btn btn-default btn-lg" id="quest_editReply">Reply</button> -->
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 id="h4_1"><span class="glyphicon glyphicon-lock"></span> Reply</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form" name="addQuest">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Admin ID</label>
+              <input type="number" class="form-control" id="admin_id" name="admin_id" placeholder="Enter adminId" min=-1>
+            </div>
+            <div class="form-group">
+              <label for="questReply"><span class="glyphicon glyphicon-eye-open"></span> Reply Text</label>
+              <textarea class="form-control" id="quest_reply" name="quest_reply" placeholder="Enter Reply Text"></textarea>
+            </div>
+            <div class="checkbox">
+              <label></label>
+            </div>
+              <button type="submit" class="btn btn-success btn-block" id="btnInsert"><span class="glyphicon glyphicon-off"></span> 確定</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          <p></p>
+          <p></p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- <script src="../js/jquery-3.1.0.min.js"></script>   -->
 	<script type="text/javascript">
 	$(function(){
         $('#replyOne').hide();
@@ -256,28 +314,27 @@
 		        $('#replyAll').show();
 				$('#replyAll>tbody').empty();
 		    $.getJSON(("QuestServlet"),{"method":"getAll"},function(data){
-			var myBody = $('#replyAll>tbody');
-			$.each(data,function(idx,data){
-			var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
-			var but2=$('<button class="btn btn-warning btn-xs" id="quest_editCancel">取消查看</button>');
-				var cell1 = $("<td></td>").text(data.quest_id);
-				var cell2 = $("<td></td>").text(data.mem_uid);
-				var cell3 = $("<td></td>").text(data.quest_topic);
-				var cell4 = $("<td></td>").text(data.quest_qtime);
-				var cell5 = $("<td></td>").append(but1).append("  ").append(but2);
-				var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
-				myBody.append(row);				
+			    var myBody = $('#replyAll>tbody');
+			    $.each(data,function(idx,data){
+			    var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
+			    var but2=$('<button class="btn btn-warning btn-xs" id="quest_editCancel">取消查看</button>');
+			    var but3=$('<button class="btn btn-danger btn-xs" id="quest_editReply">回覆</button>');
+			    	var cell1 = $("<td></td>").text(data.quest_id);
+				    var cell2 = $("<td></td>").text(data.mem_uid);
+			    	var cell3 = $("<td></td>").text(data.quest_topic);
+				    var cell4 = $("<td></td>").text(data.quest_qtime);
+			    	var cell5 = $("<td></td>").append(but1).append("  ").append(but2).append("  ").append(but3);
+				    var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
+				    myBody.append(row);				
 			    
 			    })
+			        
+			    $("tr").not(':first').hover(
+					    function () {
+							$(this).css("background","#FFD9EC");},
+						function () {
+							$(this).css("background","");});     
 			})
-			
-			$("tr").not(':first').hover(
-				    function () {
-// 				    console.log("1");
-						$(this).css("background","#FFD9EC");},
-					function () {
-						$(this).css("background","");});
-// 		    console.log("2");
 		})
 		
 
@@ -495,15 +552,22 @@
 		    
   			
           $(".btn-warning").click(function() {
+//         	 var rowClosest = $(this).closest("div");
+//         	 rowClosest.hide();
 		     $('#replyOne').remove();
 	      })
+	      
+	       $(".btn-danger").click(function(){
+		        $("#myModal").modal();
+           })
+           
        })
-    
-	
+       
 	   $("#quest_cancel").click(function() {
 		   $('#replyAll').hide();
 	   })
-	
+	   
+
 // 	   $("tr").not(':first').hover(
 // 				    function () {
 // 				    	console.log("3");
@@ -522,6 +586,7 @@
 // 	   });
 	
 	})
+	
 	</script>
 
 </body>

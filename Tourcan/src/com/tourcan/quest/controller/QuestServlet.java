@@ -192,15 +192,15 @@ public class QuestServlet extends HttpServlet {
 				checkResult.append("getQuest_topic", "問題名稱不得超過50個字");
 			}
 
-//			 memUid = questVO.getMem_uid();
-//			 if (memUid == null || memUid < 0)
-//			 checkResult.append("getMem_uid", "會員ID錯誤。");
+			 memUid = questVO.getMem_uid();
+			 if (memUid == null || memUid < 0)
+			 checkResult.append("getMem_uid", "會員ID錯誤。");
 
 			questQuiz = questVO.getQuest_quiz();
 			if (questQuiz == null || questQuiz.trim().isEmpty())
 				checkResult.append("getQuest_quiz", "問題內容錯誤。");
 
-//			 adminId = questVO.getAdmin_id();
+ 			 adminId = questVO.getAdmin_id();
 //			 if (adminId == null || adminId < 0)
 //			 checkResult.append("getAdmin_id", "管理員ID錯誤。");
 

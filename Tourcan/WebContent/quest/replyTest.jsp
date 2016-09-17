@@ -100,7 +100,7 @@
 			            </div>
 					</div>
 
-
+<!--                                                                                    須拿  uid 和  topic ( uid 和  topic 需與提問相同)  -->
 <!-- 						<div > -->
 <!-- 							<label for="memUid">會員Id</label> <input type="text" -->
 <!-- 								 id="mem_uid" name="mem_uid" -->

@@ -90,7 +90,7 @@ public class QuestDAO implements QuestDAO_interface {
 	public List<QuestVO> findByUid(Integer mem_uid) {
 		List<QuestVO> list=null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		String likeString="%" + mem_uid + "%";
+		String likeString="%"+mem_uid +"%";
 		try {
 			session.beginTransaction();
 			String queryByUid="From QuestVO WHERE mem_uid like :mem_uid";
