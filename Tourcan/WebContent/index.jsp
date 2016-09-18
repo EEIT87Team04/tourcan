@@ -26,7 +26,7 @@
     <link href="/Tourcan/css/tourcanFront.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/Tourcan/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -86,8 +86,8 @@
                 <div class="col-lg-12 text-center dath7">
                     <h2>簡介</h2>
                     <p class="lead dath7" style="text-align:justify;">　　短暫的假期不知該往何處去，想出門走走放鬆、減壓，反被行程規劃磨盡了耐心和精力。當有一個把美食、住宿與交通都能集合在內的網站，讓行程規劃不在困擾著你，既有的行程模式，景點、美食與住宿通通幫您想好。還想要來點驚喜的你，還有 TourCan 獨特的隨選行程，讓你隨時為自己準備一場精彩的旅程！
-<!--                     <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a> -->
                     </p>
+                    <a href="#" class="btn btn-dark">註冊/登入會員</a>
                 </div>
             </div>
             <!-- /.row -->
@@ -101,10 +101,10 @@
         <div class="container">
             <div class="row text-center">
                 <div class="col-lg-10 col-lg-offset-1">
-                    <h2>Our Services</h2>
+                    <h2 class="dath7">服務項目</h2>
                     <hr class="small">
                     <div class="row">
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
                                 <a href="#"><img src="/Tourcan/images/front/icons/map-location.png"  class="front_icon"></a>
@@ -112,11 +112,11 @@
                                 <h4>
                                     <strong class="dath7 frontIcon">景　　點</strong>
                                 </h4>
-                                <p class="dath7" style="text-align:center;">好玩有趣的台灣景點一覽無遺，<br>讓您輕鬆玩遍全台灣！</p>
+                                <p class="dath7" style="text-align:justify;">好玩有趣的台灣景點一覽無遺，讓您輕鬆玩遍全台灣！</p>
 <!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
                                 <a href="#"><img src="/Tourcan/images/front/icons/windows.png" class="front_icon"></a>
@@ -124,11 +124,11 @@
                                 <h4>
                                     <strong class="dath7">住　　宿</strong>
                                 </h4>
-                                <p class="dath7" style="text-align:center;">找一個小憩的美好空間，<br>蓄滿精力再出發！</p>
+                                <p class="dath7" style="text-align:justify;">找一個小憩的美好空間，蓄滿精力再出發！</p>
 <!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
                                 <a href="#"><img src="/Tourcan/images/front/icons/food.png" class="front_icon"></a>
@@ -136,11 +136,11 @@
                                 <h4>
                                     <strong class="dath7" >美　　食</strong>
                                 </h4>
-                                <p class="dath7" style="text-align:center;">台灣佳餚吃不完，<br>藏身巷弄中的美食也不要錯過！</p>
+                                <p class="dath7" style="text-align:justify;">台灣佳餚吃不完，藏身巷弄中的美食也不要錯過！</p>
 <!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-6">
+                        <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
                                <a href="#"><img src="/Tourcan/images/front/icons/suitcase.png" class="front_icon"></a>
@@ -148,7 +148,31 @@
                                 <h4>
                                      <strong class="dath7" >規劃行程</strong>
                                 </h4>
-                                <p class="dath7" style="text-align:center;">美好的旅程自己描繪，<br>現在就開始！</p>
+                                <p class="dath7" style="text-align:justify;">美好的旅程自己描繪，現在就開始！</p>
+<!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                               <a href="#"><img src="/Tourcan/images/front/icons/note.png" class="front_icon"></a>
+                            </span>
+                                <h4>
+                                     <strong class="dath7" >討 論 區</strong>
+                                </h4>
+                                <p class="dath7" style="text-align:justify;">每個期待旅行的心情，分享給大家！</p>
+<!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                               <a href="#"><img src="/Tourcan/images/front/icons/info.png" class="front_icon"></a>
+                            </span>
+                                <h4>
+                                     <strong class="dath7" >客　　服</strong>
+                                </h4>
+                                <p class="dath7" style="text-align:justify;">您的每一個建議，都是我們進步的動力。</p>
 <!--                                 <a href="#" class="btn btn-light">Learn More</a> -->
                             </div>
                         </div>
@@ -177,19 +201,16 @@
     <div class="item active">
       <img src="/Tourcan/images/front/taiwan1.jpg">
       <div class="carousel-caption">
-        1
       </div>
     </div>
     <div class="item">
       <img src="/Tourcan/images/front/taiwan2.jpg">
       <div class="carousel-caption">
-        2
       </div>
     </div>
     <div class="item">
       <img src="/Tourcan/images/front/taiwan3.jpg">
       <div class="carousel-caption">
-        3
       </div>
     </div>
   </div>
@@ -251,7 +272,6 @@
                         </div>
                     </div>
                     <!-- /.row (nested) -->
-                    <a href="#" class="btn btn-dark">View More Items</a>
                 </div>
                 <!-- /.col-lg-10 -->
             </div>
@@ -261,13 +281,11 @@
     </section>
 
     <!-- Call to Action -->
-    <aside class="call-to-action bg-primary">
+    <aside class="call-to-action" style="background-color: rgb(173,93,93)">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h3>The buttons below are impossible to resist.</h3>
-                    <a href="#" class="btn btn-lg btn-light">Click Me!</a>
-                    <a href="#" class="btn btn-lg btn-dark">Look at Me!</a>
+                    <h3 style="color: white;">Tourcan makes you tour.</h3>
                 </div>
             </div>
         </div>

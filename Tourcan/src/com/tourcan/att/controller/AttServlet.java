@@ -14,19 +14,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tourcan.att.model.AttService;
 import com.tourcan.att.model.AttVO;
+import com.tourcan.photo.model.PhotoService;
 import com.tourcan.region.model.RegionVO;
 
 @WebServlet("/att/AttServlet")
 public class AttServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	ApplicationContext context;
 
-	public AttServlet() {
-		super();
+	@Override
+	public void init() throws ServletException {
+		context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -36,15 +41,16 @@ public class AttServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		BufferedReader br = request.getReader();
-		StringBuffer sb = new StringBuffer(128);
-		String json;
-		while ((json = br.readLine()) != null)
-			sb.append(json);
-		json = sb.toString();
-
+//		BufferedReader br = request.getReader();
+//		StringBuffer sb = new StringBuffer(128);
+//		String json;
+//		while ((json = br.readLine()) != null)
+//			sb.append(json);
+//		json = sb.toString();
+		String method= request.getParameter("method");
 		JSONObject err = new JSONObject();
 
+		if(method.equals("getAttID")){
 		// Query by att_id
 		 String attIdStr=request.getParameter("att_id");
 		 if(attIdStr != null){
@@ -82,13 +88,12 @@ public class AttServlet extends HttpServlet {
 		 }
 		 return;
 		 }
-		 
+		}else if(method.equals("getByName")){
 		// ----------------Query one by attname----------------
-		String att_name = request.getParameter("attname");
-		if (att_name != null) {
 			// ***************************1.接收請求參數 -
 			// 輸入格式的錯誤處理**********************//*
 			try {
+				String att_name = request.getParameter("attname");
 				try {
 					if (att_name == null || (att_name.trim()).length() == 0) {
 						throw new Exception();
@@ -110,13 +115,13 @@ public class AttServlet extends HttpServlet {
 				System.out.println(jsonG);
 				// response.getWriter().write(jsonG);
 				response.getWriter().println(jsonG.toString());
-				
+
 				// ***************************其他可能的錯誤處理*************************************//*
 			} catch (Exception e) {
 				err.append("errmsg", "search error");
 				response.getWriter().println(err.toString());
 			}
-		} else if (attIdStr == null && att_name == null) {
+		} else if (method.equals("getAll")) {
 			AttService asv = new AttService();
 			List<AttVO> avo = asv.getAll();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
@@ -124,6 +129,44 @@ public class AttServlet extends HttpServlet {
 			System.out.println(jsonG);
 			response.getWriter().println(jsonG.toString());
 //			return;
+		}else if (method.equals("getByRegionId")){
+			// ----------------Query by regionId----------------
+			// ***************************1.接收請求參數 -輸入格式的錯誤處理**********************/
+			JSONObject checkResult = new JSONObject();
+			Integer regionId = null;
+			List<AttVO> attVO = null;
+
+			try {
+				String id = request.getParameter("regionId");
+				 System.out.println(id);
+				if (id == null || id.trim().length() == 0) {
+					checkResult.append("checkResult", "請選擇區域");
+				} else {
+					try {
+						regionId = new Integer(id);
+						System.out.println(regionId);
+					} catch (Exception e) {
+						// e.printStackTrace();
+						checkResult.append("checkResult", "區域ID格式不正確");
+					}
+				}
+				AttService attSvc = new AttService();
+				 System.out.println("test");
+				 attVO = attSvc.getByRegionId(regionId);
+				 System.out.println("attVO");
+				if (attVO.size() != 0) {
+					Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+					String jsonG = gson.toJson(attVO);
+					 System.out.println(jsonG);
+					response.getWriter().println(jsonG);
+				} else {
+					checkResult.append("result", "查無資料");
+					response.getWriter().println(checkResult.toString());
+				}
+			} catch (Exception e) {
+				checkResult.append("false", "查詢失敗");
+				response.getWriter().println(checkResult.toString());
+			}
 		}
 	}
 
@@ -207,8 +250,8 @@ public class AttServlet extends HttpServlet {
 				throw new Exception();
 			} else {
 				AttService srv = new AttService();
-				Integer att_id = srv.insert(attVO);
-				checkResult.append("att_id", att_id);
+				srv.insert(attVO);
+				checkResult.append("att_id", attVO.getAtt_id());
 				checkResult.append("result", "新增成功");
 				response.getWriter().println(checkResult.toString());
 			}
@@ -216,7 +259,7 @@ public class AttServlet extends HttpServlet {
 		} catch (Exception e) {
 			checkResult.append("result", "新增失敗。");
 			response.getWriter().println(checkResult.toString());
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 
 	}
@@ -442,8 +485,15 @@ public class AttServlet extends HttpServlet {
 
 			/*************************** 2.開始刪除單筆資料 *****************************************/
 			AttService attSvc = new AttService();
+			PhotoService pSvc = new PhotoService(); 
+			JSONObject photo = pSvc.getByAttId(attId);
 			try {
+				if(photo.length()>0)
+				{
+					pSvc.deleteByAttId(attId);
+				}
 				attSvc.deleteAtt(attId);
+				
 			} catch (Exception e) {
 				errorMsgs.put("errMsg", "查無資料");
 			}

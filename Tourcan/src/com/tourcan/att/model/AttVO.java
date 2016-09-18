@@ -7,34 +7,61 @@ public class AttVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	// private Integer att_area;
+	// @SerializedName("attName")
 	@Expose
 	private String att_name;
+
+	// @SerializedName("attId")
 	@Expose
 	private Integer att_id;
+
+	// @SerializedName("attStaytime")
 	@Expose
 	private Integer att_staytime;
-	@Expose
-	private RegionVO regionVO;
-	@Expose
-	private String att_addr;
-	@Expose
-	private Double att_price;
-	@Expose
-	private String att_phone;
-	@Expose
-	private String att_url;
-	@Expose
-	private Boolean att_eat;
-	@Expose
-	private String att_intro;
-	@Expose
-	private String att_open;
-	@Expose
-	private Double att_lat;
-	@Expose
-	private Double att_lng;
+
+	// @SerializedName("regionId")
 	@Expose
 	private Integer region_id;
+
+	@Expose
+	private RegionVO regionVO;
+
+	// @SerializedName("attAddr")
+	@Expose
+	private String att_addr;
+
+	// @SerializedName("attPrice")
+	@Expose
+	private Double att_price;
+
+	// @SerializedName("attPhone")
+	@Expose
+	private String att_phone;
+
+	// @SerializedName("attUrl")
+	@Expose
+	private String att_url;
+
+	// @SerializedName("attEat")
+	@Expose
+	private Boolean att_eat;
+
+	// @SerializedName("attIntro")
+	@Expose
+	private String att_intro;
+
+	// @SerializedName("attOpen")
+	@Expose
+	private String att_open;
+
+	// @SerializedName("attLat")
+	@Expose
+	private Double att_lat;
+
+	// @SerializedName("attLng")
+	@Expose
+	private Double att_lng;
 
 	public AttVO() {
 	}

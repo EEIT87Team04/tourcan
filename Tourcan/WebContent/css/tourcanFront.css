@@ -18,4 +18,28 @@
 	width: 96px;
 	height: 96px;
 }
-
+.pageHeader{
+	position:fixed;
+/* 	top:0px; */
+/* 	padding:45px; */
+	text-align:center;
+    vertical-align: middle;
+	margin:0px 0px;
+	width:100%;
+	height:90px;
+	background: url(/Tourcan/images/front/fp-header.jpg) no-repeat center center scroll;
+}
+.pageFooter{
+	position:fixed;
+	bottom:0px;
+	clear:both;
+	margin:0px 0px;
+	width:100%;
+	height:60px;
+	background: url(/Tourcan/images/front/fp-header.jpg) no-repeat bottom center scroll;
+/* 	background: rgba(216,174,71,0.1); */
+	background-color: rgb(216,174,71);
+}
+.containPad{
+	padding:200px 30px;
+}
