@@ -605,7 +605,6 @@
 						}
 						console.log(json);
 					}
-// 					$.post(("ReplyServlet", JSON.stringify(json)),{"questCatalog":questCatalog,"questTopic":questTopic,"memUid":memUid,"questQuiz":questQuiz,"adminId":adminId,"questReply":questReply,"questQtime":questQtime,"questRtime":questRtime},function(data){
 					$.post("ReplyServlet", JSON.stringify(json)).done(function(data) {
 						console.log(JSON.stringify(json));
 						$.each(data, function(errTrip, errMsg) {
