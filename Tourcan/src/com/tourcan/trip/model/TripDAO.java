@@ -10,12 +10,13 @@ import hibernate.util.HibernateUtil;
 public class TripDAO implements TripDAO_interface {
 
 	@Override
-	public void insert(TripVO tripVO) {
+	public Integer insert(TripVO tripVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			session.saveOrUpdate(tripVO);
 			session.getTransaction().commit();
+			return tripVO.getTrip_id();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
 			throw ex;

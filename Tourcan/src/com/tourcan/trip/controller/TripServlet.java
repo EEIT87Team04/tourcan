@@ -132,6 +132,8 @@ public class TripServlet extends HttpServlet {
 		response.setContentType("application/json");
 		BufferedReader br = request.getReader();
 
+		
+		
 		String tripName = null;
 		Timestamp tripCtime = null;
 		Integer tripPrice = null;
@@ -151,18 +153,22 @@ public class TripServlet extends HttpServlet {
 
 			// 抓出建立當下時間
 			tripCtime = new Timestamp(System.currentTimeMillis());
+			tripVO.setTrip_ctime(tripCtime);
 
-			tripPrice = tripVO.getTrip_price();
-			if (tripPrice == null || tripPrice < 0)
-				checkResult.append("trip_price", "預算金額錯誤。");
+			try{
+				tripPrice = tripVO.getTrip_price();
+			}catch(Exception e){
+			}
 
-			memUid = tripVO.getMem_uid(); // 抓出建立會員Id 且 不能修改
+			memUid ="h9nbaY43OGRODXAGp2XMMhskW9r1"; // 抓出建立會員Id 且 不能修改
+			tripVO.setMem_uid(memUid);
 
 			if (checkResult.length() > 0) {
 				throw new Exception();
 			} else {
 				TripService srv = new TripService();
-				srv.insertTrip(tripName, tripCtime, tripPrice, memUid);
+				srv.insertTrip(tripVO);
+				checkResult.append("trip_id", tripVO.getTrip_id());
 				checkResult.append("result", "新增成功");
 				response.getWriter().println(checkResult.toString());
 			}

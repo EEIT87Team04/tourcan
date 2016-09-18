@@ -6,11 +6,37 @@
 
 .myblock {background-color:#FF00FF;height:70px;width:150px; }
 </style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
-<div class='myblock' style='overflow:scroll;'> 
-  <p '>本區設捲軸overflow:scroll。 </p>
-</div>
+<input type="button" value="test" id="test">
 
+<script type="text/javascript">
+var serviceProvider = "${contextPath}/members";
+console.log(serviceProvider);
+
+
+$(function(){
+	$("#test").click(function(){
+		$.ajax({
+			url : serviceProvider+"/region/id=1",
+			method : "GET"
+		//data : JSON.stringify(json),
+		//contentType : "application/json; charset=UTF-8"
+		}).done(function(data) {
+			console.log("200: " + data);
+			refreshView();
+			$("#editorModal").modal('hide');
+		}).fail(function(xhr) {
+			console.log("ERR.");
+		});
+	})
+});
+
+
+
+
+</script>
 </body>
 </html>

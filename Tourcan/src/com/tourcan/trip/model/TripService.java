@@ -11,17 +11,8 @@ public class TripService {
 		dao = new TripDAO();
 	}
 
-	public TripVO insertTrip(String trip_name, Timestamp trip_ctime, Integer trip_price, String mem_uid) {
-
-		TripVO tripVO = new TripVO();
-
-		tripVO.setTrip_name(trip_name);
-		tripVO.setTrip_ctime(trip_ctime);
-		tripVO.setTrip_price(trip_price);
-		tripVO.setMem_uid(mem_uid);
-
+	public TripVO insertTrip(TripVO tripVO) {
 		dao.insert(tripVO);
-
 		return tripVO;
 	}
 
