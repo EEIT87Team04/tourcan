@@ -165,172 +165,172 @@
 						<button type="button" id="searchAtt">查詢</button>
 					</div>
 				</div>
-				<form id="tripForm" style="clear:both; margin-right: 28px;">
-					<div id="sortable">
-						<table style="width: 100% ;table-layout: fixed;margin-top: 10px">
-							<thead class="div5">
-								<tr>
-									<th colspan="7">
-										<label>1到下一站交通方式：</label> 
-										<input type="radio" name="traffic" value="car">開車 
-										<input type="radio" name="traffic" value="public">大眾運輸 
-										<input type="radio" name="traffic" value="walk">步行									
-									</th>
-									<th colspan="5">
-										<label>約__?__公里，估約__?___分鐘</label> 
-									</th>
-								</tr>
-							</thead>
-							<tbody class="div6">
-								<tr>
-									<td colspan="3">
-										<input type="hidden" id="att_addr" value="地址?">
-										<input type="hidden" id="att_id" value="att_id?">
-										<input type="hidden" id="hotel_id" value="hotel_id?">
-									</td>
-									<td colspan="3">
-										<P>預算:<input type="number" style="width:60px;">元</P>
-									</td>
-									<td colspan="3">
-	  									<P>逗留時間:<input type="number" style="width:60px">分</P>
-									</td>
-									<td colspan="3">
-	  									<P>起:time?</P>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="3">
-										<label>景點名稱</label>
-									</td>
-									<td colspan="3">
-										<P>註記:</P>
-									</td>
-									<td colspan="3">
-									</td>
-									<td colspan="3">
-	  									<P>迄:time?</P> 
-									</td>									
-								</tr>
-								<tr>
-									<td colspan="3">
-									</td>
-									<td colspan="6">
-										<textarea  rows="2" style="width:100% ;" placeholder="註記"></textarea>
-									</td>
-									<td colspan="3">
-										<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除">
-									</td>							
-								</tr>
-							</tbody>
-						</table>
-						<table style="width: 100% ;table-layout: fixed;margin-top: 10px">
-							<thead class="div5">
-								<tr>
-									<th colspan="7">
-										<label>2到下一站交通方式：</label> 
-										<input type="radio" name="traffic" value="car">開車 
-										<input type="radio" name="traffic" value="public">大眾運輸 
-										<input type="radio" name="traffic" value="walk">步行									
-									</th>
-									<th colspan="5">
-										<label>約______公里，估約______分鐘</label> 
-									</th>
-								</tr>
-							</thead>
-							<tbody class="div6">
-								<tr>
-									<td colspan="3">
-									</td>
-									<td colspan="3">
-										<P>預算:<input type="number" style="width:60px;">元</P>
-									</td>
-									<td colspan="3">
-	  									<P>逗留時間:<input type="number" style="width:60px">分</P>
-									</td>
-									<td colspan="3">
-	  									<P>起:time</P>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="3">
-										<label>景點名稱</label>
-									</td>
-									<td colspan="3">
-										<P>註記:</P>
-									</td>
-									<td colspan="3">
-									</td>
-									<td colspan="3">
-	  									<P>迄:time</P> 
-									</td>									
-								</tr>
-								<tr>
-									<td colspan="3">
-									</td>
-									<td colspan="6">
-										<textarea  rows="2" style="width:100% ;" placeholder="註記"></textarea>
-									</td>
-									<td colspan="3">
-										<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除">
-									</td>							
-								</tr>
-							</tbody>
-						</table>
-						<table style="width: 100% ;table-layout: fixed;margin-top: 10px">
-							<thead class="div5">
-								<tr>
-									<th colspan="7">
-										<label>3到下一站交通方式：</label> 
-										<input type="radio" name="traffic" value="car">開車 
-										<input type="radio" name="traffic" value="public">大眾運輸 
-										<input type="radio" name="traffic" value="walk">步行									
-									</th>
-									<th colspan="5">
-										<label>約______公里，估約______分鐘</label> 
-									</th>
-								</tr>
-							</thead>
-							<tbody class="div6">
-								<tr>
-									<td colspan="3">
-									</td>
-									<td colspan="3">
-										<P>預算:<input type="number" style="width:60px;">元</P>
-									</td>
-									<td colspan="3">
-	  									<P>逗留時間:<input type="number" style="width:60px">分</P>
-									</td>
-									<td colspan="3">
-	  									<P>起:time</P>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="3">
-										<label>景點名稱</label>
-									</td>
-									<td colspan="3">
-										<P>註記:</P>
-									</td>
-									<td colspan="3">
-									</td>
-									<td colspan="3">
-	  									<P>迄:time</P> 
-									</td>									
-								</tr>
-								<tr>
-									<td colspan="3">
-									</td>
-									<td colspan="6">
-										<textarea  rows="2" style="width:100% ;" placeholder="註記"></textarea>
-									</td>
-									<td colspan="3">
-										<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除">
-									</td>							
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</form>
+<!-- 				<form id="tripForm" style="clear:both; margin-right: 28px;"> -->
+<!-- 					<div id="sortable"> -->
+<!-- 						<table style="width: 100% ;table-layout: fixed;margin-top: 10px"> -->
+<!-- 							<thead class="div5"> -->
+<!-- 								<tr> -->
+<!-- 									<th colspan="7"> -->
+<!-- 										<label>1到下一站交通方式：</label>  -->
+<!-- 										<input type="radio" name="traffic" value="car">開車  -->
+<!-- 										<input type="radio" name="traffic" value="public">大眾運輸  -->
+<!-- 										<input type="radio" name="traffic" value="walk">步行									 -->
+<!-- 									</th> -->
+<!-- 									<th colspan="5"> -->
+<!-- 										<label>約__?__公里，估約__?___分鐘</label>  -->
+<!-- 									</th> -->
+<!-- 								</tr> -->
+<!-- 							</thead> -->
+<!-- 							<tbody class="div6"> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<input type="hidden" id="att_addr" value="地址?"> -->
+<!-- 										<input type="hidden" id="att_id" value="att_id?"> -->
+<!-- 										<input type="hidden" id="hotel_id" value="hotel_id?"> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<P>預算:<input type="number" style="width:60px;">元</P> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 	  									<P>逗留時間:<input type="number" style="width:60px">分</P> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 	  									<P>起:time?</P> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<label>景點名稱</label> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<P>註記:</P> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 	  									<P>迄:time?</P>  -->
+<!-- 									</td>									 -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="3"> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="6"> -->
+<!-- 										<textarea  rows="2" style="width:100% ;" placeholder="註記"></textarea> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除"> -->
+<!-- 									</td>							 -->
+<!-- 								</tr> -->
+<!-- 							</tbody> -->
+<!-- 						</table> -->
+<!-- 						<table style="width: 100% ;table-layout: fixed;margin-top: 10px"> -->
+<!-- 							<thead class="div5"> -->
+<!-- 								<tr> -->
+<!-- 									<th colspan="7"> -->
+<!-- 										<label>2到下一站交通方式：</label>  -->
+<!-- 										<input type="radio" name="traffic" value="car">開車  -->
+<!-- 										<input type="radio" name="traffic" value="public">大眾運輸  -->
+<!-- 										<input type="radio" name="traffic" value="walk">步行									 -->
+<!-- 									</th> -->
+<!-- 									<th colspan="5"> -->
+<!-- 										<label>約______公里，估約______分鐘</label>  -->
+<!-- 									</th> -->
+<!-- 								</tr> -->
+<!-- 							</thead> -->
+<!-- 							<tbody class="div6"> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="3"> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<P>預算:<input type="number" style="width:60px;">元</P> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 	  									<P>逗留時間:<input type="number" style="width:60px">分</P> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 	  									<P>起:time</P> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<label>景點名稱</label> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<P>註記:</P> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 	  									<P>迄:time</P>  -->
+<!-- 									</td>									 -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="3"> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="6"> -->
+<!-- 										<textarea  rows="2" style="width:100% ;" placeholder="註記"></textarea> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除"> -->
+<!-- 									</td>							 -->
+<!-- 								</tr> -->
+<!-- 							</tbody> -->
+<!-- 						</table> -->
+<!-- 						<table style="width: 100% ;table-layout: fixed;margin-top: 10px"> -->
+<!-- 							<thead class="div5"> -->
+<!-- 								<tr> -->
+<!-- 									<th colspan="7"> -->
+<!-- 										<label>3到下一站交通方式：</label>  -->
+<!-- 										<input type="radio" name="traffic" value="car">開車  -->
+<!-- 										<input type="radio" name="traffic" value="public">大眾運輸  -->
+<!-- 										<input type="radio" name="traffic" value="walk">步行									 -->
+<!-- 									</th> -->
+<!-- 									<th colspan="5"> -->
+<!-- 										<label>約______公里，估約______分鐘</label>  -->
+<!-- 									</th> -->
+<!-- 								</tr> -->
+<!-- 							</thead> -->
+<!-- 							<tbody class="div6"> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="3"> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<P>預算:<input type="number" style="width:60px;">元</P> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 	  									<P>逗留時間:<input type="number" style="width:60px">分</P> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 	  									<P>起:time</P> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<label>景點名稱</label> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<P>註記:</P> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 	  									<P>迄:time</P>  -->
+<!-- 									</td>									 -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td colspan="3"> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="6"> -->
+<!-- 										<textarea  rows="2" style="width:100% ;" placeholder="註記"></textarea> -->
+<!-- 									</td> -->
+<!-- 									<td colspan="3"> -->
+<!-- 										<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除"> -->
+<!-- 									</td>							 -->
+<!-- 								</tr> -->
+<!-- 							</tbody> -->
+<!-- 						</table> -->
+<!-- 					</div> -->
+<!-- 				</form> -->
 			</div>
 			
 			<div style="display: none" class="row">
@@ -441,6 +441,7 @@
 				$("#errMsg1").remove();				
 			})
 			
+			//刪除景點明細
 			$(".deleteTripitem").click(function(){
 // 				console.log($(this).parents());
 				$(this).parents(".ui-sortable-handle").remove();	
@@ -726,21 +727,92 @@
 				    $("#sendBtn").click(function(){
 						$("#addTripitemBtn").css("display","block");
 						$("#div3").css("display","none");
-
+						var tripForm=$("<form></form>").attr("id","tripForm").attr("style","clear:both; margin-right: 28px;")
+						var sortDiv=$("<div></div>").attr("id","sortable");
+									
 				    	var selected=[];
 				        $("input[name='attCheck']:checked").each(function(){
-				           selected.push($(this).val());
+// 				           selected.push($(this).val());
+				           
 				       	});
-				        alert("景點名稱 : " + selected.join());
+// 				        alert("景點名稱 : " + selected.join());
 						$("#div3 input").val("");
 						$("#region_id option[value='0']").prop("selected",true);
 						$("#tripType option[value='0']").prop("selected",true);
 						$("#selectForm").remove();
 				   });
-					}
+				}
 				})
 			  }
 		   });
+			
+// 			<form id="tripForm" style="clear:both; margin-right: 28px;">
+// 			<div id="sortable">
+// 				<table style="width: 100% ;table-layout: fixed;margin-top: 10px">
+// 					<thead class="div5">
+// 						<tr>
+// 							<th colspan="7">
+// 								<label>1到下一站交通方式：</label> 
+// 								<input type="radio" name="traffic" value="car">開車 
+// 								<input type="radio" name="traffic" value="public">大眾運輸 
+// 								<input type="radio" name="traffic" value="walk">步行									
+// 							</th>
+// 							<th colspan="5">
+// 								<label>約__?__公里，估約__?___分鐘</label> 
+// 							</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody class="div6">
+// 						<tr>
+// 							<td colspan="3">
+// 								<input type="hidden" id="att_addr" value="地址?">
+// 								<input type="hidden" id="att_id" value="att_id?">
+// 								<input type="hidden" id="hotel_id" value="hotel_id?">
+// 							</td>
+// 							<td colspan="3">
+// 								<P>預算:<input type="number" style="width:60px;">元</P>
+// 							</td>
+// 							<td colspan="3">
+// 									<P>逗留時間:<input type="number" style="width:60px">分</P>
+// 							</td>
+// 							<td colspan="3">
+// 									<P>起:time?</P>
+// 							</td>
+// 						</tr>
+// 						<tr>
+// 							<td colspan="3">
+// 								<label>景點名稱</label>
+// 							</td>
+// 							<td colspan="3">
+// 								<P>註記:</P>
+// 							</td>
+// 							<td colspan="3">
+// 							</td>
+// 							<td colspan="3">
+// 									<P>迄:time?</P> 
+// 							</td>									
+// 						</tr>
+// 						<tr>
+// 							<td colspan="3">
+// 							</td>
+// 							<td colspan="6">
+// 								<textarea  rows="2" style="width:100% ;" placeholder="註記"></textarea>
+// 							</td>
+// 							<td colspan="3">
+// 								<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除">
+// 							</td>							
+// 						</tr>
+// 					</tbody>
+// 				</table>
+			
+			
+			
+			
+			
+			
+			
+			
+			
 	    });
 			
 	</script>
