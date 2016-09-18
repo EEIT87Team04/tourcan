@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Question BackStagew</title>
+  <title>Question BackStage</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="../js/jquery-3.1.0.min.js"></script>  
+  <script src="../js/jquery-3.1.0.min.js"></script>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!--   <link href="/Tourcan/css/style.css" rel="stylesheet"> -->
 <!--   <script src="/Tourcan/js/jquery.paginate.js"></script> -->
@@ -311,7 +311,7 @@
 <!-- <script src="../js/jquery-3.1.0.min.js"></script>   -->
 	<script type="text/javascript">
 	$(function(){
-        $('#replyOne').hide();
+		$('#replyOne').remove();
         $('#replyAll').hide();
 	    $("#quest_getAll").click(function() {
 		        $('#replyAll').show();
@@ -319,9 +319,9 @@
 		    $.getJSON(("QuestServlet"),{"method":"getAll"},function(data){
 			    var myBody = $('#replyAll>tbody');
 			    $.each(data,function(idx,data){
-			    var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
-			    var but2=$('<button class="btn btn-warning btn-xs" id="quest_editCancel">取消查看</button>');
-			    var but3=$('<button class="btn btn-danger btn-xs" id="quest_editReply">回覆</button>');
+			     var but1=$('<button class="btn btn-success btn-xs" >查看</button>');
+			     var but2=$('<button class="btn btn-warning btn-xs" >取消查看</button>');
+			     var but3=$('<button class="btn btn-danger btn-xs" >回覆</button>');
 			    	var cell1 = $("<td></td>").text(data.quest_id);
 				    var cell2 = $("<td></td>").text(data.mem_uid);
 			    	var cell3 = $("<td></td>").text(data.quest_topic);
@@ -336,20 +336,22 @@
 					    function () {
 							$(this).css("background","#FFD9EC");},
 						function () {
-							$(this).css("background","");});     
+							$(this).css("background","");});  
+			    
 			})
 		})
 		
 
        $("#replyAll").on('click','.btn-success',function(){
 //             $('#replyOne').show();
+           
             quest_replyValue=null;
             $('#replyOne').remove();
 		    var rowClosest = $(this).closest("tr");              
 		    var questId = rowClosest.find("td:eq(0)").text();     // Finds the 1st <td> element
 		    console.log(questId);
 		    $.get(("QuestServlet"),{"questId":questId,"method":"getOneById"},function(data){
-			     $.each(data,function(questName,questValue){
+		    	$.each(data,function(questName,questValue){
 // 		   	   	    console.log(questName+" : "+questValue);
 				    if(questName=="quest_reply"){
                         quest_replyValue=questValue;
@@ -574,6 +576,7 @@
 			  			
 			  			rowClosest.after(frag);
 			  			
+			  			
 			        }
 		    })
 		    
@@ -585,11 +588,13 @@
 	      })
 	      
 	       $(".btn-danger").click(function(){
-		        $("#myModal").modal();
+	    	   $("#myModal").modal();
+	    	   errMsgSpan = $('form[name="addQuest"] span');
+	    	   errMsgSpan.remove();
 		        
-		        $("#btnInsert").click(function() {
-					var errMsgSpan = $('form[name="addQuest"] span');
-					errMsgSpan.remove();
+		        $("#btnInsert").off('click').on('click',function() {
+// 					errMsgSpan = $('form[name="addQuest"] span');
+// 					errMsgSpan.remove();
 					var form = $(document.addQuest).serializeArray(), json = {};
 					
 					json["quest_quiz"]=quest_quiz;
@@ -610,7 +615,8 @@
 						$.each(data, function(errTrip, errMsg) {
 							if (errMsg == "回覆成功") {
 								document.addQuest.reset();
-								errMsgSpan.remove();
+								errMsgSpan.empty();
+								
 							}
 							var errSpan = document.createElement("span");
 							var errText = document.createTextNode(errMsg);
@@ -620,6 +626,8 @@
 							errSpan.setAttribute("id", errId);
 							$('#' + errId).remove();
 							$('#' + errTrip).after(errSpan);
+							
+							
 						});
 						console.log("200.");
 					}).fail(function(xhr) {
@@ -648,6 +656,7 @@
 // 	    	   location.href = "list.aspx?id=" + page;
 // 	       }
 // 	   });
+	    
 	
 	})
 	
