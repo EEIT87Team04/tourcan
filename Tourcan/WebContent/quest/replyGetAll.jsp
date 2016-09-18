@@ -283,7 +283,7 @@
           <form role="form" name="addQuest">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> Admin ID</label>
-              <input type="number" class="form-control" id="admin_id" name="admin_id" placeholder="Enter adminId" min=-1>
+              <input type="number" class="form-control" id="admin_id" name="admin_id" placeholder="Enter adminId" min=1>
             </div>
             <div class="form-group">
               <label for="questReply"><span class="glyphicon glyphicon-eye-open"></span> Reply Text</label>
@@ -292,7 +292,10 @@
             <div class="checkbox">
               <label></label>
             </div>
-              <button type="submit" class="btn btn-success btn-block" id="btnInsert"><span class="glyphicon glyphicon-off"></span> 確定</button>
+              <button type="button" class="btn btn-success btn-block form-control" id="btnInsert"><span class="glyphicon glyphicon-off"></span> 確定</button>
+            <div >
+				<div  id="result"></div>
+			</div>
           </form>
         </div>
         <div class="modal-footer">
@@ -354,15 +357,39 @@
 				    }
 				    if(questName=="quest_quiz"){
 				    	quest_quizValue=questValue;
-				    	console.log(quest_quizValue);		
+				    	quest_quiz=questValue;
+				    	console.log(quest_quizValue);
+				    	console.log(quest_quiz);
 				    }
 				    if(questName=="quest_qtime"){
 				    	quest_qtimeValue=questValue;
-				    	console.log(quest_qtimeValue);		
+				    	quest_qtime=questValue;
+				    	console.log(quest_qtimeValue);
+				    	console.log(quest_qtime);		
 				    }
 				    if(questName=="quest_rtime"){
 				    	quest_rtimeValue=questValue;
 				    	console.log(quest_rtimeValue);		
+				    }
+				    if(questName=="quest_catalog"){
+				    	quest_catalogValue=questValue;
+				    	quest_catalog1=questValue;
+				    	quest_catalog=quest_catalog1.toString();
+				    	console.log(quest_catalogValue);
+				    	console.log(quest_catalog);
+				    }
+				    if(questName=="quest_topic"){
+				    	quest_topicValue=questValue;
+				    	quest_topic=questValue;
+				    	console.log(quest_topicValue);
+				    	console.log(quest_topic);		
+				    }
+				    if(questName=="mem_uid"){
+				    	mem_uidValue=questValue;
+				    	memUid1=questValue;
+				    	mem_uid=memUid1.toString();
+				    	console.log(mem_uidValue);
+				    	console.log(mem_uid);		
 				    }
 
 			     })
@@ -559,6 +586,51 @@
 	      
 	       $(".btn-danger").click(function(){
 		        $("#myModal").modal();
+		        
+		        $("#btnInsert").click(function() {
+					var errMsgSpan = $('form[name="addQuest"] span');
+					errMsgSpan.remove();
+					var form = $(document.addQuest).serializeArray(), json = {};
+					
+					json["quest_quiz"]=quest_quiz;
+					json["quest_catalog"]=quest_catalog;
+					json["quest_topic"]=quest_topic;
+					json["quest_qtime"]=quest_qtime;
+					json["mem_uid"]=mem_uid;
+					
+					for (var i = 0; i < form.length; i++) {
+						
+						if (form[i].value.length > 0) {
+							json[form[i].name] = form[i].value;
+						}
+						console.log(json);
+					}
+// 					$.post(("ReplyServlet", JSON.stringify(json)),{"questCatalog":questCatalog,"questTopic":questTopic,"memUid":memUid,"questQuiz":questQuiz,"adminId":adminId,"questReply":questReply,"questQtime":questQtime,"questRtime":questRtime},function(data){
+					$.post("ReplyServlet", JSON.stringify(json)).done(function(data) {
+						console.log(JSON.stringify(json));
+						$.each(data, function(errTrip, errMsg) {
+							if (errMsg == "回覆成功") {
+								document.addQuest.reset();
+								errMsgSpan.remove();
+							}
+							var errSpan = document.createElement("span");
+							var errText = document.createTextNode(errMsg);
+							var errId = 'err' + errTrip;
+							errSpan.appendChild(errText);
+							errSpan.setAttribute("style", "color:red");
+							errSpan.setAttribute("id", errId);
+							$('#' + errId).remove();
+							$('#' + errTrip).after(errSpan);
+						});
+						console.log("200.");
+					}).fail(function(xhr) {
+						console.log("ERR.");
+					});
+				});
+		        
+		        
+		        
+		        
            })
            
        })
@@ -567,13 +639,6 @@
 		   $('#replyAll').hide();
 	   })
 	   
-
-// 	   $("tr").not(':first').hover(
-// 				    function () {
-// 				    	console.log("3");
-// 						$(this).css("background","#FFD9EC");},
-// 					function () {
-// 						$(this).css("background","");});
 	   //分页
 // 	   $("#demo1").paginate({
 // 	       count: 10,

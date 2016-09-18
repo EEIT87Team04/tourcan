@@ -14,7 +14,7 @@ public class QuestVO implements java.io.Serializable {
 	private Integer quest_id;
 	private Integer mem_uid;
 	private String quest_quiz;
-	private Integer admin_id;
+	private Integer admin_id;	
 	private String quest_reply;
 	private Timestamp quest_qtime;
 	private Timestamp quest_rtime;

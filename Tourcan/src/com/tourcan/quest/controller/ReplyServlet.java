@@ -131,6 +131,12 @@ public class ReplyServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		BufferedReader br = request.getReader();
+		StringBuffer sb = new StringBuffer(128);
+		  String json;
+		  while ((json = br.readLine()) != null)
+		   sb.append(json);
+		  json = sb.toString();
+		  System.out.println("json="+json);
 
 		Integer questCatalog = null;
 		String questTopic = null;
@@ -142,46 +148,47 @@ public class ReplyServlet extends HttpServlet {
 		Timestamp questRtime = null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
-		QuestVO questVO = null;
+		JSONObject obj = new JSONObject(json);
 		try {
-			System.out.println("1");
-			questVO = new Gson().fromJson(br, QuestVO.class);
-
-			questCatalog = questVO.getQuest_catalog();
+			questCatalog = obj.getInt("quest_catalog");
+			System.out.println("questCatalog="+questCatalog);
 			if (questCatalog == null || questCatalog < 0)
 				checkResult.append("getQuest_catalog", "問題分類錯誤。");
 
-			questTopic = questVO.getQuest_topic();
+			questTopic = obj.getString("quest_topic");
+			System.out.println(questTopic);
 			if (questTopic == null || questTopic.trim().isEmpty()) {
 				checkResult.append("getQuest_topic", "請輸入問題名稱。");
 			} else if (questTopic.trim().length() >= 50) {
 				checkResult.append("getQuest_topic", "問題名稱不得超過50個字");
 			}
 
-//			 memUid = questVO.getMem_uid();
-//			 if (memUid == null || memUid < 0)
-//			 checkResult.append("getMem_uid", "會員ID錯誤。");
+			 memUid = obj.getInt("mem_uid");
+			 if (memUid == null || memUid < 0)
+			 checkResult.append("getMem_uid", "會員ID錯誤。");
 
-//			questQuiz = questVO.getQuest_quiz();
-//			if (questQuiz == null || questQuiz.trim().isEmpty())
-//				checkResult.append("getQuest_quiz", "問題內容錯誤。");
-			questQuiz="Already Sent";
+			questQuiz = obj.getString("quest_quiz");
+			if (questQuiz == null || questQuiz.trim().isEmpty())
+				checkResult.append("getQuest_quiz", "問題內容錯誤。");
 
-//			 adminId = questVO.getAdmin_id();
-//			 if (adminId == null || adminId < 0)
-//			 checkResult.append("getAdmin_id", "管理員ID錯誤。");
+			 adminId = obj.getInt("admin_id");
+			 if (adminId == null || adminId < 0)
+			 checkResult.append("getAdmin_id", "管理員ID錯誤。");
 
-			questReply = questVO.getQuest_reply();
+			questReply = obj.getString("quest_reply");
 			if (questReply == null || questReply.trim().isEmpty())
 				checkResult.append("getQuest_reply", "問題回覆錯誤。");
 
 			// 抓出建立當下時間
-			memUid = 1;
-			questQtime = new Timestamp(System.currentTimeMillis());
+//			memUid = 1;
+			
+//			questReply = questVO.getQuest_qtime();
+//			questQtime = new Timestamp(System.currentTimeMillis());
+			questQtime = Timestamp.valueOf((obj.getString("quest_qtime")));  
 			questRtime = new Timestamp(System.currentTimeMillis());
 
 //			memUid = questVO.getMem_uid(); // 抓出建立會員Id 且 不能修改
-			adminId = 1; // 抓出回覆管理員Id 且 不能修改
+//			adminId = 1; // 抓出回覆管理員Id 且 不能修改
 
 			if (checkResult.length() > 0) {
 				throw new Exception();
