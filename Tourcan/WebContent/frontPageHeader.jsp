@@ -8,8 +8,9 @@
     <title>Bare - Start Bootstrap Template</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/Tourcan/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/Tourcan/css/tourcanFront.css" rel="stylesheet">
+  <link href="/Tourcan/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/Tourcan/css/tourcanFront.css" rel="stylesheet">
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <style>

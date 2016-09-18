@@ -1,19 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html  >
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>發表新主題</title>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> 
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
-  <script src="../lang/summernote-zh-TW.js"></script>
-  
-</head>
-<body>
+<!DOCTYPE html>
+<jsp:include page="/frontPageHeader.jsp" />
 <div class="container">
 	<div>	
 		<form name="addTheme">
@@ -61,6 +49,8 @@
 	</div>	
 </div>
 
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+    <script src="/Tourcan/lang/summernote-zh-TW.js"></script>
   
 	<script type="text/javascript">
 
@@ -125,6 +115,4 @@
 		};
 	
 	</script>
-	
-</body>
-</html>
+	<jsp:include page="/frontPageFooter.jsp" />
