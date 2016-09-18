@@ -415,6 +415,9 @@
 		$(function(){
 			
 			var trip_id=null;
+			//定義sortable form
+			var tripForm=$("<form></form>").attr("id","tripForm").attr("style","clear:both; margin-right: 28px;")
+			var sortDiv=$("<div></div>").attr("id","sortable");
 			//新增行程
 			$("#addTripBtn").click(function(){
 				var tripName=$("#trip_name").val();
@@ -723,19 +726,81 @@
 					attForm.appendChild(sendBtn);
 					$("#div3").after(attForm);
 					
+				
 					//景點選單送出
 				    $("#sendBtn").click(function(){
 						$("#addTripitemBtn").css("display","block");
 						$("#div3").css("display","none");
-						var tripForm=$("<form></form>").attr("id","tripForm").attr("style","clear:both; margin-right: 28px;")
-						var sortDiv=$("<div></div>").attr("id","sortable");
+						tripForm.append(sortDiv);
 									
 				    	var selected=[];
 				        $("input[name='attCheck']:checked").each(function(){
 // 				           selected.push($(this).val());
-				           
+							var attname1=$(this).val();
+							$.get("../att/AttServlet",{"attname":attname1,"method":"getByName"},function(data1){
+								$.each(data1,function(idx1,att1){
+// 									console.log("idx1="+idx1);
+// 									console.log("att1="+att1);
+// 									console.log("addr="+att1.att_addr);
+									var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
+									
+									var lable1=$("<lable></lable>").text("到下一站交通方式:");
+									var input1=$("<input></input>").attr("type","radio").attr("name","traffic").attr("value","car").text("開車");
+									var input2=$("<input></input>").attr("type","radio").attr("name","traffic").attr("value","public").text("大眾運輸");
+									var input3=$("<input></input>").attr("type","radio").attr("name","traffic").attr("value","walk").text("步行");
+									var th1=$("<th></th>").attr("colspan","7").append([lable1,input1,input2,input3]);
+									
+									var lable2=$("<lable></lable>").text("約__?__公里，估約__?___分鐘:");
+									var th2=$("<th></th>").attr("colspan","5").append(lable2);
+									
+									var tr1=$("<tr></tr>").append([th1,th2]);
+									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
+									
+									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("value","att1.att_addr");
+									var input5=$("<input></input>").attr("type","hidden").attr("id","att_id").attr("value","att1.att_id");
+									var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
+									
+									var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
+									var td2=$("<td></td>").attr("colspan","3").append(p1);
+									
+									var p2=$("<p></p>").html("逗留時間:<input type='number' style='width:60px'>分");
+									var td3=$("<td></td>").attr("colspan","3").append(p2);
+									
+									var p3=$("<p></p>").text("起:time?");
+									var td4=$("<td></td>").attr("colspan","3").append(p3);
+									
+									var lable3=$("<lable></lable>").text(attname1);
+									var td5=$("<td></td>").attr("colspan","3").append(lable3);
+									
+									var p4=$("<p></p>").text("註記:");
+									var td6=$("<td></td>").attr("colspan","3").append(p4);
+									
+									var td7=$("<td></td>").attr("colspan","3");
+									
+									var p5=$("<p></p>").text("迄:time?");
+									var td8=$("<td></td>").attr("colspan","3").append(p5);
+									
+									var td9=$("<td></td>").attr("colspan","3");
+									
+									var textarea1=$("<textarea></textarea>").attr("rows","2").attr("style","width:100%").attr("placeholder","註記:");
+									var td10=$("<td></td>").attr("colspan","6").append(textarea1);
+									
+									var input6=$("<input></input>").attr("type","button").attr("class","deleteTripitem").attr("style","margin-left: 7px").attr("value","刪除"); 
+									var td11=$("<td></td>").attr("colspan","3").append(input6);
+									
+									var tr2=$("<tr></tr>").append([td1,td2,td3,td4]);
+									var tr3=$("<tr></tr>").append([td5,td6,td7,td8]);
+									var tr4=$("<tr></tr>").append([td9,td10,td11]);
+									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
+									
+									tripitemTable.append([tripitemThead,tripitemTbody]);
+									
+									sortDiv.append(tripitemTable);
+								})
+							})
 				       	});
 // 				        alert("景點名稱 : " + selected.join());
+                        $("#div3").after(tripForm);
 						$("#div3 input").val("");
 						$("#region_id option[value='0']").prop("selected",true);
 						$("#tripType option[value='0']").prop("selected",true);
