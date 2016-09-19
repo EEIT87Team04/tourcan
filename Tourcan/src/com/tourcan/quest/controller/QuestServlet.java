@@ -103,40 +103,37 @@ public class QuestServlet extends HttpServlet {
 		}
 		// ----------------findByUid----------------
 
+		String memUid = request.getParameter("memUid");
 //		List<QuestVO> questVO = null;
 
 		if (method.equals("getAllByUid")) {
 			JSONObject checkResult = new JSONObject();
-			Integer memUid = null;
-			
 			try {
-				String id = request.getParameter("memUid");
-				// System.out.println(id);
-				if (id == null || id.trim().length() == 0) {
+				if (memUid == null || memUid.trim().length() == 0)
 					checkResult.append("checkResult", "請輸入memUid");
+
+				if (checkResult.length() > 0) {
+					throw new Exception();
 				} else {
-					try {
-						memUid = new Integer(id);
-					} catch (Exception e) {
-						// e.printStackTrace();
-						checkResult.append("checkResult", "問題ID格式不正確");
+					QuestService questSvc = new QuestService();
+					questVO = questSvc.findByUid(memUid);
+					if (questVO.size() != 0) {
+						Gson gson = new Gson();
+						String jsonG = gson.toJson(questVO);
+						// System.out.println(jsonG);
+						response.getWriter().println(jsonG);
+					} else {
+						checkResult.append("checkResult", "查無資料");
+						response.getWriter().println(checkResult.toString());
 					}
 				}
-				QuestService questSvc = new QuestService();
-				questVO = questSvc.findByUid(memUid);
-				if (questVO != null) {
-					JSONObject obj = new JSONObject(questVO);
-					response.getWriter().println(obj.toString());
-				} else {
-					checkResult.append("checkResult", "查無資料");
-					response.getWriter().println(checkResult.toString());
-				}
 			} catch (Exception e) {
-				checkResult.append("false", "查詢失敗");
+				checkResult.append("result", "查詢失敗");
+				System.out.println("err=" + checkResult);
 				response.getWriter().println(checkResult.toString());
 			}
 		}
-		
+
 		// ----------------getAll----------------
 
 		if (method.equals("getAll")) {
@@ -169,7 +166,7 @@ public class QuestServlet extends HttpServlet {
 
 		Integer questCatalog = null;
 		String questTopic = null;
-		Integer memUid = null;
+		String memUid = null;
 		String questQuiz = null;
 		Integer adminId = null;
 		String questReply = null;
@@ -192,29 +189,30 @@ public class QuestServlet extends HttpServlet {
 				checkResult.append("getQuest_topic", "問題名稱不得超過50個字");
 			}
 
-			 memUid = questVO.getMem_uid();
-			 if (memUid == null || memUid < 0)
-			 checkResult.append("getMem_uid", "會員ID錯誤。");
+//			memUid = questVO.getMem_uid();
+//			if (memUid == null || memUid.trim().isEmpty())
+//				checkResult.append("getMem_uid", "會員ID錯誤。");
 
 			questQuiz = questVO.getQuest_quiz();
 			if (questQuiz == null || questQuiz.trim().isEmpty())
 				checkResult.append("getQuest_quiz", "問題內容錯誤。");
 
- 			 adminId = questVO.getAdmin_id();
-//			 if (adminId == null || adminId < 0)
-//			 checkResult.append("getAdmin_id", "管理員ID錯誤。");
+			// adminId = questVO.getAdmin_id();
+			// if (adminId == null || adminId < 0)
+			// checkResult.append("getAdmin_id", "管理員ID錯誤。");
 
-//			questReply = questVO.getQuest_reply();
-//			if (questReply == null || questReply.trim().isEmpty())
-//				checkResult.append("getQuest_reply", "問題回覆錯誤。");
+			// questReply = questVO.getQuest_reply();
+			// if (questReply == null || questReply.trim().isEmpty())
+			// checkResult.append("getQuest_reply", "問題回覆錯誤。");
 
 			// 抓出建立當下時間
-			memUid = 1;
-			questQtime = new Timestamp(System.currentTimeMillis());
+			questQtime = new Timestamp(System .currentTimeMillis());
+			memUid = "1";
+			adminId = null;
 			questReply = null;
 			questRtime = null;
 
-//			memUid = questVO.getMem_uid(); // 抓出建立會員Id 且 不能修改
+			// memUid = questVO.getMem_uid(); // 抓出建立會員Id 且 不能修改
 			adminId = 1; // 抓出回覆管理員Id 且 不能修改
 
 			if (checkResult.length() > 0) {
@@ -227,7 +225,7 @@ public class QuestServlet extends HttpServlet {
 				response.getWriter().println(checkResult.toString());
 			}
 		} catch (Exception e) {
-			checkResult.append("result", "新增失敗。");
+			checkResult.append("result", "新增失敗");
 			response.getWriter().println(checkResult.toString());
 			e.printStackTrace();
 		}

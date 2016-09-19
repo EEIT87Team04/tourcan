@@ -12,7 +12,7 @@ public class QuestVO implements java.io.Serializable {
 	private Integer quest_catalog;
 	private String quest_topic;
 	private Integer quest_id;
-	private Integer mem_uid;
+	private String mem_uid;
 	private String quest_quiz;
 	private Integer admin_id;	
 	private String quest_reply;
@@ -40,10 +40,10 @@ public class QuestVO implements java.io.Serializable {
 	public void setQuest_id(Integer quest_id) {
 		this.quest_id = quest_id;
 	}
-	public Integer getMem_uid() {
+	public String getMem_uid() {
 		return mem_uid;
 	}
-	public void setMem_uid(Integer mem_uid) {
+	public void setMem_uid(String mem_uid) {
 		this.mem_uid = mem_uid;
 	}
 	public String getQuest_quiz() {

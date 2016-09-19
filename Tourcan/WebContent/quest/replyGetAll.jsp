@@ -13,6 +13,8 @@
 <!--   <script src="/Tourcan/js/jquery.paginate.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.3/js/bootstrap-dialog.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.3/js/bootstrap-dialog.min.js"></script>
 
 <style type="text/css">
 .timeline {
@@ -204,6 +206,7 @@
     </div>
   </div>
 </div>
+<!------------------------!!!!!!---- 請勿刪除此段註解的 div, 謝謝 ----!!!!!!------------------------------------>
 <!-- <div class="container" id="replyOne"> -->
 <!-- 		<ul class="timeline"> -->
 <!-- 			<li> -->
@@ -265,9 +268,10 @@
 			
 <!-- 		</ul> -->
 <!-- 	</div> -->
+<!------------------------!!!!!!---- 請勿刪除此段註解的 div, 謝謝 ----!!!!!!------------------------------------>
 
 <div class="container">
-  <!-- Trigger the modal with a button -->
+  <!-- Trigger the modal with a buttom n -->
 <!-- <button type="button" class="btn btn-default btn-lg" id="quest_editReply">Reply</button> -->
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -313,7 +317,8 @@
 	$(function(){
 		$('#replyOne').remove();
         $('#replyAll').hide();
-	    $("#quest_getAll").click(function() {
+	    
+        $("#quest_getAll").click(function() {
 		        $('#replyAll').show();
 				$('#replyAll>tbody').empty();
 		    $.getJSON(("QuestServlet"),{"method":"getAll"},function(data){
@@ -347,8 +352,10 @@
            
             quest_replyValue=null;
             $('#replyOne').remove();
-		    var rowClosest = $(this).closest("tr");              
+		    var rowClosest = $(this).closest("tr");
+// 		    var rowClosestTd = $(this).closest("tr>td:eq(4)");
 		    var questId = rowClosest.find("td:eq(0)").text();     // Finds the 1st <td> element
+		    
 		    console.log(questId);
 		    $.get(("QuestServlet"),{"questId":questId,"method":"getOneById"},function(data){
 		    	$.each(data,function(questName,questValue){
@@ -382,7 +389,8 @@
 				    }
 				    if(questName=="quest_topic"){
 				    	quest_topicValue=questValue;
-				    	quest_topic=questValue;
+				    	quest_topic1=questValue;
+				    	quest_topic="Re:"+quest_topic1;
 				    	console.log(quest_topicValue);
 				    	console.log(quest_topic);		
 				    }
@@ -576,7 +584,7 @@
 			  			
 			  			rowClosest.after(frag);
 			  			
-			  			
+			  			rowClosest.find("td>button:eq(2)").removeClass("btn-danger").addClass("btn-info disabled").attr("disabled","disabled").text("已回覆");;
 			        }
 		    })
 		    
@@ -589,7 +597,7 @@
 	      
 	       $(".btn-danger").click(function(){
 	    	   $("#myModal").modal();
-	    	   errMsgSpan = $('form[name="addQuest"] span');
+	    	   errMsgSpan = $('form[name="addQuest"] p');
 	    	   errMsgSpan.remove();
 		        
 		        $("#btnInsert").off('click').on('click',function() {
@@ -613,12 +621,19 @@
 					$.post("ReplyServlet", JSON.stringify(json)).done(function(data) {
 						console.log(JSON.stringify(json));
 						$.each(data, function(errTrip, errMsg) {
+							
 							if (errMsg == "回覆成功") {
 								document.addQuest.reset();
 								errMsgSpan.empty();
+                                setTimeout(function() { $('#myModal').modal('hide'); }, 1500);
 								
+								BootstrapDialog.alert({
+									 title: $('<h4 style="color:white !important;text-align: center;font-weight:bold"><span class="glyphicon glyphicon-check"></span>回覆問題成功</h4>'),
+							         message: $('<p style="color:blue;font-weight:bold;text-align:ccenter">謝謝您的回覆，此提問已完成處理！</p>')
+							    });
 							}
-							var errSpan = document.createElement("span");
+							
+							var errSpan = document.createElement("p");
 							var errText = document.createTextNode(errMsg);
 							var errId = 'err' + errTrip;
 							errSpan.appendChild(errText);
@@ -634,11 +649,8 @@
 						console.log("ERR.");
 					});
 				});
-		        
-		        
-		        
-		        
            })
+           
            
        })
        

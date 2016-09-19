@@ -9,7 +9,7 @@ public interface QuestDAO_interface {
 		public void delete(Integer quest_id);
 		public QuestVO findById(Integer quest_id);
 		public List<QuestVO> findByName(String quest_topic);
-		public List<QuestVO> findByUid(Integer mem_uid);
+		public List<QuestVO> findByUid(String mem_uid);
 		public List<QuestVO> getAll();
 
 }

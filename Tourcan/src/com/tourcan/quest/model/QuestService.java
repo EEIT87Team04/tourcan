@@ -14,7 +14,7 @@ public class QuestService {
 		dao = new QuestDAO();
 	}
 
-	public QuestVO insertQuest(Integer quest_catalog, String quest_topic, Integer mem_uid, String quest_quiz,
+	public QuestVO insertQuest(Integer quest_catalog, String quest_topic, String mem_uid, String quest_quiz,
 			Integer admin_id, String quest_reply, Timestamp quest_qtime, Timestamp quest_rtime) {
 		
 		QuestVO questVO = new QuestVO();
@@ -45,7 +45,7 @@ public class QuestService {
 		return dao.findByName(quest_topic);
 	}
 	
-	public List<QuestVO> findByUid(Integer mem_uid){
+	public List<QuestVO> findByUid(String mem_uid){
 		return dao.findByUid(mem_uid);
 	}
 	

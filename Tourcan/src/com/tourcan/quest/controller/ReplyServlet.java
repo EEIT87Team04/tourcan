@@ -140,7 +140,7 @@ public class ReplyServlet extends HttpServlet {
 
 		Integer questCatalog = null;
 		String questTopic = null;
-		Integer memUid = null;
+		String memUid = null;
 		String questQuiz = null;
 		Integer adminId = null;
 		String questReply = null;
@@ -163,8 +163,8 @@ public class ReplyServlet extends HttpServlet {
 				checkResult.append("getQuest_topic", "問題名稱不得超過50個字");
 			}
 
-			 memUid = obj.getInt("mem_uid");
-			 if (memUid == null || memUid < 0)
+			 memUid = obj.getString("mem_uid");
+			 if (memUid == null || memUid.trim().isEmpty())
 			 checkResult.append("getMem_uid", "會員ID錯誤。");
 
 			questQuiz = obj.getString("quest_quiz");
@@ -200,7 +200,7 @@ public class ReplyServlet extends HttpServlet {
 				response.getWriter().println(checkResult.toString());
 			}
 		} catch (Exception e) {
-			checkResult.append("result", "回覆失敗。");
+			checkResult.append("result", "回覆失敗");
 			response.getWriter().println(checkResult.toString());
 			e.printStackTrace();
 		}

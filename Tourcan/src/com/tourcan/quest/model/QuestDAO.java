@@ -87,7 +87,7 @@ public class QuestDAO implements QuestDAO_interface {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<QuestVO> findByUid(Integer mem_uid) {
+	public List<QuestVO> findByUid(String mem_uid) {
 		List<QuestVO> list=null;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		String likeString="%"+mem_uid +"%";
