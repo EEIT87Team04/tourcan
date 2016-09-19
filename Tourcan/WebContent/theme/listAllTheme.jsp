@@ -1,62 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.tourcan.util.ApplicationContextUtils"%>
 <%@ page import="com.tourcan.theme.model.*"%>
+<%@ page import="com.tourcan.mem.model.*"%>
 <%@ page import="java.util.*" %>
 <%
 	ThemeService tsv =new ThemeService();
 	List<ThemeVO> list =tsv.getAll();
-	pageContext.setAttribute("list",list);
-
-		
+	pageContext.setAttribute("list",list);	
+	MemDAO dao = (MemDAO) ApplicationContextUtils.getContext().getBean("memDAO");
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+  	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+  	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>討論區主題列表</title>
+
 </head>
 <body >
 <div class="container">
 	<div class="row" >
-		
 		<div class="col-md-6">
 			<h1>討論區主題列表</h1>
 		</div>
-		
 		<div class="col-md-6 ">
 			<form class=form-inline>
-				<div class="col-md-8">
+				<div class="col-md-8 btn pull-left">
 					<div class="form-group">
 						<label for="themeTopic">TopicSearch</label><input type="text" class="form-control" id="theme_topic" name="themetopic" placeholder="themeTopic">
-					<button type="button" class="btn btn-success form-control" id="btnTopicCheck">搜尋</button>
+						<button type="button" class="btn btn-success form-control" id="btnTopicCheck">搜尋</button>
 					</div>
 				</div>
 			</form>
-			<div class="col-md-4">
+			<div class="col-md-4 btn pull-right">
 				<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">發表新主題</button>
 			</div>	
-<%-- 		<p><%=request.getContextPath()%> --%> 
 		</div>
-		
 	</div>
-<input type='hidden' id='current_page' /> <input type='hidden'
-		id='show_per_page' />
+<input type='hidden' id='current_page' /> <input type='hidden' id='show_per_page' />
 
-	<table id="themeList" class="table table-hover tableList">
+	<table id="themeList" class="table table-hover tableList" >
 		<thead>
 			<tr >
 				<th>id</th>				
 				<th>topic</th>
 				<th>memUID</th>
-		
+				<th>Create time</th>		
 			</tr>
 		</thead>
-		<tbody id="dataList">
+		<tbody id="dataList" >
 			<c:forEach var="ThemeVO" items="${list}">
+			<% 
+			ThemeVO thvo = (ThemeVO) pageContext.getAttribute("ThemeVO"); 
+			MemVO mvo = dao.findByUid(thvo.getMem_uid()); 
+			pageContext.setAttribute("mvo", mvo); 
+			%>
 				<tr >
 					<td >
 						<FORM METHOD="get" ACTION="ThemeServlet">
@@ -74,8 +76,8 @@
 						<input type="hidden"name="method" value="getOne_For_Display">
 					</FORM>
 					</td>
-					<td>${ThemeVO.mem_uid}</td>
-					
+					<td>${mvo.mem_lname}${mvo.mem_fname}</td>
+					<td>${ThemeVO.theme_time.toString().substring(0, 16)}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -83,27 +85,31 @@
 <ul id='page_navigation' class="pagination pagination-lg"></ul>
 </div>
 
-<script type="text/javascript">
 
+<script type="text/javascript">
 $(function(){
-	var serviceProvider = "${contextPath}/members";
-	var umd = "t3L6KuZlh4W4X3IIzexqIzTFtGh1";
-	console.log(serviceProvider);
-	$.ajax(
-			{
-				url:serviceProvider+"/t3L6KuZlh4W4X3IIzexqIzTFtGh1",
-				method:"Get",
-				contentType:"application/json ; charset=UTF-8",
+	 var a="${contextPath}";
+	 console.log(a)
+// 	var serviceProvider = "${contextPath}/members";
+// 	var umd = "t3L6KuZlh4W4X3IIzexqIzTFtGh1"; w8mtMYAqW6fu2RxLZ3QswrC4wCL2
+// 	var umd = "a1";
+// 	console.log(serviceProvider);
+// 	$.ajax(
+// 			{
+// 				url:serviceProvider+"/"+umd,
+// 				method:"Get",
+// 				contentType:"application/json ; charset=UTF-8",
 // 				data:{uid:"t3L6KuZlh4W4X3IIzexqIzTFtGh1"},
-				dataType:"json"	,
-				success:function(data){
-							console.log(data) 
+// 				dataType:"json"	,
+// 				}).done(function(data){
+// 					console.log("200: " + data);
+
 // 							console.log("index"+attName)
 // 							console.log(attValue)
 						
-				}
+// 				});
 						
-	})
+	
 		
 
 	$("#btnTopicCheck").click(function() {

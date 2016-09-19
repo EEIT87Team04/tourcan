@@ -57,8 +57,6 @@ public class ThemeServlet extends HttpServlet {
 //			System.out.println(thstr);
 //			System.out.println(muid);
 			try {
-
-
 				Integer memno = null;
 				try {
 					memno = new Integer(thstr);
@@ -66,33 +64,23 @@ public class ThemeServlet extends HttpServlet {
 					throw new Exception();
 				}
 				// Send the use back to the form, if there were errors
-				
+				Response r = new MemService().queryByUid(muid);
 				
 				RespService rsv = new RespService();
 				List<RespVO> resVO1 = rsv.findByThID(memno);
-				
 //				MemService msv =new MemService();
-				Response r = new MemService().queryByUid(muid);
-				
 				// System.out.println("resVO1="+resVO1);
 				ThemeService tsv = new ThemeService();
 				ThemeVO themeVO1 = tsv.findById(memno);
-				if (themeVO1 == null) {
-				}
-				// Send the use back to the form, if there were errors
 
-				// ***************************3.�d�ߧ���,�ǳ����(Send the
-				// Success view)*************//*
-//				System.out.println("aaaaaaaaaa"+r);
-				req.setAttribute("list", resVO1);
 				req.setAttribute("data",r.getEntity());
-				req.setAttribute("themeVO", themeVO1); // ��Ʈw���X��empVO����,�s�Jreq
+				req.setAttribute("list", resVO1);
+				req.setAttribute("themeVO", themeVO1); 
 				String url = "/theme/listOneTheme.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ���\���
-																				// listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+																				
 				successView.forward(req, resp);
 
-				// ***************************��L�i�઺���~�B�z*************************************//*
 			} catch (Exception e) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
 				failureView.forward(req, resp);

@@ -29,7 +29,6 @@ public class MemService {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response queryByUid(@PathParam("uid") String uid) {
 		MemVO vo;
-		System.out.println("213123123213");
 		if ((vo = dao.findByUid(uid)) == null) {
 			HashMap<String, Object> msg = new HashMap<String, Object>();
 			msg.put("result", "failure");

@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<!DOCTYPE html >
 <html  >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,7 +17,7 @@
 	<div>	
 		<form name="addTheme">
 			<div class="row">
-				<div  class="col-sm-6 col-sm-offset-3">
+				<div  class="col-sm-6 col-sm-offset-5">
 					<h2>發表新主題</h2>
 				</div>
 			</div>
@@ -26,13 +25,13 @@
 				<div class="form-inline">
 				
 					<div class="form-group">
-						<label for="themeTopic"  >主題名稱</label>						
-						<input type="text" id="theme_topic" name="theme_topic"  class="form-control"	placeholder="themeTopic">
+						 <span class="glyphicon glyphicon-star" aria-hidden="true"><label for="themeTopic">主題名稱</label> </span>				
+						<input type="text" id="theme_topic" name="theme_topic"  class="form-control"	placeholder="themeTopic"> 
 						
 					</div>
 					<div class="form-group" >
-						<label for="memId" >會員UID</label> <input type="text"
-							id="mem_uid" name="mem_uid" class="form-control"
+						  <span class="glyphicon glyphicon-user" aria-hidden="true"><label for="memId" >會員UID</label>	</span>	 
+						 <input type="text" id="mem_uid" name="mem_uid" class="form-control"
 							placeholder="會員Id" >
 					</div>
 				
@@ -45,17 +44,17 @@
 
 			</div>
 			  
-			<div class="form-inline">
-				<div class="col-md-3">
-					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/listAllTheme.jsp'">回到所有主題</button>
+			<div class="row">
+				<div class="btn pull-left">
+					<button type="button" class="btn btn-default " id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/listAllTheme.jsp'">回到所有主題</button>
 				</div>
-				<div class="col-md-3 col-sm-offset-6" >
-					<button type="button" class="btn btn-success form-control" id="btnInsert">確認新增</button>
+				<div class=" btn pull-right " >
+					<button type="button" class="btn btn-success btn-lg " id="btnInsert">確認新增</button>
 				</div>
 			</div>
-		<div>
-			<div id="result"></div>
-		</div>
+			<div>
+				<div id="result"></div>
+			</div>
 		</form>
 
 	</div>	
