@@ -145,7 +145,7 @@ public class MemService {
 		}
 
 		// region_id
-		if (vo.getRegion_id() == null || vo.getRegion_id() < 0 || vo.getRegion_id() == 0)
+		if (vo.getRegionVO() == null || vo.getRegionVO().getRegion_id() < 0 || vo.getRegionVO().getRegion_id() == 0)
 			err.put("region_id", "must provide.");
 
 		// mem_bdate
@@ -325,7 +325,7 @@ public class MemService {
 		}
 
 		// region_id
-		if (vo.getRegion_id() == null || vo.getRegion_id() < 0 || vo.getRegion_id() == 0)
+		if (vo.getRegionVO() == null || vo.getRegionVO().getRegion_id() < 0 || vo.getRegionVO().getRegion_id() == 0)
 			err.put("region_id", "must provide.");
 
 		// mem_bdate

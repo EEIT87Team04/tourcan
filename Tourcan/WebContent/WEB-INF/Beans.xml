@@ -65,6 +65,9 @@
 	<bean id="attDAO" class="com.tourcan.att.model.AttDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="eatDAO" class="com.tourcan.eat.model.EatHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	<bean id="attVO" class="com.tourcan.att.model.AttVO" scope="prototype" />
 
 </beans>

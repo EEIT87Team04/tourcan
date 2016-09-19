@@ -18,7 +18,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.tourcan.att.model.AttService;
 import com.tourcan.att.model.AttVO;
 import com.tourcan.photo.model.PhotoService;
@@ -41,55 +40,54 @@ public class AttServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-//		BufferedReader br = request.getReader();
-//		StringBuffer sb = new StringBuffer(128);
-//		String json;
-//		while ((json = br.readLine()) != null)
-//			sb.append(json);
-//		json = sb.toString();
-		String method= request.getParameter("method");
+		// BufferedReader br = request.getReader();
+		// StringBuffer sb = new StringBuffer(128);
+		// String json;
+		// while ((json = br.readLine()) != null)
+		// sb.append(json);
+		// json = sb.toString();
+		String method = request.getParameter("method");
 		JSONObject err = new JSONObject();
 
-		if(method.equals("getAttID")){
-		// Query by att_id
-		 String attIdStr=request.getParameter("att_id");
-		 if(attIdStr != null){
-		 Integer attId = null;
-		 try {
-		 attId = new Integer(request.getParameter("att_id"));
-		 } catch (Exception e) {
-		 err.append("attId", "編號只能為整數");
-		 response.getWriter().println(err.toString());
-		 // e.printStackTrace();
-		 }
-		
-		 if (attId != null) {
-		 AttService asv = new AttService();
-		 AttVO attVO = asv.getOneMem(attId);
-		
-		 if (attVO != null) {
-		 try {
-		 Gson gson = new
-		 GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-		 String attVOGson = gson.toJson(attVO);
-		 response.getWriter().println(attVOGson);
-		 } catch (Exception e) {
-		 err.append("attId", "無此編號");
-		 response.getWriter().println(err.toString());
-		 // e.printStackTrace();
-		 }
-		 } else {
-		 err.append("attId", "無此編號");
-		 response.getWriter().println(err.toString());
-		 }
-		
-		 } else {
-		 err.append("attId", "無此編號");
-		 }
-		 return;
-		 }
-		}else if(method.equals("getByName")){
-		// ----------------Query one by attname----------------
+		if (method.equals("getAttID")) {
+			// Query by att_id
+			String attIdStr = request.getParameter("att_id");
+			if (attIdStr != null) {
+				Integer attId = null;
+				try {
+					attId = new Integer(request.getParameter("att_id"));
+				} catch (Exception e) {
+					err.append("attId", "編號只能為整數");
+					response.getWriter().println(err.toString());
+					// e.printStackTrace();
+				}
+
+				if (attId != null) {
+					AttService asv = new AttService();
+					AttVO attVO = asv.getOneMem(attId);
+
+					if (attVO != null) {
+						try {
+							Gson gson = context.getBean(Gson.class);
+							String attVOGson = gson.toJson(attVO);
+							response.getWriter().println(attVOGson);
+						} catch (Exception e) {
+							err.append("attId", "無此編號");
+							response.getWriter().println(err.toString());
+							// e.printStackTrace();
+						}
+					} else {
+						err.append("attId", "無此編號");
+						response.getWriter().println(err.toString());
+					}
+
+				} else {
+					err.append("attId", "無此編號");
+				}
+				return;
+			}
+		} else if (method.equals("getByName")) {
+			// ----------------Query one by attname----------------
 			// ***************************1.接收請求參數 -
 			// 輸入格式的錯誤處理**********************//*
 			try {
@@ -107,7 +105,7 @@ public class AttServlet extends HttpServlet {
 				AttService asv = new AttService();
 				// ----------------Query one by attname----------------
 				List<AttVO> avo = asv.getAllByName(att_name);
-				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+				Gson gson = context.getBean(Gson.class);
 				// 指定要給的值 避免gson.toJson() throws StackOverflowError
 
 				// ***************************3.查詢完成,準備轉交(Send the Success
@@ -124,21 +122,22 @@ public class AttServlet extends HttpServlet {
 		} else if (method.equals("getAll")) {
 			AttService asv = new AttService();
 			List<AttVO> avo = asv.getAll();
-			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+			Gson gson = context.getBean(Gson.class);
 			String jsonG = gson.toJson(avo);
 			System.out.println(jsonG);
 			response.getWriter().println(jsonG.toString());
-//			return;
-		}else if (method.equals("getByRegionId")){
+			// return;
+		} else if (method.equals("getByRegionId")) {
 			// ----------------Query by regionId----------------
-			// ***************************1.接收請求參數 -輸入格式的錯誤處理**********************/
+			// ***************************1.接收請求參數
+			// -輸入格式的錯誤處理**********************/
 			JSONObject checkResult = new JSONObject();
 			Integer regionId = null;
 			List<AttVO> attVO = null;
 
 			try {
 				String id = request.getParameter("regionId");
-				 System.out.println(id);
+				System.out.println(id);
 				if (id == null || id.trim().length() == 0) {
 					checkResult.append("checkResult", "請選擇區域");
 				} else {
@@ -151,13 +150,13 @@ public class AttServlet extends HttpServlet {
 					}
 				}
 				AttService attSvc = new AttService();
-				 System.out.println("test");
-				 attVO = attSvc.getByRegionId(regionId);
-				 System.out.println("attVO");
+				System.out.println("test");
+				attVO = attSvc.getByRegionId(regionId);
+				System.out.println("attVO");
 				if (attVO.size() != 0) {
-					Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+					Gson gson = context.getBean(Gson.class);
 					String jsonG = gson.toJson(attVO);
-					 System.out.println(jsonG);
+					System.out.println(jsonG);
 					response.getWriter().println(jsonG);
 				} else {
 					checkResult.append("result", "查無資料");
@@ -190,7 +189,9 @@ public class AttServlet extends HttpServlet {
 		try {
 			// JSONObject obj = new JSONObject(json); // received and parsed
 			// JSON
-			attVO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(br, AttVO.class);
+
+			Gson gson = context.getBean(Gson.class);
+			attVO = gson.fromJson(br, AttVO.class);
 
 			String attName = attVO.getAtt_name();
 			if (attName == null || attName.trim().isEmpty() || attName.trim().length() >= 50)
@@ -485,15 +486,14 @@ public class AttServlet extends HttpServlet {
 
 			/*************************** 2.開始刪除單筆資料 *****************************************/
 			AttService attSvc = new AttService();
-			PhotoService pSvc = new PhotoService(); 
+			PhotoService pSvc = new PhotoService();
 			JSONObject photo = pSvc.getByAttId(attId);
 			try {
-				if(photo.length()>0)
-				{
+				if (photo.length() > 0) {
 					pSvc.deleteByAttId(attId);
 				}
 				attSvc.deleteAtt(attId);
-				
+
 			} catch (Exception e) {
 				errorMsgs.put("errMsg", "查無資料");
 			}

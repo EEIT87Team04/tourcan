@@ -1,4 +1,4 @@
-package com.tourcan.hotel.controller;
+package com.tourcan.att.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,12 +20,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.tourcan.hotel.model.HotelDAO;
-import com.tourcan.hotel.model.HotelVO;
+import com.tourcan.att.model.AttDAO_interface;
+import com.tourcan.att.model.AttVO;
+import com.tourcan.region.model.RegionVO;
 import com.tourcan.util.ApplicationContextUtils;
 
 @Path("/")
-public class HotelService {
+public class AttRestService {
 
 	@Context
 	HttpServletRequest request;
@@ -33,16 +34,16 @@ public class HotelService {
 	@Context
 	HttpServletResponse response;
 
-	HotelDAO dao = (HotelDAO) ApplicationContextUtils.getContext().getBean("hotelDAO");
+	AttDAO_interface dao = (AttDAO_interface) ApplicationContextUtils.getContext().getBean("attDAO");
 
 	@GET
 	@Path("{id: [0-9]+}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response queryById(@PathParam("id") Integer id) {
-		HotelVO vo;
+		AttVO vo;
 		if ((vo = dao.findById(id)) == null) {
 			// 404 Not found
-			HashMap<String, String> msg = new HashMap<String, String>();
+			HashMap<String, Object> msg = new HashMap<String, Object>();
 			msg.put("result", "failure");
 			msg.put("error", "id not exist.");
 			return Response.status(Status.NOT_FOUND).entity(msg).build();
@@ -58,10 +59,10 @@ public class HotelService {
 	public void queryById_static(@PathParam("id") Integer id) {
 		response.setCharacterEncoding("UTF-8");
 		try {
-			HotelVO vo = dao.findById(id);
+			AttVO vo = dao.findById(id);
 			// 200 OK
-			request.setAttribute("hotelVO", vo);
-			request.getRequestDispatcher("/WEB-INF/hotel/fs_listOneAtt.jsp").forward(request, response);
+			request.setAttribute("attVO", vo);
+			request.getRequestDispatcher("/WEB-INF/att/fs_listOneAtt.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -73,10 +74,10 @@ public class HotelService {
 	@Path("/name/{name}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response queryByName(@PathParam("name") String name) {
-		List<HotelVO> vos;
+		List<AttVO> vos;
 		if ((vos = dao.findByName(name)) == null) {
 			// 404 Not found
-			HashMap<String, String> msg = new HashMap<String, String>();
+			HashMap<String, Object> msg = new HashMap<String, Object>();
 			msg.put("result", "failure");
 			msg.put("error", "no matched entry exist.");
 			return Response.status(Status.NOT_FOUND).entity(msg).build();
@@ -92,10 +93,10 @@ public class HotelService {
 	public void queryByName_static(@PathParam("name") String name) {
 		response.setCharacterEncoding("UTF-8");
 		try {
-			List<HotelVO> vos = dao.findByName(name);
+			List<AttVO> vos = dao.findByName(name);
 			// 200 OK
-			request.setAttribute("hotelVO", vos);
-			request.getRequestDispatcher("/WEB-INF/hotel/fs_List.jsp").forward(request, response);
+			request.setAttribute("attVO", vos);
+			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -107,10 +108,10 @@ public class HotelService {
 	@Path("/region/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response queryByRegion(@PathParam("id") Integer region_id) {
-		List<HotelVO> vos;
+		List<AttVO> vos;
 		if ((vos = dao.findByRegionId(region_id)) == null) {
 			// 404 Not found
-			HashMap<String, String> msg = new HashMap<String, String>();
+			HashMap<String, Object> msg = new HashMap<String, Object>();
 			msg.put("result", "failure");
 			msg.put("error", "no matched entry exist.");
 			return Response.status(Status.NOT_FOUND).entity(msg).build();
@@ -126,10 +127,10 @@ public class HotelService {
 	public void queryByRegion_static(@PathParam("id") Integer region_id) {
 		response.setCharacterEncoding("UTF-8");
 		try {
-			List<HotelVO> vos = dao.findByRegionId(region_id);
+			List<AttVO> vos = dao.findByRegionId(region_id);
 			// 200 OK
-			request.setAttribute("hotelVO", vos);
-			request.getRequestDispatcher("/WEB-INF/hotel/fs_List.jsp").forward(request, response);
+			request.setAttribute("attVO", vos);
+			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -140,10 +141,10 @@ public class HotelService {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response queryAll() {
-		List<HotelVO> vos = dao.getAll();
+		List<AttVO> vos;
 		if ((vos = dao.getAll()) == null) {
 			// 404 Not found
-			HashMap<String, String> msg = new HashMap<String, String>();
+			HashMap<String, Object> msg = new HashMap<String, Object>();
 			msg.put("result", "failure");
 			msg.put("error", "no data.");
 			return Response.status(Status.NOT_FOUND).entity(msg).build();
@@ -158,10 +159,10 @@ public class HotelService {
 	public void queryAll_static() {
 		response.setCharacterEncoding("UTF-8");
 		try {
-			List<HotelVO> vos = dao.getAll();
+			List<AttVO> vos = dao.getAll();
 			// 200 OK
-			request.setAttribute("hotelVO", vos);
-			request.getRequestDispatcher("/WEB-INF/hotel/fs_List.jsp").forward(request, response);
+			request.setAttribute("attVO", vos);
+			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -172,14 +173,14 @@ public class HotelService {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response insertHotel(HotelVO vo) {
+	public Response insertAtt(AttVO vo) {
 		HashMap<String, Object> msg = null;
 		// for general message, such as OK, failure
 		HashMap<String, String> err = null;
-		// for column-specific message, such as hotel_name is invalid.
+		// for column-specific message, such as att_name is invalid.
 
-		if (vo.getHotel_id() != null) {
-			if ((dao.findById(vo.getHotel_id())) == null) {
+		if (vo.getAtt_id() != null) {
+			if ((dao.findById(vo.getAtt_id())) == null) {
 				// 404 Not found
 				msg = new HashMap<String, Object>();
 				msg.put("result", "failure");
@@ -196,76 +197,57 @@ public class HotelService {
 
 		err = new HashMap<String, String>();
 
-		// hotel_name
-		if (vo.getHotel_name() == null) {
-			err.put("hotel_name", "can't be empty.");
-		} else {
-			if (vo.getHotel_name().trim().length() == 0)
-				err.put("hotel_name", "can't be empty.");
-			if (vo.getHotel_name().trim().length() > 60)
-				err.put("hotel_name", "too long.");
-		}
+		String attName = vo.getAtt_name();
+		if (attName == null || attName.trim().isEmpty() || attName.trim().length() >= 50)
+			err.put("att_name", "請輸入景點名稱。");
 
-		// region_id
-		if (vo.getRegionVO() == null || vo.getRegionVO().getRegion_id() < 0 || vo.getRegionVO().getRegion_id() == 0)
-			err.put("region_id", "must provide.");
+		RegionVO regionVO = vo.getRegionVO();
+		if (regionVO == null || regionVO.getRegion_id() == 0)
+			err.put("region_id", "請選擇地區代號。");
 
-		// phone_addr
-		if (vo.getHotel_addr() == null) {
-			err.put("hotel_addr", "can't be empty.");
-		} else {
-			if (vo.getHotel_addr().trim().length() == 0)
-				err.put("hotel_addr", "can't be empty.");
-			if (vo.getHotel_addr().trim().length() >= 60)
-				err.put("hotel_addr", "too long.");
-		}
+		String attAddr = vo.getAtt_addr();
+		if (attAddr == null || attAddr.trim().isEmpty())
+			err.put("att_addr", "請輸入景點地址。");
 
-		// hotel_price
-		if (vo.getHotel_price() == null) {
-			vo.setHotel_price(-1.0);
-		} else {
-			if (vo.getHotel_price() <= -1)
-				err.put("hotel_price", "invalid price range.");
-		}
+		Boolean attEat = vo.getAtt_eat();
+		if (attEat == null)
+			err.put("att_eat", "無效的吃貨屬性。");
 
-		// hotel_phone
-		if (vo.getHotel_phone() == null) {
-			vo.setHotel_phone("");
-		} else {
-			if (vo.getHotel_phone().trim().length() >= 20)
-				err.put("hotel_phone", "too long.");
-		}
+		String attIntro = vo.getAtt_intro();
+		if (attIntro == null || attIntro.trim().isEmpty())
+			err.put("att_intro", "請輸入景點介紹。");
 
-		// hotel_class
-		if (vo.getHotel_class() == null) {
-			vo.setHotel_class(-1);
-		} else {
-			if (vo.getHotel_class() <= -1 || vo.getHotel_class() > 10)
-				err.put("hotel_class", "invalid ranking.");
-		}
+		String appOpen = vo.getAtt_open();
+		if (appOpen == null || appOpen.trim().isEmpty())
+			err.put("att_open", "請輸入開放時間。");
 
-		// hotel_url
-		if (vo.getHotel_url() == null) {
-			vo.setHotel_url("");
-		} else {
-			if (vo.getHotel_phone().trim().length() >= 60)
-				err.put("hotel_url", "too long.");
-		}
+		Double attPrice = vo.getAtt_price();
+		if (attPrice == null || attPrice < 0)
+			err.put("att_price", "請輸入最低消費金額。");
 
-		// hotel_lat
-		if (vo.getHotel_lat() == null) {
-			err.put("hotel_lat", "invalid coordinate format.");
-		} else {
-			if (vo.getHotel_lat() > 90 || vo.getHotel_lat() < -90)
-				err.put("hotel_lat", "invalid coordinate format.");
-		}
+		Integer attStaytime = vo.getAtt_staytime();
+		if (attStaytime == null || attStaytime < -1)
+			err.put("att_staytime", "請輸入滯留時間。");
 
-		// hotel_lng
-		if (vo.getHotel_lng() == null) {
-			err.put("hotel_lng", "invalid coordinate format.");
-		} else {
-			if (vo.getHotel_lng() > 180 || vo.getHotel_lng() < -180)
-				err.put("hotel_lng", "invalid coordinate format.");
+		String attUrl = vo.getAtt_url();
+		if (attUrl == null || attUrl.trim().isEmpty())
+			err.put("att_url", "無效的景點網址。");
+
+		Double attLat = vo.getAtt_lat();
+		if (attLat == null || attLat < -90 || attLat > 90)
+			err.put("att_lat", "移動座標以設定經緯度。");
+
+		Double attLng = vo.getAtt_lng();
+		if (attLng == null || attLng < -180 || attLng > 180)
+			err.put("att_lng", "移動座標以設定經緯度。");
+
+		String attPhone = vo.getAtt_phone();
+		if (attPhone == null || attPhone.trim().isEmpty() || attPhone.trim().length() >= 50) {
+			String errMsg = "請勿空白。";
+			err.put("att_phone", errMsg);
+		} else if (!attPhone.matches("[0-9]{7,}")) {
+			String errMsg = "請確認您的電話格式。";
+			err.put("att_phone", errMsg);
 		}
 
 		// update database
@@ -281,6 +263,7 @@ public class HotelService {
 				dao.insert(vo);
 				// 201 Created
 				msg = new HashMap<String, Object>();
+				msg.put("att_id", vo.getAtt_id());
 				msg.put("result", "success");
 				return Response.status(Status.CREATED).entity(msg).build();
 			} catch (Exception e) {
@@ -297,18 +280,18 @@ public class HotelService {
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response updateHotel(HotelVO vo) {
+	public Response updateAtt(AttVO vo) {
 		HashMap<String, String> msg = null;
 		// for general message, such as OK, failure
 		HashMap<String, String> err = new HashMap<String, String>();
-		// for column-specific message, such as hotel_name is invalid.
+		// for column-specific message, such as att_name is invalid.
 
 		// checking input
-		// hotel_id
-		if (vo.getHotel_id() == null) {
-			err.put("hotel_id", "must provide.");
+		// att_id
+		if (vo.getAtt_id() == null) {
+			err.put("att_id", "must provide.");
 		} else {
-			if ((dao.findById(vo.getHotel_id())) == null) {
+			if ((dao.findById(vo.getAtt_id())) == null) {
 				// 404 Not found
 				msg = new HashMap<String, String>();
 				msg.put("result", "failure");
@@ -317,76 +300,57 @@ public class HotelService {
 			}
 		}
 
-		// hotel_name
-		if (vo.getHotel_name() == null) {
-			err.put("hotel_name", "can't be empty.");
-		} else {
-			if (vo.getHotel_name().trim().length() == 0)
-				err.put("hotel_name", "can't be empty.");
-			if (vo.getHotel_name().trim().length() > 60)
-				err.put("hotel_name", "too long.");
-		}
+		String attName = vo.getAtt_name();
+		if (attName == null || attName.trim().isEmpty() || attName.trim().length() >= 50)
+			err.put("att_name", "請輸入景點名稱。");
 
-		// region_id
-		if (vo.getRegionVO() == null || vo.getRegionVO().getRegion_id() < 0 || vo.getRegionVO().getRegion_id() == 0)
-			err.put("region_id", "must provide.");
+		RegionVO regionVO = vo.getRegionVO();
+		if (regionVO == null || regionVO.getRegion_id() == 0)
+			err.put("region_id", "請選擇地區代號。");
 
-		// phone_addr
-		if (vo.getHotel_addr() == null) {
-			err.put("hotel_addr", "can't be empty.");
-		} else {
-			if (vo.getHotel_addr().trim().length() == 0)
-				err.put("hotel_addr", "can't be empty.");
-			if (vo.getHotel_addr().trim().length() >= 60)
-				err.put("hotel_addr", "too long.");
-		}
+		String attAddr = vo.getAtt_addr();
+		if (attAddr == null || attAddr.trim().isEmpty())
+			err.put("att_addr", "請輸入景點地址。");
 
-		// hotel_price
-		if (vo.getHotel_price() == null) {
-			vo.setHotel_price(-1.0);
-		} else {
-			if (vo.getHotel_price() <= -1)
-				err.put("hotel_price", "invalid price range.");
-		}
+		Boolean attEat = vo.getAtt_eat();
+		if (attEat == null)
+			err.put("att_eat", "無效的吃貨屬性。");
 
-		// hotel_phone
-		if (vo.getHotel_phone() == null) {
-			vo.setHotel_phone("");
-		} else {
-			if (vo.getHotel_phone().trim().length() >= 20)
-				err.put("hotel_phone", "too long.");
-		}
+		String attIntro = vo.getAtt_intro();
+		if (attIntro == null || attIntro.trim().isEmpty())
+			err.put("att_intro", "請輸入景點介紹。");
 
-		// hotel_class
-		if (vo.getHotel_class() == null) {
-			vo.setHotel_class(-1);
-		} else {
-			if (vo.getHotel_class() <= -1 || vo.getHotel_class() > 10)
-				err.put("hotel_class", "invalid ranking.");
-		}
+		String appOpen = vo.getAtt_open();
+		if (appOpen == null || appOpen.trim().isEmpty())
+			err.put("att_open", "請輸入開放時間。");
 
-		// hotel_url
-		if (vo.getHotel_url() == null) {
-			vo.setHotel_url("");
-		} else {
-			if (vo.getHotel_phone().trim().length() >= 60)
-				err.put("hotel_url", "too long.");
-		}
+		Double attPrice = vo.getAtt_price();
+		if (attPrice == null || attPrice < 0)
+			err.put("att_price", "請輸入最低消費金額。");
 
-		// hotel_lat
-		if (vo.getHotel_lat() == null) {
-			err.put("hotel_lat", "invalid coordinate format.");
-		} else {
-			if (vo.getHotel_lat() > 90 || vo.getHotel_lat() < -90)
-				err.put("hotel_lat", "invalid coordinate format.");
-		}
+		Integer attStaytime = vo.getAtt_staytime();
+		if (attStaytime == null || attStaytime < -1)
+			err.put("att_staytime", "請輸入滯留時間。");
 
-		// hotel_lng
-		if (vo.getHotel_lng() == null) {
-			err.put("hotel_lng", "invalid coordinate format.");
-		} else {
-			if (vo.getHotel_lng() > 180 || vo.getHotel_lng() < -180)
-				err.put("hotel_lng", "invalid coordinate format.");
+		String attUrl = vo.getAtt_url();
+		if (attUrl == null || attUrl.trim().isEmpty())
+			err.put("att_url", "無效的景點網址。");
+
+		Double attLat = vo.getAtt_lat();
+		if (attLat == null || attLat < -90 || attLat > 90)
+			err.put("att_lat", "移動座標以設定經緯度。");
+
+		Double attLng = vo.getAtt_lng();
+		if (attLng == null || attLng < -180 || attLng > 180)
+			err.put("att_lng", "移動座標以設定經緯度。");
+
+		String attPhone = vo.getAtt_phone();
+		if (attPhone == null || attPhone.trim().isEmpty() || attPhone.trim().length() >= 50) {
+			String errMsg = "請勿空白。";
+			err.put("att_phone", errMsg);
+		} else if (!attPhone.matches("[0-9]{7,}")) {
+			String errMsg = "請確認您的電話格式。";
+			err.put("att_phone", errMsg);
 		}
 
 		// update database
@@ -419,9 +383,9 @@ public class HotelService {
 	@Path("{id: [0-9]+}") // Be careful, just writing "{id}" will NOT work.
 							// Maybe conflict with GET ??
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response deleteHotel(@PathParam("id") Integer id) {
+	public Response deleteAtt(@PathParam("id") Integer id) {
 		HashMap<String, String> msg = null;
-		HotelVO vo;
+		AttVO vo;
 		if ((vo = dao.findById(id)) == null) {
 			// 404 Not found
 			msg = new HashMap<String, String>();
@@ -429,10 +393,10 @@ public class HotelService {
 			msg.put("error", "id not exist.");
 			return Response.status(Status.NOT_FOUND).entity(msg).build();
 		} else {
-			vo = ApplicationContextUtils.getContext().getBean(HotelVO.class);
-			vo.setHotel_id(id);
+			vo = ApplicationContextUtils.getContext().getBean(AttVO.class);
+			vo.setAtt_id(id);
 			try {
-				dao.delete(vo);
+				dao.delete(id);
 				// 200 OK
 				msg = new HashMap<String, String>();
 				msg.put("result", "success");

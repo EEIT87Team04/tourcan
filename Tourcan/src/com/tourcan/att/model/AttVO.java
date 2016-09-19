@@ -1,66 +1,54 @@
 package com.tourcan.att.model;
 
-import com.google.gson.annotations.Expose;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.tourcan.region.model.RegionVO;
 
+@XmlRootElement(name = "attraction")
 public class AttVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	// private Integer att_area;
 	// @SerializedName("attName")
-	@Expose
 	private String att_name;
 
 	// @SerializedName("attId")
-	@Expose
 	private Integer att_id;
 
 	// @SerializedName("attStaytime")
-	@Expose
 	private Integer att_staytime;
 
 	// @SerializedName("regionId")
-	@Expose
-	private Integer region_id;
+//	private Integer region_id;
 
-	@Expose
 	private RegionVO regionVO;
 
 	// @SerializedName("attAddr")
-	@Expose
 	private String att_addr;
 
 	// @SerializedName("attPrice")
-	@Expose
 	private Double att_price;
 
 	// @SerializedName("attPhone")
-	@Expose
 	private String att_phone;
 
 	// @SerializedName("attUrl")
-	@Expose
 	private String att_url;
 
 	// @SerializedName("attEat")
-	@Expose
 	private Boolean att_eat;
 
 	// @SerializedName("attIntro")
-	@Expose
 	private String att_intro;
 
 	// @SerializedName("attOpen")
-	@Expose
 	private String att_open;
 
 	// @SerializedName("attLat")
-	@Expose
 	private Double att_lat;
 
 	// @SerializedName("attLng")
-	@Expose
 	private Double att_lng;
 
 	public AttVO() {
@@ -174,12 +162,12 @@ public class AttVO implements java.io.Serializable {
 		this.att_lng = att_lng;
 	}
 	
-	public Integer getRegion_id() {
-		return region_id;
-	}
-
-	public void setRegion_id(Integer region_id) {
-		this.region_id = region_id;
-	}
+//	public Integer getRegion_id() {
+//		return region_id;
+//	}
+//
+//	public void setRegion_id(Integer region_id) {
+//		this.region_id = region_id;
+//	}
 
 }

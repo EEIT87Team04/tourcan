@@ -19,6 +19,17 @@
 		maxActive="8"
 		maxIdle="4"
 		maxWait="5000" />   
+<!-- 	<Resource -->
+<!-- 		name="jdbc/SQLServer" -->
+<!-- 		type="javax.sql.DataSource" -->
+<!-- 		username="SA_eeit87@tourcan-sql" -->
+<!-- 		password="TourCan_8704" -->
+<!-- 		auth="Container" -->
+<!-- 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" -->
+<!-- 		url="jdbc:sqlserver://tourcan-sql.database.windows.net:1433;DatabaseName=tourcan" -->
+<!-- 		maxActive="8" -->
+<!-- 		maxIdle="4" -->
+<!-- 		maxWait="5000" />    -->
 	<!-- <WatchedResource>WEB-INF/web.xml</WatchedResource> -->
 	<!-- <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource> -->
 </Context>

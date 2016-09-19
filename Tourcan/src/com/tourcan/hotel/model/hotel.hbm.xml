@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>  <!-- default-lazy="false" -->
+	<!-- 本檔案描述的類別與表格名稱 -->
+	<!-- 所有欄位都需要在VO內準備Getter/Setter，缺一不可 -->
+	<class name="com.tourcan.hotel.model.HotelVO" table="hotel">
+		<!-- name: 類別內的性質(property)名稱，column: 表格內的欄位名稱 -->
+		<!-- 表示當永續本類別的物件時，性質pk的值會儲存到表格的PK欄位內 -->
+		<id name="hotel_id" type="java.lang.Integer" unsaved-value="null">
+			<generator class="native" />
+		</id>
+		<!-- 省略length屬性時， 如果欄位型態為varchar，則預設值為255，如果欄位型態為int，則預設值為11 -->
+		<!-- 省略type屬性時，Hibernate會用Reflection來推算每個欄位的型態， 如果欄位型態為varchar，則預設值為 255，如果欄位型態為int，則預設值為11.。 -->
+		<!-- 表示當永續本類別的物件時，性質userId的值會儲存到表格的account欄位內 -->
+		<!-- 省略column屬性時，它的內含值與name屬性相同 -->
+<!-- 		<property name="region_id" /> -->
+		<property name="hotel_name" />
+		<property name="hotel_price" />
+		<property name="hotel_addr" />
+		<property name="hotel_phone" />
+		<property name="hotel_class" />
+		<property name="hotel_url" />
+		<property name="hotel_lat" />
+		<property name="hotel_lng" />
+
+		<many-to-one name="regionVO" class="com.tourcan.region.model.RegionVO"
+			lazy="false">
+			<column name="region_id" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

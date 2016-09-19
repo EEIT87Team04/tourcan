@@ -16,7 +16,6 @@ import org.json.JSONObject;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.tourcan.resp.model.RespService;
 import com.tourcan.resp.model.RespVO;
 
@@ -97,7 +96,7 @@ public class RespServlet  extends HttpServlet{
 				List<RespVO> avo = asv.findByTopic(th_name);
 				System.out.println("2="+th_name);
 				
-				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+				Gson gson = new Gson();
 				String jsonG = gson.toJson(avo);
 				System.out.println(jsonG);
 				if(jsonG.length()<3){

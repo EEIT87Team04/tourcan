@@ -6,18 +6,11 @@
 	<class name="com.tourcan.region.model.RegionVO" table="region">
 
 		<id name="region_id" column="region_id">
-			<generator class="native"/>
+			<generator class="native" />
 		</id>
 
 		<property name="region_name" column="region_name" />
 		<property name="region_area" column="region_area" />
-
-		<set name="atts" table="att" lazy="false" cascade="all"  inverse="true"  order-by="att_id asc">			
-			<key>
-				<column name="region_id" />
-			</key>
-			<one-to-many class="com.tourcan.att.model.AttVO" />
-		</set>
 
 	</class>
 </hibernate-mapping>

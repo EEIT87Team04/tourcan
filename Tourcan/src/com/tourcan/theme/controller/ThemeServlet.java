@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.tourcan.resp.model.RespService;
 import com.tourcan.resp.model.RespVO;
 import com.tourcan.theme.model.ThemeService;
@@ -101,7 +100,7 @@ public class ThemeServlet extends HttpServlet {
 				ThemeService asv = new ThemeService();
 				List<ThemeVO> avo = asv.findByTopic(th_name);
 
-				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+				Gson gson = new Gson();
 				String jsonG = gson.toJson(avo);
 				if (jsonG.length() < 3) {
 					// System.out.println(jsonG.length()<3);
@@ -121,7 +120,7 @@ public class ThemeServlet extends HttpServlet {
 		} else if (thstr == null && th_name == null) {
 			ThemeService asv = new ThemeService();
 			List<ThemeVO> avo = asv.getAll();
-			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+			Gson gson = new Gson();
 			String jsonG = gson.toJson(avo);
 			System.out.println(jsonG);
 			resp.getWriter().println(jsonG.toString());

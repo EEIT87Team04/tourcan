@@ -83,11 +83,11 @@ public class HotelServlet extends HttpServlet {
 		} else {
 			// Query all
 			List<HotelVO> vos = dao.getAll();
-//			if (vos == null || vos.size() == 0) {
-//				// 404 Not found
-//				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//			} else {
-//			}
+			// if (vos == null || vos.size() == 0) {
+			// // 404 Not found
+			// response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			// } else {
+			// }
 			// 200 OK
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.getWriter().println(context.getBean(Gson.class).toJson(vos));
@@ -141,7 +141,7 @@ public class HotelServlet extends HttpServlet {
 		}
 
 		// region_id
-		if (vo.getRegion_id() == null || vo.getRegion_id() < 0 || vo.getRegion_id() == 0)
+		if (vo.getRegionVO() == null || vo.getRegionVO().getRegion_id() < 0 || vo.getRegionVO().getRegion_id() == 0)
 			err.put("regionId", "must provide.");
 
 		// phone_addr
@@ -275,7 +275,7 @@ public class HotelServlet extends HttpServlet {
 		}
 
 		// region_id
-		if (vo.getRegion_id() == null || vo.getRegion_id() < 0 || vo.getRegion_id() == 0)
+		if (vo.getRegionVO() == null || vo.getRegionVO().getRegion_id() < 0 || vo.getRegionVO().getRegion_id() == 0)
 			err.put("regionId", "must provide.");
 
 		// phone_addr

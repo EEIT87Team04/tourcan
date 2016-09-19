@@ -11,6 +11,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.tourcan.region.model.RegionVO;
+
 public class MemHibernateDAO implements MemDAO {
 
 	private SessionFactory factory;
@@ -112,7 +114,9 @@ public class MemHibernateDAO implements MemDAO {
 		vo.setMem_nick("neko");
 //		vo.setMem_pwd("66666666");
 		vo.setMem_sex(2);
-		vo.setRegion_id(1);
+		RegionVO regionVO = new RegionVO();
+		regionVO.setRegion_id(0);
+		vo.setRegionVO(new RegionVO());
 		vo.setMem_uid(uid);
 		dao.insert(vo);
 		vo = null;
