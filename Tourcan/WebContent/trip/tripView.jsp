@@ -148,11 +148,11 @@
 				<div class="row div3 col-sm-12" style="display: none" id="div3">
 					<div class="col-sm-12 form-group">
 						<label>選擇縣市：</label> 
-						<select class="form-control" id="region_id" name="region_id">
+						<select  id="region_id" name="region_id">
 							<option value="0">請選擇</option>
 						</select> 
 						<label>類型：</label> 
-						<select class="form-control" id="tripType" name="tripType">
+						<select  id="tripType" name="tripType">
 							<option value="0">請選擇</option>
 							<option value="1">景點</option>
 							<option value="2">住宿</option>
@@ -161,7 +161,7 @@
 					</div>
 					<div class="col-sm-12 form-group">
 						<label>景點查詢：</label>
-						<input type="text" class="form-control" id="attname" name="attname" placeholder="直接查詢景點名稱">
+						<input type="text" id="attname" name="attname" placeholder="直接查詢景點名稱">
 						<button type="button" id="searchAtt">查詢</button>
 					</div>
 				</div>
@@ -418,6 +418,9 @@
 			//定義sortable form
 			var tripForm=$("<form></form>").attr("id","tripForm").attr("style","clear:both; margin-right: 28px;")
 			var sortDiv=$("<div></div>").attr("id","sortable");
+			
+			var count = "A"; 
+				
 			//新增行程
 			$("#addTripBtn").click(function(){
 				var tripName=$("#trip_name").val();
@@ -446,8 +449,8 @@
 			
 			//刪除景點明細
 			$(".deleteTripitem").click(function(){
-// 				console.log($(this).parents());
-				$(this).parents(".ui-sortable-handle").remove();	
+// 				console.log("TEST1="+$(this).parents());
+				$(this).parent().parent().parent().parent().remove();
 			})
 			
 			//加入行程
@@ -548,12 +551,111 @@
 				    $("#sendBtn").click(function(){
 						$("#addTripitemBtn").css("display","block");
 						$("#div3").css("display","none");
+						tripForm.append(sortDiv);
 
 				    	var selected=[];
 				        $("input[name='attCheck']:checked").each(function(){
-				           selected.push($(this).val());
+// 				           selected.push($(this).val());
+							var attname1=$(this).val();
+							$.get("../att/AttServlet",{"attname":attname1,"method":"getByName"},function(data1){
+								count= count+"A";
+								$.each(data1,function(idx1,att1){
+// 									console.log("idx1="+idx1);
+// 									console.log("att1="+att1);
+// 									console.log("addr="+att1.att_addr);
+									var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
+									var lable1=$("<lable></lable>").text("下一站交通方式:");
+									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","car");
+									var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
+									var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
+									var lableA=$("<lable></lable>").text("開車").prepend(input1);
+									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
+									var lableC=$("<lable></lable>").text("步行").prepend(input3);
+									var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+									
+									var lable2=$("<lable></lable>").text("約_?_公里，估約_?_分鐘");
+									var th2=$("<th></th>").attr("colspan","5").append(lable2);
+									
+									var tr1=$("<tr></tr>").append([th1,th2]);
+									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
+									
+									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("value",att1.att_addr);
+									var input5=$("<input></input>").attr("type","hidden").attr("id","att_id").attr("value",att1.att_id);
+									var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
+									
+									var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
+									var td2=$("<td></td>").attr("colspan","3").append(p1);
+									
+									var p2=$("<p></p>").html("停留:<input type='number' style='width:60px'>分");
+									var td3=$("<td></td>").attr("colspan","3").append(p2);
+									
+									var p3=$("<p></p>").text("起:time?");
+									var td4=$("<td></td>").attr("colspan","3").append(p3);
+									
+									var lable3=$("<lable></lable>").text(attname1);
+									var urlAA=$("<a></a>").attr("href",att1.att_url).attr("target","_new").append(lable3);
+									var td5=$("<td></td>").attr("colspan","3").attr("style","text-align:center").append(urlAA);
+									
+									var p4=$("<p></p>").text("註記:");
+									var td6=$("<td></td>").attr("colspan","3").append(p4);
+									
+									var td7=$("<td></td>").attr("colspan","3");
+									
+									var p5=$("<p></p>").text("迄:time?");
+									var td8=$("<td></td>").attr("colspan","3").append(p5);
+									
+									var td9=$("<td></td>").attr("colspan","3");
+									
+									var textarea1=$("<textarea></textarea>").attr("rows","2").attr("style","width:100%").attr("placeholder","註記:");
+									var td10=$("<td></td>").attr("colspan","6").append(textarea1);
+									
+									var input6=$("<input></input>").attr("type","button").attr("class","deleteTripitem").attr("style","margin-left: 7px").attr("value","刪除"); 
+									var td11=$("<td></td>").attr("colspan","3").append(input6);
+									
+									var tr2=$("<tr></tr>").append([td1,td2,td3,td4]);
+									var tr3=$("<tr></tr>").append([td5,td6,td7,td8]);
+									var tr4=$("<tr></tr>").append([td9,td10,td11]);
+									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
+									
+									tripitemTable.append([tripitemThead,tripitemTbody]);
+									
+									sortDiv.append(tripitemTable);
+								})
+								
+								
+								$( "#sortable" ).sortable({
+							        start: function(event, ui) {
+							            ui.item.startPos = ui.item.index();
+							        },
+							        stop: function(event, ui) {
+							            console.log("Start position: " + ui.item.startPos);
+							            console.log("New position: " + ui.item.index());
+		//					             console.log($("#sortable li").length);
+		//					             console.log($(this).children().length);
+							   var tripList = $(this).children();
+							   console.log(typeof tripList);
+							   console.log(tripList.length);
+							            for(var i=0;i<tripList.length;i++)
+							            {
+							    console.log(tripList[i]);
+							            }
+							        }
+							     
+		//					      update:function(e,ui){
+		//					       console.log(e);
+		//					       console.log(ui);
+		//					      } 
+							    });
+							    $( "#sortable" ).disableSelection();
+							    
+								$(".deleteTripitem").click(function(){
+// 					 				console.log("TEST2="+$(this).parents());
+									$(this).parent().parent().parent().parent().remove();	
+								})
+							})
 				       	});
-				        alert("景點名稱 : " + selected.join());
+// 				        alert("景點名稱 : " + selected.join());
+                        $("#div3").after(tripForm);
 						$("#div3 input").val("");
 						$("#region_id option[value='0']").prop("selected",true);
 						$("#tripType option[value='0']").prop("selected",true);
@@ -637,12 +739,118 @@
 					    $("#sendBtn").click(function(){
 							$("#addTripitemBtn").css("display","block");
 							$("#div3").css("display","none");
+							tripForm.append(sortDiv);
 
 					    	var selected=[];
 					        $("input[name='attCheck']:checked").each(function(){
-					           selected.push($(this).val());
+// 					           selected.push($(this).val());
+								var hotelname1=$(this).val();
+								$.ajax({
+									url : serviceProvider+"/name/"+hotelname1,
+									method : "GET"
+								//data : JSON.stringify(json),
+								//contentType : "application/json; charset=UTF-8"
+								}).done(function(data1){
+									count = count+"B";
+									$.each(data1,function(idx1,hotel1){
+	 									console.log("idx1="+idx1);
+	 									console.log("hotel1="+hotel1);
+	 									console.log("addr="+hotel1.hotel_addr);
+										var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
+										
+										var lable1=$("<lable></lable>").text("下一站交通方式:");
+										var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","car");
+//	 									lableA.prepend(input1);
+										var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
+										var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
+										var lableA=$("<lable></lable>").text("開車").prepend(input1);
+										var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
+										var lableC=$("<lable></lable>").text("步行").prepend(input3);
+										var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+										
+										var lable2=$("<lable></lable>").text("約_?_公里，估約_?_分鐘");
+										var th2=$("<th></th>").attr("colspan","5").append(lable2);
+										
+										var tr1=$("<tr></tr>").append([th1,th2]);
+										var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
+										
+										var input4=$("<input></input>").attr("type","hidden").attr("id","hotel_addr").attr("value",hotel1.hotel_addr);
+										var input5=$("<input></input>").attr("type","hidden").attr("id","hotel_id").attr("value",hotel1.hotel_id);
+										var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
+										
+										var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
+										var td2=$("<td></td>").attr("colspan","3").append(p1);
+										
+										var p2=$("<p></p>").html("停留:<input type='number' style='width:60px'>分");
+										var td3=$("<td></td>").attr("colspan","3").append(p2);
+										
+										var p3=$("<p></p>").text("起:time?");
+										var td4=$("<td></td>").attr("colspan","3").append(p3);
+										
+										var lable3=$("<lable></lable>").text(hotelname1);
+										var urlAA=$("<a></a>").attr("href",hotel1.hotel_url).attr("target","_new").append(lable3);
+										var td5=$("<td></td>").attr("colspan","3").attr("style","text-align:center").append(urlAA);
+										
+										var p4=$("<p></p>").text("註記:");
+										var td6=$("<td></td>").attr("colspan","3").append(p4);
+										
+										var td7=$("<td></td>").attr("colspan","3");
+										
+										var p5=$("<p></p>").text("迄:time?");
+										var td8=$("<td></td>").attr("colspan","3").append(p5);
+										
+										var td9=$("<td></td>").attr("colspan","3");
+										
+										var textarea1=$("<textarea></textarea>").attr("rows","2").attr("style","width:100%").attr("placeholder","註記:");
+										var td10=$("<td></td>").attr("colspan","6").append(textarea1);
+										
+										var input6=$("<input></input>").attr("type","button").attr("class","deleteTripitem").attr("style","margin-left: 7px").attr("value","刪除"); 
+										var td11=$("<td></td>").attr("colspan","3").append(input6);
+										
+										var tr2=$("<tr></tr>").append([td1,td2,td3,td4]);
+										var tr3=$("<tr></tr>").append([td5,td6,td7,td8]);
+										var tr4=$("<tr></tr>").append([td9,td10,td11]);
+										var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
+										
+										tripitemTable.append([tripitemThead,tripitemTbody]);
+										
+										sortDiv.append(tripitemTable);
+									})
+									
+									
+									$( "#sortable" ).sortable({
+								        start: function(event, ui) {
+								            ui.item.startPos = ui.item.index();
+								        },
+								        stop: function(event, ui) {
+								            console.log("Start position: " + ui.item.startPos);
+								            console.log("New position: " + ui.item.index());
+			//					             console.log($("#sortable li").length);
+			//					             console.log($(this).children().length);
+								   var tripList = $(this).children();
+								   console.log(typeof tripList);
+								   console.log(tripList.length);
+								            for(var i=0;i<tripList.length;i++)
+								            {
+								    console.log(tripList[i]);
+								            }
+								        }
+								     
+			//					      update:function(e,ui){
+			//					       console.log(e);
+			//					       console.log(ui);
+			//					      } 
+								    });
+								    $( "#sortable" ).disableSelection();
+								    
+									$(".deleteTripitem").off('click').on('click',function(e){
+// 	 					 				console.log("TEST3="+$(this).parents());
+										$(this).parent().parent().parent().parent().remove();	
+									})
+								})
 					       	});
-					        alert("住宿名稱 : " + selected.join());
+// 					        alert("住宿名稱 : " + selected.join());
+	                        $("#div3").after(tripForm);
 							$("#div3 input").val("");
 							$("#region_id option[value='0']").prop("selected",true);
 							$("#tripType option[value='0']").prop("selected",true);
@@ -732,45 +940,50 @@
 						$("#addTripitemBtn").css("display","block");
 						$("#div3").css("display","none");
 						tripForm.append(sortDiv);
-									
 				    	var selected=[];
 				        $("input[name='attCheck']:checked").each(function(){
 // 				           selected.push($(this).val());
 							var attname1=$(this).val();
 							$.get("../att/AttServlet",{"attname":attname1,"method":"getByName"},function(data1){
+								count = count+"C";	
 								$.each(data1,function(idx1,att1){
 // 									console.log("idx1="+idx1);
 // 									console.log("att1="+att1);
 // 									console.log("addr="+att1.att_addr);
 									var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
 									
-									var lable1=$("<lable></lable>").text("到下一站交通方式:");
-									var input1=$("<input></input>").attr("type","radio").attr("name","traffic").attr("value","car").text("開車");
-									var input2=$("<input></input>").attr("type","radio").attr("name","traffic").attr("value","public").text("大眾運輸");
-									var input3=$("<input></input>").attr("type","radio").attr("name","traffic").attr("value","walk").text("步行");
-									var th1=$("<th></th>").attr("colspan","7").append([lable1,input1,input2,input3]);
+									var lable1=$("<lable></lable>").text("下一站交通方式:");
+									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","car");
+// 									lableA.prepend(input1);
+									var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
+									var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
+									var lableA=$("<lable></lable>").text("開車").prepend(input1);
+									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
+									var lableC=$("<lable></lable>").text("步行").prepend(input3);
+									var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 									
-									var lable2=$("<lable></lable>").text("約__?__公里，估約__?___分鐘:");
+									var lable2=$("<lable></lable>").text("約_?_公里，估約_?_分鐘");
 									var th2=$("<th></th>").attr("colspan","5").append(lable2);
 									
 									var tr1=$("<tr></tr>").append([th1,th2]);
 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
 									
-									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("value","att1.att_addr");
-									var input5=$("<input></input>").attr("type","hidden").attr("id","att_id").attr("value","att1.att_id");
+									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("value",att1.att_addr);
+									var input5=$("<input></input>").attr("type","hidden").attr("id","att_id").attr("value",att1.att_id);
 									var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
 									
 									var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
 									var td2=$("<td></td>").attr("colspan","3").append(p1);
 									
-									var p2=$("<p></p>").html("逗留時間:<input type='number' style='width:60px'>分");
+									var p2=$("<p></p>").html("停留:<input type='number' style='width:60px'>分");
 									var td3=$("<td></td>").attr("colspan","3").append(p2);
 									
 									var p3=$("<p></p>").text("起:time?");
 									var td4=$("<td></td>").attr("colspan","3").append(p3);
 									
 									var lable3=$("<lable></lable>").text(attname1);
-									var td5=$("<td></td>").attr("colspan","3").append(lable3);
+									var urlAA=$("<a></a>").attr("href",att1.att_url).attr("target","_new").append(lable3);
+									var td5=$("<td></td>").attr("colspan","3").attr("style","text-align:center").append(urlAA);
 									
 									var p4=$("<p></p>").text("註記:");
 									var td6=$("<td></td>").attr("colspan","3").append(p4);
@@ -796,6 +1009,37 @@
 									tripitemTable.append([tripitemThead,tripitemTbody]);
 									
 									sortDiv.append(tripitemTable);
+								})
+								
+								
+								$( "#sortable" ).sortable({
+							        start: function(event, ui) {
+							            ui.item.startPos = ui.item.index();
+							        },
+							        stop: function(event, ui) {
+							            console.log("Start position: " + ui.item.startPos);
+							            console.log("New position: " + ui.item.index());
+		//					             console.log($("#sortable li").length);
+		//					             console.log($(this).children().length);
+							   var tripList = $(this).children();
+							   console.log(typeof tripList);
+							   console.log(tripList.length);
+							            for(var i=0;i<tripList.length;i++)
+							            {
+							    console.log(tripList[i]);
+							            }
+							        }
+							     
+		//					      update:function(e,ui){
+		//					       console.log(e);
+		//					       console.log(ui);
+		//					      } 
+							    });
+							    $( "#sortable" ).disableSelection();
+							    
+								$(".deleteTripitem").click(function(){
+// 					 				console.log("TEST4="+$(this).parents());
+									$(this).parent().parent().parent().parent().remove();	
 								})
 							})
 				       	});
@@ -878,36 +1122,37 @@
 			
 			
 			
+			
 	    });
 			
 	</script>
 	<script >
-		$(function(){
-			$( "#sortable" ).sortable({
-		        start: function(event, ui) {
-		            ui.item.startPos = ui.item.index();
-		        },
-		        stop: function(event, ui) {
-		            console.log("Start position: " + ui.item.startPos);
-		            console.log("New position: " + ui.item.index());
-//		             console.log($("#sortable li").length);
-//		             console.log($(this).children().length);
-		   var tripList = $(this).children();
-		   console.log(typeof tripList);
-		   console.log(tripList.length);
-		            for(var i=0;i<tripList.length;i++)
-		            {
-		    console.log(tripList[i]);
-		            }
-		        }
+// 		$(function(){
+// 			$( "#sortable" ).sortable({
+// 		        start: function(event, ui) {
+// 		            ui.item.startPos = ui.item.index();
+// 		        },
+// 		        stop: function(event, ui) {
+// 		            console.log("Start position: " + ui.item.startPos);
+// 		            console.log("New position: " + ui.item.index());
+// 		             console.log($("#sortable li").length);
+// 		             console.log($(this).children().length);
+// 		   var tripList = $(this).children();
+// 		   console.log(typeof tripList);
+// 		   console.log(tripList.length);
+// 		            for(var i=0;i<tripList.length;i++)
+// 		            {
+// 		    console.log(tripList[i]);
+// 		            }
+// 		        }
 		     
-//		      update:function(e,ui){
-//		       console.log(e);
-//		       console.log(ui);
-//		      } 
-		    });
-		    $( "#sortable" ).disableSelection();
-		})
+// 		      update:function(e,ui){
+// 		       console.log(e);
+// 		       console.log(ui);
+// 		      } 
+// 		    });
+// 		    $( "#sortable" ).disableSelection();
+// 		})
 	</script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&callback=initMap"
