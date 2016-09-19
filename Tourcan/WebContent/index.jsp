@@ -17,16 +17,16 @@
     <title>Tourcan</title>
 
     <!-- Bootstrap Core CSS -->
-<!--     <link href="/Tourcan/css/bootstrap.min.css" rel="stylesheet"> -->
+<!--     <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
     <!-- Custom CSS -->
-    <link href="/Tourcan/css/stylish-portfolio.css" rel="stylesheet">
-    <link href="/Tourcan/css/tourcanFront.css" rel="stylesheet">
+    <link href="${contextPath}/css/stylish-portfolio.css" rel="stylesheet">
+    <link href="${contextPath}/css/tourcanFront.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/Tourcan/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="${contextPath}/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -48,23 +48,23 @@
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
-            <li class="sidebar-brand">
-                <a href="#top" onclick=$("#menu-close").click();>Tourcan</a>
+            <li class="sidebar-brand dath7">
+                <a class="dath7" href="#top" onclick=$("#menu-close").click();>Tourcan</a>
             </li>
             <li>
-                <a href="#top" onclick=$("#menu-close").click();>Home</a>
+                <a class="dath7" href="#top" onclick=$("#menu-close").click();>首頁</a>
             </li>
             <li>
-                <a href="#about" onclick=$("#menu-close").click();>About</a>
+                <a class="dath7" href="#about" onclick=$("#menu-close").click();>關於</a>
             </li>
             <li>
-                <a href="#services" onclick=$("#menu-close").click();>Services</a>
+                <a class="dath7" href="#services" onclick=$("#menu-close").click();>服務項目</a>
             </li>
             <li>
-                <a href="#portfolio" onclick=$("#menu-close").click();>Recommend</a>
+                <a class="dath7" href="#portfolio" onclick=$("#menu-close").click();>熱門推薦</a>
             </li>
             <li>
-                <a href="#contact" onclick=$("#menu-close").click();>Contact</a>
+                <a class="dath7" href="#contact" onclick=$("#menu-close").click();>聯繫我們</a>
             </li>
         </ul>
     </nav>
@@ -107,7 +107,7 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                                <a href="#"><img src="/Tourcan/images/front/icons/map-location.png"  class="front_icon"></a>
+                                <a href="${contextPath}/attractions"><img src="${contextPath}/images/front/icons/map-location.png"  class="front_icon"></a>
                             </span>
                                 <h4>
                                     <strong class="dath7 frontIcon">景　　點</strong>
@@ -119,7 +119,7 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                                <a href="#"><img src="/Tourcan/images/front/icons/windows.png" class="front_icon"></a>
+                                <a href="${contextPath}/hotels"><img src="${contextPath}/images/front/icons/windows.png" class="front_icon"></a>
                             </span>
                                 <h4>
                                     <strong class="dath7">住　　宿</strong>
@@ -131,7 +131,7 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                                <a href="#"><img src="/Tourcan/images/front/icons/food.png" class="front_icon"></a>
+                                <a href="${contextPath}/restaurants"><img src="${contextPath}/images/front/icons/food.png" class="front_icon"></a>
                             </span>
                                 <h4>
                                     <strong class="dath7" >美　　食</strong>
@@ -143,7 +143,7 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                               <a href="#"><img src="/Tourcan/images/front/icons/suitcase.png" class="front_icon"></a>
+                               <a href="${contextPath}/trips"><img src="${contextPath}/images/front/icons/suitcase.png" class="front_icon"></a>
                             </span>
                                 <h4>
                                      <strong class="dath7" >規劃行程</strong>
@@ -155,7 +155,7 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                               <a href="#"><img src="/Tourcan/images/front/icons/note.png" class="front_icon"></a>
+                               <a href="${contextPath}/articles/list.jsp"><img src="${contextPath}/images/front/icons/note.png" class="front_icon"></a>
                             </span>
                                 <h4>
                                      <strong class="dath7" >討 論 區</strong>
@@ -167,7 +167,7 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                               <a href="#"><img src="/Tourcan/images/front/icons/info.png" class="front_icon"></a>
+                               <a href="${contextPath}/service"><img src="${contextPath}/images/front/icons/info.png" class="front_icon"></a>
                             </span>
                                 <h4>
                                      <strong class="dath7" >客　　服</strong>
@@ -199,17 +199,17 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-      <img src="/Tourcan/images/front/taiwan1.jpg">
+      <img src="${contextPath}/images/front/taiwan1.jpg">
       <div class="carousel-caption">
       </div>
     </div>
     <div class="item">
-      <img src="/Tourcan/images/front/taiwan2.jpg">
+      <img src="${contextPath}/images/front/taiwan2.jpg">
       <div class="carousel-caption">
       </div>
     </div>
     <div class="item">
-      <img src="/Tourcan/images/front/taiwan3.jpg">
+      <img src="${contextPath}/images/front/taiwan3.jpg">
       <div class="carousel-caption">
       </div>
     </div>
@@ -239,34 +239,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h2>Recommend</h2>
+                    <h2 class="dath7">熱門推薦</h2>
                     <hr class="small">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="portfolio-item">
                                 <a href="#">
-                                    <img class="img-portfolio img-responsive" src="/Tourcan/images/front/front-bamboo.jpg">
+                                    <img class="img-portfolio img-responsive" src="${contextPath}/images/front/front-bamboo.jpg">
                                 </a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="portfolio-item">
                                 <a href="#">
-                                    <img class="img-portfolio img-responsive" src="/Tourcan/images/front/front-boats.jpg">
+                                    <img class="img-portfolio img-responsive" src="${contextPath}/images/front/front-boats.jpg">
                                 </a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="portfolio-item">
                                 <a href="#">
-                                    <img class="img-portfolio img-responsive" src="/Tourcan/images/front/front-food.jpg">
+                                    <img class="img-portfolio img-responsive" src="${contextPath}/images/front/front-food.jpg">
                                 </a>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="portfolio-item">
                                 <a href="#">
-                                    <img class="img-portfolio img-responsive" src="/Tourcan/images/front/front-kaohsiung.jpg">
+                                    <img class="img-portfolio img-responsive" src="${contextPath}/images/front/front-kaohsiung.jpg">
                                 </a>
                             </div>
                         </div>
@@ -285,7 +285,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h3 style="color: white;">Tourcan makes you tour.</h3>
+                    <h3 style="color: white; ">Tourcan makes you tour.</h3>
                 </div>
             </div>
         </div>
@@ -293,12 +293,12 @@
 
     <!-- Map -->
     <section id="contact" class="map">
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.0111684555704!2d121.54151376429307!3d25.03369504540593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd379a5ec97%3A0xec12a62666a81e3d!2zMTA25Y-w54Gj5Y-w5YyX5biC5aSn5a6J5Y2A5b6p6IiI5Y2X6Lev5LiA5q61Mzkw6Jmf!5e0!3m2!1szh-TW!2s!4v1474017157662" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.0111684555704!2d121.54151376429307!3d25.03369504540593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd379a5ec97%3A0xec12a62666a81e3d!2zMTA25Y-w54Gj5Y-w5YyX5biC5aSn5a6J5Y2A5b6p6IiI5Y2X6Lev5LiA5q61Mzkw6Jmf!5e0!3m2!1szh-TW!2s!4v1474017157662" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container dath7">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
                     <h4><strong>Tourcan</strong>
@@ -331,10 +331,10 @@
     </footer>
 
     <!-- jQuery -->
-<!--     <script src="/Tourcan/js/jquery.js"></script> -->
+<!--     <script src="${contextPath}/js/jquery.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->
-<!--     <script src="/Tourcan/js/bootstrap.min.js"></script> -->
+<!--     <script src="${contextPath}/js/bootstrap.min.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script>
