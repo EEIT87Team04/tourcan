@@ -22,7 +22,7 @@
 <body>
 
 <div id="start">
-	開始時間：<input name="sTime" type="datetime-local" value="2016-09-19T07:59:00"/>
+	開始時間：<input name="sTime" type="datetime-local" value="2016-09-19T07:00:00"/>
 	交通時間：<input name="tTime" type="number" value="30"/>
 	<input name="wTime" type="number" value="0" style="display: none"/>
 </div>
@@ -68,7 +68,9 @@
 // // 	  ---------------------------------------------
 	  
 	  
-	  
+	  $("#start input[name$='Time']").change(function(){
+		  console.log("changed");
+	  });
 	  
 	  
 	  
@@ -84,17 +86,24 @@
         start: function(event, ui) {
             ui.item.startPos = ui.item.index();
         },
+        
         stop: function(event, ui) {
-            console.log("Start position: " + ui.item.startPos);
-            console.log("New position: " + ui.item.index());
+//             console.log("Start position: " + ui.item.startPos);
+//             console.log("New position: " + ui.item.index());
+
+
 			var tripList = $(this).children();
 			console.log(tripList.length);
             for(var i=0;i<tripList.length;i++)
             {
-				console.log(tripList[i].id);
+
+            
             }
         }
-    	
+
+        
+        
+        
 //     	update:function(e,ui){
 //     		console.log(e);
 //     		console.log(ui);
