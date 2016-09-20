@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+
+	
+		var coder, map, marker, checkTrigger, lastValue = "";
+		var regionList;
+
+		function initMap() {
+			var initPos = new google.maps.LatLng(25.042485, 121.543543);
+			coder = new google.maps.Geocoder();
+			map = new google.maps.Map(document.getElementById('mapPreview'), {
+				center : initPos,
+				zoom : 15,
+				scrollwheel : false
+			});
+			marker = new google.maps.Marker({
+				map : map,
+				position : initPos,
+				draggable : true
+			});
+
+			marker.addListener("position_changed", function() {
+				document.getElementById("att_lat").value = marker.getPosition()
+						.lat();
+				document.getElementById("att_lng").value = marker.getPosition()
+						.lng();
+			});
+			document.getElementById("possition").addEventListener("input",
+					queryMap);
+		}
+		function queryMap() {
+			if (lastValue != this.value) {
+				lastValue = this.value;
+				clearTimeout(checkTrigger);
+				checkTrigger = setTimeout(function() {
+					coder.geocode({
+						address : lastValue
+					}, function(r, s) {
+						if (s === google.maps.GeocoderStatus.OK) {
+							map.panTo(r[0].geometry.location);
+							marker.setPosition(r[0].geometry.location);
+						}
+					});
+				}, 300);
+			}
+		}
+		</script>
+
+</body>
+</html>

@@ -356,10 +356,10 @@
 				</div>
 				<div class="row" style="margin-top: 20px">
 					<div class="col-sm-7 form-group">
-						<button type="button" class="btn-success form-control">Save</button>
+						<button type="button" class="btn-success form-control" id="saveBtn">Save</button>
 					</div>
 					<div class="col-sm-5 form-group">
-						<button type="button" class="btn-danger form-control">Reset</button>
+						<button type="button" class="btn-danger form-control" id="resetBtn">Reset</button>
 					</div>
 				</div>
 			</div>
@@ -370,62 +370,92 @@
 
 
 	<script type="text/javascript">
-		var serviceProvider = "${contextPath}/hotels";
-		console.log(serviceProvider);
+
 	
 		var coder, map, marker, checkTrigger, lastValue = "";
 		var regionList;
-
+		var serviceProvider = "${contextPath}/hotels";
+		var addrArray=[];
+		var trip_id=null;
+		//定義sortable form
+		var tripForm=$("<form></form>").attr("id","tripForm").attr("style","clear:both; margin-right: 28px;")
+		var sortDiv=$("<div></div>").attr("id","sortable");
+		var count = "A"; 
+		
 		function initMap() {
 			var initPos = new google.maps.LatLng(25.042485, 121.543543);
-			coder = new google.maps.Geocoder();
-			map = new google.maps.Map(document.getElementById('mapPreview'), {
-				center : initPos,
-				zoom : 15,
-				scrollwheel : false
-			});
-			marker = new google.maps.Marker({
-				map : map,
-				position : initPos,
-				draggable : true
-			});
-
-			marker.addListener("position_changed", function() {
-				document.getElementById("att_lat").value = marker.getPosition()
-						.lat();
-				document.getElementById("att_lng").value = marker.getPosition()
-						.lng();
-			});
-			document.getElementById("possition").addEventListener("input",
-					queryMap);
-		}
-		function queryMap() {
-			if (lastValue != this.value) {
-				lastValue = this.value;
-				clearTimeout(checkTrigger);
-				checkTrigger = setTimeout(function() {
-					coder.geocode({
-						address : lastValue
-					}, function(r, s) {
-						if (s === google.maps.GeocoderStatus.OK) {
-							map.panTo(r[0].geometry.location);
-							marker.setPosition(r[0].geometry.location);
-						}
+			var directionsService = new google.maps.DirectionsService;
+			var directionsDisplay = new google.maps.DirectionsRenderer;
+			var map = new google.maps.Map(
+					document.getElementById('mapPreview'), {
+						center : initPos,
+						zoom : 13,
+						mapTypeId : google.maps.MapTypeId.ROADMAP,
+// 						scrollwheel : false
 					});
-				}, 300);
+			
+			directionsDisplay.setMap(map);
+
+// 			document.getElementById('submit').addEventListener('click',function() {
+						calculateAndDisplayRoute(directionsService,directionsDisplay);
+// 					});
+		}
+		
+		function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+			var point = [];
+			var waypts = [];
+			//   var waypts = [{location:"110台北市信義區松高路16號1~3F"},{location:""},{location:"110台北市信義區松勤街50號"}];
+			//   ["110台北市信義區松高路16號1~3F","110台北市信義區松勤街50號"]
+
+			//   var checkboxArray = document.getElementById('waypoints');
+			//   console.log("checkboxArray="+checkboxArray);
+			for (var i = 0; i < addrArray.length; i++) {
+				// 	  console.log(checkboxArray.value)	
+				//     if (checkboxArray.options[i].selected) {
+				//     	console.log("value="+checkboxArray[i].value)
+				waypts.push({
+					location : addrArray[i],
+				//         stopover: true
+				});
+				//     	console.log(waypts);
+				//     }
 			}
+
+			directionsService.route({
+				origin :"110台北市信義區松高路16號1~3F",
+				destination :"110台北市信義區松勤街50號",
+				waypoints : waypts,
+				optimizeWaypoints : false,
+				travelMode : google.maps.TravelMode.DRIVING
+			}, function(response, status) {
+				if (status === google.maps.DirectionsStatus.OK) {
+					directionsDisplay.setDirections(response);
+					var route = response.routes[0];
+					//       var summaryPanel = document.getElementById('directions-panel');
+					//       summaryPanel.innerHTML = '';
+					// For each route, display summary information.
+					//       for (var i = 0; i < route.legs.length; i++) {
+					//         var routeSegment = i + 1;
+					//         summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+					//             '</b><br>';
+					//         summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+					//         summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+					//         summaryPanel.innerHTML += route.legs[i].distance.text +'<br>';
+					//         summaryPanel.innerHTML += route.legs[i].duration.text + 'time <br>';
+					//       }
+				}
+				//     else {
+				//       window.alert('Directions request failed due to ' + status);
+				//     }
+			});
 		}
 		
 		$(function(){
 			
-			var trip_id=null;
-			//定義sortable form
-			var tripForm=$("<form></form>").attr("id","tripForm").attr("style","clear:both; margin-right: 28px;")
-			var sortDiv=$("<div></div>").attr("id","sortable");
-			var count = "A"; 
-				
+			
+			
 			//新增行程
-			$("#addTripBtn").click(function(){
+			$("#addTripBtn").off('click').on('click',function(){
 				var tripName=$("#trip_name").val();
 				var json={"trip_name":tripName};
 				$("#errMsg1").remove();
@@ -445,19 +475,25 @@
 					}
 				})
 			})  //移除錯誤訊息
-			$("#deleteTripBtn").click(function(){
+			$("#deleteTripBtn").off('click').on('click',function(){
 				$("#trip_name").val("");
 				$("#errMsg1").remove();				
 			})
 			
 			//刪除景點明細
-			$(".deleteTripitem").click(function(){
-// 				console.log("TEST1="+$(this).parents());
-				$(this).parent().parent().parent().parent().remove();
-			})
+			function deleteTripitem(){
+				$(".deleteTripitem").off('click').on('click',function(){
+	//  				console.log("TEST2="+$(this).parents());
+	// 				console.log($(this).parent().parent().parent().children("tr:eq(0)").children("td:eq(0)").children("input:eq(0)").val());
+	// 				console.log($( ".deleteTripitem" ).index($( this )));
+					addrArray.splice($( ".deleteTripitem" ).index($( this )),1);
+					$(this).parent().parent().parent().parent().remove();
+					initMap();
+				})
+			}
 			
 			//加入行程
-			$('#addTripitemBtn').click(function(){
+			$('#addTripitemBtn').off('click').on('click',function(){
 				$("#addTripitemBtn").css("display","none");
 				$("#div3").css("display","block");
 			});
@@ -475,7 +511,7 @@
 			});
 			
 			//列出所有選擇區域之景點類型form表單
-			$("#searchRegion").click(function(){
+			$("#searchRegion").off('click').on('click',function(){
 				var regionId=$('#region_id').val();
 				var tripType=$('#tripType').val();
 				var nullSpan1=null;
@@ -551,20 +587,16 @@
 					$("#div3").after(attForm);
 					
 					//景點選單送出
-				    $("#sendBtn").click(function(){
+				    $("#sendBtn").off('click').on('click',function(){
 						$("#addTripitemBtn").css("display","block");
 						$("#div3").css("display","none");
- 						tripForm.append(sortDiv);
+						tripForm.append(sortDiv);
 
 				    	var selected=[];
-				    	var shceduler = $.when();
 				        $("input[name='attCheck']:checked").each(function(){
 // 				           selected.push($(this).val());
 							var attname1=$(this).val();
-							shceduler.then(function(){ 
-							
-							// =====wrapper start
-							return $.get("../att/AttServlet",{"attname":attname1,"method":"getByName"},function(data1){
+							$.get("../att/AttServlet",{"attname":attname1,"method":"getByName"},function(data1){
 								count= count+"A";
 								$.each(data1,function(idx1,att1){
 // 									console.log("idx1="+idx1);
@@ -586,7 +618,7 @@
 									var tr1=$("<tr></tr>").append([th1,th2]);
 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
 									
-									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("class","addr").attr("value",att1.att_addr);
+									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("value",att1.att_addr);
 									var input5=$("<input></input>").attr("type","hidden").attr("id","att_id").attr("value",att1.att_id);
 									var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
 									
@@ -625,38 +657,21 @@
 									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
 									
 									tripitemTable.append([tripitemThead,tripitemTbody]);
-									sortDiv.append(tripitemTable);
-// 									console.log("===============");
-// 									console.log(sortDiv.html());
-									console.log("===============");
 									
+									sortDiv.append(tripitemTable);
+									
+									addrArray.push(att1.att_addr);
+// 									console.log("test="+addrArray);
 								})
-									console.log("======$.each() FINISH HERE======");
-									console.log(sortDiv.html());
-									console.log("===============");
-// 								console.log(sortDiv);
-// 								changeTable();
+								initMap();
 								
 								sortable();
 							    
-								$(".deleteTripitem").click(function(){
-// 					 				console.log("TEST2="+$(this).parents());
-									$(this).parent().parent().parent().parent().remove();
-								})
-							}).then();
-							// =====wrapper end
-							
-								});
+								deleteTripitem();
+							})
 				       	});
-				        
-// 				        console.log("send click");
-				        console.log("send click \n  "+sortDiv.html());
 // 				        alert("景點名稱 : " + selected.join());
                         $("#div3").after(tripForm);
-				        shceduler.then(function(){
-				        	console.log("======$.when FINISHED HERE======");
-							changeTable();
-				        });
 						$("#div3 input").val("");
 						$("#region_id option[value='0']").prop("selected",true);
 						$("#tripType option[value='0']").prop("selected",true);
@@ -737,7 +752,7 @@
 						$("#div3").after(attForm);
 						
 						//景點選單送出
-					    $("#sendBtn").click(function(){
+					    $("#sendBtn").off('click').on('click',function(){
 							$("#addTripitemBtn").css("display","block");
 							$("#div3").css("display","none");
 							tripForm.append(sortDiv);
@@ -816,14 +831,13 @@
 										tripitemTable.append([tripitemThead,tripitemTbody]);
 										
 										sortDiv.append(tripitemTable);
+										
+										addrArray.push(hotel1.hotel_addr);
 									})
 									
 									sortable();
 								    
-									$(".deleteTripitem").off('click').on('click',function(e){
-// 	 					 				console.log("TEST3="+$(this).parents());
-										$(this).parent().parent().parent().parent().remove();	
-									})
+									deleteTripitem();
 								})
 					       	});
 // 					        alert("住宿名稱 : " + selected.join());
@@ -837,7 +851,7 @@
 				}
 			});
 			
-			$("#searchAtt").click(function() {
+			$("#searchAtt").off('click').on('click',function() {
 				$("#selectForm").remove();
 				$("#nullSpan1").remove();
 				$("#nullSpan2").remove();
@@ -913,7 +927,7 @@
 					
 				
 					//景點選單送出
-				    $("#sendBtn").click(function(){
+				    $("#sendBtn").off('click').on('click',function(){
 						$("#addTripitemBtn").css("display","block");
 						$("#div3").css("display","none");
 						tripForm.append(sortDiv);
@@ -986,14 +1000,14 @@
 									tripitemTable.append([tripitemThead,tripitemTbody]);
 									
 									sortDiv.append(tripitemTable);
+									
+									addrArray.push(att1.att_addr);
 								})
 								
 								sortable();
+								
 							    
-								$(".deleteTripitem").click(function(){
-// 					 				console.log("TEST4="+$(this).parents());
-									$(this).parent().parent().parent().parent().remove();	
-								})
+								deleteTripitem();
 							})
 				       	});
 // 				        alert("景點名稱 : " + selected.join());
@@ -1008,21 +1022,6 @@
 			  }
 		   });
 			
-			
-			function changeTable(){
-				        console.log("in changeTable");
-				        console.log("changeTable \n  "+sortDiv.html());
-					   var tripList = $("#sortable").children();
-				        console.log(tripList.length);
-					   console.log("typeof="+typeof tripList);
-					   console.log("table count="+tripList.length);
-					            for(var i=0;i<tripList.length;i++)
-					            {
-					   console.log(tripList[i]);
-					            }
-					            
-			}
-			
 			function sortable(){
 				$( "#sortable" ).sortable({
 			        start: function(event, ui) {
@@ -1032,16 +1031,18 @@
 			            console.log("Start position: " + ui.item.startPos);
 			            console.log("New position: " + ui.item.index());
 			   var tripList = $(this).children();
-			   console.log("test"+typeof tripList);
+			   console.log(typeof tripList);
 			   console.log(tripList.length);
 			            for(var i=0;i<tripList.length;i++)
 			            {
-			    console.log("test1="+tripList[i]);
+			    console.log(tripList[i]);
 			            }
 			        }
 			    });
 			    $( "#sortable" ).disableSelection();
 			}
+			
+			
 			
 // 			<form id="tripForm" style="clear:both; margin-right: 28px;">
 // 			<div id="sortable">
@@ -1106,7 +1107,12 @@
 			
 			
 			
-			
+			$("#saveBtn").off('click').on('click',function(){
+				document.write(addrArray);
+				for(var i=0;i<addrArray.length;i++){
+				console.log(addrArray[i]);
+				}
+			})
 			
 			
 			
@@ -1143,10 +1149,7 @@
 // 		})
 	</script>
 	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&libraries=places&callback=initMap"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGoTWzmY15u_6_Yo6ieFdEHAs2nZJHTBk&libraries=places&callback=initMap"
 		async defer></script>
-<!-- 	<script  -->
-<!-- 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGoTWzmY15u_6_Yo6ieFdEHAs2nZJHTBk&callback=initMap" -->
-<!--         async defer></script> -->
 </body>
 </html>
