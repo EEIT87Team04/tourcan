@@ -128,17 +128,21 @@
 					<div class="col-sm-10 form-group">
 						<label>出發地點：</label> <input type="text" id="possition"
 							placeholder="地址或景點名稱">
-						<button type="button">送出</button>
+<!-- 						<button type="button">送出</button> -->
 					</div>
 					<div class="col-sm-10 form-group">
 						<label for="attName">出發時間：</label> <input type="datetime-local">
-						<button type="button">送出</button>
+<!-- 						<button type="button">送出</button> -->
 					</div>
-					<div class="col-sm-10 form-group">
-						<label>交通方式：</label> <input type="radio" name="traffic"
-							value="car">開車 <input type="radio" name="traffic"
-							value="public">大眾運輸 <input type="radio" name="traffic"
-							value="walk">步行
+					<div class="col-sm-12 form-group">
+						<label>交通方式：</label> 
+						<input type="radio" name="traffic" id="changemode-driving" value="car">
+						<label for="changemode-driving">開車</label>
+						<input type="radio" name="traffic" id="changemode-transit" value="public">
+						<label for="changemode-transit">大眾運輸</label>
+						<input type="radio" name="traffic" id="changemode-walking" value="walk">
+						<label for="changemode-walking">步行</label>
+						<label style="margin-left: 30px">約__?__公里，估約__?___分鐘</label>
 					</div>
 				</div>
 				
