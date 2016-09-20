@@ -44,6 +44,9 @@
 	<bean id="jsonArray" class="org.json.JSONArray" scope="prototype" />
 	<bean id="gsonInstance" class="com.google.gson.Gson" />
 
+	<bean id="HibernateUtil" class="hibernate.util.HibernateUtil">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 
 	<bean id="memDAO" class="com.tourcan.mem.model.MemHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
