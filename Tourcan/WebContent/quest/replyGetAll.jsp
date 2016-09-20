@@ -180,12 +180,37 @@
     font-size: 18px;
 }
 
+.btn.outline {
+	background: none;
+	padding: 5px 13px;
+}
+
+.btn-primary.outline {
+	border: 2px solid #0099cc;
+	color: #0099cc;
+}
+
+.btn-primary.outline:hover, .btn-primary.outline:focus, .btn-primary.outline:active, .btn-primary.outline.active, .open > .dropdown-toggle.btn-primary {
+	color: #33a6cc;
+	border-color: #33a6cc;
+}
+.btn-primary.outline:active, .btn-primary.outline.active {
+	border-color: #D7FFEE;
+	color: 	#D7FFEE;
+	box-shadow: none;
+}
+
 </style>
  
 </head>
 <body>
 <div class="container">
-  <h2>Question Table</h2>
+  <div>
+    <p></p>
+    <span style="font-size: 200%;font-weight:bold">Question Table</span>
+    <button class="btn btn-primary btn-lg outline pull-right" id="quest_raise" style="font-size:13px">搜尋問題</button>
+    <input type="text" class="pull-right" id="txt_topic" style="margin:3px">
+  </div>
   <button class="btn btn-primary" id="quest_getAll">查詢全部</button>
   <button class="btn btn-info" id="quest_cancel">取消查詢</button>
   <p></p>
@@ -319,22 +344,35 @@
         $('#replyAll').hide();
 	    
         $("#quest_getAll").click(function() {
-		        $('#replyAll').show();
-				$('#replyAll>tbody').empty();
+		    $('#replyAll').show();
+		    $('#replyAll>tbody').empty();
 		    $.getJSON(("QuestServlet"),{"method":"getAll"},function(data){
 			    var myBody = $('#replyAll>tbody');
 			    $.each(data,function(idx,data){
-			     var but1=$('<button class="btn btn-success btn-xs" >查看</button>');
-			     var but2=$('<button class="btn btn-warning btn-xs" >取消查看</button>');
-			     var but3=$('<button class="btn btn-danger btn-xs" >回覆</button>');
-			    	var cell1 = $("<td></td>").text(data.quest_id);
-				    var cell2 = $("<td></td>").text(data.mem_uid);
-			    	var cell3 = $("<td></td>").text(data.quest_topic);
-				    var cell4 = $("<td></td>").text(data.quest_qtime);
-			    	var cell5 = $("<td></td>").append(but1).append("  ").append(but2).append("  ").append(but3);
-				    var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
-				    myBody.append(row);				
-			    
+			    	var replyTxt=data.quest_topic;
+			    	if (replyTxt.indexOf("Re:") >= 0){
+			    		var but1=$('<button class="btn btn-success btn-xs" >查看</button>');
+				        var but2=$('<button class="btn btn-warning btn-xs" >取消查看</button>');
+				        var but3=$('<button class="btn btn-info btn-xs" disabled="disabled" >已回覆</button>');
+				    	var cell1 = $("<td></td>").text(data.quest_id);
+					    var cell2 = $("<td></td>").text(data.mem_uid);
+				    	var cell3 = $("<td></td>").text(data.quest_topic);
+					    var cell4 = $("<td></td>").text(data.quest_qtime);
+				    	var cell5 = $("<td></td>").append(but1).append("  ").append(but2).append("  ").append(but3);
+					    var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
+					    myBody.append(row);	
+			    	}else{
+			            var but1=$('<button class="btn btn-success btn-xs" >查看</button>');
+			            var but2=$('<button class="btn btn-warning btn-xs" >取消查看</button>');
+			            var but3=$('<button class="btn btn-danger btn-xs" >回覆</button>');
+			          	var cell1 = $("<td></td>").text(data.quest_id);
+				        var cell2 = $("<td></td>").text(data.mem_uid);
+			        	var cell3 = $("<td></td>").text(data.quest_topic);
+				        var cell4 = $("<td></td>").text(data.quest_qtime);
+			        	var cell5 = $("<td></td>").append(but1).append("  ").append(but2).append("  ").append(but3);
+				        var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
+				        myBody.append(row);				
+			    	}
 			    })
 			        
 			    $("tr").not(':first').hover(
@@ -342,21 +380,53 @@
 							$(this).css("background","#FFD9EC");},
 						function () {
 							$(this).css("background","");});  
-			    
 			})
 		})
 		
+		$("#quest_raise").click(function() {
+		    $('#replyAll').show();
+		    $('#replyAll>tbody').empty();
+		
+		    var questTopic = $('#txt_topic').val();
+		    if(questTopic == null || questTopic.trim().length == 0){
+		    	$('#replyAll').hide();
+		    }else{
+		        $.getJSON(("QuestServlet"),{"questTopic":questTopic,"method":"getByName"},function(data){
+		            console.log("questTopic:"+questTopic);
+		            var myBody = $('#replyAll>tbody');
+		            
+			        $.each(data,function(idx,data){
+                    console.log("idx:"+idx);
+                    console.log("data:"+data);
+			        var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
+			        var but2=$('<button class="btn btn-warning btn-xs" id="quest_editCancel">取消查看</button>');
+				    var cell1 = $("<td></td>").text(data.quest_id);
+				    var cell2 = $("<td></td>").text(data.quest_catalog);
+				    var cell3 = $("<td></td>").text(data.quest_topic);
+				    var cell4 = $("<td></td>").text(data.quest_qtime);
+				    var cell5 = $("<td></td>").append(but1).append("  ").append(but2);
+				    var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
+				    myBody.append(row);				
+		        })
+			
+			    $("tr").not(':first').hover(
+				    function () {
+				        $(this).css("background","#FFD9EC");},
+			        function () {
+					    $(this).css("background","");});
+		        
+			    })
+		    }
+		})
 
        $("#replyAll").on('click','.btn-success',function(){
-//             $('#replyOne').show();
            
             quest_replyValue=null;
             $('#replyOne').remove();
 		    var rowClosest = $(this).closest("tr");
-// 		    var rowClosestTd = $(this).closest("tr>td:eq(4)");
 		    var questId = rowClosest.find("td:eq(0)").text();     // Finds the 1st <td> element
-		    
 		    console.log(questId);
+		    
 		    $.get(("QuestServlet"),{"questId":questId,"method":"getOneById"},function(data){
 		    	$.each(data,function(questName,questValue){
 // 		   	   	    console.log(questName+" : "+questValue);
@@ -406,7 +476,6 @@
 			        if(typeof quest_replyValue === "undefined" ||quest_replyValue == null){
 			        var frag = document.createDocumentFragment();
 		  			var div_head = document.createElement("div");
-// 		  			div_head.className="container";
 		  			div_head.setAttribute("id","replyOne");
 		  			
 		  			var ul_afterHead= document.createElement("ul");
@@ -471,7 +540,6 @@
 			        	// Question div
 	                    var frag = document.createDocumentFragment();
 			  			var div_head = document.createElement("div");
-// 			  			div_head.className="container";
 			  			div_head.setAttribute("id","replyOne");
 			  			
 			  			var ul_afterHead= document.createElement("ul");
@@ -583,17 +651,12 @@
 			  			frag.appendChild(div_head);
 			  			
 			  			rowClosest.after(frag);
-			  			
-			  			rowClosest.find("td>button:eq(2)").removeClass("btn-danger").addClass("btn-info disabled").attr("disabled","disabled").text("已回覆");;
 			        }
 		    })
-		    
   			
-          $(".btn-warning").click(function() {
-//         	 var rowClosest = $(this).closest("div");
-//         	 rowClosest.hide();
-		     $('#replyOne').remove();
-	      })
+            $(".btn-warning").click(function() {
+               $(this).parent().parent().next('#replyOne').remove();
+	        })
 	      
 	       $(".btn-danger").click(function(){
 	    	   $("#myModal").modal();

@@ -180,10 +180,6 @@
     font-size: 18px;
 }
 
-.btn btn-default{
-     background-color: transparent;
-}
-
 .btn.outline {
 	background: none;
 	padding: 5px 13px;
@@ -212,7 +208,7 @@
     <p></p>
     <span style="font-size: 200%;font-weight:bold">Question List</span>
     <button class="btn btn-primary btn-lg outline pull-right" id="quest_raise" style="font-size:13px">搜尋問題</button>
-    <input type="text" class="pull-right" id="txt_topic" style="margin:3px">
+    <input type="text" class="pull-right" id="txt_topic" data-toggle="tooltip" data-placement="left" title="請輸入查詢標題" style="margin:3px">
   </div>
   <button class="btn btn-primary" id="quest_getAll">查詢全部</button>
   <button class="btn btn-info" id="quest_cancel">取消查詢</button>
@@ -324,16 +320,15 @@
 		    $('#replyAll>tbody').empty();
 		
 		    var questTopic = $('#txt_topic').val();
+		    if(questTopic == null || questTopic.trim().length == 0){
+		    	$('#replyAll').hide();
+		    	$('[data-toggle="tooltip"]').tooltip();
+		    }else{
 		        $.getJSON(("QuestServlet"),{"questTopic":questTopic,"method":"getByName"},function(data){
-		            console.log(data);
+		            console.log("questTopic:"+questTopic);
 		            var myBody = $('#replyAll>tbody');
 		            
-			    $.each(data,function(idx,data){
-		    if(data="請輸入問題名稱,查詢失敗"){
-		    	$('#replyAll').hide();
-		    }
-		    else{
-// 				    console.log(data);
+			        $.each(data,function(idx,data){
                     console.log("idx:"+idx);
                     console.log("data:"+data);
 			        var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
@@ -345,13 +340,14 @@
 				    var cell5 = $("<td></td>").append(but1).append("  ").append(but2);
 				    var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
 				    myBody.append(row);				
-			    })
+		        })
 			
 			    $("tr").not(':first').hover(
 				    function () {
 				        $(this).css("background","#FFD9EC");},
 			        function () {
 					    $(this).css("background","");});
+		        
 			    })
 		    }
 		})
@@ -572,7 +568,7 @@
 		    
   			
            $(".btn-warning").click(function() {
-		     $('#replyOne').remove();
+               $(this).parent().parent().next('#replyOne').remove();
 	       })
 	       
 	       
@@ -644,10 +640,13 @@
 // // 	       }
 // 	   });
 	    
-	   $(".btn-lg").click(function(){
+// 	   $(".btn-lg").click(function(){
 		   
-	   })
-	
+// 	   })
+	   $("#txt_topic").mousedown(function(){
+		   $('[data-toggle="tooltip"]').tooltip();
+		});
+		
 	})
 	</script>
 
