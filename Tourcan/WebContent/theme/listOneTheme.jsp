@@ -40,8 +40,8 @@
 			<thead>
 				<tr class="success"  >
 					<th class="col-md-5">主題:</th>
-					<th class="col-md-4">memName</th>
-					<th class="col-md-3 ">Create Time</th>
+					<th class="col-md-4">發表者姓名</th>
+					<th class="col-md-3 ">建立時間</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -71,7 +71,7 @@
 		 	<thead style="padding: 10px">
 				<tr class="success">
 					<th class="col-md-4">回覆標題</th>
-					<th class="col-md-3">mem_uid</th>
+					<th class="col-md-3">回覆者姓名</th>
 				</tr>
 			</thead>
 			<tbody>

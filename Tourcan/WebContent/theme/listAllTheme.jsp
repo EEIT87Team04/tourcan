@@ -31,7 +31,7 @@
 			<form class=form-inline>
 				<div class="col-md-8 btn pull-left">
 					<div class="form-group">
-						<label for="themeTopic">TopicSearch</label><input type="text" class="form-control" id="theme_topic" name="themetopic" placeholder="themeTopic">
+						<label for="themeTopic">主題搜尋</label><input type="text" class="form-control" id="theme_topic" name="themetopic" placeholder="請輸入主題名稱">
 						<button type="button" class="btn btn-success form-control" id="btnTopicCheck">搜尋</button>
 					</div>
 				</div>
@@ -46,10 +46,10 @@
 	<table id="themeList" class="table table-hover tableList" >
 		<thead>
 			<tr >
-				<th>id</th>				
-				<th>topic</th>
-				<th>memUID</th>
-				<th>Create time</th>		
+				<th>編號</th>				
+				<th>主題名稱</th>
+				<th>發表者姓名</th>
+				<th>建立時間</th>		
 			</tr>
 		</thead>
 		<tbody id="dataList" >
@@ -88,6 +88,11 @@
 
 <script type="text/javascript">
 $(function(){
+	$("tr").not(':first').hover(
+		    function () {
+				$(this).css("background","#FFFFB9");},
+			function () {
+				$(this).css("background","");});  
 	 var a="${contextPath}";
 	 console.log(a)
 // 	var serviceProvider = "${contextPath}/members";

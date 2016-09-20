@@ -83,9 +83,9 @@
    <br>
    <table border="1" id="table1">
    <tr><td>
-   <input type="text" class="tex1"  name="tex1" value="110台北市信義區松廉路">
+   <input type="text" class="tex1"  name="tex1" value="110台北市信義區松壽路20號">
     <tr><td>
-   <input type="text" class="tex1"  name="tex2" value="110台北市信義區松壽路20號">
+   <input type="text" class="tex1"  name="tex2" value="110台北市信義區松高路16號1~3F">
       </tr>
       <tr><td>
       <input type="submit" id="submit" >
@@ -121,21 +121,24 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     console.log(testArray.length)
   	for(var j=0;j<testArray.length;j++){
   		console.log(testArray[j].value);
-  		point.pusch({
-  			
-  		})
-  	}
-  var checkboxArray = document.getElementById('waypoints');
-  for (var i = 0; i < checkboxArray.length; i++) {
-// 	  console.log(checkboxArray.value)
-    if (checkboxArray.options[i].selected) {
-//     	console.log(checkboxArray[i].value)
-      waypts.push({
-        location: checkboxArray[i].value,
+//   		point.pusch({
+  			waypts.push({
+        location: testArray[j].value,
         stopover: true
       });
-    }
-  }
+//   		})
+  	}
+//   var checkboxArray = document.getElementById('waypoints');
+//   for (var i = 0; i < checkboxArray.length; i++) {
+// // 	  console.log(checkboxArray.value)
+//     if (checkboxArray.options[i].selected) {
+// //     	console.log(checkboxArray[i].value)
+//       waypts.push({
+//         location: checkboxArray[i].value,
+//         stopover: true
+//       });
+//     }
+//   }
 
   directionsService.route({
     origin: document.getElementById('start').value,
@@ -166,7 +169,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGoTWzmY15u_6_Yo6ieFdEHAs2nZJHTBk&signed_in=true&callback=initMap"
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGoTWzmY15u_6_Yo6ieFdEHAs2nZJHTBk&libraries=places&callback=initMap"
         async defer></script>
   </body>
 </html>
