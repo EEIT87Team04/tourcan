@@ -11,41 +11,10 @@
         padding: 0;
       }
       #mapPreview {
-        height: 100%;
+      	height: 100%;
+		border: 2px solid #E0E0E0;
         float: right;
         width: 70%;
-        height: 100%;
-      }
-#right-panel {
-  font-family: 'Roboto','sans-serif';
-  line-height: 30px;
-  padding-left: 10px;
-}
-
-#right-panel select, #right-panel input {
-  font-size: 15px;
-}
-
-#right-panel select {
-  width: 100%;
-}
-
-#right-panel i {
-  font-size: 12px;
-}
-
-      #right-panel {
-        margin: 20px;
-        border-width: 2px;
-        width: 20%;
-        float: left;
-        text-align: left;
-        padding-top: 20px;
-      }
-      #directions-panel {
-        margin-top: 20px;
-        background-color: #FFEE77;
-        padding: 10px;
       }
     </style>
   </head>
@@ -54,12 +23,7 @@
     <div id="right-panel">
     <div>
     <b>Start:</b>
-    <select id="start">
-      <option value="103台北市大同區承德路一段1號">京站Qsquare</option>
-      <option value="Boston, MA">Boston, MA</option>
-      <option value="New York, NY">New York, NY</option>
-      <option value="Miami, FL">Miami, FL</option>
-    </select>
+    <label>出發地點：</label> <input type="text" id="possition" placeholder="地址或景點名稱">
     <br>
     <b>Waypoints:</b> <br>
     <i>(Ctrl-Click for multiple selection)</i> <br>
@@ -67,26 +31,16 @@
       <option value="110台北市信義區松高路16號1~3F">微風</option>
       <option value="110台北市信義區松壽路20號">信義威秀</option>
       <option value="110台北市信義區松勤街50號">四四</option>
-      <option value="winnipeg, mb">Winnipeg</option>
-      <option value="fargo, nd">Fargo</option>
-      <option value="calgary, ab">Calgary</option>
-      <option value="spokane, wa">Spokane</option>
     </select>
     <br>
     <b>End:</b>
     <select id="end">
       <option value="110台北市信義區松廉路">世貿中心展覽二館</option> 
-      <option value="Seattle, WA">Seattle, WA</option>
-      <option value="San Francisco, CA">San Francisco, CA</option>
-      <option value="Los Angeles, CA">Los Angeles, CA</option>
     </select>
    <br>
    <table border="1" id="table1">
    <tr><td>
    <input type="text" class="tex1"  name="tex1" value="110台北市信義區松廉路">
-    <tr><td>
-   <input type="text" class="tex1"  name="tex2" value="110台北市信義區松壽路20號">
-      </tr>
       <tr><td>
       <input type="submit" id="submit" >
       </tr>
@@ -115,30 +69,25 @@ function initMap() {
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   var point=[];
-  var waypts = [];
-  var testArray = document.getElementsByClassName('tex1');
-  	console.log(testArray.value)
-    console.log(testArray.length)
-  	for(var j=0;j<testArray.length;j++){
-  		console.log(testArray[j].value);
-//   		point.pusch({
-  			
-//   		})
-  	}
-  var checkboxArray = document.getElementById('waypoints');
-  for (var i = 0; i < checkboxArray.length; i++) {
-// 	  console.log(checkboxArray.value)
-    if (checkboxArray.options[i].selected) {
-//     	console.log(checkboxArray[i].value)
-      waypts.push({
-        location: checkboxArray[i].value,
-        stopover: true
-      });
-    }
-  }
+  var waypts = [{location:"110台北市信義區松高路16號1~3F"},{location:"110台北市信義區松勤街50號"}];
+  ["110台北市信義區松高路16號1~3F","110台北市信義區松勤街50號"]
+  
+//   var checkboxArray = document.getElementById('waypoints');
+//   console.log("checkboxArray="+checkboxArray);
+//   for (var i = 0; i < checkboxArray.length; i++) {
+// 	  console.log(checkboxArray.value)	
+//     if (checkboxArray.options[i].selected) {
+//     	console.log("value="+checkboxArray[i].value)
+//       waypts.push({
+//         location: checkboxArray[i].value,
+//         stopover: true
+//       });
+//     	console.log(waypts);
+//     }
+//   }
 
   directionsService.route({
-    origin: document.getElementById('start').value,
+    origin: document.getElementById('possition').value,
     destination: document.getElementById('end').value,
     waypoints: waypts,
     optimizeWaypoints: false,
@@ -151,13 +100,13 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
       summaryPanel.innerHTML = '';
       // For each route, display summary information.
       for (var i = 0; i < route.legs.length; i++) {
-        var routeSegment = i + 1;
-        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-            '</b><br>';
-        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-        summaryPanel.innerHTML += route.legs[i].distance.text +'<br>';
-        summaryPanel.innerHTML += route.legs[i].duration.text + 'time <br>';
+//         var routeSegment = i + 1;
+//         summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+//             '</b><br>';
+//         summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+//         summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+//         summaryPanel.innerHTML += route.legs[i].distance.text +'<br>';
+//         summaryPanel.innerHTML += route.legs[i].duration.text + 'time <br>';
       }
     } else {
       window.alert('Directions request failed due to ' + status);
@@ -166,7 +115,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGoTWzmY15u_6_Yo6ieFdEHAs2nZJHTBk&signed_in=true&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGoTWzmY15u_6_Yo6ieFdEHAs2nZJHTBk&libraries=places&callback=initMap"
         async defer></script>
   </body>
 </html>

@@ -422,7 +422,6 @@
 			//定義sortable form
 			var tripForm=$("<form></form>").attr("id","tripForm").attr("style","clear:both; margin-right: 28px;")
 			var sortDiv=$("<div></div>").attr("id","sortable");
-			
 			var count = "A"; 
 				
 			//新增行程
@@ -555,13 +554,17 @@
 				    $("#sendBtn").click(function(){
 						$("#addTripitemBtn").css("display","block");
 						$("#div3").css("display","none");
-						tripForm.append(sortDiv);
+ 						tripForm.append(sortDiv);
 
 				    	var selected=[];
+				    	var shceduler = $.when();
 				        $("input[name='attCheck']:checked").each(function(){
 // 				           selected.push($(this).val());
 							var attname1=$(this).val();
-							$.get("../att/AttServlet",{"attname":attname1,"method":"getByName"},function(data1){
+							shceduler.then(function(){ 
+							
+							// =====wrapper start
+							return $.get("../att/AttServlet",{"attname":attname1,"method":"getByName"},function(data1){
 								count= count+"A";
 								$.each(data1,function(idx1,att1){
 // 									console.log("idx1="+idx1);
@@ -583,7 +586,7 @@
 									var tr1=$("<tr></tr>").append([th1,th2]);
 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
 									
-									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("value",att1.att_addr);
+									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("class","addr").attr("value",att1.att_addr);
 									var input5=$("<input></input>").attr("type","hidden").attr("id","att_id").attr("value",att1.att_id);
 									var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
 									
@@ -622,44 +625,38 @@
 									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
 									
 									tripitemTable.append([tripitemThead,tripitemTbody]);
-									
 									sortDiv.append(tripitemTable);
+// 									console.log("===============");
+// 									console.log(sortDiv.html());
+									console.log("===============");
+									
 								})
+									console.log("======$.each() FINISH HERE======");
+									console.log(sortDiv.html());
+									console.log("===============");
+// 								console.log(sortDiv);
+// 								changeTable();
 								
-								
-								$( "#sortable" ).sortable({
-							        start: function(event, ui) {
-							            ui.item.startPos = ui.item.index();
-							        },
-							        stop: function(event, ui) {
-							            console.log("Start position: " + ui.item.startPos);
-							            console.log("New position: " + ui.item.index());
-		//					             console.log($("#sortable li").length);
-		//					             console.log($(this).children().length);
-							   var tripList = $(this).children();
-							   console.log(typeof tripList);
-							   console.log(tripList.length);
-							            for(var i=0;i<tripList.length;i++)
-							            {
-							    console.log(tripList[i]);
-							            }
-							        }
-							     
-		//					      update:function(e,ui){
-		//					       console.log(e);
-		//					       console.log(ui);
-		//					      } 
-							    });
-							    $( "#sortable" ).disableSelection();
+								sortable();
 							    
 								$(".deleteTripitem").click(function(){
 // 					 				console.log("TEST2="+$(this).parents());
-									$(this).parent().parent().parent().parent().remove();	
+									$(this).parent().parent().parent().parent().remove();
 								})
-							})
+							}).then();
+							// =====wrapper end
+							
+								});
 				       	});
+				        
+// 				        console.log("send click");
+				        console.log("send click \n  "+sortDiv.html());
 // 				        alert("景點名稱 : " + selected.join());
                         $("#div3").after(tripForm);
+				        shceduler.then(function(){
+				        	console.log("======$.when FINISHED HERE======");
+							changeTable();
+				        });
 						$("#div3 input").val("");
 						$("#region_id option[value='0']").prop("selected",true);
 						$("#tripType option[value='0']").prop("selected",true);
@@ -821,31 +818,7 @@
 										sortDiv.append(tripitemTable);
 									})
 									
-									
-									$( "#sortable" ).sortable({
-								        start: function(event, ui) {
-								            ui.item.startPos = ui.item.index();
-								        },
-								        stop: function(event, ui) {
-								            console.log("Start position: " + ui.item.startPos);
-								            console.log("New position: " + ui.item.index());
-			//					             console.log($("#sortable li").length);
-			//					             console.log($(this).children().length);
-								   var tripList = $(this).children();
-								   console.log(typeof tripList);
-								   console.log(tripList.length);
-								            for(var i=0;i<tripList.length;i++)
-								            {
-								    console.log(tripList[i]);
-								            }
-								        }
-								     
-			//					      update:function(e,ui){
-			//					       console.log(e);
-			//					       console.log(ui);
-			//					      } 
-								    });
-								    $( "#sortable" ).disableSelection();
+									sortable();
 								    
 									$(".deleteTripitem").off('click').on('click',function(e){
 // 	 					 				console.log("TEST3="+$(this).parents());
@@ -1015,31 +988,7 @@
 									sortDiv.append(tripitemTable);
 								})
 								
-								
-								$( "#sortable" ).sortable({
-							        start: function(event, ui) {
-							            ui.item.startPos = ui.item.index();
-							        },
-							        stop: function(event, ui) {
-							            console.log("Start position: " + ui.item.startPos);
-							            console.log("New position: " + ui.item.index());
-		//					             console.log($("#sortable li").length);
-		//					             console.log($(this).children().length);
-							   var tripList = $(this).children();
-							   console.log(typeof tripList);
-							   console.log(tripList.length);
-							            for(var i=0;i<tripList.length;i++)
-							            {
-							    console.log(tripList[i]);
-							            }
-							        }
-							     
-		//					      update:function(e,ui){
-		//					       console.log(e);
-		//					       console.log(ui);
-		//					      } 
-							    });
-							    $( "#sortable" ).disableSelection();
+								sortable();
 							    
 								$(".deleteTripitem").click(function(){
 // 					 				console.log("TEST4="+$(this).parents());
@@ -1058,6 +1007,41 @@
 				})
 			  }
 		   });
+			
+			
+			function changeTable(){
+				        console.log("in changeTable");
+				        console.log("changeTable \n  "+sortDiv.html());
+					   var tripList = $("#sortable").children();
+				        console.log(tripList.length);
+					   console.log("typeof="+typeof tripList);
+					   console.log("table count="+tripList.length);
+					            for(var i=0;i<tripList.length;i++)
+					            {
+					   console.log(tripList[i]);
+					            }
+					            
+			}
+			
+			function sortable(){
+				$( "#sortable" ).sortable({
+			        start: function(event, ui) {
+			            ui.item.startPos = ui.item.index();
+			        },
+			        stop: function(event, ui) {
+			            console.log("Start position: " + ui.item.startPos);
+			            console.log("New position: " + ui.item.index());
+			   var tripList = $(this).children();
+			   console.log("test"+typeof tripList);
+			   console.log(tripList.length);
+			            for(var i=0;i<tripList.length;i++)
+			            {
+			    console.log("test1="+tripList[i]);
+			            }
+			        }
+			    });
+			    $( "#sortable" ).disableSelection();
+			}
 			
 // 			<form id="tripForm" style="clear:both; margin-right: 28px;">
 // 			<div id="sortable">
@@ -1159,7 +1143,10 @@
 // 		})
 	</script>
 	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&callback=initMap"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&libraries=places&callback=initMap"
 		async defer></script>
+<!-- 	<script  -->
+<!-- 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGoTWzmY15u_6_Yo6ieFdEHAs2nZJHTBk&callback=initMap" -->
+<!--         async defer></script> -->
 </body>
 </html>
