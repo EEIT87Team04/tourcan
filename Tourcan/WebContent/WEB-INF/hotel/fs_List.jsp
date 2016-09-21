@@ -2,23 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
-<head>
-<title>旅遊熱點</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
-	rel="stylesheet">
-<script
-	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
-<body>
-	<div class="container">
+<jsp:include page="/frontPageHeader.jsp" />
 		<div class="row">
 			<div class="col-md-6">
-				<h1>旅遊熱點</h1>
+				<h1>飯店/民宿</h1>
 			</div>
 			<div class="col-md-6 ">
 				<form class=form-inline>
@@ -56,7 +43,6 @@
 			</c:forEach>
 		</div>
 		<ul id='page_navigation' class="pagination pagination-lg"></ul>
-	</div>
 	<script type="text/javascript">
 		$(function() {
 			//----------Pagination-------------------------------------------------	
@@ -149,5 +135,4 @@
 		}
 		//----------End_Pagination-------
 	</script>
-</body>
-</html>
+<jsp:include page="/frontPageFooter.jsp" />

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,13 +50,19 @@
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
             <li class="sidebar-brand dath7">
-                <a class="dath7" href="#top" onclick=$("#menu-close").click();>Tourcan</a>
+                <a class="dath7" href="${contextPath}/mem/edituser">
+                ${vo.mem_nick}
+	                <c:if test="${vo.mem_nick==null}">
+	                	${vo.mem_fname}
+	                </c:if>
+	            ,您好！
+                </a>
             </li>
             <li>
-                <a class="dath7" href="#top" onclick=$("#menu-close").click();>首頁</a>
+                <a class="dath7" href="#top" onclick=$("#menu-close").click();>首　　頁</a>
             </li>
             <li>
-                <a class="dath7" href="#about" onclick=$("#menu-close").click();>關於</a>
+                <a class="dath7" href="#about" onclick=$("#menu-close").click();>簡　　介</a>
             </li>
             <li>
                 <a class="dath7" href="#services" onclick=$("#menu-close").click();>服務項目</a>
@@ -65,6 +72,10 @@
             </li>
             <li>
                 <a class="dath7" href="#contact" onclick=$("#menu-close").click();>聯繫我們</a>
+            </li>
+
+            <li>
+            <a class="dath7" href="${contextPath}/logout.jsp">登　　出</a>
             </li>
         </ul>
     </nav>
@@ -87,7 +98,9 @@
                     <h2>簡介</h2>
                     <p class="lead dath7" style="text-align:justify;">　　短暫的假期不知該往何處去，想出門走走放鬆、減壓，反被行程規劃磨盡了耐心和精力。當有一個把美食、住宿與交通都能集合在內的網站，讓行程規劃不在困擾著你，既有的行程模式，景點、美食與住宿通通幫您想好。還想要來點驚喜的你，還有 TourCan 獨特的隨選行程，讓你隨時為自己準備一場精彩的旅程！
                     </p>
-                    <a href="#" class="btn btn-dark">註冊/登入會員</a>
+                    <c:if test="${vo==null}">
+                    <a href="${contextPath}/login.jsp" class="btn btn-dark">註冊/登入會員</a>
+                    </c:if>
                 </div>
             </div>
             <!-- /.row -->

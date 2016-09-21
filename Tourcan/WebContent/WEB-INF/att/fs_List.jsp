@@ -2,20 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
-<head>
-<title>旅遊熱點</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
-	rel="stylesheet">
-<script
-	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
-<body>
-	<div class="container">
+<jsp:include page="/frontPageHeader.jsp" />
 		<div class="row">
 			<div class="col-md-6">
 				<h1>旅遊熱點</h1>
@@ -40,7 +27,7 @@
 			<c:forEach var="AttVO" items="${attVO}">
 				<div class="row">
 					<div class="col-md-4 col-md-offset-1">
-						<p>這裡可以放照片lalalalalalalala</p>
+						<p><img src=""></p>
 					</div>
 					<div class="col-md-7">
 						<div class="row">
@@ -58,7 +45,6 @@
 			</c:forEach>
 		</div>
 		<ul id='page_navigation' class="pagination pagination-lg"></ul>
-	</div>
 	<script type="text/javascript">
 		$(function() {
 			//----------Pagination-------------------------------------------------	
@@ -151,5 +137,4 @@
 		}
 		//----------End_Pagination-------
 	</script>
-</body>
-</html>
+<jsp:include page="/frontPageFooter.jsp" />
