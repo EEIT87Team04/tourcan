@@ -42,6 +42,7 @@
 	</bean>
 
 	<bean id="jsonArray" class="org.json.JSONArray" scope="prototype" />
+	<bean id="tika" class="org.apache.tika.Tika" />
 	<bean id="gsonInstance" class="com.google.gson.Gson" />
 
 	<bean id="HibernateUtil" class="hibernate.util.HibernateUtil">
@@ -72,5 +73,10 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="attVO" class="com.tourcan.att.model.AttVO" scope="prototype" />
+
+	<bean id="photoDAO" class="com.tourcan.photo.model.PhotoDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="photoVO" class="com.tourcan.photo.model.PhotoVO" scope="prototype" />
 
 </beans>

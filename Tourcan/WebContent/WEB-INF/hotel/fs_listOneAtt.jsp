@@ -24,7 +24,12 @@
 		<div style="border: solid 1px" class="col-md-10 col-md-offset-1">
 			<div class="row">
 				<div style="border: solid 1px" class="col-md-4 col-md-offset-1">
-					照片:照片放這</div>
+					<c:forEach items="${imgs}" var="img">
+						<div class="col-md-12">
+							<img src="${img}" />
+						</div>
+					</c:forEach>
+				</div>
 				<div style="border: solid 1px" class="col-md-7">
 					<div style="border: solid 1px" class="row">
 						<div class="col-md-7">${hotelVO.hotel_name}</div>

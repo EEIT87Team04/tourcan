@@ -1,6 +1,8 @@
 package com.tourcan.att.controller;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,8 +22,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.tika.Tika;
+
 import com.tourcan.att.model.AttDAO_interface;
 import com.tourcan.att.model.AttVO;
+import com.tourcan.photo.model.PhotoDAO_interface;
+import com.tourcan.photo.model.PhotoVO;
 import com.tourcan.region.model.RegionVO;
 import com.tourcan.util.ApplicationContextUtils;
 
@@ -35,6 +41,7 @@ public class AttRestService {
 	HttpServletResponse response;
 
 	AttDAO_interface dao = (AttDAO_interface) ApplicationContextUtils.getContext().getBean("attDAO");
+	PhotoDAO_interface pdao = (PhotoDAO_interface) ApplicationContextUtils.getContext().getBean("photoDAO");
 
 	@GET
 	@Path("{id: [0-9]+}")
@@ -62,10 +69,68 @@ public class AttRestService {
 			AttVO vo = dao.findById(id);
 			// 200 OK
 			request.setAttribute("attVO", vo);
+			ArrayList<String> imgs = new ArrayList<String>();
+			for (PhotoVO pvo : pdao.findByAttId(id))
+				imgs.add(request.getContextPath() + request.getServletPath() + request.getPathInfo() + "/photos/"
+						+ pvo.getPhoto_id());
+			request.setAttribute("imgs", imgs);
 			request.getRequestDispatcher("/WEB-INF/att/fs_listOneAtt.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@GET
+	@Path("{id: [0-9]+}/photos")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response queryPhotosById(@PathParam("id") Integer id) {
+		HashMap<String, Object> msg = new HashMap<String, Object>();
+		if (dao.findById(id) == null) {
+			// 404 Not found
+			msg.put("result", "failure");
+			msg.put("error", "id not exist.");
+			return Response.status(Status.NOT_FOUND).entity(msg).build();
+		} else {
+			// 200 OK
+			ArrayList<String> imgPath = new ArrayList<String>();
+			for (PhotoVO pvo : pdao.findByAttId(id))
+				imgPath.add(request.getContextPath() + request.getServletPath() + request.getPathInfo() + "/"
+						+ pvo.getPhoto_id());
+			msg.put("result", "success");
+			msg.put("imgs", imgPath);
+			return Response.status(Status.OK).entity(msg).build();
+		}
+	}
+
+	@GET
+	@Path("{id: [0-9]+}/photos/{pid: [0-9]+}")
+	public void queryPhotoById(@PathParam("id") Integer id, @PathParam("pid") Integer pid) {
+		AttVO vo;
+		PhotoVO pvo;
+		try {
+			OutputStream out = response.getOutputStream();
+			if ((vo = dao.findById(id)) == null || (pvo = pdao.findById(pid)) == null
+					|| vo.getAtt_id() != pvo.getAtt_id()) {
+				// 404 Not found
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			} else if (vo.getAtt_id() != pvo.getAtt_id()) {
+				// 404 Not found
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			} else {
+				// 200 OK
+				byte[] photo = pvo.getPhoto_file();
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.setHeader("Content-Type",
+						ApplicationContextUtils.getContext().getBean(Tika.class).detect(photo));
+				response.setHeader("Content-Transfer-Encoding", "binary");
+				response.setHeader("Content-Disposition", "inline");
+				response.setContentLength(photo.length);
+				out.write(photo);
+			}
+		} catch (IOException e) {
+			// 500 Internal server error
 			e.printStackTrace();
 		}
 	}

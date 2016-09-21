@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import hibernate.util.HibernateUtil;
 
@@ -13,6 +14,12 @@ public class PhotoDAO implements PhotoDAO_interface {
 	private static final String QUERY_BY_HOTEL_ID = "FROM PhotoVO WHERE hotel_id = :hotel_id ORDER BY photo_id";
 	private static final String QUERY_BY_ATT_ID = "FROM PhotoVO WHERE att_id = :att_id ORDER BY photo_id";
 	private static final String QUERY_BY_ATT_ID_AND_HOTEL_ID = "FROM PhotoVO WHERE att_id = :att_id AND hotel_id = :hotel_id ORDER BY photo_id";
+
+	private SessionFactory factory;
+
+	public void setSessionFactory(SessionFactory factory) {
+		this.factory = factory;
+	}
 
 	@Override
 	public void insert(PhotoVO photoVO) {
