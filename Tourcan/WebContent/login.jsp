@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:if test="${vo != null}">
+	<c:redirect url="/" />
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,7 +111,8 @@
 	<div class="container">
 		<div class="omb_login">
 			<h3 class="omb_authTitle">
-				<a data-toggle="tab" href="#login_form">登入</a> 或是 <a data-toggle="tab" href="#register_form">立即註冊</a>
+				<a data-toggle="tab" href="#login_form">登入</a> 或是 <a
+					data-toggle="tab" href="#register_form">立即註冊</a>
 			</h3>
 			<div class="row">
 				<div class="col-xs-12 col-sm-4 col-sm-offset-2">
@@ -192,7 +196,7 @@
 										id="reg_password" placeholder="Password">
 								</div>
 								<span class="help-block"></span>
-								
+
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock"></i></span>
 									<input type="password" class="form-control" name="password"

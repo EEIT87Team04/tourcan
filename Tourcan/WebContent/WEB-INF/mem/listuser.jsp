@@ -40,7 +40,7 @@
 								<td>${member.mem_email}</td>
 								<td><fmt:formatDate value="${member.mem_regtime}"
 										type="date" pattern="yyyy-MM-dd" /></td>
-								<td>${member.region_id}</td>
+								<td>${member.regionVO.region_id}</td>
 								<td>${member.mem_mobile}</td>
 								<td>${member.mem_sex}</td>
 								<td><fmt:formatDate value="${member.mem_bdate}" type="date"

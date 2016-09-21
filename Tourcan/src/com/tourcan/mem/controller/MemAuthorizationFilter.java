@@ -31,23 +31,24 @@ public class MemAuthorizationFilter implements Filter {
 	private static final Map<String, String[]> blacklist = new HashMap<String, String[]>();
 	private static final Set<String> restful = new HashSet<String>();
 	static {
-		blacklist.put("/att", new String[] { "POST", "PUT", "DELETE" });
-		restful.add("/att");
-
-		blacklist.put("/HotelServlet", new String[] { "POST", "PUT", "DELETE" });
-		restful.add("/HotelServlet");
-
-		blacklist.put("/hotels", new String[] { "POST", "PUT", "DELETE" });
-		restful.add("/hotels");
-
-		blacklist.put("/members", new String[] { "GET", "POST", "PUT", "DELETE" });
-		restful.add("/members");
-
-		blacklist.put("/ems", new String[] { "GET", "POST", "PUT", "DELETE" });
-		blacklist.put("/attImport.html", new String[] { "GET", "POST", "PUT", "DELETE" });
-		blacklist.put("/att/insert.jsp", new String[] { "GET", "POST", "PUT", "DELETE" });
-		blacklist.put("/mem", new String[] { "GET", "POST", "PUT", "DELETE" });
-		blacklist.put("/hotelManage.jsp", new String[] { "GET", "POST", "PUT", "DELETE" });
+		// TODO complete this blacklist
+//		blacklist.put("/att", new String[] { "POST", "PUT", "DELETE" });
+//		restful.add("/att");
+//
+//		blacklist.put("/HotelServlet", new String[] { "POST", "PUT", "DELETE" });
+//		restful.add("/HotelServlet");
+//
+//		blacklist.put("/hotels", new String[] { "POST", "PUT", "DELETE" });
+//		restful.add("/hotels");
+//
+//		blacklist.put("/members", new String[] { "GET", "POST", "PUT", "DELETE" });
+//		restful.add("/members");
+//
+//		blacklist.put("/ems", new String[] { "GET", "POST", "PUT", "DELETE" });
+//		blacklist.put("/attImport.html", new String[] { "GET", "POST", "PUT", "DELETE" });
+//		blacklist.put("/att/insert.jsp", new String[] { "GET", "POST", "PUT", "DELETE" });
+//		blacklist.put("/mem", new String[] { "GET", "POST", "PUT", "DELETE" });
+//		blacklist.put("/hotelManage.jsp", new String[] { "GET", "POST", "PUT", "DELETE" });
 	}
 
 	@Override

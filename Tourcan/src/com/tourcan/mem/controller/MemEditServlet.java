@@ -20,6 +20,8 @@ import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.converters.DateConverter;
 
 import com.tourcan.mem.model.MemVO;
+import com.tourcan.region.model.RegionDAO;
+import com.tourcan.util.ApplicationContextUtils;
 
 @WebServlet("/mem/edituser")
 public class MemEditServlet extends HttpServlet {
@@ -60,6 +62,10 @@ public class MemEditServlet extends HttpServlet {
 		conv.register(dconv, Date.class);
 		try {
 			new BeanUtilsBean(conv).populate(vo_new, req.getParameterMap());
+
+			// switch region_id to regionVO
+			vo_new.setRegionVO(((RegionDAO) ApplicationContextUtils.getContext().getBean("regionDAO"))
+					.findById(Integer.parseInt(req.getParameter("region_id"))));
 
 			if (vo_new.getMem_uid().equals(vo_orig.getMem_uid())) {
 				// modify user it self.
