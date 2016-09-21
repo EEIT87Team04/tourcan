@@ -29,6 +29,8 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.tasks.Task;
 import com.google.firebase.tasks.Tasks;
 import com.tourcan.mem.model.MemVO;
+import com.tourcan.region.model.RegionDAO;
+import com.tourcan.util.ApplicationContextUtils;
 
 /**
  * This class is used to assign uid in session only if user provided a valid
@@ -61,8 +63,9 @@ public class MemAuthService extends HttpServlet {
 		if (vo != null) {
 			// if vo provided, assume the user signed in successfully.
 			// this should not happen.
-			// in case it happened, redirect to correct path.
-			req.getRequestDispatcher("/mem/edituser").forward(req, resp);
+			// it's possible if user signed in many times.
+			// in case it happened, redirect to somewhere.
+			req.getRequestDispatcher("/").forward(req, resp);
 		} else if (jwt != null) {
 			// user is signing in.
 			// decode token first
@@ -94,6 +97,10 @@ public class MemAuthService extends HttpServlet {
 							dconv.setPattern("yyyy-MM-dd");
 							conv.register(dconv, Date.class);
 							new BeanUtilsBean(conv).populate(vo, req.getParameterMap());
+							
+							// switch region_id to regionVO
+							vo.setRegionVO(((RegionDAO) ApplicationContextUtils.getContext().getBean("regionDAO"))
+									.findById(Integer.parseInt(req.getParameter("region_id"))));
 
 							Response i = new MemService().insertMem(vo);
 							if (i.getStatusInfo().equals(Status.CREATED)) {

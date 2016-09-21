@@ -167,6 +167,7 @@
 	<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase-auth.js"></script>
 	<script type="text/javascript">
+		var region_list;
 		$(function() {
 			$.ajax({
 				url : "${contextPath}/att/RegionServlet",
@@ -174,6 +175,7 @@
 				contentType : "application/json; charset=UTF-8",
 				dataType : "json"
 			}).done(function(l) {
+				region_list = l;
 				var f = document.createDocumentFragment();
 				for (var i = 1; i < l.length; i++)
 					f.appendChild(new Option(l[i].region_name, l[i].region_id));
@@ -181,7 +183,7 @@
 			}).fail(function(xhr) {
 				console.log("Get region list unsuccessful.");
 			}).then(function(){
-				$("#region_id").val("${data.region_id}");
+				$("#region_id").val("${data.regionVO.region_id}");
 			});
 			
 			$(".datepicker").datepicker({
@@ -228,7 +230,7 @@
 				$(document.new_data).submit();
 			});
 			$("#mem_sex").val(${data.mem_sex});
-			<%-- $("#region_id").val(${data.region_id}); --%>
+			<%-- $("#region_id").val(${data.regionVO.region_id}); --%>
 			<%-- #region_id should generated in a more static way --%>
 			<%-- otherwise above code may not work on slow network--%>
 		})

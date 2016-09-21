@@ -173,7 +173,7 @@
 	<script type="text/javascript">
 		var coder, map, marker, checkTrigger, lastValue = "";
 		var tmp, regionList, hotelList;
-		var serviceProvider = "${contextPath}/api/hotels";
+		var serviceProvider = "${contextPath}/hotels";
 		//var serviceProvider = "HotelServlet";
 		var gmbase = "https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyCBQ5sPydJ0xmpC9Evp8bWZu6O8LmJyuHw&size=640x240&markers=color:blue%7C";
 
@@ -231,7 +231,7 @@
 					}).done(function(data) {
 				document.new_data.hotel_id.value = data.hotel_id;
 				document.new_data.hotel_name.value = data.hotel_name;
-				document.new_data.region_id.value = data.region_id;
+				document.new_data.region_id.value = data.regionVO.region_id;
 				document.new_data.hotel_addr.value = data.hotel_addr;
 				document.new_data.hotel_phone.value = data.hotel_phone;
 				document.new_data.hotel_url.value = data.hotel_url;
@@ -270,7 +270,7 @@
 			var $td4 = $("<div>").text(this.hotel_price).addClass("col-sm-2");
 			var $td5 = $("<div>").text(this.hotel_phone).addClass("col-sm-3");
 			var $td6 = $("<div>").text(
-					regionList[this.region_id].region_name + this.hotel_addr)
+					regionList[this.regionVO.region_id].region_name + this.hotel_addr)
 					.addClass("col-sm-7");
 			var $td7 = $("<div>").text(this.hotel_url).addClass("col-sm-5");
 			$tr.append([ $td1, $td2, $td3, $td4, $td5, $td6, $td7 ]);
@@ -339,6 +339,7 @@
 				for (var i = 0; i < form.length; i++)
 					if (form[i].value.length > 0)
 						json[form[i].name] = form[i].value;
+				json["regionVO"] = regionList[json.region_id];
 
 				$.ajax({
 					url : serviceProvider,
