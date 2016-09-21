@@ -225,7 +225,25 @@ public class AttRestService {
 		response.setCharacterEncoding("UTF-8");
 		try {
 			List<AttVO> vos = dao.getAll();
+			List<String> imgs = new ArrayList<String>();
+				
+			for (AttVO avo : vos) {
+//				for (PhotoVO pvo : pdao.findByAttId(avo.getAtt_id())) {
+//					imgs.add(request.getContextPath() + request.getServletPath() + request.getPathInfo() + "/photos/"
+//							+ pvo.getPhoto_id());
+//				}
+				System.out.println(request.getPathInfo());
+
+				List<PhotoVO> pvo;
+				if ((pvo = pdao.findByAttId(avo.getAtt_id())) != null && pvo.size() > 0) {
+					imgs.add(request.getContextPath() + request.getServletPath() + "/" + avo.getAtt_id() + "/photos/"
+							+ pvo.get(0).getPhoto_id());
+				}else{
+					imgs.add("");
+				}
+			}
 			// 200 OK
+			request.setAttribute("imgs", imgs);
 			request.setAttribute("attVO", vos);
 			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
