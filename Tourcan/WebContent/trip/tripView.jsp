@@ -131,18 +131,18 @@
 <!-- 						<button type="button">送出</button> -->
 					</div>
 					<div class="col-sm-10 form-group">
-						<label for="attName">出發時間：</label> <input type="datetime-local">
+						<label for="attName">出發時間：</label> <input type="datetime-local" id="startTime">
 <!-- 						<button type="button">送出</button> -->
 					</div>
 					<div class="col-sm-12 form-group">
 						<label>交通方式：</label> 
-						<input type="radio" name="traffic" id="changemode-driving" value="car">
+						<input type="radio" name="traffic" id="changemode-driving" value="car" checked>
 						<label for="changemode-driving">開車</label>
 						<input type="radio" name="traffic" id="changemode-transit" value="public">
 						<label for="changemode-transit">大眾運輸</label>
 						<input type="radio" name="traffic" id="changemode-walking" value="walk">
 						<label for="changemode-walking">步行</label>
-						<label style="margin-left: 30px">約__?__公里，估約__?___分鐘</label>
+						<label style="margin-left: 20px">約____公里，____分鐘</label>
 					</div>
 				</div>
 				
@@ -389,7 +389,7 @@
 			var map = new google.maps.Map(
 					document.getElementById('mapPreview'), {
 						center : initPos,
-						zoom : 13,
+						zoom : 15,
 						mapTypeId : google.maps.MapTypeId.ROADMAP,
 // 						scrollwheel : false
 					});
@@ -404,12 +404,13 @@
 		function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 			var point = [];
 			var waypts = [];
+			var lastPos=addrArray[addrArray.length-1];
 			//   var waypts = [{location:"110台北市信義區松高路16號1~3F"},{location:""},{location:"110台北市信義區松勤街50號"}];
 			//   ["110台北市信義區松高路16號1~3F","110台北市信義區松勤街50號"]
 
 			//   var checkboxArray = document.getElementById('waypoints');
 			//   console.log("checkboxArray="+checkboxArray);
-			for (var i = 0; i < addrArray.length; i++) {
+			for (var i = 0; i < addrArray.length-1; i++) {
 				// 	  console.log(checkboxArray.value)	
 				//     if (checkboxArray.options[i].selected) {
 				//     	console.log("value="+checkboxArray[i].value)
@@ -419,11 +420,11 @@
 				});
 				//     	console.log(waypts);
 				//     }
+// 				console.log("1=="+lastPos); 
 			}
-
 			directionsService.route({
-				origin :"110台北市信義區松高路16號1~3F",
-				destination :"110台北市信義區松勤街50號",
+				origin :$("#possition").val(),
+				destination :"\""+lastPos+"\"",
 				waypoints : waypts,
 				optimizeWaypoints : false,
 				travelMode : google.maps.TravelMode.DRIVING
@@ -494,8 +495,12 @@
 			
 			//加入行程
 			$('#addTripitemBtn').off('click').on('click',function(){
-				$("#addTripitemBtn").css("display","none");
-				$("#div3").css("display","block");
+// 				if($("#possition").val().trim().length==0 || $("#startTime").val().trim().length==0){
+// 					alert("請輸入出發地點及完整時間");
+// 				}else{
+					$("#addTripitemBtn").css("display","none");
+					$("#div3").css("display","block");
+// 				}
 			});
 			
 			//加入縣市
@@ -509,6 +514,28 @@
 					}).fail(function(xhr) {
 				console.log("Get region list unsuccessful.");
 			});
+			
+			//拖拉排序
+			function sortable(){
+				$( "#sortable" ).sortable({
+// 			        start: function(event, ui) {
+// 			            ui.item.startPos = ui.item.index();
+// 			        },
+			        stop: function(event, ui) {
+// 			            console.log("Start position: " + ui.item.startPos);
+// 			            console.log("New position: " + ui.item.index());
+			            
+			            addrArray.length=0;
+			            console.log("array="+addrArray.length);
+			            $("#sortable>table").each(function(){
+			            	console.log($(this).find("input[name$='addr']").val());
+			            	addrArray.push($(this).find("input[name$='addr']").val());
+			            });
+			            initMap();
+			        }
+			    });
+			    $( "#sortable" ).disableSelection();
+			}
 			
 			//列出所有選擇區域之景點類型form表單
 			$("#searchRegion").off('click').on('click',function(){
@@ -604,7 +631,7 @@
 // 									console.log("addr="+att1.att_addr);
 									var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
 									var lable1=$("<lable></lable>").text("下一站交通方式:");
-									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","car");
+									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
 									var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
 									var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
 									var lableA=$("<lable></lable>").text("開車").prepend(input1);
@@ -618,8 +645,8 @@
 									var tr1=$("<tr></tr>").append([th1,th2]);
 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
 									
-									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("value",att1.att_addr);
-									var input5=$("<input></input>").attr("type","hidden").attr("id","att_id").attr("value",att1.att_id);
+									var input4=$("<input></input>").attr("type","hidden").attr("name","att_addr").attr("value",att1.att_addr);
+									var input5=$("<input></input>").attr("type","hidden").attr("name","att_id").attr("value",att1.att_id);
 									var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
 									
 									var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
@@ -775,7 +802,7 @@
 										var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
 										
 										var lable1=$("<lable></lable>").text("下一站交通方式:");
-										var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","car");
+										var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
 //	 									lableA.prepend(input1);
 										var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
 										var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
@@ -790,8 +817,8 @@
 										var tr1=$("<tr></tr>").append([th1,th2]);
 										var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
 										
-										var input4=$("<input></input>").attr("type","hidden").attr("id","hotel_addr").attr("value",hotel1.hotel_addr);
-										var input5=$("<input></input>").attr("type","hidden").attr("id","hotel_id").attr("value",hotel1.hotel_id);
+										var input4=$("<input></input>").attr("type","hidden").attr("name","hotel_addr").attr("value",hotel1.hotel_addr);
+										var input5=$("<input></input>").attr("type","hidden").attr("name","hotel_id").attr("value",hotel1.hotel_id);
 										var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
 										
 										var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
@@ -834,6 +861,8 @@
 										
 										addrArray.push(hotel1.hotel_addr);
 									})
+									
+									initMap();
 									
 									sortable();
 								    
@@ -944,7 +973,7 @@
 									var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
 									
 									var lable1=$("<lable></lable>").text("下一站交通方式:");
-									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","car");
+									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
 // 									lableA.prepend(input1);
 									var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
 									var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
@@ -959,8 +988,8 @@
 									var tr1=$("<tr></tr>").append([th1,th2]);
 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
 									
-									var input4=$("<input></input>").attr("type","hidden").attr("id","att_addr").attr("value",att1.att_addr);
-									var input5=$("<input></input>").attr("type","hidden").attr("id","att_id").attr("value",att1.att_id);
+									var input4=$("<input></input>").attr("type","hidden").attr("name","att_addr").attr("value",att1.att_addr);
+									var input5=$("<input></input>").attr("type","hidden").attr("name","att_id").attr("value",att1.att_id);
 									var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
 									
 									var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
@@ -1004,9 +1033,10 @@
 									addrArray.push(att1.att_addr);
 								})
 								
+								initMap();
+								
 								sortable();
 								
-							    
 								deleteTripitem();
 							})
 				       	});
@@ -1022,25 +1052,6 @@
 			  }
 		   });
 			
-			function sortable(){
-				$( "#sortable" ).sortable({
-			        start: function(event, ui) {
-			            ui.item.startPos = ui.item.index();
-			        },
-			        stop: function(event, ui) {
-			            console.log("Start position: " + ui.item.startPos);
-			            console.log("New position: " + ui.item.index());
-			   var tripList = $(this).children();
-			   console.log(typeof tripList);
-			   console.log(tripList.length);
-			            for(var i=0;i<tripList.length;i++)
-			            {
-			    console.log(tripList[i]);
-			            }
-			        }
-			    });
-			    $( "#sortable" ).disableSelection();
-			}
 			
 			
 			

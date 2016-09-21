@@ -35,6 +35,7 @@ public class TripService {
 		dao.delete(trip_id);
 	}
 	
+
 	public TripVO findById(Integer trip_id){
 		return dao.findById(trip_id);
 	}
@@ -45,5 +46,8 @@ public class TripService {
 	
 	public List<TripVO> getAll(){
 		return dao.getAll();
+	}
+	public List<TripVO> findByMemuid(String mem_uid) {
+		return dao.findByMemuid(mem_uid);
 	}
 }

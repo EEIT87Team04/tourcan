@@ -8,5 +8,6 @@ public interface TripDAO_interface {
 	public void delete(Integer trip_id);
 	public TripVO findById(Integer trip_id);
 	public List<TripVO> findByName(String trip_name);
+	public List<TripVO> findByMemuid(String mem_uid);
 	public List<TripVO> getAll();
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,12 +30,65 @@ public class TripServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// ----------------findById----------------
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		String method = request.getParameter("method");
 
+		if(method.equals("findByID")){
+			String id = request.getParameter("tripId");
+			try{
+			Integer tripno =null;
+			try{
+			tripno =new Integer(id);
+			}catch (Exception e) {
+				throw new Exception();
+			}
+			TripService trsv = new TripService();
+			TripVO tripVO =trsv.findById(tripno);
+			request.setAttribute("tripVO",tripVO);
+			System.out.println(tripVO.getTrip_id());
+			String url = "/trip/???????.jsp";
+			RequestDispatcher successView = request.getRequestDispatcher(url); 
+			successView.forward(request, response);
+			}catch (Exception e) {
+				RequestDispatcher failureView = request.getRequestDispatcher("/trip/listOneFromMemTrip.jsp");
+				failureView.forward(request, response);
+			}
+		}
+		
+		
+		
+		if(method.equals("findByMemuid")){
+			JSONObject chResult = new JSONObject();
+			List<TripVO> tripVO = null;
+			try{
+				String uid = request.getParameter("mem_uid");
+				if(uid==null||uid.trim().length()==0)
+					chResult.append("chResult", "error");
+				if(chResult.length()>0){
+					throw new Exception();
+				}else{
+				TripService tsv =new TripService();
+				tripVO =  tsv.findByMemuid(uid);
+				if(tripVO.size()!=0){
+					Gson gson =new Gson();
+					String strjson = gson.toJson(tripVO);
+					response.getWriter().println(strjson);
+				}else{
+					chResult.append("chResult", "sreach null");
+					response.getWriter().println(chResult.toString());
+				}
+				}	
+			}catch (Exception e) {
+				chResult.append("chResult", "sreach error");
+				response.getWriter().println(chResult.toString());
+				
+			}
+			
+		}
+		// ----------------findById----------------
+		
 		if (method.equals("getOneById")) {
 			JSONObject checkResult = new JSONObject();
 			Integer tripId = null;
