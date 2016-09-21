@@ -24,6 +24,7 @@
   <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
   <script src="../lang/summernote-zh-TW.js"></script>
+
 </head>
 <body >
 <div class="container" style="padding: 10px">
@@ -39,9 +40,9 @@
 		<table  class="table table-hover">
 			<thead>
 				<tr class="success"  >
-					<th class="col-md-5">主題:</th>
-					<th class="col-md-4">發表者姓名</th>
-					<th class="col-md-3 ">建立時間</th>
+					 <th class="col-md-5"><span class="glyphicon glyphicon-star" aria-hidden="true"> 主題: </span></th>
+					<th class="col-md-4"><span class="glyphicon glyphicon-user" aria-hidden="true"> 發表者姓名: </span></th>
+					<th class="col-md-3"><span class="glyphicon glyphicon-time" aria-hidden="true"> 建立時間:</span></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -70,14 +71,16 @@
  		 %> 
 		 	<thead style="padding: 10px">
 				<tr class="success">
-					<th class="col-md-4">回覆標題</th>
-					<th class="col-md-3">回覆者姓名</th>
+					<th class="col-md-5"><span class="glyphicon glyphicon-star" aria-hidden="true"> 回覆標題:</span></th>
+					<th class="col-md-4"><span class="glyphicon glyphicon-user" aria-hidden="true"> 回覆者姓名:</span></th>
+					<th class="col-md-3"><span class="glyphicon glyphicon-time" aria-hidden="true"> 回覆時間:</span></th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td>${RespVO.resp_topic}</td>
-					<td>${mvo.mem_lname}${mvo.mem_fname}</td>
+					<td class="col-md-5">${RespVO.resp_topic}</td>
+					<td class="col-md-4">${mvo.mem_lname}${mvo.mem_fname}</td>
+					<td class="col-md-3">${RespVO.resp_time.toString().substring(0, 16)}</td>
 			 	</tr>	
 				<tr class="warning">
 					<th colspan="4"> 回覆內容:</th>	
@@ -102,10 +105,9 @@
 				<div class="form-inline">
 				
 					<div class="form-group">
-						<label for="respTopic" >回覆標題</label>						
+						<span class="glyphicon glyphicon-star-empty" aria-hidden="true"><label for="respTopic">回覆標題</label></span>						
 						<input type="text" id="resp_topic" name="resp_topic"  class="form-control" value="回覆:<%=themeVO1.getTheme_topic()%>"	
 						placeholder="respTopic">
-						
 					</div>
 					<div class="form-group" >
 						<label for="memId" >會員UId</label> <input type="text"

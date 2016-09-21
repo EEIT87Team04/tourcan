@@ -18,8 +18,21 @@
   	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
   	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+.btn-primary.btn-outline:hover,{
+color:#fff;
+} 
+  </style>
 <title>討論區主題列表</title>
-
+  
 </head>
 <body >
 <div class="container">
@@ -48,7 +61,7 @@
 			<tr >
 				<th>編號</th>				
 				<th>主題名稱</th>
-				<th>發表者姓名</th>
+				<th>發表者</th>
 				<th>建立時間</th>		
 			</tr>
 		</thead>
@@ -62,7 +75,7 @@
 				<tr >
 					<td >
 						<FORM METHOD="get" ACTION="ThemeServlet">
-						<input class="btn btn-primary" type="submit" value="${ThemeVO.theme_id}">
+						<input class="btn btn-primary btn-outline" type="submit" value="${ThemeVO.theme_id}">
 						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">
 						<input type="hidden"name="mem_uid" value="${ThemeVO.mem_uid}">
 						<input type="hidden"name="method" value="getOne_For_Display">				
@@ -93,8 +106,8 @@ $(function(){
 				$(this).css("background","#FFFFB9");},
 			function () {
 				$(this).css("background","");});  
-	 var a="${contextPath}";
-	 console.log(a)
+// 	 var a="${contextPath}";
+// 	 console.log(a)
 // 	var serviceProvider = "${contextPath}/members";
 // 	var umd = "t3L6KuZlh4W4X3IIzexqIzTFtGh1"; w8mtMYAqW6fu2RxLZ3QswrC4wCL2
 // 	var umd = "a1";
