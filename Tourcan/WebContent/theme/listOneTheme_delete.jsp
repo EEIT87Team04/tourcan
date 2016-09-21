@@ -5,9 +5,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-ThemeVO themeVO1 = (ThemeVO) request.getAttribute("themeVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
-RespVO respVO1 =(RespVO) request.getAttribute("resVO"); 
-MemVO memVO1 =(MemVO) request.getAttribute("data");
+	ThemeVO themeVO1 = (ThemeVO) request.getAttribute("themeVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+	RespVO respVO1 =(RespVO) request.getAttribute("resVO"); 
+	MemVO memVO1 =(MemVO) request.getAttribute("data");
 %>
 
 

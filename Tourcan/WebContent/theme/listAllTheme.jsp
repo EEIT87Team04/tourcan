@@ -106,18 +106,16 @@ $(function(){
 				$(this).css("background","#FFFFB9");},
 			function () {
 				$(this).css("background","");});  
-// 	 var a="${contextPath}";
-// 	 console.log(a)
 // 	var serviceProvider = "${contextPath}/members";
-// 	var umd = "t3L6KuZlh4W4X3IIzexqIzTFtGh1"; w8mtMYAqW6fu2RxLZ3QswrC4wCL2
+// // 	var umd = "t3L6KuZlh4W4X3IIzexqIzTFtGh1"; w8mtMYAqW6fu2RxLZ3QswrC4wCL2
 // 	var umd = "a1";
 // 	console.log(serviceProvider);
 // 	$.ajax(
 // 			{
-// 				url:serviceProvider+"/"+umd,
+// 				url:serviceProvider+"/"+"a1",
 // 				method:"Get",
 // 				contentType:"application/json ; charset=UTF-8",
-// 				data:{uid:"t3L6KuZlh4W4X3IIzexqIzTFtGh1"},
+// // 				data:{uid:"t3L6KuZlh4W4X3IIzexqIzTFtGh1"},
 // 				dataType:"json"	,
 // 				}).done(function(data){
 // 					console.log("200: " + data);
@@ -135,7 +133,7 @@ $(function(){
 		$('#themeList>tbody').empty();
 		$("#d1").empty();
 	
-		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic},function(data){
+		$.getJSON(("ThemeServlet"),{"theme_topic" : theme_topic,"method":"getForName"},function(data){
 			var myBody = $('#themeList>tbody');
 			$.each(data,function(themeName,themeValue){
 				if(themeName=="themeTopic"){
@@ -149,13 +147,15 @@ $(function(){
 				}else{
 						var cell1 = $("<td/>").text(themeValue.theme_id);
 						var cell2 = $("<td/>").text(themeValue.theme_topic);
-						var input3= $("<input/>").attr("type",'hidden').attr('name',"action").attr("value","getOne_For_Display");
+						var input4= $("<input/>").attr("type",'hidden').attr('name',"method").attr("value","getOne_For_Display");
+						var input3= $("<input/>").attr("type",'hidden').attr('name',"mem_uid").attr("value",themeValue.mem_uid);
 						var input2= $("<input/>").attr("type",'hidden').attr('name',"theme_id").attr("value",themeValue.theme_id);
 						var input1= $("<input/>").attr("class","btn btn-default").attr("type","submit").attr("value",themeValue.theme_topic);
-						var form  = $("<form/>").attr("METHOD","post").attr("ACTION","ThemeServlet").append([input1,input2,input3]);
+						var form  = $("<form/>").attr("METHOD","get").attr("ACTION","ThemeServlet").append([input1,input2,input3,input4]);
 						var cell5 = $("<td/>").append([form])
 						var cell3 = $("<td></td>").text(themeValue.mem_uid);
-						var row = $("<tr></tr>").append([cell1,cell5,cell3]);
+						var cell4 = $("<td/>").text(themeValue.theme_time);
+						var row = $("<tr></tr>").append([cell1,cell5,cell3,cell4]);
 						myBody.append(row);
 					}
 			})

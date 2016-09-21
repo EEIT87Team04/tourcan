@@ -55,11 +55,12 @@ public class ThemeServlet extends HttpServlet {
 		// ----------------Query one by attId----------------
 		if(method.equals("getOne_For_Display")){
 //			System.out.println(thstr);
-//			System.out.println(muid);
+//			System.out.println("1"+thstr);
 			try {
 				Integer memno = null;
 				try {
 					memno = new Integer(thstr);
+//					System.out.println("2"+thstr);
 				} catch (Exception e) {
 					throw new Exception();
 				}
@@ -90,44 +91,44 @@ public class ThemeServlet extends HttpServlet {
 			
 			
 			
-		}else{
+		}else if(method.equals("getForName")){
 		System.out.println("no1=" + thstr);
 		String th_name = req.getParameter("theme_topic");
-		if (thstr != null) {
-			Integer thno = null;
-			try {
-				thno = new Integer(req.getParameter("theme_id"));
-			} catch (Exception e) {
-				err.append("themeId", "編號只能為整數");
-				resp.getWriter().println(err.toString());
-				// System.out.println(e.getMessage());
-			}
-			// ***************************2.開始查詢資料*****************************************//*
-
-			if (thno != null) {
-				ThemeService tsv = new ThemeService();
-				ThemeVO thVO = tsv.findById(thno);
-				// System.out.println(thVO);
-				if (thVO != null) {
-					try {
-						Gson gson = GsonBuilderUtils.gsonBuilderWithBase64EncodedByteArrays().create();
-						String themeG = gson.toJson(thVO);
-						// System.out.println(themeG);
-						resp.getWriter().println(themeG);
-					} catch (Exception e) {
-						err.append("themeId", "無此編號");
-						resp.getWriter().println(err.toString());
-					}
-				} else {
-					err.append("themeId", "無此編號");
-					resp.getWriter().println(err.toString());
-				}
-			} else {
-				err.append("themeId", "無此編號");
-
-			}
-			return;
-		}
+//		if (thstr != null) {
+//			Integer thno = null;
+//			try {
+//				thno = new Integer(req.getParameter("theme_id"));
+//			} catch (Exception e) {
+//				err.append("themeId", "編號只能為整數");
+//				resp.getWriter().println(err.toString());
+//				// System.out.println(e.getMessage());
+//			}
+//			// ***************************2.開始查詢資料*****************************************//*
+//
+//			if (thno != null) {
+//				ThemeService tsv = new ThemeService();
+//				ThemeVO thVO = tsv.findById(thno);
+//				// System.out.println(thVO);
+//				if (thVO != null) {
+//					try {
+//						Gson gson = GsonBuilderUtils.gsonBuilderWithBase64EncodedByteArrays().create();
+//						String themeG = gson.toJson(thVO);
+//						// System.out.println(themeG);
+//						resp.getWriter().println(themeG);
+//					} catch (Exception e) {
+//						err.append("themeId", "無此編號");
+//						resp.getWriter().println(err.toString());
+//					}
+//				} else {
+//					err.append("themeId", "無此編號");
+//					resp.getWriter().println(err.toString());
+//				}
+//			} else {
+//				err.append("themeId", "無此編號");
+//
+//			}
+//			return;
+//		}
 
 		// System.out.println(th_name);
 		if (th_name != null) {
@@ -160,14 +161,14 @@ public class ThemeServlet extends HttpServlet {
 				resp.getWriter().println(err.toString());
 			}
 
-		} else if (thstr == null && th_name == null) {
+		}
+		} else  {
 			ThemeService asv = new ThemeService();
 			List<ThemeVO> avo = asv.getAll();
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 			String jsonG = gson.toJson(avo);
 			System.out.println(jsonG);
 			resp.getWriter().println(jsonG.toString());
-		}
 		}
 	}
 
