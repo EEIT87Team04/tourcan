@@ -23,7 +23,7 @@
 <body>
 <!-- name屬性具有可重複性，作未來selector與變數設定的使用 -->
 	<div id="start">
-		開始時間：<input name="sTime" type="datetime-local" value="2016-09-19T07:00:00"/>
+		開始時間：<input name="sTime" type="datetime-local" />
 		交通時間：<input name="tTime" type="number" value="30"/>
 		<input name="tripitem_begin" type="number"/>
 		<input name="tripitem_staytime" type="number"/>
@@ -153,6 +153,7 @@
 	  //監聽每一個input的變化
 	  $(document).on("change","input[name$='Time']",function(){
 		  console.log("input changed");
+		  console.log($("#start input[name='sTime']").val());
 		  timeInit();
 		  timeReveal();
 	  });

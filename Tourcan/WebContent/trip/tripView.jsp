@@ -124,14 +124,14 @@
 					</div>
 				</div>			
 			
-				<div class="row div1 col-sm-12">
+				<div  id="start" class="row div1 col-sm-12">
 					<div class="col-sm-10 form-group">
 						<label>出發地點：</label> <input type="text" id="possition"
 							placeholder="地址或景點名稱">
 <!-- 						<button type="button">送出</button> -->
 					</div>
 					<div class="col-sm-10 form-group">
-						<label for="attName">出發時間：</label> <input type="datetime-local" id="startTime">
+						<label for="attName">出發時間：</label> <input type="datetime-local" id="sTime" name="sTime">
 <!-- 						<button type="button">送出</button> -->
 					</div>
 					<div class="col-sm-12 form-group">
@@ -142,7 +142,15 @@
 						<label for="changemode-transit">大眾運輸</label>
 						<input type="radio" name="traffic" id="changemode-walking" value="walk">
 						<label for="changemode-walking">步行</label>
-						<label style="margin-left: 20px">約____公里，____分鐘</label>
+						<label style="margin-left: 20px">
+							<span>到下一站距離：</span>
+							<span id="tDistance"></span>
+							<span style="margin-left: 10px">時間:</span>
+							<span id="tTime" name="tTime"></span>
+						</label>
+						<input name="tripitem_begin" type="number" style="display: none"/>
+						<input name="tripitem_staytime" type="number" style="display: none"/>
+						<input name="tripitem_end" type="number" style="display: none"/>
 					</div>
 				</div>
 				
@@ -371,7 +379,7 @@
 
 	<script type="text/javascript">
 
-	
+	  	var sTime,tTime,wTime,eTime;
 		var coder, map, marker, checkTrigger, lastValue = "";
 		var regionList;
 		var serviceProvider = "${contextPath}/hotels";
@@ -435,7 +443,37 @@
 					//       var summaryPanel = document.getElementById('directions-panel');
 					//       summaryPanel.innerHTML = '';
 					// For each route, display summary information.
-					//       for (var i = 0; i < route.legs.length; i++) {
+					$("#tDistance").empty();
+					$("#tTime").empty();
+					
+					$("#sortable span[name='tDistance']").empty();
+					$("#sortable span[name='tTime']").empty();
+
+					$("#tDistance").append(route.legs[0].distance.text);
+					$("#tTime").append(route.legs[0].duration.text);
+					
+// 					idx="0";
+// 					var test1=idx+1;
+// 					var test2=parseInt(idx)+1;
+// 					console.log("test1="+test1);
+// 					console.log("test2="+test2);
+// 					console.log("route.legs[test2].distance.text="+route.legs[test2].distance.text);
+// 					console.log("route.legs[test1].distance.text="+route.legs[test1].distance.text);
+// 					console.log("route.legs[(idx+1)].distance.text="+route.legs[(idx+1)].distance.text);
+// 					console.log("route.legs[idx+1].distance.text="+route.legs[idx+1].distance.text);
+					
+					//idx為String要轉型  並判斷table個數
+		            $("#sortable>table").each(function(idx,table){
+// 		            	console.log("idx="+idx);
+// 		            	console.log("table="+table);
+						if(parseInt(idx)<(addrArray.length-1)){
+		            	$(this).find("span[name='tDistance']").append(route.legs[(parseInt(idx)+1)].distance.text);
+		            	$(this).find("span[name='tTime']").append(route.legs[(parseInt(idx)+1)].duration.text);
+						}
+		            });
+					      for (var i = 0; i < route.legs.length; i++) {
+					    	  console.log(route.legs[i].distance.text);
+					    	  console.log(route.legs[i].duration.text);
 					//         var routeSegment = i + 1;
 					//         summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
 					//             '</b><br>';
@@ -443,7 +481,7 @@
 					//         summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
 					//         summaryPanel.innerHTML += route.legs[i].distance.text +'<br>';
 					//         summaryPanel.innerHTML += route.legs[i].duration.text + 'time <br>';
-					//       }
+					      }
 				}
 				//     else {
 				//       window.alert('Directions request failed due to ' + status);
@@ -451,10 +489,103 @@
 			});
 		}
 		
+		
+		// ↓ 依"啟程"的出發時間為基準，初始化基準值  ↓
+		  function timeInit()
+		  {
+			  //console.log("initial start...");
+			  sTime = new Date($("#start input[name='sTime']").val().replace('T'," ")).getTime();
+			  tTime = $("#start input[name='tTime']").val()*60*1000;
+			  wTime = 0;
+			  eTime = sTime + tTime + wTime;
+			  $("#start input[name='tripitem_begin']").val(sTime);
+			  $("#start input[name='tripitem_staytime']").val(0);
+			  $("#start input[name='tripitem_end']").val(eTime);
+			  //console.log("initial done.");
+		  }
+		// ↑ 依"啟程"的出發時間為基準，初始化基準值   ↑
+		
+		
+			//刪除景點明細
+			function deleteTripitem(){
+				$(".deleteTripitem").off('click').on('click',function(){
+	//  			console.log("TEST2="+$(this).parents());
+	// 				console.log($(this).parent().parent().parent().children("tr:eq(0)").children("td:eq(0)").children("input:eq(0)").val());
+	// 				console.log($( ".deleteTripitem" ).index($( this )));
+					addrArray.splice($( ".deleteTripitem" ).index($( this )),1);
+					$(this).parent().parent().parent().parent().remove();
+					initMap();
+				})
+			}
+		
+			// ↓ 將所有sortable元素的Time帶入值，並準備轉交給下一個item  ↓
+			  function timeReveal()
+			  {
+				  //console.log("reveal start...");	  
+				  $("#sortable").children().each(function(){
+					  sTime = eTime;
+					  
+					  //將　開始時間　帶入tripitem_begin (millisecond)
+					  //console.log(new Date(sTime)); //解開註解，可看該毫秒數所指日期。
+					  $(this).children('div').find('input[name=tripitem_begin]').val(sTime);
+					  
+					  var newSt = new Date(sTime).toTimeString();
+					  var sTidx = newSt.indexOf("G");
+					  newSt = "起：" + newSt.substr(0,sTidx-4);
+					  
+					  $(this).children('p[name=sTime]').text(newSt);
+					  tTime = $(this).find('input[name=tTime]').val()*60*1000;
+					  wTime = $(this).find('input[name=wTime]').val();
+
+					  //將　逗留時間　帶入tripitem_staytime
+					  $(this).children('div').find('input[name=tripitem_staytime]').val(wTime);
+					  
+					  wTime = wTime*60*1000;
+					  var newEt = new Date(eTime+wTime).toTimeString();
+					  var eTidx = newEt.indexOf("G");
+					  newEt = "訖：" + newEt.substr(0,eTidx-4);
+					  
+					  //將　結束時間　(運算後)帶入tripitem_end (millisecond)
+					  //console.log(new Date(sTime+wTime)); //解開註解，可看該毫秒數所指日期。
+					  $(this).children('div').find('input[name=tripitem_end]').val(sTime+wTime);
+					  
+					  $(this).children('p[name=eTime]').text(newEt);
+					  
+					  eTime = sTime + tTime + wTime;
+				  });
+				  //console.log("reveal done.");	  
+			  }
+			// ↑ 將所有sortable元素的Time帶入值，並準備轉交給下一個item  ↑
+			
+			
+			//監聽每一個input的變化
+	  		$(document).on("change","input[name$='Time']",function(){
+		  		console.log("input changed");
+		  		console.log($("#start input[name='sTime']").val());
+		  		timeInit();
+		  		timeReveal();
+	  		});
+		
 		$(function(){
 			
-			
-			
+			//拖拉排序
+			function sortable(){
+				$( "#sortable" ).sortable({
+		        	update: function(event,ui){
+						 timeInit();
+						 timeReveal();
+						 
+			             addrArray.length=0;
+			             console.log("array="+addrArray.length);
+			             $("#sortable>table").each(function(){
+			             	console.log($(this).find("input[name$='addr']").val());
+			             	addrArray.push($(this).find("input[name$='addr']").val());
+			             });
+			             initMap();
+					 	 }
+			    }).disableSelection();
+			}
+
 			//新增行程
 			$("#addTripBtn").off('click').on('click',function(){
 				var tripName=$("#trip_name").val();
@@ -481,21 +612,9 @@
 				$("#errMsg1").remove();				
 			})
 			
-			//刪除景點明細
-			function deleteTripitem(){
-				$(".deleteTripitem").off('click').on('click',function(){
-	//  				console.log("TEST2="+$(this).parents());
-	// 				console.log($(this).parent().parent().parent().children("tr:eq(0)").children("td:eq(0)").children("input:eq(0)").val());
-	// 				console.log($( ".deleteTripitem" ).index($( this )));
-					addrArray.splice($( ".deleteTripitem" ).index($( this )),1);
-					$(this).parent().parent().parent().parent().remove();
-					initMap();
-				})
-			}
-			
 			//加入行程
 			$('#addTripitemBtn').off('click').on('click',function(){
-// 				if($("#possition").val().trim().length==0 || $("#startTime").val().trim().length==0){
+// 				if($("#possition").val().trim().length==0 || $("#sTime").val().trim().length==0){
 // 					alert("請輸入出發地點及完整時間");
 // 				}else{
 					$("#addTripitemBtn").css("display","none");
@@ -515,27 +634,9 @@
 				console.log("Get region list unsuccessful.");
 			});
 			
-			//拖拉排序
-			function sortable(){
-				$( "#sortable" ).sortable({
-// 			        start: function(event, ui) {
-// 			            ui.item.startPos = ui.item.index();
-// 			        },
-			        stop: function(event, ui) {
-// 			            console.log("Start position: " + ui.item.startPos);
-// 			            console.log("New position: " + ui.item.index());
-			            
-			            addrArray.length=0;
-			            console.log("array="+addrArray.length);
-			            $("#sortable>table").each(function(){
-			            	console.log($(this).find("input[name$='addr']").val());
-			            	addrArray.push($(this).find("input[name$='addr']").val());
-			            });
-			            initMap();
-			        }
-			    });
-			    $( "#sortable" ).disableSelection();
-			}
+
+			
+// --------------------------↓ 開始長出所有表格 ↓------------------------------------			
 			
 			//列出所有選擇區域之景點類型form表單
 			$("#searchRegion").off('click').on('click',function(){
@@ -639,7 +740,11 @@
 									var lableC=$("<lable></lable>").text("步行").prepend(input3);
 									var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 									
-									var lable2=$("<lable></lable>").text("約_?_公里，估約_?_分鐘");
+									var span1=$("<span></span>").text("距離：");
+									var span2=$("<span></span>").attr("name","tDistance");
+									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
+									var span4=$("<span></span>").attr("name","tTime");
+									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
 									var th2=$("<th></th>").attr("colspan","5").append(lable2);
 									
 									var tr1=$("<tr></tr>").append([th1,th2]);
@@ -651,11 +756,10 @@
 									
 									var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
 									var td2=$("<td></td>").attr("colspan","3").append(p1);
-									
-									var p2=$("<p></p>").html("停留:<input type='number' style='width:60px'>分");
+									var p2=$("<p></p>").html("停留:<input name='wTime' type='number' style='width:60px'>分");
 									var td3=$("<td></td>").attr("colspan","3").append(p2);
 									
-									var p3=$("<p></p>").text("起:time?");
+									var p3=$("<p></p>").attr("name","sTime").text("起：");
 									var td4=$("<td></td>").attr("colspan","3").append(p3);
 									
 									var lable3=$("<lable></lable>").text(attname1);
@@ -667,7 +771,7 @@
 									
 									var td7=$("<td></td>").attr("colspan","3");
 									
-									var p5=$("<p></p>").text("迄:time?");
+									var p5=$("<p></p>").attr("name","eTime").text("迄：");
 									var td8=$("<td></td>").attr("colspan","3").append(p5);
 									
 									var td9=$("<td></td>").attr("colspan","3");
@@ -684,8 +788,22 @@
 									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
 									
 									tripitemTable.append([tripitemThead,tripitemTbody]);
+
+									//新增__input(目前非hidden)，以便取item內值送至servlet --------------------------------------------
+									var startTime = $("<input></input>").attr("type","number").attr("name","tripitem_begin");
+									var wonderTime = $("<input></input>").attr("type","number").attr("name","tripitem_staytime");
+									var endTime = $("<input></input>").attr("type","number").attr("name","tripitem_end");
+									
+									var begin = $("<label></label>").text("begin：").append(startTime);
+									var staytime = $("<label></label>").text("staytime：").append(wonderTime);
+									var endtime = $("<label></label>").text("end：").append(endTime);
+
+									var dataBox = $("<div></div>").attr("style","display:none").append([begin,staytime,endtime]);
+									tripitemTable.append(dataBox);
+								   //-------------------------------------------------------------------------------啟程初始值請另取值
 									
 									sortDiv.append(tripitemTable);
+									
 									
 									addrArray.push(att1.att_addr);
 // 									console.log("test="+addrArray);
@@ -811,7 +929,11 @@
 										var lableC=$("<lable></lable>").text("步行").prepend(input3);
 										var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 										
-										var lable2=$("<lable></lable>").text("約_?_公里，估約_?_分鐘");
+										var span1=$("<span></span>").text("距離：");
+										var span2=$("<span></span>").attr("name","tDistance");
+										var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
+										var span4=$("<span></span>").attr("name","tTime");
+										var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
 										var th2=$("<th></th>").attr("colspan","5").append(lable2);
 										
 										var tr1=$("<tr></tr>").append([th1,th2]);
@@ -824,10 +946,10 @@
 										var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
 										var td2=$("<td></td>").attr("colspan","3").append(p1);
 										
-										var p2=$("<p></p>").html("停留:<input type='number' style='width:60px'>分");
+										var p2=$("<p></p>").html("停留:<input name='wTime' type='number' style='width:60px'>分");
 										var td3=$("<td></td>").attr("colspan","3").append(p2);
 										
-										var p3=$("<p></p>").text("起:time?");
+										var p3=$("<p></p>").attr("name","sTime").text("起：");
 										var td4=$("<td></td>").attr("colspan","3").append(p3);
 										
 										var lable3=$("<lable></lable>").text(hotelname1);
@@ -839,7 +961,7 @@
 										
 										var td7=$("<td></td>").attr("colspan","3");
 										
-										var p5=$("<p></p>").text("迄:time?");
+										var p5=$("<p></p>").attr("name","eTime").text("迄：");
 										var td8=$("<td></td>").attr("colspan","3").append(p5);
 										
 										var td9=$("<td></td>").attr("colspan","3");
@@ -856,6 +978,19 @@
 										var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
 										
 										tripitemTable.append([tripitemThead,tripitemTbody]);
+										
+										//新增__input(目前非hidden)，以便取item內值送至servlet --------------------------------------------
+										var startTime = $("<input></input>").attr("type","number").attr("name","tripitem_begin");
+										var wonderTime = $("<input></input>").attr("type","number").attr("name","tripitem_staytime");
+										var endTime = $("<input></input>").attr("type","number").attr("name","tripitem_end");
+										
+										var begin = $("<label></label>").text("begin：").append(startTime);
+										var staytime = $("<label></label>").text("staytime：").append(wonderTime);
+										var endtime = $("<label></label>").text("end：").append(endTime);
+
+										var dataBox = $("<div></div>").attr("style","display:none").append([begin,staytime,endtime]);
+										tripitemTable.append(dataBox);
+									   //-------------------------------------------------------------------------------啟程初始值請另取值
 										
 										sortDiv.append(tripitemTable);
 										
@@ -982,7 +1117,11 @@
 									var lableC=$("<lable></lable>").text("步行").prepend(input3);
 									var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 									
-									var lable2=$("<lable></lable>").text("約_?_公里，估約_?_分鐘");
+									var span1=$("<span></span>").text("距離：");
+									var span2=$("<span></span>").attr("name","tDistance");
+									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
+									var span4=$("<span></span>").attr("name","tTime");
+									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
 									var th2=$("<th></th>").attr("colspan","5").append(lable2);
 									
 									var tr1=$("<tr></tr>").append([th1,th2]);
@@ -995,10 +1134,10 @@
 									var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
 									var td2=$("<td></td>").attr("colspan","3").append(p1);
 									
-									var p2=$("<p></p>").html("停留:<input type='number' style='width:60px'>分");
+									var p2=$("<p></p>").html("停留:<input name='wTime' type='number' style='width:60px'>分");
 									var td3=$("<td></td>").attr("colspan","3").append(p2);
 									
-									var p3=$("<p></p>").text("起:time?");
+									var p3=$("<p></p>").attr("name","sTime").text("起：");
 									var td4=$("<td></td>").attr("colspan","3").append(p3);
 									
 									var lable3=$("<lable></lable>").text(attname1);
@@ -1010,7 +1149,7 @@
 									
 									var td7=$("<td></td>").attr("colspan","3");
 									
-									var p5=$("<p></p>").text("迄:time?");
+									var p5=$("<p></p>").attr("name","eTime").text("迄：");
 									var td8=$("<td></td>").attr("colspan","3").append(p5);
 									
 									var td9=$("<td></td>").attr("colspan","3");
@@ -1027,6 +1166,19 @@
 									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
 									
 									tripitemTable.append([tripitemThead,tripitemTbody]);
+									
+									//新增__input(目前非hidden)，以便取item內值送至servlet --------------------------------------------
+									var startTime = $("<input></input>").attr("type","number").attr("name","tripitem_begin");
+									var wonderTime = $("<input></input>").attr("type","number").attr("name","tripitem_staytime");
+									var endTime = $("<input></input>").attr("type","number").attr("name","tripitem_end");
+									
+									var begin = $("<label></label>").text("begin：").append(startTime);
+									var staytime = $("<label></label>").text("staytime：").append(wonderTime);
+									var endtime = $("<label></label>").text("end：").append(endTime);
+
+									var dataBox = $("<div></div>").attr("style","display:none").append([begin,staytime,endtime]);
+									tripitemTable.append(dataBox);
+								   //-------------------------------------------------------------------------------啟程初始值請另取值
 									
 									sortDiv.append(tripitemTable);
 									
