@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.tourcan.quest.model.QuestVO" table="quest" >
+        
+        <id name="quest_id" column="quest_id">
+            <generator class="identity"/>
+        </id>
+        
+        <property name="quest_catalog" column="quest_catalog" />
+        <property name="quest_topic" column="quest_topic" />
+        <property name="quest_quiz" column="quest_quiz" />
+        <property name="quest_reply" column="quest_reply" />
+        <property name="quest_qtime" column="quest_qtime" />
+        <property name="quest_rtime" column="quest_rtime" />
+        <property name="mem_uid" column="mem_uid" />
+        <property name="admin_id" column="admin_id" />
+        
+<!--         <many-to-one name="memVO" class="com.tourcan.member.model.memVO" lazy="false"> -->
+<!--             <column name="mem_id" /> -->
+<!--         </many-to-one> -->
+
+<!--         <many-to-one name="adminVO" class="com.tourcan.admin.model.adminVO" lazy="false"> -->
+<!--             <column name="admin_id" /> -->
+<!--         </many-to-one> -->
+        
+    </class>
+</hibernate-mapping>
+

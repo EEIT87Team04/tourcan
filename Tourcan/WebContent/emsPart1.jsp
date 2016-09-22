@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="${contextPath}/css/emsBasic.css" />
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${contextPath}/css/emsBasic.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Tourcan 後台管理系統</title>
 </head>
@@ -17,52 +17,52 @@
 	<div class="listContainer" id="iBtnList">
 		<div class="col-md-2 listBox">
 			<div class="row" style="margin: 15px 15px">
-				<button id="index" class="iconBtn shadowBtn">
+				<a id="index" class="iconBtn shadowBtn">
 					<img class="icon" src="${contextPath}/icons/EMS/list.png"><span
 						class="liTxt">首頁選單</span>
-				</button>
+				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<button id="att" class="iconBtn shadowBtn">
+				<a id="att" class="iconBtn shadowBtn" href="${contextPath}/att/list.jsp">
 					<img class="icon" src="${contextPath}/icons/EMS/location-mark.png"><span
 						class="liTxt">景 點</span>
-				</button>
+				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<button id="hotel" class="iconBtn shadowBtn">
+				<a id="hotel" class="iconBtn shadowBtn" href="${contextPath}/hotels">
 					<img class="icon" src="${contextPath}/icons/EMS/residential-block.png"><span
 						class="liTxt">飯 店</span>
-				</button>
+				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<button id="eat" class="iconBtn shadowBtn">
+				<a id="eat" class="iconBtn shadowBtn" href="${contextPath}/restaurants">
 					<img class="icon" src="${contextPath}/icons/EMS/restaurant.png"><span
 						class="liTxt">美 食</span>
-				</button>
+				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<button id="trip" class="iconBtn shadowBtn">
+				<a id="trip" class="iconBtn shadowBtn" href="${contextPath}/trips">
 					<img class="icon" src="${contextPath}/icons/EMS/trajectory.png"><span
 						class="liTxt">規劃行程</span>
-				</button>
+				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<button id="article" class="iconBtn shadowBtn">
+				<a id="article" class="iconBtn shadowBtn" href="${contextPath}/articles/listAllTheme.jsp">
 					<img class="icon" src="${contextPath}/icons/EMS/media.png"><span
 						class="liTxt">管理心得</span>
-				</button>
+				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<button id="member" class="iconBtn shadowBtn">
+				<a id="member" class="iconBtn shadowBtn" href="${contextPath}/mem">
 					<img class="icon" src="${contextPath}/icons/EMS/social.png"><span
 						class="liTxt">管理會員</span>
-				</button>
+				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<button id="service" class="iconBtn shadowBtn">
+				<a id="service" class="iconBtn shadowBtn" href="${contextPath}/quest/replyGetAll.jsp">
 					<img class="icon" src="${contextPath}/icons/EMS/tourist-map.png"><span
 						class="liTxt">客 服</span>
-				</button>
+				</a>
 			</div>
 		</div>
 

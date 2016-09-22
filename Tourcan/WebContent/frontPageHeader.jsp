@@ -59,7 +59,7 @@
                     <li><a class="dath7" href="${contextPath}/restaurants">美食</a></li>
                     <li><a class="dath7" href="${contextPath}/hotels">住宿</a></li>
                     <li><a class="dath7" href="${contextPath}/articles/list.jsp">討論區</a></li>
-                    <li><a class="dath7" href="${contextPath}/service">客服</a></li>
+                    <li><a class="dath7" href="${contextPath}/quest/">客服</a></li>
                     <c:if test="${vo!=null}">
                     <li style="margin-left: 550px"><a class="dath7" href="${contextPath}/mem/edituser" style="float: right;">
                     ${vo.mem_nick},<c:if test="${vo.mem_nick==null}">${vo.mem_fname}</c:if>您好！
@@ -87,6 +87,6 @@
 
     <div class="container containPad">
         <div class="row">
-            <div class="col-lg-12 text-center dath7">
+            <div class="col-lg-12 dath7">
 
             
