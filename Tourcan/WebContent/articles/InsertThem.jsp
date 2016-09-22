@@ -14,13 +14,13 @@
 				<div class="form-inline">
 				
 					<div class="form-group">
-						<label for="themeTopic"  >主題名稱</label>						
+						<span class="glyphicon glyphicon-star" aria-hidden="true"><label for="themeTopic">主題名稱</label> </span>						
 						<input type="text" id="theme_topic" name="theme_topic"  class="form-control"	placeholder="themeTopic">
 						
 					</div>
 					<div class="form-group" >
-						<label for="memId" >會員UID</label> <input type="text"
-							id="mem_uid" name="mem_uid" class="form-control"
+						 <span class="glyphicon glyphicon-user" aria-hidden="true"><label for="memId" >會員UID</label>	</span>	 
+						 <input type="text" id="mem_uid" name="mem_uid" class="form-control"
 							placeholder="會員Id" >
 					</div>
 				
@@ -35,10 +35,10 @@
 			  
 			<div class="form-inline">
 				<div class="col-md-3">
-					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/listAllTheme.jsp'">回到所有主題</button>
+					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/articles/listAllTheme.jsp'">回到所有主題</button>
 				</div>
 				<div class="col-md-3 col-sm-offset-6" >
-					<button type="button" class="btn btn-success form-control" id="btnInsert">確認新增</button>
+					<button type="button" class="btn btn-success form-control btn-lg" id="btnInsert">確認新增</button>
 				</div>
 			</div>
 		<div>
@@ -116,3 +116,4 @@
 	
 	</script>
 	<jsp:include page="/frontPageFooter.jsp" />
+
