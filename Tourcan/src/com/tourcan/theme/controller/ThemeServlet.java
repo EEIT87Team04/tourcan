@@ -180,12 +180,12 @@ public class ThemeServlet extends HttpServlet {
 		resp.setContentType("application/json");
 		BufferedReader br = req.getReader();
 		StringBuffer sb = new StringBuffer(128);
-		String n1 = null;
+//		String n1 = null;
 		String strj;
 		while ((strj = br.readLine()) != null)
 			sb.append(strj);
 		strj = sb.toString();
-		 System.out.println(strj.length());
+//		 System.out.println(strj.length());
 //		 System.out.println("strj"+strj);
 //		if (strj.indexOf("getOne") > -1) {
 //			System.out.println("000=" + strj);
@@ -287,18 +287,16 @@ public class ThemeServlet extends HttpServlet {
 				if (themearticle == null || themearticle.trim().isEmpty() || themearticle.trim().length() == 0) {
 					checkR.append("theme_article", "請輸入內容");
 				}
-				themetime = new Timestamp(System.currentTimeMillis());
-				// System.out.println("themetime:"+themetime);
-//				Integer themecatalog = themeVO.getTheme_catalog();
-//				if (themecatalog == null) {
-//					checkR.append("theme_catalog", "plz into catalog");
-//				}
 				memUid = themeVO.getMem_uid();// 抓出已建立的id
+				themetime = new Timestamp(System.currentTimeMillis());
+				themeVO.setTheme_time(themetime);
+				Integer catlog=1;
+				themeVO.setTheme_catalog(catlog);
 				if (checkR.length() > 0) {
 					throw new Exception();
 				} else {
 					ThemeService srv = new ThemeService();
-					srv.insert(themeTopic, themearticle, themetime, memUid);
+					srv.insert(themeVO);
 					checkR.append("result", "success");
 					resp.getWriter().println(checkR.toString());
 				}
@@ -350,6 +348,8 @@ public class ThemeServlet extends HttpServlet {
 			themeVO.setTheme_time(themetime);
 			themeid = themeVO.getTheme_id();
 			memUid = themeVO.getMem_uid();// 抓出已建立的id
+			Integer catlog=1;
+			themeVO.setTheme_catalog(catlog);
 			if (checkR.length() > 0) {
 				throw new Exception();
 			} else {
@@ -388,6 +388,10 @@ public class ThemeServlet extends HttpServlet {
 			}
 
 			if (thno != null) {
+				RespService rsv =new RespService();
+				RespVO res =new RespVO();
+				rsv.deleteByThemeID(thno);
+				
 				ThemeService tsv = new ThemeService();
 				try {
 					tsv.delete(thno);
