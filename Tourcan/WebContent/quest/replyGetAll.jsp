@@ -209,7 +209,7 @@
     <p></p>
     <span style="font-size: 200%;font-weight:bold">Question Table</span>
     <button class="btn btn-primary btn-lg outline pull-right" id="quest_raise" style="font-size:13px">搜尋問題</button>
-    <input type="text" class="pull-right" id="txt_topic" style="margin:3px">
+    <input type="text" class="pull-right tooltip-show" id="txt_topic" data-placement="left" title="請輸入查詢標題" style="margin:3px">
   </div>
   <button class="btn btn-primary" id="quest_getAll">查詢全部</button>
   <button class="btn btn-info" id="quest_cancel">取消查詢</button>
@@ -218,17 +218,18 @@
   <table class="table table-striped" id="replyAll">
     <thead>
       <tr>
-        <th>quest_id</th>
-        <th>mem_uid</th>
-        <th>quest_topic</th>
-        <th>quest_qtime</th>
-        <th>edit</th>
+        <th>問題序號</th>
+        <th>會員ID</th>
+        <th>標題</th>
+        <th>提問時間</th>
+        <th>編輯</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
-    <div id="demo1">   
-    </div>
+<!--     <div id="demo1">    -->
+<!--     </div> -->
+<div id="smart-paginator" > </>
   </div>
 </div>
 <!------------------------!!!!!!---- 請勿刪除此段註解的 div, 謝謝 ----!!!!!!------------------------------------>
@@ -389,6 +390,8 @@
 		
 		    var questTopic = $('#txt_topic').val();
 		    if(questTopic == null || questTopic.trim().length == 0){
+		    	$('.tooltip-show').attr('data-original-title', '請勿空白!')
+                                  .tooltip('show');
 		    	$('#replyAll').hide();
 		    }else{
 		        $.getJSON(("QuestServlet"),{"questTopic":questTopic,"method":"getByName"},function(data){
@@ -396,18 +399,24 @@
 		            var myBody = $('#replyAll>tbody');
 		            
 			        $.each(data,function(idx,data){
-                    console.log("idx:"+idx);
-                    console.log("data:"+data);
-			        var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
-			        var but2=$('<button class="btn btn-warning btn-xs" id="quest_editCancel">取消查看</button>');
-				    var cell1 = $("<td></td>").text(data.quest_id);
-				    var cell2 = $("<td></td>").text(data.quest_catalog);
-				    var cell3 = $("<td></td>").text(data.quest_topic);
-				    var cell4 = $("<td></td>").text(data.quest_qtime);
-				    var cell5 = $("<td></td>").append(but1).append("  ").append(but2);
-				    var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
-				    myBody.append(row);				
-		        })
+                        console.log("idx:"+idx);
+                        console.log("data:"+data);
+                        if(idx=="result"){
+	                    	$('#replyAll').hide();
+	                    	$('.tooltip-show').attr('data-original-title', '查無資料!')
+                                              .tooltip('show');
+	                    }else{
+			                var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
+			                var but2=$('<button class="btn btn-warning btn-xs" id="quest_editCancel">取消查看</button>');
+				            var cell1 = $("<td></td>").text(data.quest_id);
+				            var cell2 = $("<td></td>").text(data.quest_catalog);
+				            var cell3 = $("<td></td>").text(data.quest_topic);
+				            var cell4 = $("<td></td>").text(data.quest_qtime);
+				            var cell5 = $("<td></td>").append(but1).append("  ").append(but2);
+				            var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
+				            myBody.append(row);
+	                    }
+		            })
 			
 			    $("tr").not(':first').hover(
 				    function () {
@@ -731,7 +740,11 @@
 // 	    	   location.href = "list.aspx?id=" + page;
 // 	       }
 // 	   });
-	    
+	   $("#txt_topic").hover(function(){
+		   $('.tooltip-show').tooltip('hide')
+		                     .attr('data-original-title', '請輸入查詢標題')
+		                     .tooltip('show');
+		});
 	
 	})
 	

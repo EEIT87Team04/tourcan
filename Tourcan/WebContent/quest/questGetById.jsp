@@ -199,6 +199,8 @@
 	color: 	#D7FFEE;
 	box-shadow: none;
 }
+
+
 </style>
  
 </head>
@@ -207,30 +209,32 @@
   <div>
     <p></p>
     <span style="font-size: 200%;font-weight:bold">Question List</span>
-    <button class="btn btn-primary btn-lg outline pull-right" id="quest_raise" style="font-size:13px">搜尋問題</button>
-    <input type="text" class="pull-right" id="txt_topic" data-toggle="tooltip" data-placement="left" title="請輸入查詢標題" style="margin:3px">
+    <button class="btn btn-primary btn-lg outline pull-right"  id="quest_raise" style="font-size:13px">搜尋問題</button>
+    <input type="text" class="pull-right tooltip-show" id="txt_topic" data-placement="left" title="請輸入查詢標題" style="margin:3px">
   </div>
   <button class="btn btn-primary" id="quest_getAll">查詢全部</button>
   <button class="btn btn-info" id="quest_cancel">取消查詢</button>
   <button class="btn btn-danger pull-right" id="quest_insert">提出問題</button>
   <p></p>
   <div id="table1">
+  <input type='hidden' id='current_page' /> <input type='hidden'
+		id='show_per_page' />
   <table class="table table-striped" id="replyAll">
     <thead>
       <tr>
-        <th>quest_id</th>
-        <th>quest_catalog</th>
-        <th>quest_topic</th>
-        <th>quest_qtime</th>
-        <th>function</th>
+        <th>問題序號</th>
+        <th>問題分類</th>
+        <th>標題</th>
+        <th>提問時間</th>
+        <th>功能</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
-<!--     <div id="demo1">    -->
-<!--     </div> -->
+  <ul id='page_navigation' class="pagination pagination-lg"></ul>
   </div>
 </div>
+
 
 <div class="container">
   <!-- Trigger the modal with a buttom n -->
@@ -284,7 +288,7 @@
         $('#replyOne').hide();
         $('#replyAll').hide();
 	    
-        // 查詢此會員 id 全部的 list
+        
         $("#quest_getAll").click(function() {
 		    $('#replyAll').show();
 		    $('#replyAll>tbody').empty();
@@ -311,49 +315,100 @@
 				    $(this).css("background","#FFD9EC");},
 			    function () {
 					$(this).css("background","");});
+			
+			//----------Pagination-----------	
+		    //how much items per page to show  
+		    var show_per_page = 10;  
+		    //getting the amount of elements inside content div  
+		    var number_of_items = $('#replyAll tbody').children().length;
+		    console.log(number_of_items);
+		    //calculate the number of pages we are going to have  
+		    var number_of_pages = Math.ceil(number_of_items/show_per_page);  
+		  
+		    //set the value of our hidden input fields  
+		    $('#current_page').val(0);  
+		    $('#show_per_page').val(show_per_page);  
+		  
+		    //now when we got all we need for the navigation let's make it '  
+		  
+		    /* 
+		    what are we going to have in the navigation? 
+		        - link to previous page 
+		        - links to specific pages 
+		        - link to next page 
+		    */  
+//	 	    var navigation_html = '<li><a class="previous_link" href="javascript:previous();">Prev</a></li>';
+	        var navigation_html = "";
+		    var current_link = 0;  
+		    while(number_of_pages > current_link){  
+		        navigation_html += '<li><a class="page_link" href="javascript:go_to_page(' + current_link +')" longdesc="' + current_link +'">'+ (current_link + 1) +'</a></li>';  
+		        current_link++;  
+		    }  
+//	 	    navigation_html += '<li><a class="next_link" href="javascript:next();">Next</a></li>';  
+		  
+		    $('#page_navigation').html(navigation_html);  
+		  
+		    //add active_page class to the first page link  
+		    $('#page_navigation .page_link:first').addClass('active_page');  
+		  
+		    //hide all the elements inside content div  
+		    $('#replyAll>tbody').children().css('display', 'none');  
+		  
+		    //and show the first n (show_per_page) elements  
+		    $('#replyAll>tbody').children().slice(0, show_per_page).css('display', 'table-row');  
+			
+			
 			})
 		})
 		
-		// 查詢此標題  全部的 list
+		
 		$("#quest_raise").click(function() {
 		    $('#replyAll').show();
 		    $('#replyAll>tbody').empty();
 		
 		    var questTopic = $('#txt_topic').val();
-		    if(questTopic == null || questTopic.trim().length == 0){
+		    if(questTopic == null || questTopic.trim().length == 0 ){
+		    	$('.tooltip-show').attr('data-original-title', '請勿空白!')
+		                          .tooltip('show'); 
 		    	$('#replyAll').hide();
-		    	$('[data-toggle="tooltip"]').tooltip();
 		    }else{
 		        $.getJSON(("QuestServlet"),{"questTopic":questTopic,"method":"getByName"},function(data){
-		            console.log("questTopic:"+questTopic);
 		            var myBody = $('#replyAll>tbody');
 		            
 			        $.each(data,function(idx,data){
-                    console.log("idx:"+idx);
-                    console.log("data:"+data);
-			        var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
-			        var but2=$('<button class="btn btn-warning btn-xs" id="quest_editCancel">取消查看</button>');
-				    var cell1 = $("<td></td>").text(data.quest_id);
-				    var cell2 = $("<td></td>").text(data.quest_catalog);
-				    var cell3 = $("<td></td>").text(data.quest_topic);
-				    var cell4 = $("<td></td>").text(data.quest_qtime);
-				    var cell5 = $("<td></td>").append(but1).append("  ").append(but2);
-				    var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
-				    myBody.append(row);				
-		        })
+                        console.log("idx:"+idx);
+                        console.log("data:"+data);
+		                if(idx=="result"){
+		                	$('#replyAll').hide();
+		            	    $('.tooltip-show').attr('data-original-title', '查無資料!')
+	                                          .tooltip('show');
+		                }else{
+			                var but1=$('<button class="btn btn-success btn-xs" id="quest_edit">查看</button>');
+			                var but2=$('<button class="btn btn-warning btn-xs" id="quest_editCancel">取消查看</button>');
+				            var cell1 = $("<td></td>").text(data.quest_id);
+				            var cell2 = $("<td></td>").text(data.quest_catalog);
+			         	    var cell3 = $("<td></td>").text(data.quest_topic);
+			        	    var cell4 = $("<td></td>").text(data.quest_qtime);
+			        	    var cell5 = $("<td></td>").append(but1).append("  ").append(but2);
+			        	    var row = $("<tr></tr>").append([cell1,cell2,cell3,cell4,cell5]);
+			        	    myBody.append(row);		
+		                }
+		            })
+			        
 			
 			    $("tr").not(':first').hover(
 				    function () {
 				        $(this).css("background","#FFD9EC");},
 			        function () {
 					    $(this).css("background","");});
-		        
+			        
+		            
 			    })
 		    }
 		})
 		
 
-		// 查看每筆  data 的細項
+		
         $("#replyAll").on('click','.btn-success',function(){
 //          $('#replyOne').show();
             quest_replyValue=null;
@@ -576,7 +631,7 @@
     
 	
 	   $("#quest_cancel").click(function() {
-		   $('#replyAll').hide();
+		   $('#replyAll').remove();
 	   })
 	   
 	   $(".btn-danger").click(function(){
@@ -629,25 +684,56 @@
 				});
 	   })
 	
-// // 	   //分页
-// // 	   $("#demo1").paginate({
-// // 	       count: 10,
-// // 	       start: 1,
-// // 	       display: 10,
-// // 	       border: true,
-// // 	       onChange: function(page) {
-// // 	    	   location.href = "list.aspx?id=" + page;
-// // 	       }
-// 	   });
-	    
-// 	   $(".btn-lg").click(function(){
-		   
-// 	   })
-	   $("#txt_topic").mousedown(function(){
-		   $('[data-toggle="tooltip"]').tooltip();
+	   $("#txt_topic").hover(function(){
+		   $('.tooltip-show').tooltip('hide')
+		                     .attr('data-original-title', '請輸入查詢標題')
+		                     .tooltip('show');
 		});
+        
+		
 		
 	})
+	
+		function previous(){  
+		  
+	    new_page = parseInt($('#current_page').val()) - 1;  
+	    //if there is an item before the current active link run the function  
+	    if($('.active_page').prev('.page_link').length==true){  
+	        go_to_page(new_page);  
+	    }  
+	  
+	}  
+	  
+	function next(){  
+	    new_page = parseInt($('#current_page').val()) + 1;  
+	    //if there is an item after the current active link run the function  
+	    if($('.active_page').next('.page_link').length==true){  
+	        go_to_page(new_page);  
+	    }  
+	  
+	}  
+	function go_to_page(page_num){  
+	    //get the number of items shown per page  
+	    var show_per_page = parseInt($('#show_per_page').val());  
+	  
+	    //get the element number where to start the slice from  
+	    start_from = page_num * show_per_page;  
+	  
+	    //get the element number where to end the slice  
+	    end_on = start_from + show_per_page;  
+	  
+	    //hide all children elements of content div, get specific items and show them  
+	    $('#replyAll>tbody').children().css('display', 'none').slice(start_from, end_on).css('display', 'table-row');  
+	  
+	    /*get the page link that has longdesc attribute of the current page and add active_page class to it 
+	    and remove that class from previously active page link*/  
+	    $('.page_link[longdesc=' + page_num +']').addClass('active_page').siblings('.active_page').removeClass('active_page');  
+	  
+	    //update the current page input field  
+	    $('#replyAll>tbody').val(page_num);  
+	    
+	}  
+	
 	</script>
 
 </body>
