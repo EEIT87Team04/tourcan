@@ -1110,10 +1110,27 @@
 			
 			
 			$("#saveBtn").off('click').on('click',function(){
-				$("#sortable > table").each(function(idx,table){
-					console.log("idx="+idx);
-					console.log("table"+table);
-				})
+				$.get("TripServlet",{"",""}){
+					
+				}
+				
+					var json = {
+							"trip_id":"",
+							"tripitem_serial":"",
+							"att_id":"",
+							"hotel_id":"",
+							"tripitem_staytime":"",
+							"tripitem_begin":"",
+							"tripitem_end":"",
+							"tripitem_traffic":"",
+					};
+					
+					$.post()
+					
+					$("#sortable > table").each(function(idx,table){
+						console.log("idx="+idx);
+						console.log("table"+table);
+					})
 			})
 			
 			

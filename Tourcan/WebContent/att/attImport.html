@@ -209,6 +209,9 @@
 						json[form[i].name] = form[i].value;
 					}
 				}
+				
+				console.log(json);
+				
 				json["regionVO"] = regionList[json.region_id];
 
 				$.post("AttServlet", JSON.stringify(json)).done(function(data) {
