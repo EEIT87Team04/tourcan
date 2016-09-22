@@ -50,7 +50,7 @@ color:#fff;
 				</div>
 			</form>
 			<div class="col-md-4 btn pull-right">
-				<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">發表新主題</button>
+				<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/articles/InsertThem.jsp'">發表新主題</button>
 			</div>	
 		</div>
 	</div>

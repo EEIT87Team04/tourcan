@@ -27,7 +27,7 @@ import com.tourcan.resp.model.RespVO;
 import com.tourcan.theme.model.ThemeService;
 import com.tourcan.theme.model.ThemeVO;
 
-@WebServlet("/theme/ThemeServlet")
+@WebServlet("/articles/ThemeServlet")
 public class ThemeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -77,13 +77,13 @@ public class ThemeServlet extends HttpServlet {
 				req.setAttribute("data",r.getEntity());
 				req.setAttribute("list", resVO1);
 				req.setAttribute("themeVO", themeVO1); 
-				String url = "/theme/listOneTheme.jsp";
+				String url = "/articles/listOneTheme.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 																				
 				successView.forward(req, resp);
 
 			} catch (Exception e) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/theme/listAllTheme.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/articles/listAllTheme.jsp");
 				failureView.forward(req, resp);
 			}
 			

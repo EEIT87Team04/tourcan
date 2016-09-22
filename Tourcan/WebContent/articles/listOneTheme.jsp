@@ -33,7 +33,7 @@
 			<h1>　討論區</h1>
 		</div>
 		<div class="col-md-3 btn pull-right">
-			<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">發表新主題</button>
+			<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/articles/InsertThem.jsp'">發表新主題</button>
 		</div>
 	</div>
 	<div style="border: solid 1px;">
@@ -125,7 +125,7 @@
 					<textarea name="resp_article" id="resp_article" class="form-control"></textarea>
 			<div class="from-inline">
 				<div class="col-md-3" > 
-					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/listAllTheme.jsp'">回到所有主題</button>
+					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/articles/listAllTheme.jsp'">回到所有主題</button>
 				</div>  
 				<div class="col-md-3 col-sm-offset-6" >
 					<button type="button" class="btn btn-success form-control" id="btnInsert"  > 確定回覆</button>

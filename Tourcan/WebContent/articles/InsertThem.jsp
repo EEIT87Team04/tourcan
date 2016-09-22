@@ -46,7 +46,7 @@
 			  
 			<div class="row">
 				<div class="btn pull-left">
-					<button type="button" class="btn btn-default " id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/listAllTheme.jsp'">回到所有主題</button>
+					<button type="button" class="btn btn-default " id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/articles/listAllTheme.jsp'">回到所有主題</button>
 				</div>
 				<div class=" btn pull-right " >
 					<button type="button" class="btn btn-success btn-lg " id="btnInsert">確認新增</button>
