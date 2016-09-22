@@ -228,11 +228,7 @@ public class AttRestService {
 			List<String> imgs = new ArrayList<String>();
 				
 			for (AttVO avo : vos) {
-//				for (PhotoVO pvo : pdao.findByAttId(avo.getAtt_id())) {
-//					imgs.add(request.getContextPath() + request.getServletPath() + request.getPathInfo() + "/photos/"
-//							+ pvo.getPhoto_id());
-//				}
-				System.out.println(request.getPathInfo());
+//				System.out.println(request.getPathInfo());
 
 				List<PhotoVO> pvo;
 				if ((pvo = pdao.findByAttId(avo.getAtt_id())) != null && pvo.size() > 0) {

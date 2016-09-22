@@ -50,6 +50,7 @@
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
             <li class="sidebar-brand dath7">
+            <c:if test="${vo!=null}">
                 <a class="dath7" href="${contextPath}/mem/edituser">
                 ${vo.mem_nick}
 	                <c:if test="${vo.mem_nick==null}">
@@ -57,6 +58,10 @@
 	                </c:if>
 	            ,您好！
                 </a>
+                </c:if>
+            <c:if test="${vo==null}">
+            <a class="dath7" href="${contextPath}/login.jsp" onclick=$("#menu-close").click();>Join Tourcan</a>
+            </c:if>
             </li>
             <li>
                 <a class="dath7" href="#top" onclick=$("#menu-close").click();>首　　頁</a>
@@ -74,9 +79,11 @@
                 <a class="dath7" href="#contact" onclick=$("#menu-close").click();>聯繫我們</a>
             </li>
 
+            <c:if test="${vo!=null}">
             <li>
             <a class="dath7" href="${contextPath}/logout.jsp">登　　出</a>
             </li>
+            </c:if>
         </ul>
     </nav>
 
