@@ -406,6 +406,7 @@
 
 // 			document.getElementById('submit').addEventListener('click',function() {
 						calculateAndDisplayRoute(directionsService,directionsDisplay);
+
 // 					});
 		}
 		
@@ -471,6 +472,8 @@
 		            	$(this).find("span[name='tTime']").append(route.legs[(parseInt(idx)+1)].duration.text);
 						}
 		            });
+			  		timeInit();
+			  		timeReveal();
 					      for (var i = 0; i < route.legs.length; i++) {
 					    	  console.log(route.legs[i].distance.text);
 					    	  console.log(route.legs[i].duration.text);
@@ -495,7 +498,8 @@
 		  {
 			  //console.log("initial start...");
 			  sTime = new Date($("#start input[name='sTime']").val().replace('T'," ")).getTime();
-			  tTime = $("#start input[name='tTime']").val()*60*1000;
+			  console.log(sTime);
+			  tTime = parseInt($("#start span[name='tTime']").text())*60*1000;
 			  wTime = 0;
 			  eTime = sTime + tTime + wTime;
 			  $("#start input[name='tripitem_begin']").val(sTime);
@@ -521,52 +525,52 @@
 			// ↓ 將所有sortable元素的Time帶入值，並準備轉交給下一個item  ↓
 			  function timeReveal()
 			  {
-				  //console.log("reveal start...");	  
-				  $("#sortable").children().each(function(){
+				  console.log("reveal start...");	  
+					$("#sortable").children().each(function(){
 					  sTime = eTime;
 					  
-					  //將　開始時間　帶入tripitem_begin (millisecond)
-					  //console.log(new Date(sTime)); //解開註解，可看該毫秒數所指日期。
-					  $(this).children('div').find('input[name=tripitem_begin]').val(sTime);
+// 					  console.log(new Date(sTime)); //解開註解，可看該毫秒數所指日期。
+					  $(this).find('input[name="tripitem_begin"]').val(sTime);
 					  
 					  var newSt = new Date(sTime).toTimeString();
 					  var sTidx = newSt.indexOf("G");
 					  newSt = "起：" + newSt.substr(0,sTidx-4);
 					  
-					  $(this).children('p[name=sTime]').text(newSt);
-					  tTime = $(this).find('input[name=tTime]').val()*60*1000;
-					  wTime = $(this).find('input[name=wTime]').val();
+					  $(this).find('p[name=sTime]').text(newSt);
+					  tTime = parseInt($(this).find('span[name="tTime"]').text())*60*1000;
+					  wTime = $(this).find('input[name="wTime"]').val();
 
-					  //將　逗留時間　帶入tripitem_staytime
-					  $(this).children('div').find('input[name=tripitem_staytime]').val(wTime);
+					  $(this).find('input[name="tripitem_staytime"]').val(wTime);
 					  
 					  wTime = wTime*60*1000;
 					  var newEt = new Date(eTime+wTime).toTimeString();
 					  var eTidx = newEt.indexOf("G");
 					  newEt = "訖：" + newEt.substr(0,eTidx-4);
 					  
-					  //將　結束時間　(運算後)帶入tripitem_end (millisecond)
+
 					  //console.log(new Date(sTime+wTime)); //解開註解，可看該毫秒數所指日期。
-					  $(this).children('div').find('input[name=tripitem_end]').val(sTime+wTime);
+					  $(this).find('input[name="tripitem_end"]').val(sTime+wTime);
 					  
-					  $(this).children('p[name=eTime]').text(newEt);
+					  $(this).find('p[name="eTime"]').text(newEt);
 					  
 					  eTime = sTime + tTime + wTime;
 				  });
-				  //console.log("reveal done.");	  
+				  console.log("reveal done.");	  
 			  }
 			// ↑ 將所有sortable元素的Time帶入值，並準備轉交給下一個item  ↑
 			
 			
+			
+			
+		
+		$(function(){
 			//監聽每一個input的變化
 	  		$(document).on("change","input[name$='Time']",function(){
 		  		console.log("input changed");
-		  		console.log($("#start input[name='sTime']").val());
+// 		  		console.log($("#start input[name='sTime']").val());
 		  		timeInit();
 		  		timeReveal();
-	  		});
-		
-		$(function(){
+	  		}); 
 			
 			//拖拉排序
 			function sortable(){
@@ -807,6 +811,7 @@
 									
 									addrArray.push(att1.att_addr);
 // 									console.log("test="+addrArray);
+									
 								})
 								initMap();
 								
