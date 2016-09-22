@@ -11,7 +11,30 @@
 	MemDAO dao = (MemDAO) ApplicationContextUtils.getContext().getBean("memDAO");
 %>
 
-<jsp:include page="/frontPageHeader.jsp" />
+<!DOCTYPE html >
+<html>
+<head>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+  	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+.btn-primary.btn-outline:hover,{
+color:#fff;
+} 
+  </style>
+<title>討論區主題列表</title>
+  
+</head>
+<body >
 <div class="container">
 	<div class="row" >
 		<div class="col-md-6">
@@ -233,4 +256,5 @@ $(function(){
 
 
 </script>
-<jsp:include page="/frontPageFooter.jsp" />
+</body>
+</html>

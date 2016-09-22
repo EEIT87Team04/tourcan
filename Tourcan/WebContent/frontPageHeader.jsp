@@ -61,16 +61,11 @@
                     <li><a class="dath7" href="${contextPath}/articles/list.jsp">討論區</a></li>
                     <li><a class="dath7" href="${contextPath}/service">客服</a></li>
                     <c:if test="${vo!=null}">
-                    <li style="margin-left: 600px"><a class="dath7" href="${contextPath}/mem/edituser" style="float: right;">
-                    
-                    ${vo.mem_nick},
-	                <c:if test="${vo.mem_nick==null}">
-	                	${vo.mem_fname}
-	                </c:if>
-	            	您好！
+                    <li style="margin-left: 550px"><a class="dath7" href="${contextPath}/mem/edituser" style="float: right;">
+                    ${vo.mem_nick},<c:if test="${vo.mem_nick==null}">${vo.mem_fname}</c:if>您好！
                     </a>
                     </li>
-                    <li style="margin-left: 600px">
+                    <li>
                     <a class="dath7" href="${contextPath}/logout.jsp">登出</a>
                     </li>
 	            	</c:if>
