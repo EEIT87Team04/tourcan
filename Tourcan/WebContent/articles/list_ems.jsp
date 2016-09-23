@@ -11,7 +11,7 @@
 	MemDAO dao = (MemDAO) ApplicationContextUtils.getContext().getBean("memDAO");
 %>
 
-<jsp:include page="/frontPageHeader.jsp" />
+<jsp:include page="/emsPart1.jsp" />
 <div class="container">
 	<div class="row" >
 		<div class="col-md-6">
@@ -233,4 +233,4 @@ $(function(){
 
 
 </script>
-<jsp:include page="/frontPageFooter.jsp" />
+<jsp:include page="/emsPart2.jsp" />

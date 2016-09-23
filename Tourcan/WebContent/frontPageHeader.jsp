@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,7 +59,28 @@
                     <li><a class="dath7" href="${contextPath}/restaurants">美食</a></li>
                     <li><a class="dath7" href="${contextPath}/hotels">住宿</a></li>
                     <li><a class="dath7" href="${contextPath}/articles/list.jsp">討論區</a></li>
-                    <li><a class="dath7" href="${contextPath}/service">客服</a></li>
+                    <c:if test="${vo!=null}">
+                    <li><a class="dath7" href="${contextPath}/quest/questGetById.jsp">客服</a></li>
+                    </c:if>
+                    <c:if test="${vo==null}">
+                    <li><a class="dath7" onclick=alert('請先登入會員')>客服</a></li>
+                    </c:if>
+                    
+                    
+                    <c:if test="${vo!=null}">
+                    <li style="margin-left: 550px"><a class="dath7" href="${contextPath}/mem/edituser" style="float: right;">
+                    ${vo.mem_nick},<c:if test="${vo.mem_nick==null}">${vo.mem_fname}</c:if>您好！
+                    </a>
+                    </li>
+                    <li>
+                    <a class="dath7" href="${contextPath}/logout.jsp">登出</a>
+                    </li>
+	            	</c:if>
+                    <c:if test="${vo==null}">
+                    <li style="margin-left: 600px">
+                    <a class="dath7" href="${contextPath}/login.jsp">登入</a>
+                    </li>
+					</c:if>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -72,6 +94,6 @@
 
     <div class="container containPad">
         <div class="row">
-            <div class="col-lg-12 text-center dath7">
+            <div class="col-lg-12 dath7">
 
             

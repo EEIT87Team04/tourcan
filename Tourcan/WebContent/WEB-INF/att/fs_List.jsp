@@ -24,10 +24,10 @@
 		<input type='hidden' id='current_page' /> <input type='hidden'
 			id='show_per_page' />
 		<div class="row" id="dataList">
-			<c:forEach var="AttVO" items="${attVO}">
+			<c:forEach var="AttVO" items="${attVO}" varStatus="count">
 				<div class="row">
 					<div class="col-md-4 col-md-offset-1">
-						<p><img src=""></p>
+						<p><img src="${imgs[count.index]}" width="150px" height="150px"></p>
 					</div>
 					<div class="col-md-7">
 						<div class="row">

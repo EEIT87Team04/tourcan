@@ -11,7 +11,30 @@
 	MemDAO dao = (MemDAO) ApplicationContextUtils.getContext().getBean("memDAO");
 %>
 
-<jsp:include page="/frontPageHeader.jsp" />
+<!DOCTYPE html >
+<html>
+<head>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+  	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+.btn-primary.btn-outline:hover,{
+color:#fff;
+} 
+  </style>
+<title>討論區主題列表</title>
+  
+</head>
+<body >
 <div class="container">
 	<div class="row" >
 		<div class="col-md-6">
@@ -40,6 +63,7 @@
 				<th>主題名稱</th>
 				<th>發表者</th>
 				<th>建立時間</th>
+				<th>刪除</th>		
 			</tr>
 		</thead>
 		<tbody id="dataList" >
@@ -68,10 +92,7 @@
 					</td>
 					<td>${mvo.mem_lname}${mvo.mem_fname}</td>
 					<td>${ThemeVO.theme_time.toString().substring(0, 16)}</td>
-					<td>
-					
-					
-					</td>
+					<td><button id="delete1" class="btn btn-danger delete1" value="${ThemeVO.theme_id}" >刪除</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -139,9 +160,29 @@ $(function(){
 						var row = $("<tr></tr>").append([cell1,cell5,cell3,cell4]);
 						myBody.append(row);
 					}
+				})
 			})
+		})
+	$('.delete1').on('click',function(){
+		var id1=$('#delete1').val();
+		$.ajax({
+			type : "delete",
+			url:"ThemeServlet?"+$.param({"theme_id":id1}),
+			dataType:"json",
+			success:function(data){
+				console.log(data.themeSu)
+				if(data.themeSu)
+				alert("success");
+// 				window.location.reload();
+			}		
+			
+			
+		})
+		
+		
 	})
-})
+		
+		
 	
 	
 	
@@ -233,4 +274,5 @@ $(function(){
 
 
 </script>
-<jsp:include page="/frontPageFooter.jsp" />
+</body>
+</html>

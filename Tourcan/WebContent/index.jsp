@@ -50,6 +50,7 @@
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
             <li class="sidebar-brand dath7">
+            <c:if test="${vo!=null}">
                 <a class="dath7" href="${contextPath}/mem/edituser">
                 ${vo.mem_nick}
 	                <c:if test="${vo.mem_nick==null}">
@@ -57,6 +58,10 @@
 	                </c:if>
 	            ,您好！
                 </a>
+                </c:if>
+            <c:if test="${vo==null}">
+            <a class="dath7" href="${contextPath}/login.jsp" onclick=$("#menu-close").click();>Join Tourcan</a>
+            </c:if>
             </li>
             <li>
                 <a class="dath7" href="#top" onclick=$("#menu-close").click();>首　　頁</a>
@@ -66,6 +71,11 @@
             </li>
             <li>
                 <a class="dath7" href="#services" onclick=$("#menu-close").click();>服務項目</a>
+                <small><a class="dath7" href="${contextPath}/attractions" onclick=$("#menu-close").click();>　景點</a></small>
+                <small><a class="dath7" href="${contextPath}/hotels" onclick=$("#menu-close").click();>　住宿</a></small>
+                <small><a class="dath7" href="${contextPath}/restaurants" onclick=$("#menu-close").click();>　美食</a></small>
+                <small><a class="dath7" href="${contextPath}/trips" onclick=$("#menu-close").click();>　規劃行程</a></small>
+                <small><a class="dath7" href="${contextPath}/articles/list.jsp" onclick=$("#menu-close").click();>　討 論區</a></small>
             </li>
             <li>
                 <a class="dath7" href="#portfolio" onclick=$("#menu-close").click();>熱門推薦</a>
@@ -74,9 +84,11 @@
                 <a class="dath7" href="#contact" onclick=$("#menu-close").click();>聯繫我們</a>
             </li>
 
+            <c:if test="${vo!=null}">
             <li>
             <a class="dath7" href="${contextPath}/logout.jsp">登　　出</a>
             </li>
+            </c:if>
         </ul>
     </nav>
 
@@ -180,7 +192,12 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                               <a href="${contextPath}/service"><img src="${contextPath}/images/front/icons/info.png" class="front_icon"></a>
+                                <c:if test="${vo!=null}">
+	                               <a href="${contextPath}/quest/questGetById.jsp"><img src="${contextPath}/images/front/icons/info.png" class="front_icon"></a>
+                                </c:if>
+                                <c:if test="${vo==null}">
+	                               <a onclick=alert('請先登入會員')><img src="${contextPath}/images/front/icons/info.png" class="front_icon"></a>
+                                </c:if>
                             </span>
                                 <h4>
                                      <strong class="dath7" >客　　服</strong>

@@ -25,7 +25,9 @@
 	<div id="start">
 		開始時間：<input name="sTime" type="datetime-local" value="2016-09-19T07:00:00"/>
 		交通時間：<input name="tTime" type="number" value="30"/>
-		<input name="wTime" type="number" value="0" style="display: none"/>
+		<input name="tripitem_begin" type="number"/>
+		<input name="tripitem_staytime" type="number"/>
+		<input name="tripitem_end" type="number"/>
 	</div>
 	 
 	<div class="stbDiv" id="sortable">
@@ -43,8 +45,11 @@
 	  //console.log("initial start...");
 	  sTime = new Date($("#start input[name='sTime']").val().replace('T'," ")).getTime();
 	  tTime = $("#start input[name='tTime']").val()*60*1000;
-	  wTime = $("#start input[name='wTime']").val()*60*1000;
+	  wTime = 0;
 	  eTime = sTime + tTime + wTime;
+	  $("#start input[name='tripitem_begin']").val(sTime);
+	  $("#start input[name='tripitem_staytime']").val(0);
+	  $("#start input[name='tripitem_end']").val(eTime);
 	  //console.log("initial done.");
   }
 // ↑ 依"啟程"的出發時間為基準，初始化基準值   ↑
@@ -93,23 +98,23 @@
   function timeReveal()
   {
 	  //console.log("reveal start...");	  
-	  $.each($("#sortable").children(),function(idx,div){
+	  $("#sortable").children().each(function(){
 		  sTime = eTime;
 		  
 		  //將　開始時間　帶入tripitem_begin (millisecond)
 		  //console.log(new Date(sTime)); //解開註解，可看該毫秒數所指日期。
-		  $(this).children('div').children('label').children('input[name=tripitem_begin]').val(sTime);
+		  $(this).children('div').find('input[name=tripitem_begin]').val(sTime);
 		  
 		  var newSt = new Date(sTime).toTimeString();
 		  var sTidx = newSt.indexOf("G");
 		  newSt = "起：" + newSt.substr(0,sTidx-4);
 		  
 		  $(this).children('p[name=sTime]').text(newSt);
-		  tTime = $(this).children('label').children('input[name=tTime]').val()*60*1000;
-		  wTime = $(this).children('label').children('input[name=wTime]').val();
+		  tTime = $(this).find('input[name=tTime]').val()*60*1000;
+		  wTime = $(this).find('input[name=wTime]').val();
 
 		  //將　逗留時間　帶入tripitem_staytime
-		  $(this).children('div').children('label').children('input[name=tripitem_staytime]').val(wTime);
+		  $(this).children('div').find('input[name=tripitem_staytime]').val(wTime);
 		  
 		  wTime = wTime*60*1000;
 		  var newEt = new Date(eTime+wTime).toTimeString();
@@ -117,8 +122,8 @@
 		  newEt = "訖：" + newEt.substr(0,eTidx-4);
 		  
 		  //將　結束時間　(運算後)帶入tripitem_end (millisecond)
-		  //console.log(new Date(eTime+wTime)); //解開註解，可看該毫秒數所指日期。
-		  $(this).children('div').children('label').children('input[name=tripitem_end]').val(eTime+wTime);
+		  //console.log(new Date(sTime+wTime)); //解開註解，可看該毫秒數所指日期。
+		  $(this).children('div').find('input[name=tripitem_end]').val(sTime+wTime);
 		  
 		  $(this).children('p[name=eTime]').text(newEt);
 		  
@@ -134,7 +139,7 @@
 
 
 
-  $( function() {
+  $(function() {
 
 	  //_____模擬_____新增行程
 	  var count = $("#sortable").children().length;

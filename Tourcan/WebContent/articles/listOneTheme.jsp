@@ -1,154 +1,138 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.tourcan.theme.model.*"%>
 <%@ page import="com.tourcan.resp.model.*"%>
+<%@ page import="com.tourcan.mem.model.*"%>
+<%@ page import="com.tourcan.util.ApplicationContextUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<%-- ¦¹­¶¬°script¨ú­È ¡AÀ³½m²ß§ï¥Î±Ä¥Î EL ªº¼gªk¨ú­È --%>
-
+<%@ page import="java.util.*" %>
 <%
-ThemeVO themeVO1 = (ThemeVO) request.getAttribute("themeVO"); //EmpServlet.java(Concroller), ¦s¤JreqªºempVOª«¥ó
-RespVO respVO1 =(RespVO) request.getAttribute("resVO"); 
+	ThemeVO themeVO1 = (ThemeVO) request.getAttribute("themeVO"); 
+	RespVO respVO1 =(RespVO) request.getAttribute("resVO"); 
+	MemVO memVO1 =(MemVO) request.getAttribute("data");
+	MemDAO dao = (MemDAO) ApplicationContextUtils.getContext().getBean("memDAO");
 
 %>
 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title> listOneTheme.jsp</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
-  <script src="../lang/summernote-zh-TW.js"></script>
-</head>
-<body >
+<!DOCTYPE html >
+<jsp:include page="/frontPageHeader.jsp" />
 <div class="container" style="padding: 10px">
 	<div class="row" >
-		
-		<div class="col-md-9">
-			<h1>¡@°Q½×°Ï</h1>
+		<div class=" pull-left">
+			<h1>ã€€è¨è«–å€</h1>
 		</div>
-		
-		
-		<div class="col-md-3 ">
-			<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/InsertThem.jsp'">µoªí·s¥DÃD</button>
-<%-- 		<p><%=request.getContextPath()%> --%> 
+		<div class="col-md-3 btn pull-right">
+			<button type="button" class="btn btn-info form-control" id="newtheme" onclick="javascript:location.href='<%=request.getContextPath()%>/articles/InsertThem.jsp'">ç™¼è¡¨æ–°ä¸»é¡Œ</button>
 		</div>
-		
 	</div>
 	<div style="border: solid 1px;">
 		<table  class="table table-hover">
-				<thead >
-					<tr class="success"  >
-						<th class="col-md-4">¥DÃD:</th>
-						<th class="col-md-3">memUID</th>
-						
-					</tr>
-				</thead>
-				<tbody>
-					<tr >
-<%-- 						<td><%=themeVO1.getTheme_id()%></td> --%>
-						<td><%=themeVO1.getTheme_topic()%></td>
-						<td><%=themeVO1.getMem_uid()%></td>				
-<%-- 						<td><%=themeVO1.getTheme_catalog()%></td> --%>
-					</tr>
-					<tr class="warning">
-						<th colspan="4"> ¥DÃD¤º®e:</th>	
-					</tr>
-					<tr>
-						<td id="div1" colspan="4"> <%=themeVO1.getTheme_article()%>	</td>
-					</tr>
+			<thead>
+				<tr class="success"  >
+					 <th class="col-md-5"><span class="glyphicon glyphicon-star" aria-hidden="true"> ä¸»é¡Œ: </span></th>
+					<th class="col-md-4"><span class="glyphicon glyphicon-user" aria-hidden="true"> ç™¼è¡¨è€…å§“å: </span></th>
+					<th class="col-md-3"><span class="glyphicon glyphicon-time" aria-hidden="true"> å»ºç«‹æ™‚é–“:</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr >
+					<td class="col-md-5"><%=themeVO1.getTheme_topic()%></td>
+					<td class="col-md-4"><%=memVO1.getMem_lname() %><%=memVO1.getMem_fname() %></td>				
+					<td class="col-md-3"><%=themeVO1.getTheme_time().toString().substring(0, 16) %></td>
+				</tr>
+				<tr class="warning">
+					<th colspan="4"> ä¸»é¡Œå…§å®¹:</th>	
+				</tr>
+				<tr>
+					<td id="div1" colspan="4"> <%=themeVO1.getTheme_article()%>	</td>
+				</tr>
 			</tbody>
 		</table>
-	
 	</div>
-
-<br>
-	<div >
+  <br>
+  <div>
 	 <table class="table table-hover" >
 		 <c:forEach var="RespVO" items="${list}">
+		 <% 
+ 			RespVO respVO2 =(RespVO) pageContext.getAttribute("RespVO");
+			MemVO mvo = dao.findByUid(respVO2.getMem_uid()); 
+ 		 	pageContext.setAttribute("mvo", mvo);
+ 		 %> 
 		 	<thead style="padding: 10px">
-					<tr  class="success">
-						<th>¦^ÂĞ¼ĞÃD</th>
-						<th>mem_uid</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>${RespVO.resp_topic}</td>
-						<td>${RespVO.mem_uid}</td>
-				 	</tr>	
-						<tr class="warning">
-							<th colspan="4"> ¦^ÂĞ¤º®e:</th>	
-						</tr>
-			 		<tr>
-			 			<td id="d2" colspan="4" >${RespVO.resp_article }</td>
-			 		</tr>
-			 		<tr>
-			 		<td></td>
-			 		
-			 		</tr>
-		 		</tbody>
+				<tr class="success">
+					<th class="col-md-5"><span class="glyphicon glyphicon-star" aria-hidden="true"> å›è¦†æ¨™é¡Œ:</span></th>
+					<th class="col-md-4"><span class="glyphicon glyphicon-user" aria-hidden="true"> å›è¦†è€…å§“å:</span></th>
+					<th class="col-md-3"><span class="glyphicon glyphicon-time" aria-hidden="true"> å›è¦†æ™‚é–“:</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="col-md-5">${RespVO.resp_topic}</td>
+					<td class="col-md-4">${mvo.mem_lname}${mvo.mem_fname}</td>
+					<td class="col-md-3">${RespVO.resp_time.toString().substring(0, 16)}</td>
+			 	</tr>	
+				<tr class="warning">
+					<th colspan="4"> å›è¦†å…§å®¹:</th>	
+				</tr>
+				<tr>
+					<td id="d2" colspan="4" >${RespVO.resp_article }</td>
+				</tr>
+				<tr>
+					<td></td>				
+				</tr>
+		 	</tbody>
 		 </c:forEach>
-	 </table>
-	
-		<div>	
+	 </table>	
+	<div>	
 		<form name="addResp">
 			<div class="row">
 				<div  class="col-sm-6 ">
-					<h3>µoªí·s¦^ÂĞ</h3>
+					<h3>ç™¼è¡¨æ–°å›è¦†</h3>
 				</div>
 			</div>
 			<div>
 				<div class="form-inline">
 				
 					<div class="form-group">
-						<label for="respTopic" >¦^ÂĞ¼ĞÃD</label>
-						
-						<input type="text" id="resp_topic" name="resp_topic"  class="form-control" value="¦^ÂĞ:<%=themeVO1.getTheme_topic()%>"	
+						<span class="glyphicon glyphicon-star-empty" aria-hidden="true"><label for="respTopic">å›è¦†æ¨™é¡Œ</label></span>						
+						<input type="text" id="resp_topic" name="resp_topic"  class="form-control" value="å›è¦†:<%=themeVO1.getTheme_topic()%>"	
 						placeholder="respTopic">
-						
 					</div>
 					<div class="form-group" >
-						<label for="memId" >·|­ûUId</label> <input type="text"
-							id="mem_uid" name="mem_uid" class="form-control"
-							placeholder="·|­ûId" >
+						<label for="memId" >æœƒå“¡UId</label> <input type="text"
+							id="mem_uid" name="mem_uid" class="form-control" value="${vo.mem_uid}"
+							placeholder="æœƒå“¡Id" readonly="readonly" >
 					</div>
 					<div class="form-group" >
 						<label for="themeID" >themeId</label> <input type="number"
 							id="theme_id" name="theme_id" class="form-control" value="<%=themeVO1.getTheme_id()%>"
 							placeholder="theme_id" min=1>
-					</div>
-					
-				
+					</div>		
 				</div>
-			</div>
-				
-				<div id="d2"></div>
+			</div>				
+<!-- 				<div id="d2"></div> -->
 					<textarea name="resp_article" id="resp_article" class="form-control"></textarea>
 			<div class="from-inline">
 				<div class="col-md-3" > 
-					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/theme/listAllTheme.jsp'">¦^¨ì©Ò¦³¥DÃD</button>
-			
+					<button type="button" class="btn btn-default form-control" id="backall" onclick="javascript:location.href='<%=request.getContextPath()%>/articles/list.jsp'">å›åˆ°æ‰€æœ‰ä¸»é¡Œ</button>
 				</div>  
 				<div class="col-md-3 col-sm-offset-6" >
-					<button type="button" class="btn btn-success form-control" id="btnInsert"  > ½T©w¦^ÂĞ</button>
+					<button type="button" class="btn btn-success form-control" id="btnInsert"  > ç¢ºå®šå›è¦†</button>
 				</div>
 			</div>
 		</form>
 	</div>	
 	</div>
 </div>
-
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
  <script type="text/javascript">
  
 		//----------summernote---------------
 		 $('#resp_article').summernote({
 			 height:200,
 			 lang: 'zh-TW', // default: 'en-US'
-			 placeholder:"½Ğ¦b¦¹½s¿è¤º®e"
+			 placeholder:"è«‹åœ¨æ­¤ç·¨è¼¯å…§å®¹"
 			 });
 		 $('#div2').summernote('code');
 		//----------End---------------------
@@ -193,6 +177,4 @@ RespVO respVO1 =(RespVO) request.getAttribute("resVO");
 		 });
 	
 	 </script>
-	 
-	</body>
-</html>
+<jsp:include page="/frontPageFooter.jsp" />

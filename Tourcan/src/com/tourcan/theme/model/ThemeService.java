@@ -14,18 +14,18 @@ public class ThemeService {
 	
 	
 	
-	public ThemeVO insert(String theme_topic, String theme_article,Timestamp theme_time,String memUid)
-	{
-		ThemeVO thVO=new ThemeVO();
-		thVO.setTheme_article(theme_article);
-		thVO.setTheme_topic(theme_topic);
-//		thVO.setTheme_catalog(themecatalog);
-		thVO.setTheme_time(theme_time);
-		thVO.setMem_uid(memUid);
-		
-		dao.insert(thVO);
-		return thVO;
-	}
+//	public ThemeVO insert(String theme_topic, String theme_article,Timestamp theme_time,String memUid)
+//	{
+//		ThemeVO thVO=new ThemeVO();
+//		thVO.setTheme_article(theme_article);
+//		thVO.setTheme_topic(theme_topic);
+////		thVO.setTheme_catalog(themecatalog);
+//		thVO.setTheme_time(theme_time);
+//		thVO.setMem_uid(memUid);
+//		
+//		dao.insert(thVO);
+//		return thVO;
+//	}
 
 
 
@@ -55,6 +55,13 @@ public class ThemeService {
 	}
 	public List<ThemeVO> getAll() {
 		return dao.getAll();
+	}
+
+
+
+	public void insert(ThemeVO themeVO) {
+		 dao.insert(themeVO);
+		
 	}
 
 
