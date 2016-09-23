@@ -114,12 +114,14 @@
 			</div>
 		</div>
 	</form>
-	<div id="photo" style="display: inherit;">
-	<form method="post" action="PhotoServlet" id="photoUpload" name="photoUpload" enctype="multipart/form-data">
+	<div id="photo" style="display:none;">
+	<form name="photos">
 	<input type="hidden" name="att_id" id="attId">
 <%-- 	<input type="hidden" name="uri" id="uri" value="${pageContext.request.requestURI}"> --%>
-	<input type="file" name="imgs" id="imgs" style="display: inline;" multiple="multiple">
-	<input type="button" id="photoSubmit" value="上傳檔案" style="display: inline;">
+	<input type="file" name="imgs" style="display: inline;">
+	<input type="file" name="imgs" style="display: none;">
+	<input type="file" name="imgs" style="display: none;">
+	<button id="photoSubmit" style="display: inline;">上傳檔案</button>
 	</form>
 	</div>
 </div>
@@ -171,6 +173,8 @@
 
 			var att_id;
 		$(function() {
+			$("#pageBtns").html("<a>")
+			
 			$.get("RegionServlet").done(
 					function(list) {
 						regionList = list;
@@ -219,8 +223,7 @@
 						{
 // 							console.log(errMsg[0]);
 							$("#attId").val(errMsg[0]);
-							$("#photo").css("display","initial");
-							$("#imgs").change(function(){console.log("haha")});
+							$("#photo").css("display","inherit");
  						}
 					});
 					console.log("200.");
@@ -233,9 +236,50 @@
 				document.addAtt.reset();
 				 $('form[name="addAtt"] span').remove();
 			});
-			$("#photoSubmit").click(function(){
-				$("#photoUpload").submit();
+			
+			$("#photoSubmit").click(function(event){
+				event.preventDefault();
+				var formdata = new FormData();
+				var file_count = 0;
+				
+				$(":file").each(function(d){$(this.files).each(function(){formdata.append('file'+file_count++,this)})});
+				formdata.append("att_id",$("#attId").val());
+				
+				$.ajax({
+					  type:'POST',
+					  url:'http://localhost:8080/Tourcan/att/PhotoServlet',
+					  data:formdata,
+					  cache: false,
+					  contentType: false,
+					  processData: false
+					})
+				.done(function(d){
+					if(d.result[0]=="新增成功")
+					{
+						alert("圖片上傳成功");
+						document.addAtt.reset();
+						document.photos.reset();
+						$('form[name="addAtt"] span').remove();
+						$("#photo").css("display","none");
+					}
+				})
+				.fail(function(d){console.log(d.result[0]);})
 			});
+			
+			$(":file").change(function(){
+				$(this).each(function(){
+					console.log($(this.files).length);
+					if($(this.files).length>0)
+					{
+						$(this).next("input").css("display","inherit");
+					}
+					else
+					{
+						$(this).next("input").css("display","none");
+					}
+				});
+			});
+			
 		});
 	</script>
 <script

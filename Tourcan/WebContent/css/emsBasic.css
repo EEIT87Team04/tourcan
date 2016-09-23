@@ -127,6 +127,7 @@ body {
 
 /* google map */
 #mapPreview {
+	width:95%;
 	height: 292px;
 }
 
@@ -183,36 +184,6 @@ to {
 	opacity: 1
 }
 
-}
-
-/* The Close Button */
-.close {
-	color: white;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.close:hover, .close:focus {
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.modal-header {
-	padding: 2px 16px;
-	background-color: rgb(188, 179, 159);
-	color: white;
-}
-
-.modal-body {
-	padding: 2px 16px;
-}
-
-.modal-footer {
-	padding: 2px 16px;
-	background-color: rgb(188, 179, 159);
-	color: white;
 }
 
 /* update page */
@@ -375,7 +346,7 @@ to {
 }
 
 .modal-header, h4_1, .close {
-    background-color: #5cb85c;
+/*     background-color: #5cb85c; */
     color:white !important;
     text-align: center;
     font-size: 30px;
@@ -557,7 +528,7 @@ to {
 }
 
 .modal-header, h4_1, .close {
-    background-color: #5cb85c;
+/*     background-color: #5cb85c; */
     color:white !important;
     text-align: center;
     font-size: 30px;
@@ -592,4 +563,33 @@ to {
 	border-color: #D7FFEE;
 	color: 	#D7FFEE;
 	box-shadow: none;
+}
+/* The Close Button */
+.close {
+	color: white;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.modal-header {
+	padding: 2px 16px;
+	background-color: rgb(188, 179, 159);
+	color: white;
+}
+
+.modal-body {
+	padding: 2px 16px;
+}
+
+.modal-footer {
+	padding: 2px 16px;
+	background-color: rgb(188, 179, 159);
+	color: white;
 }

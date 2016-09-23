@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,14 @@
 <link rel="stylesheet" href="${contextPath}/css/emsBasic.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Tourcan 後台管理系統</title>
+<style type="text/css">
+body {
+	background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;
+	background-size: cover;
+	height: 100%;
+	font-family: '微軟正黑體';
+}
+</style>
 </head>
 <body>
 	<script
@@ -72,7 +81,7 @@
 				<span
 					style="float: right; font-family: Arial; font-size: 16px; color: rgb(255, 255, 255);">
 					<img src="${contextPath}/icons/EMS/suit-and-bow-tie.png"> Welcome,
-					Admin
+<!-- 					Admin vo EL CODING -->
 				</span>
 			</div>
 			<div class="row" style="margin: 15px 15px">

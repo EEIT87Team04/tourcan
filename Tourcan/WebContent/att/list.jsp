@@ -373,6 +373,7 @@
 				
 					$.getJSON(("AttServlet"), {"att_id" : $(this).val(),"method":"getAttID"}, function(data) {
 					resetErrors();
+						console.log(data);
 						$.each(data, function(attName, attValue) {
 						    	console.log($("#"+attName).val(attValue));
 						    	$("#"+attName).val(attValue);
@@ -389,9 +390,19 @@
 									});
 								}
 						});
+		 				updPop.css("display","block");
+// 						$("#updPop").modal("show");
+						google.maps.event.trigger(map, 'resize');
+						coder.geocode({
+							location : {lat: data.att_lat, lng: data.att_lng}
+						}, function(r, s) {
+							if (s === google.maps.GeocoderStatus.OK) {
+								map.panTo(r[0].geometry.location);
+								marker.setPosition(r[0].geometry.location);
+							}
+						});
 				   });
 
-				updPop.css("display","block");
 			});	
 		//↑↑↑↑↑↑↑↑↑↑↑Popup Window↑↑↑↑↑↑↑↑↑↑↑
 		});

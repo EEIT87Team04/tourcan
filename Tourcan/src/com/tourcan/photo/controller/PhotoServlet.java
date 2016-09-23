@@ -3,6 +3,7 @@ package com.tourcan.photo.controller;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -128,7 +129,7 @@ public class PhotoServlet extends HttpServlet {
 			PhotoService src = new PhotoService();
 			JSONObject result = new JSONObject();
 			
-			System.out.println(request.getParameter("att_id"));
+			System.out.println("att_id:" + request.getParameter("att_id"));
 			try {
 				String attId = request.getParameter("att_id");
 				if (attId.trim().length() > 0) {
@@ -149,31 +150,39 @@ public class PhotoServlet extends HttpServlet {
 				// } catch (Exception e) {
 				// e.printStackTrace();
 				// }
-
-				Part photoFile = request.getPart("imgs");
-				if (photoFile.getSize() <= 0) {
-					result.append("photo", "請載入圖片");
-					throw new Exception();
+				
+				
+				Collection<Part> photos = request.getParts();
+				
+				for (Part part : photos) {
+					if(part.getName().matches("^file[0-9]*$")){
+						System.out.println(part.getName());
+						
+						if (part.getSize() <= 0) {
+							result.append("photo", "請載入圖片");
+							throw new Exception();
+						}
+						
+					byte[] photo_file = new byte[(int) part.getSize()];
+					InputStream is = part.getInputStream();
+					BufferedInputStream bis = new BufferedInputStream(is);
+					bis.read(photo_file);
+					if (att_id != null) {
+						src.insertByAttId(photo_file, att_id);
+					}
+					// else if(hotel_id!=null){}
+					else {
+						src.insert(photo_file);
+						// src.insert(photo_file, att_id, hotel_id);
+						}
+					}
 				}
-				byte[] photo_file = new byte[(int) photoFile.getSize()];
-				InputStream is = photoFile.getInputStream();
-				BufferedInputStream bis = new BufferedInputStream(is);
-				bis.read(photo_file);
-				if (att_id != null) {
-					src.insertByAttId(photo_file, att_id);
-				}
-				// else if(hotel_id!=null){}
-				else {
-					src.insert(photo_file);
-					// src.insert(photo_file, att_id, hotel_id);
-				}
+				
 				result.append("result", "新增成功");
-//				response.getWriter().println(result.toString());
-				response.sendRedirect(uri);
+				response.getWriter().println(result.toString());
 			} catch (Exception e) {
 				result.append("result", "新增失敗");
-//				response.getWriter().println(result.toString());
-				response.sendRedirect(uri);
+				response.getWriter().println(result.toString());
 				 e.printStackTrace();
 			}
 //		} else if ("put".equals(method)) {
