@@ -2,9 +2,11 @@ package com.tourcan.att.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tourcan.region.model.RegionVO;
 
 @XmlRootElement(name = "attraction")
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class AttVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
