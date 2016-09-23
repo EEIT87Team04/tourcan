@@ -18,6 +18,7 @@
         <property name="trip_id" column="trip_id" />
         <property name="att_id" column="att_id" />
         <property name="hotel_id" column="hotel_id" />
+        <property name="tripitem_price" column="tripitem_price" />
         
     
         

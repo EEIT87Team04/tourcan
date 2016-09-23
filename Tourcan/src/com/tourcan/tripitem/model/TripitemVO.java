@@ -16,6 +16,7 @@ public class TripitemVO implements java.io.Serializable {
 	private Integer att_id;
 	private Integer hotel_id;
 	private Integer tripitem_id;
+	private Integer tripitem_price;
 	
 	public Integer getTripitem_serial() {
 		return tripitem_serial;
@@ -77,5 +78,12 @@ public class TripitemVO implements java.io.Serializable {
 	public void setTripitem_id(Integer tripitem_id) {
 		this.tripitem_id = tripitem_id;
 	}
+	public Integer getTripitem_price() {
+		return tripitem_price;
+	}
+	public void setTripitem_price(Integer tripitem_price) {
+		this.tripitem_price = tripitem_price;
+	}
+	
 	
 }

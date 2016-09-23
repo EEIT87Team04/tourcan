@@ -592,9 +592,9 @@
 									var input5=$("<input></input>").attr("type","hidden").attr("name","att_id").attr("value",att1.att_id);
 									var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
 									
-									var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
+									var p1=$("<p></p>").html("預算:<input name='tripitem_price' type='number' style='width:60px' value='0' min='0'>元");
 									var td2=$("<td></td>").attr("colspan","3").append(p1);
-									var p2=$("<p></p>").html("停留:<input name='wTime' type='number' style='width:60px'>分");
+									var p2=$("<p></p>").html("停留:<input name='wTime' type='number' style='width:60px' value='0' min='0'>分");
 									var td3=$("<td></td>").attr("colspan","3").append(p2);
 									
 									var p3=$("<p></p>").attr("name","sTime").text("起：");
@@ -614,7 +614,7 @@
 									
 									var td9=$("<td></td>").attr("colspan","3");
 									
-									var textarea1=$("<textarea></textarea>").attr("rows","2").attr("style","width:100%").attr("placeholder","註記:");
+									var textarea1=$("<textarea></textarea>").attr("name","tripitem_memo").attr("rows","2").attr("style","width:100%").attr("placeholder","註記:");
 									var td10=$("<td></td>").attr("colspan","6").append(textarea1);
 									
 									var input6=$("<input></input>").attr("type","button").attr("class","deleteTripitem").attr("style","margin-left: 7px").attr("value","刪除"); 
@@ -782,10 +782,10 @@
 										var input5=$("<input></input>").attr("type","hidden").attr("name","hotel_id").attr("value",hotel1.hotel_id);
 										var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
 										
-										var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
+										var p1=$("<p></p>").html("預算:<input name='tripitem_price' type='number' style='width:60px' value='0' min='0'>元");
 										var td2=$("<td></td>").attr("colspan","3").append(p1);
 										
-										var p2=$("<p></p>").html("停留:<input name='wTime' type='number' style='width:60px'>分");
+										var p2=$("<p></p>").html("停留:<input name='wTime' type='number' style='width:60px' value='0' min='0'>分");
 										var td3=$("<td></td>").attr("colspan","3").append(p2);
 										
 										var p3=$("<p></p>").attr("name","sTime").text("起：");
@@ -805,7 +805,7 @@
 										
 										var td9=$("<td></td>").attr("colspan","3");
 										
-										var textarea1=$("<textarea></textarea>").attr("rows","2").attr("style","width:100%").attr("placeholder","註記:");
+										var textarea1=$("<textarea></textarea>").attr("name","tripitem_memo").attr("rows","2").attr("style","width:100%").attr("placeholder","註記:");
 										var td10=$("<td></td>").attr("colspan","6").append(textarea1);
 										
 										var input6=$("<input></input>").attr("type","button").attr("class","deleteTripitem").attr("style","margin-left: 7px").attr("value","刪除"); 
@@ -970,10 +970,10 @@
 									var input5=$("<input></input>").attr("type","hidden").attr("name","att_id").attr("value",att1.att_id);
 									var td1=$("<td></td>").attr("colspan","3").append([input4,input5]);
 									
-									var p1=$("<p></p>").html("預算:<input type='number' style='width:60px'>元");
+									var p1=$("<p></p>").html("預算:<input name='tripitem_price' type='number' style='width:60px' value='0' min='0'>元");
 									var td2=$("<td></td>").attr("colspan","3").append(p1);
 									
-									var p2=$("<p></p>").html("停留:<input name='wTime' type='number' style='width:60px'>分");
+									var p2=$("<p></p>").html("停留:<input name='wTime' type='number' style='width:60px' value='0' min='0'>分");
 									var td3=$("<td></td>").attr("colspan","3").append(p2);
 									
 									var p3=$("<p></p>").attr("name","sTime").text("起：");
@@ -993,7 +993,7 @@
 									
 									var td9=$("<td></td>").attr("colspan","3");
 									
-									var textarea1=$("<textarea></textarea>").attr("rows","2").attr("style","width:100%").attr("placeholder","註記:");
+									var textarea1=$("<textarea></textarea>").attr("name","tripitem_memo").attr("rows","2").attr("style","width:100%").attr("placeholder","註記:");
 									var td10=$("<td></td>").attr("colspan","6").append(textarea1);
 									
 									var input6=$("<input></input>").attr("type","button").attr("class","deleteTripitem").attr("style","margin-left: 7px").attr("value","刪除"); 
@@ -1111,17 +1111,17 @@
 			
 			$("#saveBtn").off('click').on('click',function(){
 // 					console.log("tripId="+trip_id);
-					console.log(sTime);
-					console.log(new Date(sTime));
+// 					console.log(sTime);
+// 					console.log(new Date(sTime));
+// 					console.log(new Date(parseInt($("#start input[name='tripitem_begin']").val())))
 					
 					var json = {
 							"trip_id":trip_id,
 							"tripitem_serial":"0",
 							"tripitem_staytime":"0",
-							"tripitem_begin":sTime,
-							"tripitem_end":sTime,
+							"tripitem_begin":$("#start input[name='tripitem_begin']").val(),
+							"tripitem_end":$("#start input[name='tripitem_end']").val(),
 					};
-					
 					$.post("../tripitem/TripitemServlet",JSON.stringify(json)).done(function(data){
 						console.log(data);
 						$.each(data,function(idx,result){
@@ -1131,10 +1131,29 @@
 					
 // 					$.post()
 					
-// 					$("#sortable > table").each(function(idx,table){
-// 						console.log("idx="+idx);
-// 						console.log("table"+table);
-// 					})
+					$("#sortable > table").each(function(idx,table){
+						console.log("idx="+idx);
+						console.log("table"+table);
+						
+						var itemJson={
+								"trip_id":trip_id,
+								"tripitem_serial":(parseInt(idx)+1),
+								"att_id":$(this).find("input[name='att_id']").val(),
+								"hotel_id":$(this).find("input[name='hotel_id']").val(),
+								"tripitem_staytime":$(this).find("input[name='tripitem_staytime']").val(),
+								"tripitem_begin":$(this).find("input[name='tripitem_begin']").val(),
+								"tripitem_end":$(this).find("input[name='tripitem_end']").val(),
+								"tripitem_memo":$(this).find("textarea[name='tripitem_memo']").val(),
+								"tripitem_price":$(this).find("input[name='tripitem_price']").val(),
+						};
+						console.log("itemJson="+itemJson);
+						$.post("../tripitem/TripitemServlet",JSON.stringify(itemJson)).done(function(data){
+							console.log(data);
+							$.each(data,function(idx,result){
+								console.log(result);
+							})
+						})
+					})
 			})
 			
 			

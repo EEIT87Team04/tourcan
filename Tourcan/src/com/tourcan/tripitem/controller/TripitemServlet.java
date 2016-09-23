@@ -97,6 +97,7 @@ public class TripitemServlet extends HttpServlet {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// ----------------INSERT----------------
@@ -120,6 +121,7 @@ public class TripitemServlet extends HttpServlet {
 		Timestamp tripitemEnd=null;
 		String tripitemTraffic=null;
 		String tripitemMemo=null;
+		Integer tripitemPrice=null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
 
@@ -142,16 +144,7 @@ public class TripitemServlet extends HttpServlet {
 			
 			tripitemSerial = obj.getInt("tripitem_serial");
 
-			try {
-				tripitemStaytime = obj.getInt("tripitem_staytime");
-				if (tripitemStaytime == null || tripitemStaytime < 0) {
-					throw new Exception();
-
-				}
-			} catch (Exception e) {
-				checkResult.append("tripitem_staytime", "請輸入逗留時間"); // do not need error in update
-				// e.printStackTrace();
-			}
+			tripitemStaytime = obj.getInt("tripitem_staytime");
 			
 			try {
 				String Begin = obj.getString("tripitem_begin");
@@ -181,23 +174,24 @@ public class TripitemServlet extends HttpServlet {
 				 e.printStackTrace();
 			}
 
-			try {
-				tripitemTraffic = obj.getString("tripitem_traffic");
-				if (tripitemTraffic == null || tripitemTraffic.trim().isEmpty()) {
-					throw new Exception();
-				}
-			} catch (Exception e) {
-				checkResult.append("tripitem_traffic", "請輸入交通資訊。");
-				// e.printStackTrace();
-			}
+			
+			
+				tripitemTraffic = null;
 			
 			try {
 				tripitemMemo = obj.getString("tripitem_memo");
 			} catch (Exception e) {
 //				e.printStackTrace();
 			}
+			
+			try {
+				tripitemPrice=obj.getInt("tripitem_price");
+			} catch (Exception e) {
+				tripitemPrice=0;
+//				e.printStackTrace();
+			}
+			
 
-				
 				if (checkResult.length() > 0) {
 					throw new Exception();
 				} else {
@@ -205,6 +199,7 @@ public class TripitemServlet extends HttpServlet {
 					TripitemVO tripitemVO = new Gson().fromJson(obj.toString(), TripitemVO.class);
 					tripitemVO.setTripitem_begin(tripitemBegin);
 					tripitemVO.setTripitem_end(tripitemEnd);
+					tripitemVO.setTripitem_price(tripitemPrice);
 					
 					tripitemSvc.insert(tripitemVO); 
 					checkResult.append("result", "新增成功");
@@ -218,6 +213,7 @@ public class TripitemServlet extends HttpServlet {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// ----------------UPDATE----------------
@@ -242,6 +238,8 @@ public class TripitemServlet extends HttpServlet {
 		Timestamp tripitemEnd=null;
 		String tripitemTraffic=null;
 		String tripitemMemo=null;
+		Integer tripitemPrice=null;
+		
 
 		JSONObject checkResult = new JSONObject(); // checking result
 
@@ -266,16 +264,7 @@ public class TripitemServlet extends HttpServlet {
 			
 			tripitemSerial = obj.getInt("tripitem_serial");
 
-			try {
-				tripitemStaytime = obj.getInt("tripitem_staytime");
-				if (tripitemStaytime == null || tripitemStaytime < 0) {
-					throw new Exception();
-
-				}
-			} catch (Exception e) {
-				checkResult.append("tripitem_staytime", "請輸入逗留時間"); // do not need error in update
-				// e.printStackTrace();
-			}
+			tripitemStaytime = obj.getInt("tripitem_staytime");
 			
 			try {
 				String Begin = obj.getString("tripitem_begin");
@@ -305,18 +294,18 @@ public class TripitemServlet extends HttpServlet {
 				 e.printStackTrace();
 			}
 
-			try {
-				tripitemTraffic = obj.getString("tripitem_traffic");
-				if (tripitemTraffic == null || tripitemTraffic.trim().isEmpty()) {
-					throw new Exception();
-				}
-			} catch (Exception e) {
-				checkResult.append("tripitem_traffic", "請輸入交通資訊。");
-				// e.printStackTrace();
-			}
+			tripitemTraffic = null;
+			
 			try {
 				tripitemMemo = obj.getString("tripitem_memo");
 			} catch (Exception e) {
+//				e.printStackTrace();
+			}
+			
+			try {
+				tripitemPrice=obj.getInt("tripitem_price");
+			} catch (Exception e) {
+				tripitemPrice=0;
 //				e.printStackTrace();
 			}
 
@@ -328,6 +317,7 @@ public class TripitemServlet extends HttpServlet {
 					TripitemVO tripitemVO = new Gson().fromJson(obj.toString(), TripitemVO.class);
 					tripitemVO.setTripitem_begin(tripitemBegin);
 					tripitemVO.setTripitem_end(tripitemEnd);
+					tripitemVO.setTripitem_price(tripitemPrice);
 					
 					tripitemSvc.insert(tripitemVO); 
 					checkResult.append("result", "更新成功");
