@@ -435,7 +435,7 @@
 						var errMsg1=$("<span></span>").attr("style","color:red;font-size:70%").attr("id","errMsg1").text(data.trip_name[0])
 						$("#trip_name").after(errMsg1);
 					}else{
-						console.log("tripId="+data.trip_id[0]);
+// 						console.log("tripId="+data.trip_id[0]);
 						trip_id=data.trip_id[0];
 						$(".addTripDiv").css("display","none");
 						$(".div1").css("display","block");
@@ -1110,27 +1110,31 @@
 			
 			
 			$("#saveBtn").off('click').on('click',function(){
-				$.get("TripServlet",{"",""}){
+// 					console.log("tripId="+trip_id);
+					console.log(sTime);
+					console.log(new Date(sTime));
 					
-				}
-				
 					var json = {
-							"trip_id":"",
-							"tripitem_serial":"",
-							"att_id":"",
-							"hotel_id":"",
-							"tripitem_staytime":"",
-							"tripitem_begin":"",
-							"tripitem_end":"",
-							"tripitem_traffic":"",
+							"trip_id":trip_id,
+							"tripitem_serial":"0",
+							"tripitem_staytime":"0",
+							"tripitem_begin":sTime,
+							"tripitem_end":sTime,
 					};
 					
-					$.post()
-					
-					$("#sortable > table").each(function(idx,table){
-						console.log("idx="+idx);
-						console.log("table"+table);
+					$.post("../tripitem/TripitemServlet",JSON.stringify(json)).done(function(data){
+						console.log(data);
+						$.each(data,function(idx,result){
+							console.log(result);
+						})
 					})
+					
+// 					$.post()
+					
+// 					$("#sortable > table").each(function(idx,table){
+// 						console.log("idx="+idx);
+// 						console.log("table"+table);
+// 					})
 			})
 			
 			

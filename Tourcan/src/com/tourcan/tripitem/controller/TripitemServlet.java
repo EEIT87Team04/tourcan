@@ -2,7 +2,7 @@ package com.tourcan.tripitem.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,8 +116,8 @@ public class TripitemServlet extends HttpServlet {
 		Integer attId=null;
 		Integer hotelId=null;
 		Integer tripitemStaytime=null;
-		Time tripitemBegin = null;
-		Time tripitemEnd=null;
+		Timestamp tripitemBegin = null;
+		Timestamp tripitemEnd=null;
 		String tripitemTraffic=null;
 		String tripitemMemo=null;
 
@@ -128,9 +128,17 @@ public class TripitemServlet extends HttpServlet {
 			
 			tripId = obj.getInt("trip_id");
 
-			attId = obj.getInt("att_id");
+			try {
+				attId = obj.getInt("att_id");
+			} catch (Exception e) {
+//				e.printStackTrace();
+			}
 			
-			hotelId = obj.getInt("hotel_id");
+			try {
+				hotelId = obj.getInt("hotel_id");
+			} catch (Exception e) {
+//				e.printStackTrace();
+			}
 			
 			tripitemSerial = obj.getInt("tripitem_serial");
 
@@ -150,7 +158,7 @@ public class TripitemServlet extends HttpServlet {
 				if (Begin == null || Begin.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemBegin=Time.valueOf(Begin+":00");
+					tripitemBegin=new Timestamp(Long.parseLong(Begin));
 					obj.remove("tripitem_begin");
 //					obj.put("tripitem_begin", tripitemBegin);
 				}
@@ -159,9 +167,19 @@ public class TripitemServlet extends HttpServlet {
 				 e.printStackTrace();
 			}
 			
-			tripitemEnd=new Time(tripitemBegin.getTime()+tripitemStaytime*60*1000);
-			obj.remove("tripitem_end");
-//			obj.append("tripitem_end", tripitemEnd);
+			try {
+				String End = obj.getString("tripitem_end");
+				if (End == null || End.trim().isEmpty()) {
+					throw new Exception();
+				}else{
+					tripitemEnd=new Timestamp(Long.parseLong(End));
+					obj.remove("tripitem_end");
+//					obj.put("tripitem_end", tripitemEegin);
+				}
+			} catch (Exception e) {
+				checkResult.append("tripitem_end", "請輸入完整時間。");
+				 e.printStackTrace();
+			}
 
 			try {
 				tripitemTraffic = obj.getString("tripitem_traffic");
@@ -172,6 +190,7 @@ public class TripitemServlet extends HttpServlet {
 				checkResult.append("tripitem_traffic", "請輸入交通資訊。");
 				// e.printStackTrace();
 			}
+			
 			try {
 				tripitemMemo = obj.getString("tripitem_memo");
 			} catch (Exception e) {
@@ -219,8 +238,8 @@ public class TripitemServlet extends HttpServlet {
 		Integer attId=null;
 		Integer hotelId=null;
 		Integer tripitemStaytime=null;
-		Time tripitemBegin = null;
-		Time tripitemEnd=null;
+		Timestamp tripitemBegin = null;
+		Timestamp tripitemEnd=null;
 		String tripitemTraffic=null;
 		String tripitemMemo=null;
 
@@ -233,9 +252,17 @@ public class TripitemServlet extends HttpServlet {
 			
 			tripId = obj.getInt("trip_id");
 
-			attId = obj.getInt("att_id");
+			try {
+				attId = obj.getInt("att_id");
+			} catch (Exception e) {
+//				e.printStackTrace();
+			}
 			
-			hotelId = obj.getInt("hotel_id");
+			try {
+				hotelId = obj.getInt("hotel_id");
+			} catch (Exception e) {
+//				e.printStackTrace();
+			}
 			
 			tripitemSerial = obj.getInt("tripitem_serial");
 
@@ -251,22 +278,32 @@ public class TripitemServlet extends HttpServlet {
 			}
 			
 			try {
-				String Begin = obj.getString("tripitem_begin").substring(0, 5);
+				String Begin = obj.getString("tripitem_begin");
 				if (Begin == null || Begin.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemBegin=Time.valueOf(Begin+":00");
+					tripitemBegin=new Timestamp(Long.parseLong(Begin));
 					obj.remove("tripitem_begin");
 //					obj.put("tripitem_begin", tripitemBegin);
 				}
-			} catch (Exception e) {	
-				checkResult.append("tripitem_begin", "請修改初始時間。");
+			} catch (Exception e) {
+				checkResult.append("tripitem_begin", "請輸入完整時間。");
 				 e.printStackTrace();
 			}
 			
-			tripitemEnd=new Time(tripitemBegin.getTime()+tripitemStaytime*60*1000);
-			obj.remove("tripitem_end");
-//			obj.append("tripitem_end", tripitemEnd);
+			try {
+				String End = obj.getString("tripitem_end");
+				if (End == null || End.trim().isEmpty()) {
+					throw new Exception();
+				}else{
+					tripitemEnd=new Timestamp(Long.parseLong(End));
+					obj.remove("tripitem_end");
+//					obj.put("tripitem_end", tripitemEegin);
+				}
+			} catch (Exception e) {
+				checkResult.append("tripitem_end", "請輸入完整時間。");
+				 e.printStackTrace();
+			}
 
 			try {
 				tripitemTraffic = obj.getString("tripitem_traffic");
