@@ -222,7 +222,8 @@
 		//定義sortable form
 		var tripForm=$("<form></form>").attr("id","tripForm").attr("style","clear:both; margin-right: 28px;")
 		var sortDiv=$("<div></div>").attr("id","sortable");
-		var count = "A"; 
+		var count = "A";
+		var sumBudget=0;
 		
 		function initMap() {
 			var initPos = new google.maps.LatLng(25.042485, 121.543543);
@@ -427,7 +428,7 @@
 			//新增行程
 			$("#addTripBtn").off('click').on('click',function(){
 				var tripName=$("#trip_name").val();
-				var json={"trip_name":tripName};
+				var json={"trip_name":tripName,"trip_price":0};
 				$("#errMsg1").remove();
 				$.post("TripServlet",JSON.stringify(json),function(data){
 					console.log(data);
@@ -452,12 +453,12 @@
 			
 			//加入行程
 			$('#addTripitemBtn').off('click').on('click',function(){
-// 				if($("#possition").val().trim().length==0 || $("#sTime").val().trim().length==0){
-// 					alert("請輸入出發地點及完整時間");
-// 				}else{
+				if($("#possition").val().trim().length==0 || $("#sTime").val().trim().length==0){
+					alert("請輸入出發地點及完整時間");
+				}else{
 					$("#addTripitemBtn").css("display","none");
 					$("#div3").css("display","block");
-// 				}
+				}
 			});
 			
 			//加入縣市
@@ -1129,12 +1130,10 @@
 						})
 					})
 					
-// 					$.post()
-					
 					$("#sortable > table").each(function(idx,table){
-						console.log("idx="+idx);
-						console.log("table"+table);
-						
+// 						console.log("idx="+idx);
+// 						console.log("table"+table);
+						var tripitemPrice=$(this).find("input[name='tripitem_price']").val();
 						var itemJson={
 								"trip_id":trip_id,
 								"tripitem_serial":(parseInt(idx)+1),
@@ -1146,6 +1145,7 @@
 								"tripitem_memo":$(this).find("textarea[name='tripitem_memo']").val(),
 								"tripitem_price":$(this).find("input[name='tripitem_price']").val(),
 						};
+						sumBudget=sumBudget+parseInt(tripitemPrice);
 						console.log("itemJson="+itemJson);
 						$.post("../tripitem/TripitemServlet",JSON.stringify(itemJson)).done(function(data){
 							console.log(data);
@@ -1153,6 +1153,26 @@
 								console.log(result);
 							})
 						})
+					})
+					
+					$.get("TripServlet",{"trip_id":trip_id,"method":"getOneById"},function(data){
+// 						console.log("data="+data);
+						var jsonTrip={
+	 							"trip_name":data.trip_name,
+	 							"trip_id":trip_id,
+	 							"trip_price":sumBudget,
+	 							"mem_uid":data.mem_uid 
+						}
+						console.log(jsonTrip);
+						$.ajax({
+							"type":"PUT",
+							"url":"TripServlet",
+							"dataType":"json",
+							"data":JSON.stringify(jsonTrip),
+							"success":function(data){
+								console.log(data.result);
+		                        }
+						})		
 					})
 			})
 			

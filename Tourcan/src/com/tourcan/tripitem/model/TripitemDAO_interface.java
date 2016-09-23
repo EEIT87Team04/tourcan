@@ -8,4 +8,5 @@ public interface TripitemDAO_interface {
 	public void delete(Integer tripitem_id);
 	public TripitemVO findById(Integer tripitem_id);
 	public List<TripitemVO> getAll();
+	public List<TripitemVO> findByTripID(Integer trip_id);
 }

@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.tourcan.trip.model.TripService;
 import com.tourcan.trip.model.TripVO;
+import com.tourcan.tripitem.model.TripitemService;
 
 @WebServlet("/trip/TripServlet")
 public class TripServlet extends HttpServlet {
@@ -95,7 +96,7 @@ public class TripServlet extends HttpServlet {
 			TripVO tripVO = null;
 
 			try {
-				String id = request.getParameter("tripId");
+				String id = request.getParameter("trip_id");
 				// System.out.println(id);
 				if (id == null || id.trim().length() == 0) {
 					checkResult.append("checkResult", "請輸入行程ID");
@@ -240,6 +241,12 @@ public class TripServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		BufferedReader br = request.getReader();
+		StringBuffer sb = new StringBuffer(128);
+		String json;
+		while ((json = br.readLine()) != null)
+			sb.append(json);
+		json = sb.toString();
+		System.out.println(json);
 
 		String tripName = null;
 		Integer tripId = null;
@@ -248,27 +255,19 @@ public class TripServlet extends HttpServlet {
 		String memUid = null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
-		TripVO tripVO = null;
 		try {
-			tripVO = new Gson().fromJson(br, TripVO.class);
+			JSONObject obj = new JSONObject(json); // received and parsed JSON
+			
+			tripName = obj.getString("trip_name"); 
 
-			tripName = tripVO.getTrip_name();
-			if (tripName == null || tripName.trim().isEmpty()) {
-				checkResult.append("trip_name", "請輸入旅遊名稱。");
-			} else if (tripName.trim().length() >= 50) {
-				checkResult.append("trip_name", "旅遊名稱不得超過50個字");
-			}
-
-			tripId = new Integer(request.getParameter("trip_id")); // 不能修改Id
+			tripId = obj.getInt("trip_id");
 
 			// 抓出修改當下時間
-			tripCtime = new Timestamp(System.currentTimeMillis());
+			tripCtime =new Timestamp(System.currentTimeMillis());
 
-			tripPrice = tripVO.getTrip_price();
-			if (tripPrice == null || tripPrice < 0)
-				checkResult.append("trip_price", "總預算金額錯誤。");
+			tripPrice =obj.getInt("trip_price"); 
 
-			memUid = tripVO.getMem_uid(); // 抓出會員Id 且 不能修改
+			memUid = obj.getString("mem_uid"); // 抓出會員Id 且 不能修改
 //			System.out.println(tripName + "," + tripId + "," + tripCtime + "," + tripPrice + "," + memUid);
 			if (checkResult.length() > 0) {
 				throw new Exception();
@@ -300,8 +299,8 @@ public class TripServlet extends HttpServlet {
 		/****************************
 		 * 1.接收請求參數 - 輸入格式的錯誤處理
 		 **********************/
+		String id = request.getParameter("tripId");
 		try {
-			String id = request.getParameter("tripId");
 			System.out.println(id);
 			if (id == null || (id.trim()).length() == 0) {
 				errorMsgs.put("errMsg", "請輸入行程ID");
@@ -314,6 +313,8 @@ public class TripServlet extends HttpServlet {
 			}
 
 			/*************************** 2.開始刪除單筆資料 *****************************************/
+			TripitemService itsvc =new TripitemService();
+			itsvc.deleteForTripID(tripId);
 			TripService tripSvc = new TripService();
 			try {
 				tripSvc.deleteTrip(tripId);

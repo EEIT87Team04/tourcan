@@ -26,7 +26,6 @@
 					<th class="col-md-5">主題名稱</th>
 					<th class="col-md-4">總運算</th>
 					<th class="col-md-3">創建時間</th>
-<!-- 					<th class='pull right'><input type="button" class="btn btn-danger" value="刪除"></th> -->
 					<th > 刪除</th>
 				</tr>
 			</thead>
@@ -39,7 +38,6 @@
 	<script type="text/javascript">
 	$(function(){
 		$('#tab1').hide();
-		var buID;
 		$('#serach').click(function(){			
 			$('#tab1').show();
 				var myBody = $('#tab1>tbody');
@@ -49,7 +47,6 @@
 			$.getJSON(("TripServlet"),{"mem_uid":memuid,"method":"findByMemuid"},function(data){
 				$.each(data,function(idx, tripvalue){
 // 					console.log(idx);
-					buID=idx;
 					var input3= $("<input/>").attr("type","hidden").attr('name','method').val("findByID");
 					var input2= $("<input/>").attr("type","hidden").attr('name','tripId').val(tripvalue.trip_id);
 					var input1= $("<input/>").attr("class","btn btn-default btn-lg").attr('type','submit').val(tripvalue.trip_name);
@@ -65,9 +62,21 @@
 				})
 				trhover();
 
-				$('.d22').off("click").on("click",function(){					
-					console.log($(this).val())
-					$('#tab1').show();
+				$('.d22').click(function(){
+					var id1=$(this).val()
+// 					console.log($(this).parent().parent())
+					var ab=$(this).parent().parent()
+					$.ajax({
+							type:"delete",
+							url:"TripServlet?"+$.param({"tripId":id1}),
+							dataType:"json",
+							success:function(){
+// 								alert("success")
+								ab.remove();
+							}
+
+					})
+					
 				});
 			})
 		})	
@@ -86,7 +95,6 @@
 	function click1(){
 		$('#cancel').click(function(){
 			$('#tab1').hide();
-			console.log("123123")
 		})	
 	}
 // 	function click2(){
