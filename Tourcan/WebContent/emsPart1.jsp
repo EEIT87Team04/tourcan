@@ -47,7 +47,7 @@
 				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<a id="article" class="iconBtn shadowBtn" href="${contextPath}/articles/listAllTheme.jsp">
+				<a id="article" class="iconBtn shadowBtn" href="${contextPath}/articles/list_ems.jsp">
 					<img class="icon" src="${contextPath}/icons/EMS/media.png"><span
 						class="liTxt">管理心得</span>
 				</a>
