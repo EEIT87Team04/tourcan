@@ -4,9 +4,11 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tourcan.region.model.RegionVO;
 
 @XmlRootElement(name = "member")
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class MemVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

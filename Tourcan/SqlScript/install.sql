@@ -341,6 +341,7 @@ CREATE TABLE [dbo].[tripitem](
 	[tripitem_staytime] [int] NOT NULL,
 	[tripitem_begin] [datetime] NOT NULL,
 	[tripitem_end] [datetime] NOT NULL,
+	[tripitem_price] [money] NOT NULL,
  CONSTRAINT [PK_tripitem] PRIMARY KEY CLUSTERED 
 (
 	[tripitem_id] ASC

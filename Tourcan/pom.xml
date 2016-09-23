@@ -11,6 +11,7 @@
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<build.sourceEncoding>UTF-8</build.sourceEncoding>
 		<jersey.version>2.23.2</jersey.version>
+		<tomcat.version>8.0.36</tomcat.version>
 	</properties>
 	<dependencies>
 
@@ -73,6 +74,12 @@
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client-servlet</artifactId>
 			<version>${googleapi.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.servlet</groupId>
+					<artifactId>servlet-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.google.api-client</groupId>
@@ -248,10 +255,35 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>${tomcat.version}</version>
+			<!-- <scope>provided</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-websocket</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+
+		<!-- Azure App Insights for Java Web App -->
+		<dependency>
+			<groupId>com.microsoft.azure</groupId>
+			<artifactId>applicationinsights-web</artifactId>
+			<version>[1.0,)</version>
+		</dependency>
+		<dependency>
+			<groupId>com.microsoft.azure</groupId>
+			<artifactId>applicationinsights-core</artifactId>
+			<version>[1.0,)</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>

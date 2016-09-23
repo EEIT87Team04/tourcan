@@ -1,5 +1,11 @@
 package com.tourcan.region.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@XmlRootElement(name = "region")
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class RegionVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
