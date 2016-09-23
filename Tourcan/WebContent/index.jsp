@@ -71,6 +71,11 @@
             </li>
             <li>
                 <a class="dath7" href="#services" onclick=$("#menu-close").click();>服務項目</a>
+                <small><a class="dath7" href="${contextPath}/attractions" onclick=$("#menu-close").click();>　景點</a></small>
+                <small><a class="dath7" href="${contextPath}/hotels" onclick=$("#menu-close").click();>　住宿</a></small>
+                <small><a class="dath7" href="${contextPath}/restaurants" onclick=$("#menu-close").click();>　美食</a></small>
+                <small><a class="dath7" href="${contextPath}/trips" onclick=$("#menu-close").click();>　規劃行程</a></small>
+                <small><a class="dath7" href="${contextPath}/articles/list.jsp" onclick=$("#menu-close").click();>　討 論區</a></small>
             </li>
             <li>
                 <a class="dath7" href="#portfolio" onclick=$("#menu-close").click();>熱門推薦</a>
@@ -187,7 +192,12 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                               <a href="${contextPath}/service"><img src="${contextPath}/images/front/icons/info.png" class="front_icon"></a>
+                                <c:if test="${vo!=null}">
+	                               <a href="${contextPath}/quest/questGetById.jsp"><img src="${contextPath}/images/front/icons/info.png" class="front_icon"></a>
+                                </c:if>
+                                <c:if test="${vo==null}">
+	                               <a onclick=alert('請先登入會員')><img src="${contextPath}/images/front/icons/info.png" class="front_icon"></a>
+                                </c:if>
                             </span>
                                 <h4>
                                      <strong class="dath7" >客　　服</strong>

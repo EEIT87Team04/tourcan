@@ -114,11 +114,11 @@
 			</div>
 		</div>
 	</form>
-	<div id="photo" style="display: none">
+	<div id="photo" style="display: inherit;">
 	<form method="post" action="PhotoServlet" id="photoUpload" name="photoUpload" enctype="multipart/form-data">
 	<input type="hidden" name="att_id" id="attId">
-	<input type="hidden" name="uri" id="uri" value="${pageContext.request.requestURI}">
-	<input type="file" name="imgs" id="imgs" style="display: inline;">
+<%-- 	<input type="hidden" name="uri" id="uri" value="${pageContext.request.requestURI}"> --%>
+	<input type="file" name="imgs" id="imgs" style="display: inline;" multiple="multiple">
 	<input type="button" id="photoSubmit" value="上傳檔案" style="display: inline;">
 	</form>
 	</div>
@@ -220,6 +220,7 @@
 // 							console.log(errMsg[0]);
 							$("#attId").val(errMsg[0]);
 							$("#photo").css("display","initial");
+							$("#imgs").change(function(){console.log("haha")});
  						}
 					});
 					console.log("200.");
