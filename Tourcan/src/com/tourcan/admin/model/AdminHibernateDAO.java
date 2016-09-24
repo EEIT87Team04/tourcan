@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 public class AdminHibernateDAO implements AdminDAO {
 	
 	private SessionFactory factory;
-	private	AdminVO adminVO;
 
 	public void setSessionFactory(SessionFactory factory) {
 		this.factory = factory;
@@ -13,6 +12,7 @@ public class AdminHibernateDAO implements AdminDAO {
 	
 	@Override
 	public AdminVO findById() {
+		AdminVO adminVO = new AdminVO();
 		
 		adminVO.setAdmin_account("pingu");
 		adminVO.setAdmin_id(0);
