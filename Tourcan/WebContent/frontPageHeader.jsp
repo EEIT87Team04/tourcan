@@ -11,7 +11,7 @@
     <!-- Bootstrap Core CSS -->
   <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
   <link href="${contextPath}/css/tourcanFront.css" rel="stylesheet">
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
   
 <!--   <script src="//s3-ap-northeast-1.amazonaws.com/justfont-user-script/jf-44849.js"></script> -->
 

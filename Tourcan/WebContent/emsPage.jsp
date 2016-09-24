@@ -9,7 +9,7 @@
 body {background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;}
 </style>
 <link rel="stylesheet"
-	href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
