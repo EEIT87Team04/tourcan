@@ -15,8 +15,8 @@
 <html>
 <head>
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
-  	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script> 
+  	<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+  	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
 .btn-outline {
