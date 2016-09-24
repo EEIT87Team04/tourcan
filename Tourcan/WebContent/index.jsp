@@ -21,27 +21,12 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
     <!-- Custom CSS -->
-    <link href="${contextPath}/css/stylish-portfolio.css" rel="stylesheet">
-    <link href="${contextPath}/css/tourcanFront.css" rel="stylesheet">
+    <%@ include file="/WEB-INF/common.style.jsp"%>
 
     <!-- Custom Fonts -->
     <link href="${contextPath}/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-
-<style type="text/css">
-.header {
-    display: table;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: url(${contextPath}//images/front/front-cover-fixed.jpg) no-repeat center center scroll;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-}
-</style>
 </head>
 <body>
 	<script

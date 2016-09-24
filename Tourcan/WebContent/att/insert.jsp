@@ -247,7 +247,7 @@
 				
 				$.ajax({
 					  type:'POST',
-					  url:'http://localhost:8080/Tourcan/att/PhotoServlet',
+					  url:'${contextPath}/att/PhotoServlet',
 					  data:formdata,
 					  cache: false,
 					  contentType: false,

@@ -50,7 +50,7 @@
 </div>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
-    <script src="/Tourcan/lang/summernote-zh-TW.js"></script>
+    <script src="/${contextPath}/lang/summernote-zh-TW.js"></script>
   
 	<script type="text/javascript">
 

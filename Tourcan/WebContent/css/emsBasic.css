@@ -10,6 +10,7 @@ html {
 }
 
 body {
+    /* to defined the path in RUNTIME, modify jsp file. */
 	background: url("/Tourcan/images/emsBG.jpg") no-repeat center fixed;
 	background-size: cover;
 	height: 100%;
