@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.tourcan.admin.model.AdminVO" table="admin">
+
+		<id name="admin_id" column="admin_id">
+			<generator class="identity" />
+		</id>
+
+		<property name="admin_name" column="admin_name" />
+		<property name="admin_account" column="admin_account" />
+		<property name="admin_pwd" column="admin_pwd" />
+		<property name="admin_level" column="admin_level" />
+
+	</class>
+</hibernate-mapping>
+

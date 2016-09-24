@@ -40,6 +40,7 @@
 				<th>主題名稱</th>
 				<th>發表者</th>
 				<th>建立時間</th>
+				<th>刪除</th>		
 			</tr>
 		</thead>
 		<tbody id="dataList" >
@@ -68,10 +69,7 @@
 					</td>
 					<td>${mvo.mem_lname}${mvo.mem_fname}</td>
 					<td>${ThemeVO.theme_time.toString().substring(0, 16)}</td>
-					<td>
-					
-					
-					</td>
+					<td><button id="delete1" class="btn btn-danger delete1" value="${ThemeVO.theme_id}" >刪除</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -86,7 +84,9 @@ $(function(){
 		    function () {
 				$(this).css("background","#FFFFB9");},
 			function () {
-				$(this).css("background","");});  
+				$(this).css("background","");
+			});
+	
 // 	var serviceProvider = "${contextPath}/members";
 // // 	var umd = "t3L6KuZlh4W4X3IIzexqIzTFtGh1"; w8mtMYAqW6fu2RxLZ3QswrC4wCL2
 // 	var umd = "a1";
@@ -105,9 +105,6 @@ $(function(){
 // 							console.log(attValue)
 						
 // 				});
-						
-	
-		
 
 	$("#btnTopicCheck").click(function() {
 		var theme_topic = $("#theme_topic").val();
@@ -139,12 +136,25 @@ $(function(){
 						var row = $("<tr></tr>").append([cell1,cell5,cell3,cell4]);
 						myBody.append(row);
 					}
+				})
 			})
+		})
+	$('.delete1').on('click',function(){
+		var id1=$('#delete1').val();
+		var aa=$(this).parent().parent();
+		$.ajax({
+			type : "delete",
+			url:"ThemeServlet?"+$.param({"theme_id":id1}),
+			dataType:"json",
+			success:function(data){
+				console.log(data.themeSu)
+				if(data.themeSu)
+				alert("success");
+// 				window.location.reload();
+				aa.remove()
+			}		
+		})
 	})
-})
-	
-	
-	
 	
 	//----------Pagination-------------------------------------------------	
 	//how much items per page to show  
@@ -228,9 +238,6 @@ $(function(){
 	    $('#themeList tbody').val(page_num);  
 	}  
 	//----------End_Pagination-------
-	
-
-
 
 </script>
 <jsp:include page="/emsPart2.jsp" />

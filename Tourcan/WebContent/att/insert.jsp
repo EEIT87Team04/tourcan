@@ -173,7 +173,10 @@
 
 			var att_id;
 		$(function() {
-			$("#pageBtns").html("<a>")
+			//-----page buttons-----
+			var pBtn = $("<a></a>").append($("<strong></strong>").text("≡景點列表").addClass("pageBtn")).attr("href","${contextPath}/att/list.jsp");
+			$("#pageBtns").append(pBtn);			
+			//-----page buttons-----
 			
 			$.get("RegionServlet").done(
 					function(list) {

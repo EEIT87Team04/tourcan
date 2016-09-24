@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,13 +28,13 @@ body {background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;}
 				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<a id="att" class="iconBtn shadowBtn" href="${contextPath}/att/list.jsp">
+				<a id="att" class="iconBtn shadowBtn" href="${contextPath}/adridores/att/list.jsp">
 					<img class="icon" src="${contextPath}/icons/EMS/location-mark.png"><span
 						class="liTxt">景 點</span>
 				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<a id="hotel" class="iconBtn shadowBtn" href="${contextPath}/hotels">
+				<a id="hotel" class="iconBtn shadowBtn" href="${contextPath}/adridores/hotel">
 					<img class="icon" src="${contextPath}/icons/EMS/residential-block.png"><span
 						class="liTxt">飯 店</span>
 				</a>
@@ -58,7 +58,7 @@ body {background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;}
 				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<a id="member" class="iconBtn shadowBtn" href="${contextPath}/mem">
+				<a id="member" class="iconBtn shadowBtn" href="${contextPath}/adridores/mem">
 					<img class="icon" src="${contextPath}/icons/EMS/social.png"><span
 						class="liTxt">管理會員</span>
 				</a>
@@ -73,11 +73,13 @@ body {background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;}
 
 		<div class="col-md-10">
 			<div class="row" style="margin: 15px 15px">
-				<div style="float: left;" id="pageBtns"></div>
+				<span style="float: left;" id="pageBtns" ></span>
 				<span
 					style="float: right; font-family: Arial; font-size: 16px; color: rgb(255, 255, 255);">
 					<img src="${contextPath}/icons/EMS/suit-and-bow-tie.png"> Welcome,
-<!-- 					Admin vo EL CODING -->
+<%-- 					<c:if test="${vo!=null}"> --%>
+<%-- 						${vo} --%>
+<%-- 					</c:if> --%>
 				</span>
 			</div>
 			<div class="row" style="margin: 15px 15px">

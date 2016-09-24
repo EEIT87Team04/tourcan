@@ -4,6 +4,7 @@ a{
 }
 a:hover {
     text-decoration: none;
+    color: white;
 }
 html {
 	height: 100%;
@@ -15,6 +16,17 @@ body {
 	background-size: cover;
 	height: 100%;
 	font-family: '微軟正黑體';
+}
+
+#pageBtns{
+	vertical-align: middle;
+	text-align: left;
+}
+
+.pageBtn{
+	font-family: '微軟正黑體';
+	color: #ffffff;
+	font-size: 22px;
 }
 
 .liTxt {
@@ -136,7 +148,7 @@ body {
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
+/* 	z-index: 1; Sit on top */
 	padding-top: 100px; /* Location of the box */
 	left: 0;
 	top: 0;

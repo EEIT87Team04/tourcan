@@ -225,6 +225,10 @@
 			}
 		
 		$(function() {
+			var pBtn = $("<a></a>").append($("<strong></strong>").text("+新增景點").addClass("pageBtn")).attr("href","${contextPath}/att/insert.jsp");
+			$("#pageBtns").append(pBtn);
+			
+			
 			$.get("RegionServlet").done(
 					function(list) {
 						regionList = list;
