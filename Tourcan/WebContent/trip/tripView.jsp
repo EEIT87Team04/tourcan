@@ -197,22 +197,15 @@
 					<div class="col-sm-12" id="mapPreview"></div>
 				</div>
 				<div class="row" style="margin-top: 20px">
-					<div class="col-sm-7 form-group">
+					<div class="col-sm-6 col-sm-offset-3 form-group">
 						<button type="button" class="btn-success form-control" id="saveBtn">Save</button>
-					</div>
-					<div class="col-sm-5 form-group">
-						<button type="button" class="btn-danger form-control" id="resetBtn">Reset</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div><a href=""></a></div>
-
-
 	<script type="text/javascript">
-
 	  	var sTime,tTime,wTime,eTime;
 		var coder, map, marker, checkTrigger, lastValue = "";
 		var regionList;
@@ -1171,10 +1164,14 @@
 							"data":JSON.stringify(jsonTrip),
 							"success":function(data){
 								console.log(data.result);
+								window.location="${contextPath}/trip/listOneFromMemTrip.jsp";
 		                        }
 						})		
 					})
+
 			})
+			
+			
 			
 			
 			
