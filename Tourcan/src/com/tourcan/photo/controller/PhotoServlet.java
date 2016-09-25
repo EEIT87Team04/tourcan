@@ -17,6 +17,8 @@ import javax.servlet.http.Part;
 import org.json.JSONObject;
 
 import com.tourcan.att.model.AttService;
+import com.tourcan.hotel.model.HotelDAO;
+import com.tourcan.hotel.model.HotelHibernateDAO;
 import com.tourcan.photo.model.PhotoService;
 
 @WebServlet("/att/PhotoServlet")
@@ -124,8 +126,7 @@ public class PhotoServlet extends HttpServlet {
 		response.setContentType("application/json");
 
 			Integer att_id = null;
-			String uri = request.getParameter("uri");
-			// Integer hotel_id = null;
+			Integer hotel_id = null;
 			PhotoService src = new PhotoService();
 			JSONObject result = new JSONObject();
 			
@@ -145,11 +146,19 @@ public class PhotoServlet extends HttpServlet {
 					}
 				}
 
-				// try {
-				// hotel_id = new Integer(request.getParameter("hotel_id"));
-				// } catch (Exception e) {
-				// e.printStackTrace();
-				// }
+				String hotelID = request.getParameter("hotel_id");
+				if (hotelID.trim().length() > 0) {
+					try {
+						hotel_id = new Integer(hotelID);
+						HotelDAO hdao = new HotelHibernateDAO();
+						if (hdao.findById(hotel_id) == null) {
+							throw new Exception();
+						}
+					} catch (Exception e) {
+						result.append("hotel", "無效飯店編號");
+						throw e;
+					}
+				}
 				
 				
 				Collection<Part> photos = request.getParts();
@@ -170,7 +179,10 @@ public class PhotoServlet extends HttpServlet {
 					if (att_id != null) {
 						src.insertByAttId(photo_file, att_id);
 					}
-					// else if(hotel_id!=null){}
+					 else if(hotel_id!=null){
+						 src.insertByHotelId(photo_file, hotel_id);
+						 
+					 }
 					else {
 						src.insert(photo_file);
 						// src.insert(photo_file, att_id, hotel_id);
@@ -309,11 +321,6 @@ public class PhotoServlet extends HttpServlet {
 //				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		
-		
 
 	}
 

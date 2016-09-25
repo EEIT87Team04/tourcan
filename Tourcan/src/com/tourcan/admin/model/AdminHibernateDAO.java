@@ -15,7 +15,7 @@ public class AdminHibernateDAO implements AdminDAO {
 		AdminVO adminVO = new AdminVO();
 		
 		adminVO.setAdmin_account("pingu");
-		adminVO.setAdmin_id(0);
+		adminVO.setAdmin_id(1);
 		adminVO.setAdmin_level(0);
 		adminVO.setAdmin_name("pingu");
 		adminVO.setAdmin_pwd("tourcan04");

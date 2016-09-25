@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +27,7 @@ body {background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;}
 				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<a id="att" class="iconBtn shadowBtn" href="${contextPath}/adridores/att/list.jsp">
+				<a id="att" class="iconBtn shadowBtn" href="${contextPath}/adridores/att">
 					<img class="icon" src="${contextPath}/icons/EMS/location-mark.png"><span
 						class="liTxt">景 點</span>
 				</a>

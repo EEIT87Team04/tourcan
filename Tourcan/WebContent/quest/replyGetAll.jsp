@@ -112,8 +112,9 @@
         <div class="modal-body" style="padding:40px 50px;">
           <form role="form" name="addQuest">
             <div class="form-group">
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Admin ID</label>
-              <input type="number" class="form-control" id="admin_id" name="admin_id" placeholder="Enter adminId" min=1>
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Admin Name</label>
+              <input type="text" class="form-control"  value="${admin.admin_name }">
+              <input type="hidden"  id="admin_id" name="admin_id" placeholder="Enter adminId" >
             </div>
             <div class="form-group">
               <label for="questReply"><span class="glyphicon glyphicon-eye-open"></span> Reply Text</label>
