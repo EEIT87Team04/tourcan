@@ -52,20 +52,10 @@
 			%>
 				<tr >
 					<td >
-						<FORM METHOD="get" ACTION="ThemeServlet">
-						<input class="btn btn-primary btn-outline" type="submit" value="${ThemeVO.theme_id}">
-						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">
-						<input type="hidden"name="mem_uid" value="${ThemeVO.mem_uid}">
-						<input type="hidden"name="method" value="getOne_For_Display">				
-						</FORM>
+					<a target="_blank" href="${contextPath}/articles/ThemeServlet?theme_id=${ThemeVO.theme_id}&mem_uid=${ThemeVO.mem_uid}&method=getOne_For_Display" class="btn btn-primary" role="button">${ThemeVO.theme_id}</a>
 					 </td>
 					 <td>
-						<FORM METHOD="get" ACTION="ThemeServlet">
-						<input class="btn btn-default" type="submit" value="${ThemeVO.theme_topic}">
-						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">
-						<input type="hidden"name="mem_uid" value="${ThemeVO.mem_uid}">
-						<input type="hidden"name="method" value="getOne_For_Display">
-					</FORM>
+					 <a target="_blank" href="${contextPath}/articles/ThemeServlet?theme_id=${ThemeVO.theme_id}&mem_uid=${ThemeVO.mem_uid}&method=getOne_For_Display" class="btn btn-default" role="button">${ThemeVO.theme_topic}</a>
 					</td>
 					<td>${mvo.mem_lname}${mvo.mem_fname}</td>
 					<td>${ThemeVO.theme_time.toString().substring(0, 16)}</td>
