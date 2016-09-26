@@ -20,6 +20,7 @@ import com.tourcan.att.model.AttService;
 import com.tourcan.hotel.model.HotelDAO;
 import com.tourcan.hotel.model.HotelHibernateDAO;
 import com.tourcan.photo.model.PhotoService;
+import com.tourcan.util.ApplicationContextUtils;
 
 @WebServlet("/att/PhotoServlet")
 @MultipartConfig
@@ -125,133 +126,131 @@ public class PhotoServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 
-			Integer att_id = null;
-			Integer hotel_id = null;
-			PhotoService src = new PhotoService();
-			JSONObject result = new JSONObject();
-			
-			System.out.println("att_id:" + request.getParameter("att_id"));
-			try {
-				String attId = request.getParameter("att_id");
-				if (attId.trim().length() > 0) {
-					try {
-						att_id = new Integer(attId);
-						AttService attSrc = new AttService();
-						if (attSrc.getOne(att_id) == null) {
-							throw new Exception();
-						}
-					} catch (Exception e) {
-						result.append("attid", "無效景點編號");
-						throw e;
-					}
-				}
+		Integer att_id = null;
+		Integer hotel_id = null;
+		PhotoService src = new PhotoService();
+		JSONObject result = new JSONObject();
 
-				String hotelID = request.getParameter("hotel_id");
-				if (hotelID.trim().length() > 0) {
-					try {
-						hotel_id = new Integer(hotelID);
-						HotelDAO hdao = new HotelHibernateDAO();
-						if (hdao.findById(hotel_id) == null) {
-							throw new Exception();
-						}
-					} catch (Exception e) {
-						result.append("hotel", "無效飯店編號");
-						throw e;
+		System.out.println("att_id:" + request.getParameter("att_id"));
+		System.out.println("hotel_id:" + request.getParameter("hotel_id"));
+		try {
+			String attId = request.getParameter("att_id");
+			if (attId != null && attId.trim().length() > 0) {
+				try {
+					att_id = new Integer(attId);
+					AttService attSrc = new AttService();
+					if (attSrc.getOne(att_id) == null) {
+						throw new Exception();
 					}
+				} catch (Exception e) {
+					result.append("attid", "無效景點編號");
+					throw e;
 				}
-				
-				
-				Collection<Part> photos = request.getParts();
-				
-				for (Part part : photos) {
-					if(part.getName().matches("^file[0-9]*$")){
-						System.out.println(part.getName());
-						
-						if (part.getSize() <= 0) {
-							result.append("photo", "請載入圖片");
-							throw new Exception();
-						}
-						
+			}
+
+			String hotelID = request.getParameter("hotel_id");
+			if (hotelID != null && hotelID.trim().length() > 0) {
+				try {
+					hotel_id = new Integer(hotelID);
+					HotelDAO hdao = (HotelDAO) ApplicationContextUtils.getContext().getBean("hotelDAO");
+					if (hdao.findById(hotel_id) == null) {
+						throw new Exception();
+					}
+				} catch (Exception e) {
+					result.append("hotelid", "無效飯店編號");
+					throw e;
+				}
+			}
+
+			Collection<Part> photos = request.getParts();
+
+			for (Part part : photos) {
+				if (part.getName().matches("^file[0-9]*$")) {
+					System.out.println(part.getName());
+
+					if (part.getSize() <= 0) {
+						result.append("photo", "請載入圖片");
+						throw new Exception();
+					}
+
 					byte[] photo_file = new byte[(int) part.getSize()];
 					InputStream is = part.getInputStream();
 					BufferedInputStream bis = new BufferedInputStream(is);
 					bis.read(photo_file);
 					if (att_id != null) {
 						src.insertByAttId(photo_file, att_id);
-					}
-					 else if(hotel_id!=null){
-						 src.insertByHotelId(photo_file, hotel_id);
-						 
-					 }
-					else {
+					} else if (hotel_id != null) {
+						src.insertByHotelId(photo_file, hotel_id);
+
+					} else {
 						src.insert(photo_file);
 						// src.insert(photo_file, att_id, hotel_id);
-						}
 					}
 				}
-				
-				result.append("result", "新增成功");
-				response.getWriter().println(result.toString());
-			} catch (Exception e) {
-				result.append("result", "新增失敗");
-				response.getWriter().println(result.toString());
-				 e.printStackTrace();
 			}
-//		} else if ("put".equals(method)) {
-//			session.removeAttribute("attid");
-//			session.removeAttribute("photo");
-//			session.removeAttribute("result");
-//			String uri = request.getParameter("uri");
-//			Integer att_id = null;
-//			// Integer hotel_id = null;
-//			PhotoService src = new PhotoService();
-//
-//			try {
-//				String attId = request.getParameter("att_id");
-//				if (attId.trim().length() > 0) {
-//					try {
-//						att_id = new Integer(attId);
-//						AttService attSrc = new AttService();
-//						if (attSrc.getOne(att_id) == null) {
-//							throw new Exception();
-//						}
-//					} catch (Exception e) {
-//						session.setAttribute("attid", "無效景點編號");
-//						throw e;
-//					}
-//				}
-//
-//				// try {
-//				// hotel_id = new Integer(request.getParameter("hotel_id"));
-//				// } catch (Exception e) {
-//				// e.printStackTrace();
-//				// }
-//
-//				Part photoFile = request.getPart("photo");
-//				if (photoFile.getSize() <= 0) {
-//					session.setAttribute("photo", "請載入圖片");
-//					throw new Exception();
-//				}
-//				byte[] photo_file = new byte[(int) photoFile.getSize()];
-//				InputStream is = photoFile.getInputStream();
-//				BufferedInputStream bis = new BufferedInputStream(is);
-//				bis.read(photo_file);
-//				if (att_id != null) {
-//					src.insertByAttId(photo_file, att_id);
-//				}
-//				// else if(hotel_id!=null){}
-//				else {
-//					src.insert(photo_file);
-//					// src.insert(photo_file, att_id, hotel_id);
-//				}
-//				session.setAttribute("result", "新增成功");
-//				response.sendRedirect(uri);
-//			} catch (Exception e) {
-//				session.setAttribute("result", "新增失敗");
-//				response.sendRedirect(uri);
-//				// e.printStackTrace();
-//			}
-//		}
+
+			result.append("result", "新增成功");
+			response.getWriter().println(result.toString());
+		} catch (Exception e) {
+			result.append("result", "新增失敗");
+			response.getWriter().println(result.toString());
+			e.printStackTrace();
+		}
+		// } else if ("put".equals(method)) {
+		// session.removeAttribute("attid");
+		// session.removeAttribute("photo");
+		// session.removeAttribute("result");
+		// String uri = request.getParameter("uri");
+		// Integer att_id = null;
+		// // Integer hotel_id = null;
+		// PhotoService src = new PhotoService();
+		//
+		// try {
+		// String attId = request.getParameter("att_id");
+		// if (attId.trim().length() > 0) {
+		// try {
+		// att_id = new Integer(attId);
+		// AttService attSrc = new AttService();
+		// if (attSrc.getOne(att_id) == null) {
+		// throw new Exception();
+		// }
+		// } catch (Exception e) {
+		// session.setAttribute("attid", "無效景點編號");
+		// throw e;
+		// }
+		// }
+		//
+		// // try {
+		// // hotel_id = new Integer(request.getParameter("hotel_id"));
+		// // } catch (Exception e) {
+		// // e.printStackTrace();
+		// // }
+		//
+		// Part photoFile = request.getPart("photo");
+		// if (photoFile.getSize() <= 0) {
+		// session.setAttribute("photo", "請載入圖片");
+		// throw new Exception();
+		// }
+		// byte[] photo_file = new byte[(int) photoFile.getSize()];
+		// InputStream is = photoFile.getInputStream();
+		// BufferedInputStream bis = new BufferedInputStream(is);
+		// bis.read(photo_file);
+		// if (att_id != null) {
+		// src.insertByAttId(photo_file, att_id);
+		// }
+		// // else if(hotel_id!=null){}
+		// else {
+		// src.insert(photo_file);
+		// // src.insert(photo_file, att_id, hotel_id);
+		// }
+		// session.setAttribute("result", "新增成功");
+		// response.sendRedirect(uri);
+		// } catch (Exception e) {
+		// session.setAttribute("result", "新增失敗");
+		// response.sendRedirect(uri);
+		// // e.printStackTrace();
+		// }
+		// }
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
@@ -284,7 +283,7 @@ public class PhotoServlet extends HttpServlet {
 					result.append("photoId", "編號格式錯誤");
 					throw e;
 				}
-				if (!srv.deleteById(photo_id))  {
+				if (!srv.deleteById(photo_id)) {
 					throw new Exception();
 				}
 
@@ -293,10 +292,9 @@ public class PhotoServlet extends HttpServlet {
 			} catch (Exception e) {
 				result.append("result", "刪除失敗");
 				response.getWriter().println(result.toString());
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
-		}
-		else if ("deleteByAtt".equals(method)) {
+		} else if ("deleteByAtt".equals(method)) {
 			try {
 				if (attID == null || attID.trim().length() <= 0) {
 					result.append("photoId", "請輸入照片編號");
@@ -309,16 +307,16 @@ public class PhotoServlet extends HttpServlet {
 					result.append("photoId", "編號格式錯誤");
 					throw e;
 				}
-				if (!srv.deleteByAttId(att_id))  {
+				if (!srv.deleteByAttId(att_id)) {
 					throw new Exception();
 				}
-				
+
 				result.append("result", "刪除成功");
 				response.getWriter().println(result.toString());
 			} catch (Exception e) {
 				result.append("result", "刪除失敗");
 				response.getWriter().println(result.toString());
-//				e.printStackTrace();
+				// e.printStackTrace();
 			}
 		}
 

@@ -276,7 +276,7 @@
 					console.log($(this.files).length);
 					if($(this.files).length>0)
 					{
-						$(this).next("input").css("display","inherit");
+						$(this).next("input").css("display","inline");
 					}
 					else
 					{

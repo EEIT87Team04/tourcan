@@ -83,6 +83,13 @@
 			}
 		}
 		$(function() {
+			//------------------page buttons------------------
+			var pBtn = $("<a></a>").append($("<strong></strong>")
+								   .text("＋新增飯店").addClass("pageBtn"))
+								   .attr("href","${contextPath}/hotel/insert.jsp");
+			$("#pageBtns").append(pBtn);			
+			//------------------page buttons------------------
+			
 			//↓↓↓↓↓↓↓↓↓prepare RegionVO↓↓↓↓↓↓↓↓↓
 			$.ajax({
 				url : "${contextPath}/att/RegionServlet",

@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.tika.Tika;
 
+import com.tourcan.att.model.AttVO;
 import com.tourcan.hotel.model.HotelDAO;
 import com.tourcan.hotel.model.HotelVO;
 import com.tourcan.photo.model.PhotoDAO_interface;
@@ -224,7 +225,21 @@ public class HotelService {
 		response.setCharacterEncoding("UTF-8");
 		try {
 			List<HotelVO> vos = dao.getAll();
+			List<String> imgs = new ArrayList<String>();
+				
+			for (HotelVO hvo : vos) {
+//				System.out.println(request.getPathInfo());
+
+				List<PhotoVO> pvo;
+				if ((pvo = pdao.findByHotleId(hvo.getHotel_id())) != null && pvo.size() > 0) {
+					imgs.add(request.getContextPath() + request.getServletPath() + "/" + hvo.getHotel_id() + "/photos/"
+							+ pvo.get(0).getPhoto_id());
+				}else{
+					imgs.add("");
+				}
+			}
 			// 200 OK
+			request.setAttribute("imgs", imgs);
 			request.setAttribute("hotelVO", vos);
 			request.getRequestDispatcher("/WEB-INF/hotel/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
@@ -347,6 +362,7 @@ public class HotelService {
 				// 201 Created
 				msg = new HashMap<String, Object>();
 				msg.put("result", "success");
+				msg.put("hotel_id", vo.getHotel_id());
 				return Response.status(Status.CREATED).entity(msg).build();
 			} catch (Exception e) {
 				e.printStackTrace();
