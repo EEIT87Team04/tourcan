@@ -75,7 +75,7 @@ body {background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;}
 				<span style="float: left;" id="pageBtns" ></span>
 				<span
 					style="float: right; font-family: Arial; font-size: 16px; color: rgb(255, 255, 255);">
-					<img src="${contextPath}/icons/EMS/suit-and-bow-tie.png"> Welcome,
+					<img src="${contextPath}/icons/EMS/suit-and-bow-tie.png"> Welcome, <a href="${contextPath}/adridores/logout">${admin.admin_name}.</a>
 <%-- 					<c:if test="${vo!=null}"> --%>
 <%-- 						${vo} --%>
 <%-- 					</c:if> --%>
