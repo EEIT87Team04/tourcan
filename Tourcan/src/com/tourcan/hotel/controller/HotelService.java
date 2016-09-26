@@ -235,7 +235,7 @@ public class HotelService {
 					imgs.add(request.getContextPath() + request.getServletPath() + "/" + hvo.getHotel_id() + "/photos/"
 							+ pvo.get(0).getPhoto_id());
 				}else{
-					imgs.add("");
+					imgs.add(request.getContextPath() + "/images/noInfo.jpg");
 				}
 			}
 			// 200 OK

@@ -46,6 +46,16 @@
 .containPad{
 	padding:200px 30px;
 }
+
+.imgSize{
+	max-height: 100%;
+	max-width: 100%;
+	padding-top: 23px;
+}
+.info{
+	font-size: 20px;
+}
+
 @media ( min-width : 768px) {
 	.omb_row-sm-offset-2 div:first-child[class*="col-"] {
 		margin-left: 16.6666667%;

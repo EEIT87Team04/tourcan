@@ -24,10 +24,11 @@
 		<input type='hidden' id='current_page' /> <input type='hidden'
 			id='show_per_page' />
 		<div class="row" id="dataList">
+			<hr>
 			<c:forEach var="AttVO" items="${attVO}" varStatus="count">
 				<div class="row">
-					<div class="col-md-4 col-md-offset-1">
-						<p><img src="${imgs[count.index]}" width="150px" height="150px"></p>
+					<div class="col-md-4 col-md-offset-1" style="max-height: 300px; overflow: hidden;">
+						<p><img src="${imgs[count.index]}" class="imgSize"></p>
 					</div>
 					<div class="col-md-7">
 						<div class="row">
@@ -42,6 +43,7 @@
 						</div>
 					</div>
 				</div>
+			<hr>
 			</c:forEach>
 		</div>
 		<ul id='page_navigation' class="pagination pagination-lg"></ul>
