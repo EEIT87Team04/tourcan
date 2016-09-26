@@ -11,9 +11,9 @@
 				<form class=form-inline>
 					<div class="col-md-8">
 						<div class="form-group">
-							<label for="themeTopic">TopicSearch</label><input type="text"
+							<input type="text"
 								class="form-control" id="theme_topic" name="themetopic"
-								placeholder="themeTopic">
+								placeholder="search">
 							<button type="button" class="btn btn-success form-control"
 								id="btnTopicCheck">搜尋</button>
 						</div>

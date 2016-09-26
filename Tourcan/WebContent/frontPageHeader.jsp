@@ -35,7 +35,7 @@
 	    vertical-align: middle;
 		margin:0px 0px;
 		width:100%;
-		height:90px;
+		height:45px;
 		background: url(${contextPath}/images/front/fp-header.jpg) no-repeat center center scroll;
 	}
 	.pageFooter{
@@ -44,7 +44,7 @@
 		clear:both;
 		margin:0px 0px;
 		width:100%;
-		height:60px;
+		height:45px;
 		background: url(${contextPath}/images/front/fp-header.jpg) no-repeat bottom center scroll;
 	/* 	background: rgba(216,174,71,0.1); */
 		background-color: rgb(216,174,71);
