@@ -121,14 +121,14 @@
 	<!-- 						<button type="button">送出</button> -->
 						</div>
 						<div class="col-sm-12 form-group">
-							<label>交通方式：</label> 
-							<input type="radio" name="traffic" id="changemode-driving" value="car" checked>
-							<label for="changemode-driving">開車</label>
-							<input type="radio" name="traffic" id="changemode-transit" value="public">
-							<label for="changemode-transit">大眾運輸</label>
-							<input type="radio" name="traffic" id="changemode-walking" value="walk">
-							<label for="changemode-walking">步行</label>
-							<label style="margin-left: 20px">
+<!-- 							<label>交通方式：</label>  -->
+<!-- 							<input type="radio" name="traffic" id="changemode-driving" value="car" checked> -->
+<!-- 							<label for="changemode-driving">開車</label> -->
+<!-- 							<input type="radio" name="traffic" id="changemode-transit" value="public"> -->
+<!-- 							<label for="changemode-transit">大眾運輸</label> -->
+<!-- 							<input type="radio" name="traffic" id="changemode-walking" value="walk"> -->
+<!-- 							<label for="changemode-walking">步行</label> -->
+							<label>
 								<span>到下一站距離：</span>
 								<span id="tDistance"></span>
 								<span style="margin-left: 10px">時間:</span>
@@ -181,15 +181,15 @@
 		 				<table style="width: 100% ;table-layout: fixed;margin-top: 10px">
 		 					<thead class="div5">
 		 						<tr>
-		 							<th colspan="7">
-		 								<label>到下一站交通方式：</label> 
-		 								<input type="radio" name="${tripitemVO.tripitem_serial}" value="car" checked>開車 
-		 								<input type="radio" name="${tripitemVO.tripitem_serial}" value="public">大眾運輸 
-		 								<input type="radio" name="${tripitemVO.tripitem_serial}" value="walk">步行									
-		 							</th>
-		 							<th colspan="5">
+<!-- 		 							<th colspan="7"> -->
+<!-- 		 								<label>到下一站交通方式：</label>  -->
+<%-- 		 								<input type="radio" name="${tripitemVO.tripitem_serial}" value="car" checked>開車  --%>
+<%-- 		 								<input type="radio" name="${tripitemVO.tripitem_serial}" value="public">大眾運輸  --%>
+<%-- 		 								<input type="radio" name="${tripitemVO.tripitem_serial}" value="walk">步行									 --%>
+<!-- 		 							</th> -->
+		 							<th colspan="12">
 		 								<label>
-			 								<span>距離:</span>
+			 								<span>到下一站距離:</span>
 			 								<span name="tDistance"></span>
 			 								<span style="margin-left:10px">時間:</span>
 			 								<span name="tTime"></span>
@@ -282,7 +282,6 @@
 						center : initPos,
 						zoom : 15,
 						mapTypeId : google.maps.MapTypeId.ROADMAP,
-// 						scrollwheel : false
 					});
 			
 			directionsDisplay.setMap(map);
@@ -583,14 +582,14 @@
 									var lableA=$("<lable></lable>").text("開車").prepend(input1);
 									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
 									var lableC=$("<lable></lable>").text("步行").prepend(input3);
-									var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+									var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 									
-									var span1=$("<span></span>").text("距離：");
+									var span1=$("<span></span>").text("到下一站距離：");
 									var span2=$("<span></span>").attr("name","tDistance");
 									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
 									var span4=$("<span></span>").attr("name","tTime");
 									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
-									var th2=$("<th></th>").attr("colspan","5").append(lable2);
+									var th2=$("<th></th>").attr("colspan","12").append(lable2);
 									
 									var tr1=$("<tr></tr>").append([th1,th2]);
 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
@@ -718,7 +717,6 @@
 							checkInput.setAttribute("type","checkbox");
 							checkInput.setAttribute("value",hotel.hotel_name);
 							checkInput.setAttribute("name","attCheck");
-//	 						checkInput.setAttribute("style","");
 
 							butDiv.appendChild(checkInput);
 							attDiv.appendChild(imgDiv);
@@ -743,12 +741,10 @@
 
 					    	var selected=[];
 					        $("input[name='attCheck']:checked").each(function(){
-// 					           selected.push($(this).val());
 								var hotelname1=$(this).val();
 								$.ajax({
 									url : serviceProvider+"/name/"+hotelname1,
 									method : "GET"
-								//data : JSON.stringify(json),
 								}).done(function(data1){
 									count = count+"B";
 									$.each(data1,function(idx1,hotel1){
@@ -765,14 +761,14 @@
 										var lableA=$("<lable></lable>").text("開車").prepend(input1);
 										var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
 										var lableC=$("<lable></lable>").text("步行").prepend(input3);
-										var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+										var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 										
-										var span1=$("<span></span>").text("距離：");
+										var span1=$("<span></span>").text("到下一站距離：");
 										var span2=$("<span></span>").attr("name","tDistance");
 										var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
 										var span4=$("<span></span>").attr("name","tTime");
 										var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
-										var th2=$("<th></th>").attr("colspan","5").append(lable2);
+										var th2=$("<th></th>").attr("colspan","12").append(lable2);
 										
 										var tr1=$("<tr></tr>").append([th1,th2]);
 										var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
@@ -947,14 +943,14 @@
 									var lableA=$("<lable></lable>").text("開車").prepend(input1);
 									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
 									var lableC=$("<lable></lable>").text("步行").prepend(input3);
-									var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+									var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 									
-									var span1=$("<span></span>").text("距離：");
+									var span1=$("<span></span>").text("到下一站距離：");
 									var span2=$("<span></span>").attr("name","tDistance");
 									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
 									var span4=$("<span></span>").attr("name","tTime");
 									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
-									var th2=$("<th></th>").attr("colspan","5").append(lable2);
+									var th2=$("<th></th>").attr("colspan","12").append(lable2);
 									
 									var tr1=$("<tr></tr>").append([th1,th2]);
 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
@@ -1033,69 +1029,6 @@
 				})
 			  }
 		   });
-			
-			
-// 			<div id="sortable">
-// 				<table style="width: 100% ;table-layout: fixed;margin-top: 10px">
-// 					<thead class="div5">
-// 						<tr>
-// 							<th colspan="7">
-// 								<label>1到下一站交通方式：</label> 
-// 								<input type="radio" name="traffic" value="car">開車 
-// 								<input type="radio" name="traffic" value="public">大眾運輸 
-// 								<input type="radio" name="traffic" value="walk">步行									
-// 							</th>
-// 							<th colspan="5">
-// 								<label>約__?__公里，估約__?___分鐘</label> 
-// 							</th>
-// 						</tr>
-// 					</thead>
-// 					<tbody class="div6">
-// 						<tr>
-// 							<td colspan="3">
-// 								<input type="hidden" id="att_addr" value="地址?">
-// 								<input type="hidden" id="att_id" value="att_id?">
-// 								<input type="hidden" id="hotel_id" value="hotel_id?">
-// 							</td>
-// 							<td colspan="3">
-// 								<P>預算:<input type="number" style="width:60px;">元</P>
-// 							</td>
-// 							<td colspan="3">
-// 									<P>逗留時間:<input type="number" style="width:60px">分</P>
-// 							</td>
-// 							<td colspan="3">
-// 									<P>起:time?</P>
-// 							</td>
-// 						</tr>
-// 						<tr>
-// 							<td colspan="3">
-// 								<label>景點名稱</label>
-// 							</td>
-// 							<td colspan="3">
-// 								<P>註記:</P>
-// 							</td>
-// 							<td colspan="3">
-// 							</td>
-// 							<td colspan="3">
-// 									<P>迄:time?</P> 
-// 							</td>									
-// 						</tr>
-// 						<tr>
-// 							<td colspan="3">
-// 							</td>
-// 							<td colspan="6">
-// 								<textarea  rows="2" style="width:100% ;" placeholder="註記"></textarea>
-// 							</td>
-// 							<td colspan="3">
-// 								<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除">
-// 							</td>							
-// 						</tr>
-// 					</tbody>
-// 				</table>
-			
-			
-			
-			
 			
 			$("#saveBtn").off('click').on('click',function(){
 					var json = {

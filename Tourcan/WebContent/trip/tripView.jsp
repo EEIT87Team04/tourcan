@@ -128,21 +128,19 @@
 					<div class="col-sm-10 form-group">
 						<label>出發地點：</label> <input type="text" id="possition"
 							placeholder="地址或景點名稱">
-<!-- 						<button type="button">送出</button> -->
 					</div>
 					<div class="col-sm-10 form-group">
 						<label for="attName">出發時間：</label> <input type="datetime-local" id="sTime" name="sTime">
-<!-- 						<button type="button">送出</button> -->
 					</div>
 					<div class="col-sm-12 form-group">
-						<label>交通方式：</label> 
-						<input type="radio" name="traffic" id="changemode-driving" value="car" checked>
-						<label for="changemode-driving">開車</label>
-						<input type="radio" name="traffic" id="changemode-transit" value="public">
-						<label for="changemode-transit">大眾運輸</label>
-						<input type="radio" name="traffic" id="changemode-walking" value="walk">
-						<label for="changemode-walking">步行</label>
-						<label style="margin-left: 20px">
+<!-- 						<label>交通方式：</label>  -->
+<!-- 						<input type="radio" name="traffic" id="changemode-driving" value="car" checked> -->
+<!-- 						<label for="changemode-driving">開車</label> -->
+<!-- 						<input type="radio" name="traffic" id="changemode-transit" value="public"> -->
+<!-- 						<label for="changemode-transit">大眾運輸</label> -->
+<!-- 						<input type="radio" name="traffic" id="changemode-walking" value="walk"> -->
+<!-- 						<label for="changemode-walking">步行</label> -->
+						<label>
 							<span>到下一站距離：</span>
 							<span id="tDistance"></span>
 							<span style="margin-left: 10px">時間:</span>
@@ -214,37 +212,22 @@
 						center : initPos,
 						zoom : 15,
 						mapTypeId : google.maps.MapTypeId.ROADMAP,
-// 						scrollwheel : false
 					});
 			
 			directionsDisplay.setMap(map);
 
-// 			document.getElementById('submit').addEventListener('click',function() {
 						calculateAndDisplayRoute(directionsService,directionsDisplay);
 
-// 					});
 		}
 		
 		function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 			var point = [];
 			var waypts = [];
 			var lastPos=addrArray[addrArray.length-1];
-			//   var waypts = [{location:"110台北市信義區松高路16號1~3F"},{location:""},{location:"110台北市信義區松勤街50號"}];
-			//   ["110台北市信義區松高路16號1~3F","110台北市信義區松勤街50號"]
-
-			//   var checkboxArray = document.getElementById('waypoints');
-			//   console.log("checkboxArray="+checkboxArray);
 			for (var i = 0; i < addrArray.length-1; i++) {
-				// 	  console.log(checkboxArray.value)	
-				//     if (checkboxArray.options[i].selected) {
-				//     	console.log("value="+checkboxArray[i].value)
 				waypts.push({
 					location : addrArray[i],
-				//         stopover: true
 				});
-				//     	console.log(waypts);
-				//     }
-// 				console.log("1=="+lastPos); 
 			}
 			directionsService.route({
 				origin :$("#possition").val(),
@@ -256,9 +239,6 @@
 				if (status === google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(response);
 					var route = response.routes[0];
-					//       var summaryPanel = document.getElementById('directions-panel');
-					//       summaryPanel.innerHTML = '';
-					// For each route, display summary information.
 					$("#tDistance").empty();
 					$("#tTime").empty();
 					
@@ -268,17 +248,6 @@
 					$("#tDistance").append(route.legs[0].distance.text);
 					$("#tTime").append(route.legs[0].duration.text);
 					
-// 					idx="0";
-// 					var test1=idx+1;
-// 					var test2=parseInt(idx)+1;
-// 					console.log("test1="+test1);
-// 					console.log("test2="+test2);
-// 					console.log("route.legs[test2].distance.text="+route.legs[test2].distance.text);
-// 					console.log("route.legs[test1].distance.text="+route.legs[test1].distance.text);
-// 					console.log("route.legs[(idx+1)].distance.text="+route.legs[(idx+1)].distance.text);
-// 					console.log("route.legs[idx+1].distance.text="+route.legs[idx+1].distance.text);
-					
-					//idx為String要轉型  並判斷table個數
 		            $("#sortable>table").each(function(idx,table){
 // 		            	console.log("idx="+idx);
 // 		            	console.log("table="+table);
@@ -292,18 +261,8 @@
 					      for (var i = 0; i < route.legs.length; i++) {
 					    	  console.log(route.legs[i].distance.text);
 					    	  console.log(route.legs[i].duration.text);
-					//         var routeSegment = i + 1;
-					//         summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-					//             '</b><br>';
-					//         summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-					//         summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-					//         summaryPanel.innerHTML += route.legs[i].distance.text +'<br>';
-					//         summaryPanel.innerHTML += route.legs[i].duration.text + 'time <br>';
 					      }
 				}
-				//     else {
-				//       window.alert('Directions request failed due to ' + status);
-				//     }
 			});
 		}
 		
@@ -328,9 +287,6 @@
 			//刪除景點明細
 			function deleteTripitem(){
 				$(".deleteTripitem").off('click').on('click',function(){
-	//  			console.log("TEST2="+$(this).parents());
-	// 				console.log($(this).parent().parent().parent().children("tr:eq(0)").children("td:eq(0)").children("input:eq(0)").val());
-	// 				console.log($( ".deleteTripitem" ).index($( this )));
 					addrArray.splice($( ".deleteTripitem" ).index($( this )),1);
 					$(this).parent().parent().parent().parent().remove();
 					initMap();
@@ -361,7 +317,6 @@
 					  var newEt = new Date(eTime+wTime).toTimeString();
 					  var eTidx = newEt.indexOf("G");
 					  newEt = "訖：" + newEt.substr(0,eTidx-4);
-					  
 
 					  //console.log(new Date(sTime+wTime)); //解開註解，可看該毫秒數所指日期。
 					  $(this).find('input[name="tripitem_end"]').val(sTime+wTime);
@@ -520,7 +475,6 @@
 						checkInput.setAttribute("type","checkbox");
 						checkInput.setAttribute("value",att.att_name);
 						checkInput.setAttribute("name","attCheck");
-// 						checkInput.setAttribute("style","");
 
 						butDiv.appendChild(checkInput);
 						attDiv.appendChild(imgDiv);
@@ -545,7 +499,6 @@
 
 				    	var selected=[];
 				        $("input[name='attCheck']:checked").each(function(){
-// 				           selected.push($(this).val());
 							var attname1=$(this).val();
 							$.get("../att/AttServlet",{"attname":attname1,"method":"getByName"},function(data1){
 								count= count+"A";
@@ -561,14 +514,14 @@
 									var lableA=$("<lable></lable>").text("開車").prepend(input1);
 									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
 									var lableC=$("<lable></lable>").text("步行").prepend(input3);
-									var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+									var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 									
-									var span1=$("<span></span>").text("距離：");
+									var span1=$("<span></span>").text("到下一站距離：");
 									var span2=$("<span></span>").attr("name","tDistance");
 									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
 									var span4=$("<span></span>").attr("name","tTime");
 									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
-									var th2=$("<th></th>").attr("colspan","5").append(lable2);
+									var th2=$("<th></th>").attr("colspan","12").append(lable2);
 									
 									var tr1=$("<tr></tr>").append([th1,th2]);
 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
@@ -629,7 +582,6 @@
 									
 									
 									addrArray.push(att1.att_addr);
-// 									console.log("test="+addrArray);
 									
 								})
 								initMap();
@@ -655,8 +607,6 @@
 					$.ajax({
 						url : serviceProvider+"/region/"+regionId,
 						method : "GET"
-					//data : JSON.stringify(json),
-					//contentType : "application/json; charset=UTF-8"
 					}).done(function(data) {
 						console.log("200: " + data);
 						$.each(data,function(idx,hotel){
@@ -702,7 +652,6 @@
 							checkInput.setAttribute("type","checkbox");
 							checkInput.setAttribute("value",hotel.hotel_name);
 							checkInput.setAttribute("name","attCheck");
-//	 						checkInput.setAttribute("style","");
 
 							butDiv.appendChild(checkInput);
 							attDiv.appendChild(imgDiv);
@@ -728,13 +677,10 @@
 
 					    	var selected=[];
 					        $("input[name='attCheck']:checked").each(function(){
-// 					           selected.push($(this).val());
 								var hotelname1=$(this).val();
 								$.ajax({
 									url : serviceProvider+"/name/"+hotelname1,
 									method : "GET"
-								//data : JSON.stringify(json),
-								//contentType : "application/json; charset=UTF-8"
 								}).done(function(data1){
 									count = count+"B";
 									$.each(data1,function(idx1,hotel1){
@@ -745,20 +691,20 @@
 										
 										var lable1=$("<lable></lable>").text("下一站交通方式:");
 										var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
-//	 									lableA.prepend(input1);
+
 										var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
 										var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
 										var lableA=$("<lable></lable>").text("開車").prepend(input1);
 										var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
 										var lableC=$("<lable></lable>").text("步行").prepend(input3);
-										var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+										var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 										
-										var span1=$("<span></span>").text("距離：");
+										var span1=$("<span></span>").text("到下一站距離：");
 										var span2=$("<span></span>").attr("name","tDistance");
 										var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
 										var span4=$("<span></span>").attr("name","tTime");
 										var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
-										var th2=$("<th></th>").attr("colspan","5").append(lable2);
+										var th2=$("<th></th>").attr("colspan","12").append(lable2);
 										
 										var tr1=$("<tr></tr>").append([th1,th2]);
 										var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
@@ -828,7 +774,6 @@
 									deleteTripitem();
 								})
 					       	});
-// 					        alert("住宿名稱 : " + selected.join());
 	                        $("#div3").after(tripForm);
 							$("#div3 input").val("");
 							$("#region_id option[value='0']").prop("selected",true);
@@ -896,7 +841,6 @@
 						checkInput.setAttribute("type","checkbox");
 						checkInput.setAttribute("value",att.att_name);
 						checkInput.setAttribute("name","attCheck");
-// 						checkInput.setAttribute("style","");
 
 						butDiv.appendChild(checkInput);
 						attDiv.appendChild(imgDiv);
@@ -921,7 +865,6 @@
 						tripForm.append(sortDiv);
 				    	var selected=[];
 				        $("input[name='attCheck']:checked").each(function(){
-// 				           selected.push($(this).val());
 							var attname1=$(this).val();
 							$.get("../att/AttServlet",{"attname":attname1,"method":"getByName"},function(data1){
 								count = count+"C";	
@@ -933,20 +876,20 @@
 									
 									var lable1=$("<lable></lable>").text("下一站交通方式:");
 									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
-// 									lableA.prepend(input1);
+
 									var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
 									var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
 									var lableA=$("<lable></lable>").text("開車").prepend(input1);
 									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
 									var lableC=$("<lable></lable>").text("步行").prepend(input3);
-									var th1=$("<th></th>").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+									var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 									
-									var span1=$("<span></span>").text("距離：");
+									var span1=$("<span></span>").text("到下一站距離：");
 									var span2=$("<span></span>").attr("name","tDistance");
 									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
 									var span4=$("<span></span>").attr("name","tTime");
 									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
-									var th2=$("<th></th>").attr("colspan","5").append(lable2);
+									var th2=$("<th></th>").attr("colspan","12").append(lable2);
 									
 									var tr1=$("<tr></tr>").append([th1,th2]);
 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
@@ -1016,7 +959,6 @@
 								deleteTripitem();
 							})
 				       	});
-// 				        alert("景點名稱 : " + selected.join());
                         $("#div3").after(tripForm);
 						$("#div3 input").val("");
 						$("#region_id option[value='0']").prop("selected",true);
@@ -1028,77 +970,7 @@
 			  }
 		   });
 			
-			
-			
-			
-// 			<form id="tripForm" style="clear:both; margin-right: 28px;">
-// 			<div id="sortable">
-// 				<table style="width: 100% ;table-layout: fixed;margin-top: 10px">
-// 					<thead class="div5">
-// 						<tr>
-// 							<th colspan="7">
-// 								<label>1到下一站交通方式：</label> 
-// 								<input type="radio" name="traffic" value="car">開車 
-// 								<input type="radio" name="traffic" value="public">大眾運輸 
-// 								<input type="radio" name="traffic" value="walk">步行									
-// 							</th>
-// 							<th colspan="5">
-// 								<label>約__?__公里，估約__?___分鐘</label> 
-// 							</th>
-// 						</tr>
-// 					</thead>
-// 					<tbody class="div6">
-// 						<tr>
-// 							<td colspan="3">
-// 								<input type="hidden" id="att_addr" value="地址?">
-// 								<input type="hidden" id="att_id" value="att_id?">
-// 								<input type="hidden" id="hotel_id" value="hotel_id?">
-// 							</td>
-// 							<td colspan="3">
-// 								<P>預算:<input type="number" style="width:60px;">元</P>
-// 							</td>
-// 							<td colspan="3">
-// 									<P>逗留時間:<input type="number" style="width:60px">分</P>
-// 							</td>
-// 							<td colspan="3">
-// 									<P>起:time?</P>
-// 							</td>
-// 						</tr>
-// 						<tr>
-// 							<td colspan="3">
-// 								<label>景點名稱</label>
-// 							</td>
-// 							<td colspan="3">
-// 								<P>註記:</P>
-// 							</td>
-// 							<td colspan="3">
-// 							</td>
-// 							<td colspan="3">
-// 									<P>迄:time?</P> 
-// 							</td>									
-// 						</tr>
-// 						<tr>
-// 							<td colspan="3">
-// 							</td>
-// 							<td colspan="6">
-// 								<textarea  rows="2" style="width:100% ;" placeholder="註記"></textarea>
-// 							</td>
-// 							<td colspan="3">
-// 								<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除">
-// 							</td>							
-// 						</tr>
-// 					</tbody>
-// 				</table>
-			
-			
-			
-			
-			
 			$("#saveBtn").off('click').on('click',function(){
-// 					console.log("tripId="+trip_id);
-// 					console.log(sTime);
-// 					console.log(new Date(sTime));
-// 					console.log(new Date(parseInt($("#start input[name='tripitem_begin']").val())))
 					
 					var json = {
 							"trip_id":trip_id,
@@ -1161,14 +1033,7 @@
 		                        }
 						})		
 					})
-
 			})
-			
-			
-			
-			
-			
-			
 	    });
 			
 	</script>
