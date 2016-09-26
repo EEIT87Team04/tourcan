@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tourcan.admin.model.AdminDAO;
-import com.tourcan.admin.model.AdminHibernateDAO;
 import com.tourcan.admin.model.AdminVO;
+import com.tourcan.util.ApplicationContextUtils;
 
 @WebServlet("/adridores/login")
 public class AdminAuthService extends HttpServlet {
@@ -24,7 +24,7 @@ public class AdminAuthService extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		AdminDAO dao = new AdminHibernateDAO();
+		AdminDAO dao = (AdminDAO) ApplicationContextUtils.getContext().getBean("adminDAO");
 		AdminVO vo = dao.findByAccount(req.getParameter("admin_account"));
 		if (!vo.getAdmin_pwd().equals(req.getParameter("admin_pwd"))) {
 			req.getRequestDispatcher("/WEB-INF/adridores/login.jsp").forward(req, resp);

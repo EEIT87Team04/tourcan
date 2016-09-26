@@ -5,14 +5,14 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import com.tourcan.admin.model.AdminDAO;
-import com.tourcan.admin.model.AdminHibernateDAO;
+import com.tourcan.admin.model.AdminFakeDAO;
 
 public class ServletContextUtils implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		ServletContext sc = sce.getServletContext();
-		AdminDAO dao = new AdminHibernateDAO();
+		AdminDAO dao = new AdminFakeDAO();
 		// System.out.println("contextPath = " + sc.getContextPath());
 		sc.setAttribute("contextPath", sc.getContextPath());
 		sc.setAttribute("admin", dao.findById(0));
