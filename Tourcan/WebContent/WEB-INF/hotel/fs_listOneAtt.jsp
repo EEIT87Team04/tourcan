@@ -13,7 +13,7 @@
 				<div style="border: solid 1px" class="col-md-4 col-md-offset-1">
 					<c:forEach items="${imgs}" var="img">
 						<div class="col-md-12">
-							<img src="${img}" />
+							<img src="${img}" width="150px" height="150px" />
 						</div>
 					</c:forEach>
 				</div>

@@ -15,7 +15,7 @@ public class ServletContextUtils implements ServletContextListener {
 		AdminDAO dao = new AdminHibernateDAO();
 		// System.out.println("contextPath = " + sc.getContextPath());
 		sc.setAttribute("contextPath", sc.getContextPath());
-		sc.setAttribute("admin", dao.findById());
+		sc.setAttribute("admin", dao.findById(0));
 	}
 
 	@Override
