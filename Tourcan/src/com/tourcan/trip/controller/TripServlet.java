@@ -37,27 +37,27 @@ public class TripServlet extends HttpServlet {
 		response.setContentType("application/json");
 		String method = request.getParameter("method");
 
-		if(method.equals("findByID")){
-			String id = request.getParameter("tripId");
-			try{
-			Integer tripno =null;
-			try{
-			tripno =new Integer(id);
-			}catch (Exception e) {
-				throw new Exception();
-			}
-			TripService trsv = new TripService();
-			TripVO tripVO =trsv.findById(tripno);
-			request.setAttribute("tripVO",tripVO);
-			System.out.println(tripVO.getTrip_id());
-			String url = "/trip/???????.jsp";
-			RequestDispatcher successView = request.getRequestDispatcher(url); 
-			successView.forward(request, response);
-			}catch (Exception e) {
-				RequestDispatcher failureView = request.getRequestDispatcher("/trip/listOneFromMemTrip.jsp");
-				failureView.forward(request, response);
-			}
-		}
+//		if(method.equals("findByID")){
+//			String id = request.getParameter("tripId");
+//			try{
+//			Integer tripno =null;
+//			try{
+//			tripno =new Integer(id);
+//			}catch (Exception e) {
+//				throw new Exception();
+//			}
+//			TripService trsv = new TripService();
+//			TripVO tripVO =trsv.findById(tripno);
+//			request.setAttribute("tripVO",tripVO);
+//			System.out.println(tripVO.getTrip_id());
+//			String url = "/trip/???????.jsp";
+//			RequestDispatcher successView = request.getRequestDispatcher(url); 
+//			successView.forward(request, response);
+//			}catch (Exception e) {
+//				RequestDispatcher failureView = request.getRequestDispatcher("/trip/listOneFromMemTrip.jsp");
+//				failureView.forward(request, response);
+//			}
+//		}
 		
 		
 		

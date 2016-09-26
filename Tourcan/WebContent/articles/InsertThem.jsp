@@ -15,12 +15,13 @@
 				
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star" aria-hidden="true"><label for="themeTopic">主題名稱</label> </span>						
-						<input type="text" id="theme_topic" name="theme_topic"  class="form-control"	placeholder="themeTopic">
+						<input type="text" id="theme_topic" name="theme_topic"  class="form-control"	placeholder="請輸入主題名稱">
 						
 					</div>
 					<div class="form-group" >
-						 <span class="glyphicon glyphicon-user" aria-hidden="true"><label for="memId" >會員UID</label>	</span>	 
-						 <input type="text" id="mem_uid" name="mem_uid" class="form-control" value="${vo.mem_uid}"
+						 <span class="glyphicon glyphicon-user" aria-hidden="true"><label for="memId" >會員名</label>	</span>	 
+						 <input type="text"  class="form-control" value="${vo.mem_fname}"  readonly="readonly">
+						 <input type="hidden" id="mem_uid" name="mem_uid" class="form-control" value="${vo.mem_uid}"
 							placeholder="會員Id" readonly="readonly" >
 					</div>
 				
@@ -50,7 +51,7 @@
 </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
-    <script src="/${contextPath}/lang/summernote-zh-TW.js"></script>
+    <script src="${contextPath}/lang/summernote-zh-TW.js"></script>
   
 	<script type="text/javascript">
 

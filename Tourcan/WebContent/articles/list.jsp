@@ -51,20 +51,10 @@
 			%>
 				<tr >
 					<td >
-						<FORM METHOD="get" ACTION="ThemeServlet">
-						<input class="btn btn-primary btn-outline" type="submit" value="${ThemeVO.theme_id}">
-						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">
-						<input type="hidden"name="mem_uid" value="${ThemeVO.mem_uid}">
-						<input type="hidden"name="method" value="getOne_For_Display">				
-						</FORM>
+					<a  href="${contextPath}/articles/ThemeServlet?theme_id=${ThemeVO.theme_id}&mem_uid=${ThemeVO.mem_uid}&method=getOne_For_Display" class="btn btn-primary" role="button">${ThemeVO.theme_id}</a>
 					 </td>
 					 <td>
-						<FORM METHOD="get" ACTION="ThemeServlet">
-						<input class="btn btn-default" type="submit" value="${ThemeVO.theme_topic}">
-						<input type="hidden"name="theme_id" value="${ThemeVO.theme_id}">
-						<input type="hidden"name="mem_uid" value="${ThemeVO.mem_uid}">
-						<input type="hidden"name="method" value="getOne_For_Display">
-					</FORM>
+ 					<a  href="${contextPath}/articles/ThemeServlet?theme_id=${ThemeVO.theme_id}&mem_uid=${ThemeVO.mem_uid}&method=getOne_For_Display" class="btn btn-default" role="button">${ThemeVO.theme_topic}</a>
 					</td>
 					<td>${mvo.mem_lname}${mvo.mem_fname}</td>
 					<td>${ThemeVO.theme_time.toString().substring(0, 16)}</td>
@@ -128,15 +118,16 @@ $(function(){
 				}else{
 						var cell1 = $("<td/>").text(themeValue.theme_id);
 						var cell2 = $("<td/>").text(themeValue.theme_topic);
-						var input4= $("<input/>").attr("type",'hidden').attr('name',"method").attr("value","getOne_For_Display");
-						var input3= $("<input/>").attr("type",'hidden').attr('name',"mem_uid").attr("value",themeValue.mem_uid);
-						var input2= $("<input/>").attr("type",'hidden').attr('name',"theme_id").attr("value",themeValue.theme_id);
-						var input1= $("<input/>").attr("class","btn btn-default").attr("type","submit").attr("value",themeValue.theme_topic);
-						var form  = $("<form/>").attr("METHOD","get").attr("ACTION","ThemeServlet").append([input1,input2,input3,input4]);
-						var cell5 = $("<td/>").append([form])
+// 						var input4= $("<input/>").attr("type",'hidden').attr('name',"method").attr("value","getOne_For_Display");
+// 						var input3= $("<input/>").attr("type",'hidden').attr('name',"mem_uid").attr("value",themeValue.mem_uid);
+// 						var input2= $("<input/>").attr("type",'hidden').attr('name',"theme_id").attr("value",themeValue.theme_id);
+// 						var input1= $("<input/>").attr("class","btn btn-default").attr("type","submit").attr("value",themeValue.theme_topic);
+// 						var form  = $("<form/>").attr("METHOD","get").attr("ACTION","ThemeServlet").append([input1,input2,input3,input4]);
+// 						var cell5 = $("<td/>").append([form])
+						var cell6 = $("<a/>").attr("href","${contextPath}/articles/ThemeServlet?theme_id="+themeValue.theme_id+"&mem_uid="+themeValue.mem_uid+"&method=getOne_For_Display").attr("class","btn btn-default").attr("role","button").text(themeValue.theme_topic);
 						var cell3 = $("<td></td>").text(themeValue.mem_uid);
 						var cell4 = $("<td/>").text(themeValue.theme_time);
-						var row = $("<tr></tr>").append([cell1,cell5,cell3,cell4]);
+						var row = $("<tr></tr>").append([cell1,cell6,cell3,cell4]);
 						myBody.append(row);
 					}
 			})

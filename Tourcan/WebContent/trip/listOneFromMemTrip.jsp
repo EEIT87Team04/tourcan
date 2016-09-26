@@ -13,17 +13,18 @@
 </head>
 <body>
 	<div class="container">
-		<span style="font-size: 200%;font-weight:bold">我 的 行 程</span>	
 			<div class='row'>
+		<span style="font-size: 200%;font-weight:bold">我 的 行 程</span>	
 				<input type="hidden" id="mem_uid" name="mem_uid" value="${vo.mem_uid}" >
-				<input type="button" class="btn btn-info btn-lg  " id="serach" value="查詢">
-				<input type="button" class="btn btn-defaulf btn-lg pull-right" id="cancel" value="取消查詢">
+<!-- 				<input type="button" class="btn btn-info btn-lg  " id="serach" value="查詢"> -->
+<!-- 				<input type="button" class="btn btn-defaulf btn-lg pull-right" id="cancel" value="取消查詢"> -->
+				<input type="button" class="btn btn-info btn-lg pull-right" id="insetNew" value="新增行程" onclick="javascript:location.href='<%=request.getContextPath()%>/trip/tripView.jsp'">
 			</div>
 		<br>
 		<table class="table table-striped" id="tab1">
 			<thead>
 				<tr class="warning">
-					<th class="col-md-5">主題名稱</th>
+					<th class="col-md-5">行程名稱</th>
 					<th class="col-md-4">總預算</th>
 					<th class="col-md-3">創建時間</th>
 					<th >刪除</th>
@@ -81,22 +82,6 @@
 	})
 	}
 	
-	
-	
-	
-	$(function(){
-		searchCheck();
-		
-		
-		
-		
-// 		$('#tab1').hide();
-		$('#serach').click(function(){
-			searchCheck();
-		})	
-		click1();
-	})
-	
 	function trhover(){
 		$("tr").not(':first').hover(
 				function () {
@@ -111,6 +96,18 @@
 			$('#tab1').hide();
 		})	
 	}
+	
+	
+	
+	
+	$(function(){
+		searchCheck();
+
+		$('#serach').click(function(){
+			searchCheck();
+		})	
+		click1();
+	})
 // 	function click2(){
 // 		$('table > tbody').delegate("tr","click",function(){
 // 			alert($(this).val())

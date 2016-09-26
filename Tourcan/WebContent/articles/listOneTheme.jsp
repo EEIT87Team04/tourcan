@@ -100,12 +100,14 @@
 						placeholder="respTopic">
 					</div>
 					<div class="form-group" >
-						<label for="memId" >會員UId</label> <input type="text"
-							id="mem_uid" name="mem_uid" class="form-control" value="${vo.mem_uid}"
+						<label for="memId" >會員姓名</label> 
+						<input type="text"	class="form-control" value="${vo.mem_lname}${vo.mem_fname}" readonly="readonly">
+						<input type="hidden"	id="mem_uid" name="mem_uid" class="form-control" value="${vo.mem_uid}"
 							placeholder="會員Id" readonly="readonly" >
 					</div>
 					<div class="form-group" >
-						<label for="themeID" >themeId</label> <input type="number"
+<!-- 						<label for="themeID" >themeId</label>  -->
+						<input type="hidden"
 							id="theme_id" name="theme_id" class="form-control" value="<%=themeVO1.getTheme_id()%>"
 							placeholder="theme_id" min=1>
 					</div>		
@@ -126,6 +128,7 @@
 	</div>
 </div>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+	<script src="${contextPath}/lang/summernote-zh-TW.js"></script>
  <script type="text/javascript">
  
 		//----------summernote---------------
