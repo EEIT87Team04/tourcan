@@ -78,6 +78,8 @@
 	background-color:#FFFCEC;
 	border: 2px solid #E0E0E0;
 	padding-top: 3px;
+	text-align: center;
+	font-weight:bold;
 }
 
 .div6 {
@@ -507,24 +509,24 @@
 // 									console.log("att1="+att1);
 // 									console.log("addr="+att1.att_addr);
 									var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
-									var lable1=$("<lable></lable>").text("下一站交通方式:");
-									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
-									var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
-									var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
-									var lableA=$("<lable></lable>").text("開車").prepend(input1);
-									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
-									var lableC=$("<lable></lable>").text("步行").prepend(input3);
-									var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+// 									var lable1=$("<lable></lable>").text("下一站交通方式:");
+// 									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
+// 									var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
+// 									var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
+// 									var lableA=$("<lable></lable>").text("開車").prepend(input1);
+// 									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
+// 									var lableC=$("<lable></lable>").text("步行").prepend(input3);
+// 									var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 									
-									var span1=$("<span></span>").text("到下一站距離：");
-									var span2=$("<span></span>").attr("name","tDistance");
-									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
-									var span4=$("<span></span>").attr("name","tTime");
-									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
-									var th2=$("<th></th>").attr("colspan","12").append(lable2);
+// 									var span1=$("<span></span>").text("到下一站距離：");
+// 									var span2=$("<span></span>").attr("name","tDistance");
+// 									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
+// 									var span4=$("<span></span>").attr("name","tTime");
+// 									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
+// 									var th2=$("<th></th>").attr("colspan","12").append(lable2);
 									
-									var tr1=$("<tr></tr>").append([th1,th2]);
-									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
+// 									var tr1=$("<tr></tr>").append([th1,th2]);
+// 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
 									
 									var input4=$("<input></input>").attr("type","hidden").attr("name","att_addr").attr("value",att1.att_addr);
 									var input5=$("<input></input>").attr("type","hidden").attr("name","att_id").attr("value",att1.att_id);
@@ -561,9 +563,19 @@
 									var tr2=$("<tr></tr>").append([td1,td2,td3,td4]);
 									var tr3=$("<tr></tr>").append([td5,td6,td7,td8]);
 									var tr4=$("<tr></tr>").append([td9,td10,td11]);
-									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
 									
-									tripitemTable.append([tripitemThead,tripitemTbody]);
+									var span1=$("<span></span>").text("到下一站距離：");
+									var span2=$("<span></span>").attr("name","tDistance");
+									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
+									var span4=$("<span></span>").attr("name","tTime");
+									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
+									var td12=$("<td></td>").attr("colspan","12").append(lable2);
+									
+									var tr1=$("<tr></tr>").attr("class","div5").append(td12);
+									
+									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4,tr1]);
+									
+									tripitemTable.append(tripitemTbody);
 
 									//新增__input(目前非hidden)，以便取item內值送至servlet --------------------------------------------
 									var startTime = $("<input></input>").attr("type","number").attr("name","tripitem_begin");
@@ -689,25 +701,25 @@
 	 									console.log("addr="+hotel1.hotel_addr);
 										var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
 										
-										var lable1=$("<lable></lable>").text("下一站交通方式:");
-										var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
+// 										var lable1=$("<lable></lable>").text("下一站交通方式:");
+// 										var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
 
-										var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
-										var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
-										var lableA=$("<lable></lable>").text("開車").prepend(input1);
-										var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
-										var lableC=$("<lable></lable>").text("步行").prepend(input3);
-										var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+// 										var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
+// 										var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
+// 										var lableA=$("<lable></lable>").text("開車").prepend(input1);
+// 										var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
+// 										var lableC=$("<lable></lable>").text("步行").prepend(input3);
+// 										var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 										
-										var span1=$("<span></span>").text("到下一站距離：");
-										var span2=$("<span></span>").attr("name","tDistance");
-										var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
-										var span4=$("<span></span>").attr("name","tTime");
-										var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
-										var th2=$("<th></th>").attr("colspan","12").append(lable2);
+// 										var span1=$("<span></span>").text("到下一站距離：");
+// 										var span2=$("<span></span>").attr("name","tDistance");
+// 										var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
+// 										var span4=$("<span></span>").attr("name","tTime");
+// 										var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
+// 										var th2=$("<th></th>").attr("colspan","12").append(lable2);
 										
-										var tr1=$("<tr></tr>").append([th1,th2]);
-										var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
+// 										var tr1=$("<tr></tr>").append([th1,th2]);
+// 										var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
 										
 										var input4=$("<input></input>").attr("type","hidden").attr("name","hotel_addr").attr("value",hotel1.hotel_addr);
 										var input5=$("<input></input>").attr("type","hidden").attr("name","hotel_id").attr("value",hotel1.hotel_id);
@@ -745,9 +757,19 @@
 										var tr2=$("<tr></tr>").append([td1,td2,td3,td4]);
 										var tr3=$("<tr></tr>").append([td5,td6,td7,td8]);
 										var tr4=$("<tr></tr>").append([td9,td10,td11]);
-										var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
 										
-										tripitemTable.append([tripitemThead,tripitemTbody]);
+										var span1=$("<span></span>").text("到下一站距離：");
+										var span2=$("<span></span>").attr("name","tDistance");
+										var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
+										var span4=$("<span></span>").attr("name","tTime");
+										var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
+										var td12=$("<td></td>").attr("colspan","12").append(lable2);
+										
+										var tr1=$("<tr></tr>").attr("class","div5").append(td12);
+										
+										var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4,tr1]);
+										
+										tripitemTable.append(tripitemTbody);
 										
 										//新增__input(目前非hidden)，以便取item內值送至servlet --------------------------------------------
 										var startTime = $("<input></input>").attr("type","number").attr("name","tripitem_begin");
@@ -874,25 +896,25 @@
 // 									console.log("addr="+att1.att_addr);
 									var tripitemTable=$("<table></table>").attr("style","width: 100% ;table-layout: fixed;margin-top: 10px");
 									
-									var lable1=$("<lable></lable>").text("下一站交通方式:");
-									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
+// 									var lable1=$("<lable></lable>").text("下一站交通方式:");
+// 									var input1=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("checked","checked").attr("value","car");
 
-									var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
-									var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
-									var lableA=$("<lable></lable>").text("開車").prepend(input1);
-									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
-									var lableC=$("<lable></lable>").text("步行").prepend(input3);
-									var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
+// 									var input2=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","public");
+// 									var input3=$("<input></input>").attr("type","radio").attr("name",count+idx1).attr("value","walk");
+// 									var lableA=$("<lable></lable>").text("開車").prepend(input1);
+// 									var lableB=$("<lable></lable>").text("大眾運輸").prepend(input2);
+// 									var lableC=$("<lable></lable>").text("步行").prepend(input3);
+// 									var th1=$("<th></th>").css("display","none").attr("colspan","7").append([lable1,lableA,lableB,lableC]);
 									
-									var span1=$("<span></span>").text("到下一站距離：");
-									var span2=$("<span></span>").attr("name","tDistance");
-									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
-									var span4=$("<span></span>").attr("name","tTime");
-									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
-									var th2=$("<th></th>").attr("colspan","12").append(lable2);
+// 									var span1=$("<span></span>").text("到下一站距離：");
+// 									var span2=$("<span></span>").attr("name","tDistance");
+// 									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
+// 									var span4=$("<span></span>").attr("name","tTime");
+// 									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
+// 									var th2=$("<th></th>").attr("colspan","12").append(lable2);
 									
-									var tr1=$("<tr></tr>").append([th1,th2]);
-									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
+// 									var tr1=$("<tr></tr>").append([th1,th2]);
+// 									var tripitemThead=$("<thead></thead>").attr("class","div5").append(tr1);
 									
 									var input4=$("<input></input>").attr("type","hidden").attr("name","att_addr").attr("value",att1.att_addr);
 									var input5=$("<input></input>").attr("type","hidden").attr("name","att_id").attr("value",att1.att_id);
@@ -930,9 +952,19 @@
 									var tr2=$("<tr></tr>").append([td1,td2,td3,td4]);
 									var tr3=$("<tr></tr>").append([td5,td6,td7,td8]);
 									var tr4=$("<tr></tr>").append([td9,td10,td11]);
-									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4]);
 									
-									tripitemTable.append([tripitemThead,tripitemTbody]);
+									var span1=$("<span></span>").text("到下一站距離：");
+									var span2=$("<span></span>").attr("name","tDistance");
+									var span3=$("<span></span>").attr("style","margin-left:10px").text("時間：");
+									var span4=$("<span></span>").attr("name","tTime");
+									var lable2=$("<lable></lable>").append([span1,span2,span3,span4]);
+									var td12=$("<td></td>").attr("colspan","12").append(lable2);
+									
+									var tr1=$("<tr></tr>").attr("class","div5").append(td12);
+									
+									var tripitemTbody=$("<tbody></tbody>").attr("class","div6").append([tr2,tr3,tr4,tr1]);
+									
+									tripitemTable.append(tripitemTbody);
 									
 									//新增__input(目前非hidden)，以便取item內值送至servlet --------------------------------------------
 									var startTime = $("<input></input>").attr("type","number").attr("name","tripitem_begin");
