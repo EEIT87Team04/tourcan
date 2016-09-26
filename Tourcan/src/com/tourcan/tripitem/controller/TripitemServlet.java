@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.tourcan.trip.model.TripService;
+import com.tourcan.trip.model.TripVO;
 import com.tourcan.tripitem.model.TripitemService;
 import com.tourcan.tripitem.model.TripitemVO;
 
@@ -31,13 +34,41 @@ public class TripitemServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// ----------------findById----------------
+		//---------------findByTripID--------------
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		String method = request.getParameter("method");
 
-		if (method.equals("getOneById")) {
+		if(method.equals("findByID")){
+			String id = request.getParameter("tripId");
+			try{
+			Integer tripno =null;
+			try{
+			tripno =new Integer(id);
+			}catch (Exception e) {
+				throw new Exception();
+			}
+			TripitemService tripitemSvc = new TripitemService();
+			List<TripitemVO> tripitemVO =tripitemSvc.findByTripID(tripno);
+			request.setAttribute("tripitemVO",tripitemVO);
+			System.out.println(tripitemVO);
+			String url = "/trip/updateTrip.jsp";
+			RequestDispatcher successView = request.getRequestDispatcher(url); 
+			successView.forward(request, response);
+			}catch (Exception e) {
+				RequestDispatcher failureView = request.getRequestDispatcher("/trip/listOneFromMemTrip.jsp");
+				failureView.forward(request, response);
+			}
+		}
+		
+		// ----------------findById----------------
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		String method1 = request.getParameter("method");
+
+		if (method1.equals("getOneById")) {
 			JSONObject checkResult = new JSONObject();
 			Integer tripitemId = null;
 			TripitemVO tripitemVO = null;
@@ -175,8 +206,11 @@ public class TripitemServlet extends HttpServlet {
 			}
 
 			
-			
-				tripitemTraffic = null;
+			try{
+				tripitemTraffic = obj.getString("tripitem_traffic");
+			}catch(Exception e){
+//				e.printStackTrace();			
+			}
 			
 			try {
 				tripitemMemo = obj.getString("tripitem_memo");

@@ -26,7 +26,7 @@
 					<th class="col-md-5">主題名稱</th>
 					<th class="col-md-4">總運算</th>
 					<th class="col-md-3">創建時間</th>
-					<th > 刪除</th>
+					<th >刪除</th>
 				</tr>
 			</thead>
 			<tbody>		
@@ -50,11 +50,12 @@
 					var input3= $("<input/>").attr("type","hidden").attr('name','method').val("findByID");
 					var input2= $("<input/>").attr("type","hidden").attr('name','tripId').val(tripvalue.trip_id);
 					var input1= $("<input/>").attr("class","btn btn-default btn-lg").attr('type','submit').val(tripvalue.trip_name);
-					var form1 = $('<form/>').attr("method","get").attr("action","TripServlet").append([input1,input2,input3]);
+					var form1 = $('<form/>').attr("method","get").attr("action","../tripitem/TripitemServlet").append([input1,input2,input3,hiddenId]);
 					var cell1 = $("<td/>").append([form1]);
 					var cell2 = $("<td/>").text(tripvalue.trip_price);
 					var cell3 = $("<td/>").text(tripvalue.trip_ctime);
-					var button41= $("<button/>").attr("class","btn btn-danger d22 ").attr("id","bu"+""+idx).val(tripvalue.trip_id).text("刪除");
+					var hiddenId=$("<input/>").attr("type","hidden").attr("name","method").attr("value","findByID");
+					var button41= $("<button/>").attr("class","btn btn-danger d22").attr("id","bu"+""+idx).val(tripvalue.trip_id).text("刪除");
 					var cell4 = $("<td/>").append([button41]);
 					var row = $('<tr/>').attr("id","tr"+""+idx).val(tripvalue.trip_id).append([cell1,cell2,cell3,cell4]);
 					myBody.append(row);
