@@ -82,4 +82,22 @@ public class TripitemDAO implements TripitemDAO_interface {
 			}
 			return list;
 		}
+
+	@Override
+	public List<TripitemVO> findByTripID(Integer trip_id) {
+		List<TripitemVO> thlist =null;
+		Integer tripID =trip_id;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try{
+		session.beginTransaction();
+		Query query=session.createQuery("From TripitemVO where trip_id =:trip_id order by tripitem_serial");
+		query.setParameter("trip_id", tripID);
+		thlist=query.list();
+		session.getTransaction().commit();
+		}catch (Exception e) {
+		session.getTransaction().rollback();	
+			throw e;
+		}
+		return thlist;
+	}
 }

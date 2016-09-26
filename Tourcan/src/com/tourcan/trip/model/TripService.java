@@ -11,17 +11,8 @@ public class TripService {
 		dao = new TripDAO();
 	}
 
-	public TripVO insertTrip(String trip_name, Timestamp trip_ctime, Integer trip_price, String mem_uid) {
-
-		TripVO tripVO = new TripVO();
-
-		tripVO.setTrip_name(trip_name);
-		tripVO.setTrip_ctime(trip_ctime);
-		tripVO.setTrip_price(trip_price);
-		tripVO.setMem_uid(mem_uid);
-
+	public TripVO insertTrip(TripVO tripVO) {
 		dao.insert(tripVO);
-
 		return tripVO;
 	}
 
@@ -44,6 +35,7 @@ public class TripService {
 		dao.delete(trip_id);
 	}
 	
+
 	public TripVO findById(Integer trip_id){
 		return dao.findById(trip_id);
 	}
@@ -54,5 +46,8 @@ public class TripService {
 	
 	public List<TripVO> getAll(){
 		return dao.getAll();
+	}
+	public List<TripVO> findByMemuid(String mem_uid) {
+		return dao.findByMemuid(mem_uid);
 	}
 }

@@ -10,12 +10,13 @@ import hibernate.util.HibernateUtil;
 public class TripDAO implements TripDAO_interface {
 
 	@Override
-	public void insert(TripVO tripVO) {
+	public Integer insert(TripVO tripVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
 			session.saveOrUpdate(tripVO);
 			session.getTransaction().commit();
+			return tripVO.getTrip_id();
 		} catch (RuntimeException ex) {
 			session.getTransaction().rollback();
 			throw ex;
@@ -73,7 +74,7 @@ public class TripDAO implements TripDAO_interface {
 		String likeString="%" + trip_name + "%";
 		try {
 			session.beginTransaction();
-			String queryByName="From TripVO WHERE trip_name like :trip_name";
+			String queryByName="From TripVO WHERE trip_name like :trip_name ";
 			Query query=session.createQuery(queryByName);
 			query.setParameter("trip_name", likeString);
 			list=query.list();
@@ -85,6 +86,7 @@ public class TripDAO implements TripDAO_interface {
 		return list;
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TripVO> getAll() {
@@ -100,5 +102,24 @@ public class TripDAO implements TripDAO_interface {
 			throw ex;
 		}
 		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TripVO> findByMemuid(String mem_uid) {
+		List<TripVO> list_trip= null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		String strlike= "%"+ mem_uid+"%";
+		try{
+			session.beginTransaction();
+			Query query = session.createQuery("From TripVO WHERE mem_uid like :mem_uid ORDER BY trip_id DESC");
+			query.setParameter("mem_uid", strlike);
+			list_trip=query.list();
+			session.getTransaction().commit();
+		}catch (Exception e) {
+			session.beginTransaction().rollback();
+			throw e;
+		}
+		return list_trip;
 	}
 }

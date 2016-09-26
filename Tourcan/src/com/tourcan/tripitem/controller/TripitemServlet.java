@@ -2,11 +2,12 @@ package com.tourcan.tripitem.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.tourcan.trip.model.TripService;
+import com.tourcan.trip.model.TripVO;
 import com.tourcan.tripitem.model.TripitemService;
 import com.tourcan.tripitem.model.TripitemVO;
 
@@ -31,13 +34,41 @@ public class TripitemServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// ----------------findById----------------
+		//---------------findByTripID--------------
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		String method = request.getParameter("method");
 
-		if (method.equals("getOneById")) {
+		if(method.equals("findByID")){
+			String id = request.getParameter("tripId");
+			try{
+			Integer tripno =null;
+			try{
+			tripno =new Integer(id);
+			}catch (Exception e) {
+				throw new Exception();
+			}
+			TripitemService tripitemSvc = new TripitemService();
+			List<TripitemVO> tripitemVO =tripitemSvc.findByTripID(tripno);
+			request.setAttribute("tripitemVO",tripitemVO);
+			System.out.println(tripitemVO);
+			String url = "/trip/updateTrip.jsp";
+			RequestDispatcher successView = request.getRequestDispatcher(url); 
+			successView.forward(request, response);
+			}catch (Exception e) {
+				RequestDispatcher failureView = request.getRequestDispatcher("/trip/listOneFromMemTrip.jsp");
+				failureView.forward(request, response);
+			}
+		}
+		
+		// ----------------findById----------------
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		String method1 = request.getParameter("method");
+
+		if (method1.equals("getOneById")) {
 			JSONObject checkResult = new JSONObject();
 			Integer tripitemId = null;
 			TripitemVO tripitemVO = null;
@@ -97,6 +128,7 @@ public class TripitemServlet extends HttpServlet {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// ----------------INSERT----------------
@@ -116,10 +148,11 @@ public class TripitemServlet extends HttpServlet {
 		Integer attId=null;
 		Integer hotelId=null;
 		Integer tripitemStaytime=null;
-		Time tripitemBegin = null;
-		Time tripitemEnd=null;
+		Timestamp tripitemBegin = null;
+		Timestamp tripitemEnd=null;
 		String tripitemTraffic=null;
 		String tripitemMemo=null;
+		Integer tripitemPrice=null;
 
 		JSONObject checkResult = new JSONObject(); // checking result
 
@@ -128,29 +161,28 @@ public class TripitemServlet extends HttpServlet {
 			
 			tripId = obj.getInt("trip_id");
 
-			attId = obj.getInt("att_id");
+			try {
+				attId = obj.getInt("att_id");
+			} catch (Exception e) {
+//				e.printStackTrace();
+			}
 			
-			hotelId = obj.getInt("hotel_id");
+			try {
+				hotelId = obj.getInt("hotel_id");
+			} catch (Exception e) {
+//				e.printStackTrace();
+			}
 			
 			tripitemSerial = obj.getInt("tripitem_serial");
 
-			try {
-				tripitemStaytime = obj.getInt("tripitem_staytime");
-				if (tripitemStaytime == null || tripitemStaytime < 0) {
-					throw new Exception();
-
-				}
-			} catch (Exception e) {
-				checkResult.append("tripitem_staytime", "請輸入逗留時間"); // do not need error in update
-				// e.printStackTrace();
-			}
+			tripitemStaytime = obj.getInt("tripitem_staytime");
 			
 			try {
 				String Begin = obj.getString("tripitem_begin");
 				if (Begin == null || Begin.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemBegin=Time.valueOf(Begin+":00");
+					tripitemBegin=new Timestamp(Long.parseLong(Begin));
 					obj.remove("tripitem_begin");
 //					obj.put("tripitem_begin", tripitemBegin);
 				}
@@ -159,26 +191,41 @@ public class TripitemServlet extends HttpServlet {
 				 e.printStackTrace();
 			}
 			
-			tripitemEnd=new Time(tripitemBegin.getTime()+tripitemStaytime*60*1000);
-			obj.remove("tripitem_end");
-//			obj.append("tripitem_end", tripitemEnd);
-
 			try {
-				tripitemTraffic = obj.getString("tripitem_traffic");
-				if (tripitemTraffic == null || tripitemTraffic.trim().isEmpty()) {
+				String End = obj.getString("tripitem_end");
+				if (End == null || End.trim().isEmpty()) {
 					throw new Exception();
+				}else{
+					tripitemEnd=new Timestamp(Long.parseLong(End));
+					obj.remove("tripitem_end");
+//					obj.put("tripitem_end", tripitemEegin);
 				}
 			} catch (Exception e) {
-				checkResult.append("tripitem_traffic", "請輸入交通資訊。");
-				// e.printStackTrace();
+				checkResult.append("tripitem_end", "請輸入完整時間。");
+				 e.printStackTrace();
 			}
+
+			
+			try{
+				tripitemTraffic = obj.getString("tripitem_traffic");
+			}catch(Exception e){
+//				e.printStackTrace();			
+			}
+			
 			try {
 				tripitemMemo = obj.getString("tripitem_memo");
 			} catch (Exception e) {
 //				e.printStackTrace();
 			}
+			
+			try {
+				tripitemPrice=obj.getInt("tripitem_price");
+			} catch (Exception e) {
+				tripitemPrice=0;
+//				e.printStackTrace();
+			}
+			
 
-				
 				if (checkResult.length() > 0) {
 					throw new Exception();
 				} else {
@@ -186,6 +233,7 @@ public class TripitemServlet extends HttpServlet {
 					TripitemVO tripitemVO = new Gson().fromJson(obj.toString(), TripitemVO.class);
 					tripitemVO.setTripitem_begin(tripitemBegin);
 					tripitemVO.setTripitem_end(tripitemEnd);
+					tripitemVO.setTripitem_price(tripitemPrice);
 					
 					tripitemSvc.insert(tripitemVO); 
 					checkResult.append("result", "新增成功");
@@ -199,6 +247,7 @@ public class TripitemServlet extends HttpServlet {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// ----------------UPDATE----------------
@@ -219,67 +268,83 @@ public class TripitemServlet extends HttpServlet {
 		Integer attId=null;
 		Integer hotelId=null;
 		Integer tripitemStaytime=null;
-		Time tripitemBegin = null;
-		Time tripitemEnd=null;
+		Timestamp tripitemBegin = null;
+		Timestamp tripitemEnd=null;
 		String tripitemTraffic=null;
 		String tripitemMemo=null;
+		Integer tripitemPrice=null;
+		
 
 		JSONObject checkResult = new JSONObject(); // checking result
 
 		try {
 			JSONObject obj = new JSONObject(json); // received and parsed JSON
 			
-			tripitemId = new Integer(request.getParameter("tripitem_id"));
+			try{
+				System.out.println(obj.get("tripitem_id"));
+				tripitemId = obj.getInt("tripitem_id");
+			}catch(Exception e){
+				obj.remove("tripitem_id");
+			}
 			
 			tripId = obj.getInt("trip_id");
 
-			attId = obj.getInt("att_id");
+			try {
+				attId = obj.getInt("att_id");
+			} catch (Exception e) {
+				obj.remove("att_id");
+			}
 			
-			hotelId = obj.getInt("hotel_id");
+			try {
+				hotelId = obj.getInt("hotel_id");
+			} catch (Exception e) {
+				obj.remove("hotel_id");
+			}
 			
 			tripitemSerial = obj.getInt("tripitem_serial");
 
-			try {
-				tripitemStaytime = obj.getInt("tripitem_staytime");
-				if (tripitemStaytime == null || tripitemStaytime < 0) {
-					throw new Exception();
-
-				}
-			} catch (Exception e) {
-				checkResult.append("tripitem_staytime", "請輸入逗留時間"); // do not need error in update
-				// e.printStackTrace();
-			}
+			tripitemStaytime = obj.getInt("tripitem_staytime");
 			
 			try {
-				String Begin = obj.getString("tripitem_begin").substring(0, 5);
+				String Begin = obj.getString("tripitem_begin");
 				if (Begin == null || Begin.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemBegin=Time.valueOf(Begin+":00");
+					tripitemBegin=new Timestamp(Long.parseLong(Begin));
 					obj.remove("tripitem_begin");
 //					obj.put("tripitem_begin", tripitemBegin);
 				}
-			} catch (Exception e) {	
-				checkResult.append("tripitem_begin", "請修改初始時間。");
+			} catch (Exception e) {
+				checkResult.append("tripitem_begin", "請輸入完整時間。");
 				 e.printStackTrace();
 			}
 			
-			tripitemEnd=new Time(tripitemBegin.getTime()+tripitemStaytime*60*1000);
-			obj.remove("tripitem_end");
-//			obj.append("tripitem_end", tripitemEnd);
-
 			try {
-				tripitemTraffic = obj.getString("tripitem_traffic");
-				if (tripitemTraffic == null || tripitemTraffic.trim().isEmpty()) {
+				String End = obj.getString("tripitem_end");
+				if (End == null || End.trim().isEmpty()) {
 					throw new Exception();
+				}else{
+					tripitemEnd=new Timestamp(Long.parseLong(End));
+					obj.remove("tripitem_end");
+//					obj.put("tripitem_end", tripitemEegin);
 				}
 			} catch (Exception e) {
-				checkResult.append("tripitem_traffic", "請輸入交通資訊。");
-				// e.printStackTrace();
+				checkResult.append("tripitem_end", "請輸入完整時間。");
+				 e.printStackTrace();
 			}
+
+			tripitemTraffic = null;
+			
 			try {
 				tripitemMemo = obj.getString("tripitem_memo");
 			} catch (Exception e) {
+//				e.printStackTrace();
+			}
+			
+			try {
+				tripitemPrice=obj.getInt("tripitem_price");
+			} catch (Exception e) {
+				tripitemPrice=0;
 //				e.printStackTrace();
 			}
 
@@ -291,6 +356,7 @@ public class TripitemServlet extends HttpServlet {
 					TripitemVO tripitemVO = new Gson().fromJson(obj.toString(), TripitemVO.class);
 					tripitemVO.setTripitem_begin(tripitemBegin);
 					tripitemVO.setTripitem_end(tripitemEnd);
+					tripitemVO.setTripitem_price(tripitemPrice);
 					
 					tripitemSvc.insert(tripitemVO); 
 					checkResult.append("result", "更新成功");
@@ -298,7 +364,7 @@ public class TripitemServlet extends HttpServlet {
 				}
 				
 		} catch (Exception e) {
-			checkResult.append("result", "新增失敗。");
+			checkResult.append("result", "更新失敗。");
 			response.getWriter().println(checkResult.toString());
 			e.printStackTrace();
 		}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<title>Waypoints in directions</title>
+<style>
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#mapPreview {
+	height: 100%;
+	border: 2px solid #E0E0E0;
+	float: right;
+	width: 70%;
+}
+</style>
+</head>
+<body>
+	<div id="mapPreview"></div>
+	<div id="right-panel">
+		<div>
+			<b>Start:</b> <label>出發地點：</label> <input type="text" id="possition"
+				placeholder="地址或景點名稱"> <br> <b>Waypoints:</b> <br>
+			<i>(Ctrl-Click for multiple selection)</i> <br> <select multiple
+				id="waypoints">
+				<option value="110台北市信義區松高路16號1~3F">微風</option>
+				<option value="110台北市信義區松壽路20號">信義威秀</option>
+				<option value="110台北市信義區松勤街50號">四四</option>
+			</select> <br> <b>End:</b> <select id="end">
+				<option value="110台北市信義區松廉路">世貿中心展覽二館</option>
+			</select> <br>
+			<table border="1" id="table1">
+				<tr>
+					<td><input type="text" class="tex1" name="tex1"
+						value="110台北市信義區松廉路">
+				<tr>
+					<td><input type="submit" id="submit">
+				</tr>
+			</table>
+		</div>
+		<div id="directions-panel"></div>
+		<br>
+	</div>
+
+
+	<script type="text/javascript">
+		function initMap() {
+			var initPos = new google.maps.LatLng(25.042485, 121.543543);
+			var directionsService = new google.maps.DirectionsService;
+			var directionsDisplay = new google.maps.DirectionsRenderer;
+			var map = new google.maps.Map(
+					document.getElementById('mapPreview'), {
+						center : initPos,
+						zoom : 13,
+						mapTypeId : google.maps.MapTypeId.ROADMAP,
+// 						scrollwheel : false
+					});
+			
+			directionsDisplay.setMap(map);
+
+			document.getElementById('submit').addEventListener('click',function() {
+						calculateAndDisplayRoute(directionsService,directionsDisplay);
+					});
+		}
+		
+		function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+			var point = [];
+			var waypts = [];
+			//   var waypts = [{location:"110台北市信義區松高路16號1~3F"},{location:""},{location:"110台北市信義區松勤街50號"}];
+			//   ["110台北市信義區松高路16號1~3F","110台北市信義區松勤街50號"]
+
+			//   var checkboxArray = document.getElementById('waypoints');
+			//   console.log("checkboxArray="+checkboxArray);
+			for (var i = 0; i < addrArray.length - 1; i++) {
+				// 	  console.log(checkboxArray.value)	
+				//     if (checkboxArray.options[i].selected) {
+				//     	console.log("value="+checkboxArray[i].value)
+				waypts.push({
+					location : addrArray[i],
+				//         stopover: true
+				});
+				//     	console.log(waypts);
+				//     }
+			}
+
+			directionsService.route({
+				origin : document.getElementById('possition').value,
+				destination : addrArray[addrArray.length],
+				waypoints : waypts,
+				optimizeWaypoints : false,
+				travelMode : google.maps.TravelMode.DRIVING
+			}, function(response, status) {
+				if (status === google.maps.DirectionsStatus.OK) {
+					directionsDisplay.setDirections(response);
+					var route = response.routes[0];
+					//       var summaryPanel = document.getElementById('directions-panel');
+					//       summaryPanel.innerHTML = '';
+					// For each route, display summary information.
+					//       for (var i = 0; i < route.legs.length; i++) {
+					//         var routeSegment = i + 1;
+					//         summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+					//             '</b><br>';
+					//         summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+					//         summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+					//         summaryPanel.innerHTML += route.legs[i].distance.text +'<br>';
+					//         summaryPanel.innerHTML += route.legs[i].duration.text + 'time <br>';
+					//       }
+				}
+				//     else {
+				//       window.alert('Directions request failed due to ' + status);
+				//     }
+			});
+		}
+	</script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGoTWzmY15u_6_Yo6ieFdEHAs2nZJHTBk&libraries=places&callback=initMap"
+		async defer></script>
+</body>
+</html>

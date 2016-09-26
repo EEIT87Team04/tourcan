@@ -1,6 +1,6 @@
 package com.tourcan.tripitem.model;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 
 public class TripitemVO implements java.io.Serializable {
 
@@ -10,12 +10,13 @@ public class TripitemVO implements java.io.Serializable {
 	private String tripitem_traffic;
 	private String tripitem_memo;
 	private Integer tripitem_staytime;
-	private Time tripitem_begin;
-	private Time tripitem_end;
+	private Timestamp tripitem_begin;
+	private Timestamp tripitem_end;
 	private Integer trip_id;
 	private Integer att_id;
 	private Integer hotel_id;
 	private Integer tripitem_id;
+	private Integer tripitem_price;
 	
 	public Integer getTripitem_serial() {
 		return tripitem_serial;
@@ -41,16 +42,16 @@ public class TripitemVO implements java.io.Serializable {
 	public void setTripitem_staytime(Integer tripitem_staytime) {
 		this.tripitem_staytime = tripitem_staytime;
 	}
-	public Time getTripitem_begin() {
+	public Timestamp getTripitem_begin() {
 		return tripitem_begin;
 	}
-	public void setTripitem_begin(Time tripitem_begin) {
+	public void setTripitem_begin(Timestamp tripitem_begin) {
 		this.tripitem_begin = tripitem_begin;
 	}
-	public Time getTripitem_end() {
+	public Timestamp getTripitem_end() {
 		return tripitem_end;
 	}
-	public void setTripitem_end(Time tripitem_end) {
+	public void setTripitem_end(Timestamp tripitem_end) {
 		this.tripitem_end = tripitem_end;
 	}
 	public Integer getTrip_id() {
@@ -77,5 +78,12 @@ public class TripitemVO implements java.io.Serializable {
 	public void setTripitem_id(Integer tripitem_id) {
 		this.tripitem_id = tripitem_id;
 	}
+	public Integer getTripitem_price() {
+		return tripitem_price;
+	}
+	public void setTripitem_price(Integer tripitem_price) {
+		this.tripitem_price = tripitem_price;
+	}
+	
 	
 }

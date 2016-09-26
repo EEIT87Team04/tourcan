@@ -1,5 +1,16 @@
+<%@page import="com.tourcan.util.ApplicationContextUtils"%>
+<%@page import="com.tourcan.hotel.model.HotelVO"%>
+<%@page import="com.tourcan.att.model.AttVO"%>
+<%@page import="com.tourcan.hotel.model.HotelHibernateDAO"%>
+<%@page import="com.tourcan.hotel.model.HotelDAO"%>
+<%@page import="com.tourcan.att.model.AttDAO"%>
+<%@page import="com.tourcan.tripitem.model.TripitemVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% AttDAO attDao =  new AttDAO(); 
+   HotelHibernateDAO hotelDao = (HotelHibernateDAO) ApplicationContextUtils.getContext().getBean("hotelDAO");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,22 +30,13 @@
 	border: 2px solid #E0E0E0;
 }
 
-.addTripDiv{
-	background-color: #F1E1FF;
-	border: 2px solid #E0E0E0;
-	border-radius: 20px;
-	margin-bottom: 5px;
-	padding: 5px;
-	display: block;
-}
-
 .div1 {
 	background-color: #FFECEC;
 	border: 2px solid #E0E0E0;
 	border-radius: 20px;
 	margin-bottom: 5px;
 	padding-top: 3px;
-	display: none;
+	display: block;
 }
 
 .div2 {
@@ -45,7 +47,7 @@
 	padding-top: 3px;
 	text-align: left;
 	color: #9D9D9D;
-	display: none;
+	display: block;
 }
 
 .div3 {
@@ -54,6 +56,7 @@
 	border-radius: 20px;
 	margin-bottom: 5px;
 	padding-top: 3px;
+	display: none;
 }
 
 .div4 {
@@ -99,12 +102,7 @@
 <body>
 	<div class="container">
 
-		<div class="row" style="display: block" id="title1">
-			<div class="col-sm-6 col-sm-offset-2">
-				<h1>建立行程</h1>
-			</div>
-		</div>
-		<div class="row" style="display: none" id="title2">
+		<div class="row" style="display: block" id="title2">
 			<div class="col-sm-6 col-sm-offset-2">
 				<h1>行程規劃</h1>
 			</div>
@@ -112,52 +110,43 @@
 
 		<div class="row">
 			<div class="row col-sm-7 ">
-				<!--新增行程 -->
-				<div class="row addTripDiv col-sm-12">
-					<div class="col-sm-10 col-sm-offset-2 form-group">
-						<label>新增行程名稱：</label> 
-						<input type="text" id="trip_name" name="trip_name" placeholder="請輸入行程名稱" autofocus>
+				<c:forEach begin="0" end="0" var="tripitemVO1" items="${tripitemVO}">	
+					<div  id="start" class="row div1 col-sm-12">
+						<div class="col-sm-10 form-group">
+							<label>出發地點：</label> 
+							<input type="text" id="possition" placeholder="地址或景點名稱" value="${tripitemVO1.tripitem_memo}">
+							<input type="hidden" name="tripitemId" value="${tripitemVO1.tripitem_id}">
+							<input type="hidden" name="trip_id" value="${tripitemVO1.trip_id}">
+						</div>
+						<div class="col-sm-10 form-group">
+							<label for="attName">出發時間：</label> <input type="datetime-local" id="sTime" name="sTime"  value='${tripitemVO1.tripitem_begin.toString().replace(" ","T")}'>
+	<!-- 						<button type="button">送出</button> -->
+						</div>
+						<div class="col-sm-12 form-group">
+<!-- 							<label>交通方式：</label>  -->
+<!-- 							<input type="radio" name="traffic" id="changemode-driving" value="car" checked> -->
+<!-- 							<label for="changemode-driving">開車</label> -->
+<!-- 							<input type="radio" name="traffic" id="changemode-transit" value="public"> -->
+<!-- 							<label for="changemode-transit">大眾運輸</label> -->
+<!-- 							<input type="radio" name="traffic" id="changemode-walking" value="walk"> -->
+<!-- 							<label for="changemode-walking">步行</label> -->
+							<label>
+								<span>到下一站距離：</span>
+								<span id="tDistance"></span>
+								<span style="margin-left: 10px">時間:</span>
+								<span id="tTime" name="tTime"></span>
+							</label>
+							<input name="tripitem_begin" type="number" style="display: none"/>
+							<input name="tripitem_staytime" type="number" style="display: none"/>
+							<input name="tripitem_end" type="number" style="display: none"/>
+						</div>
 					</div>
-					<div class="col-sm-2 col-sm-offset-2">
-						<button type="button" class="btn-success form-control" id="addTripBtn">新增</button>
-					</div>
-					<div class="col-sm-2 col-sm-offset-2">
-						<button type="button" class="btn-danger form-control" id="deleteTripBtn">重設</button>
-					</div>
-				</div>			
-			
-				<div  id="start" class="row div1 col-sm-12">
-					<div class="col-sm-10 form-group">
-						<label>出發地點：</label> <input type="text" id="possition"
-							placeholder="地址或景點名稱">
-					</div>
-					<div class="col-sm-10 form-group">
-						<label for="attName">出發時間：</label> <input type="datetime-local" id="sTime" name="sTime">
-					</div>
-					<div class="col-sm-12 form-group">
-<!-- 						<label>交通方式：</label>  -->
-<!-- 						<input type="radio" name="traffic" id="changemode-driving" value="car" checked> -->
-<!-- 						<label for="changemode-driving">開車</label> -->
-<!-- 						<input type="radio" name="traffic" id="changemode-transit" value="public"> -->
-<!-- 						<label for="changemode-transit">大眾運輸</label> -->
-<!-- 						<input type="radio" name="traffic" id="changemode-walking" value="walk"> -->
-<!-- 						<label for="changemode-walking">步行</label> -->
-						<label>
-							<span>到下一站距離：</span>
-							<span id="tDistance"></span>
-							<span style="margin-left: 10px">時間:</span>
-							<span id="tTime" name="tTime"></span>
-						</label>
-						<input name="tripitem_begin" type="number" style="display: none"/>
-						<input name="tripitem_staytime" type="number" style="display: none"/>
-						<input name="tripitem_end" type="number" style="display: none"/>
-					</div>
-				</div>
+				</c:forEach>
 				
 				<input type="button" class="row div2 col-sm-12" id="addTripitemBtn"
 					value="+新增行程...">
 					
-				<div class="row div3 col-sm-12" style="display: none" id="div3">
+				<div class="row div3 col-sm-12" id="div3">
 					<div class="col-sm-12 form-group">
 						<label>選擇縣市：</label> 
 						<select  id="region_id" name="region_id">
@@ -177,7 +166,89 @@
 						<button type="button" id="searchAtt">查詢</button>
 					</div>
 				</div>
+	 			<div id="sortable" style="clear:both; margin-right: 28px">
+					<c:forEach begin="1" var="tripitemVO" items="${tripitemVO}">	
+					<%  
+					pageContext.removeAttribute("attVO");
+					pageContext.removeAttribute("hotelVO");
+					TripitemVO tripitemVO =(TripitemVO) pageContext.getAttribute("tripitemVO"); 
+					if(tripitemVO.getAtt_id()!=null){
+					AttVO attVO = attDao.findById(tripitemVO.getAtt_id());
+     				pageContext.setAttribute("attVO", attVO); 
+					}else if(tripitemVO.getHotel_id()!=null){
+					HotelVO hotelVO = hotelDao.findById(tripitemVO.getHotel_id());        
+     				pageContext.setAttribute("hotelVO", hotelVO); 
+					}
+    				%>
+		 				<table style="width: 100% ;table-layout: fixed;margin-top: 10px">
+		 					<tbody class="div6">
+		 						<tr>
+		 							<td colspan="3">
+		 								<input type="hidden" name="addr" value="${tripitemVO.tripitem_traffic}">
+		 								<input type="hidden" name="att_id" value="${tripitemVO.att_id}">
+		 								<input type="hidden" name="hotel_id" value="${tripitemVO.hotel_id}">
+		 								<input type="hidden" name="tripitemId" value="${tripitemVO.tripitem_id}">
+		 							</td>
+		 							<td colspan="3">
+		 								<P>預算:<input name="tripitem_price" type="number" style="width:60px" value="${tripitemVO.tripitem_price}" min="0">元</P>
+		 							</td>
+		 							<td colspan="3">
+		 								<P>停留:<input type="number" name="wTime" style="width:60px" value="${tripitemVO.tripitem_staytime}" min="0">分</P>
+		 							</td>
+		 							<td colspan="3">
+		 									<P name="sTime">起:</P>
+		 							</td>
+		 						</tr>
+		 						<tr>
+		 							<td colspan="3" style="text-align:center">
+										<a href="att1.att_url" target="_new"><label>${attVO.att_name}${hotelVO.hotel_name}</label></a>
+		 							</td>
+		 							<td colspan="3">
+		 								<P>註記:</P>
+		 							</td>
+		 							<td colspan="3">
+					 					<div style="display:none">
+					 						<label>begin:<input type="number" name="tripitem_begin"></label>
+					 						<label>staytime：<input type="number" name="tripitem_staytime"></label>
+					 						<label>end:<input type="number" name="tripitem_end"></label>
+					 					</div>
+		 							</td>
+		 							<td colspan="3">
+		 									<P name="eTime">迄:</P> 
+		 							</td>									
+		 						</tr>
+		 						<tr>
+		 							<td colspan="3">
+		 							</td>
+		 							<td colspan="6">
+		 								<textarea  name="tripitem_memo" rows="2" style="width:100%" placeholder="註記">${tripitemVO.tripitem_memo}</textarea>
+		 							</td>
+		 							<td colspan="3">
+		 								<input type="button" class="deleteTripitem" style="margin-left: 7px" value="刪除">
+		 							</td>							
+		 						</tr>
+		 						<tr class="div5">
+<!-- 		 							<th colspan="7"> -->
+<!-- 		 								<label>到下一站交通方式：</label>  -->
+<%-- 		 								<input type="radio" name="${tripitemVO.tripitem_serial}" value="car" checked>開車  --%>
+<%-- 		 								<input type="radio" name="${tripitemVO.tripitem_serial}" value="public">大眾運輸  --%>
+<%-- 		 								<input type="radio" name="${tripitemVO.tripitem_serial}" value="walk">步行									 --%>
+<!-- 		 							</th> -->
+		 							<td colspan="12" style="text-align: center">
+		 								<label>
+			 								<span>到下一站距離:</span>
+			 								<span name="tDistance"></span>
+			 								<span style="margin-left:10px">時間:</span>
+			 								<span name="tTime"></span>
+										</label>
+		 							</td>
+		 						</tr>
+		 					</tbody>
+		 				</table>
+					</c:forEach>
+	 			</div>
 			</div>
+			
 			
 			<div class="col-sm-5">
 				<div class="row">
@@ -185,7 +256,7 @@
 				</div>
 				<div class="row" style="margin-top: 20px">
 					<div class="col-sm-6 col-sm-offset-3 form-group">
-						<button type="button" class="btn-success form-control" id="saveBtn">Save</button>
+						<button type="button" class="btn-success form-control" id="saveBtn">修改</button>
 					</div>
 				</div>
 			</div>
@@ -198,10 +269,7 @@
 		var regionList;
 		var serviceProvider = "${contextPath}/hotels";
 		var addrArray=[];
-		var trip_id=null;
-		//定義sortable form
-		var tripForm=$("<form></form>").attr("id","tripForm").attr("style","clear:both; margin-right: 28px;")
-		var sortDiv=$("<div></div>").attr("id","sortable");
+		var trip_id=$("#start").find("input[name=trip_id]").val();
 		var count = "A";
 		var sumBudget=0;
 		
@@ -218,8 +286,7 @@
 			
 			directionsDisplay.setMap(map);
 
-						calculateAndDisplayRoute(directionsService,directionsDisplay);
-
+			calculateAndDisplayRoute(directionsService,directionsDisplay);
 		}
 		
 		function calculateAndDisplayRoute(directionsService, directionsDisplay) {
@@ -241,6 +308,7 @@
 				if (status === google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(response);
 					var route = response.routes[0];
+
 					$("#tDistance").empty();
 					$("#tTime").empty();
 					
@@ -250,6 +318,7 @@
 					$("#tDistance").append(route.legs[0].distance.text);
 					$("#tTime").append(route.legs[0].duration.text);
 					
+					//idx為String要轉型  並判斷table個數
 		            $("#sortable>table").each(function(idx,table){
 // 		            	console.log("idx="+idx);
 // 		            	console.log("table="+table);
@@ -289,7 +358,18 @@
 			//刪除景點明細
 			function deleteTripitem(){
 				$(".deleteTripitem").off('click').on('click',function(){
+					console.log("test1111");
 					addrArray.splice($( ".deleteTripitem" ).index($( this )),1);
+					var tripitemId=$(this).parent().parent().parent().parent().find("input[name='tripitemId']").val();
+					console.log(tripitemId);
+						$.ajax({
+							type : "delete",
+							url:"TripitemServlet?" + $.param({"tripitemId" : tripitemId}),
+							dataType : "json",
+							success : function(data) {
+								console.log("刪除成功");
+							}
+						})
 					$(this).parent().parent().parent().parent().remove();
 					initMap();
 				})
@@ -319,6 +399,7 @@
 					  var newEt = new Date(eTime+wTime).toTimeString();
 					  var eTidx = newEt.indexOf("G");
 					  newEt = "訖：" + newEt.substr(0,eTidx-4);
+					  
 
 					  //console.log(new Date(sTime+wTime)); //解開註解，可看該毫秒數所指日期。
 					  $(this).find('input[name="tripitem_end"]').val(sTime+wTime);
@@ -336,6 +417,22 @@
 			
 		
 		$(function(){
+			$("#sortable>table").each(function(idx,addr){
+				addrArray.push($(this).find("input[name='addr']").val());
+			})
+			
+			console.log(addrArray);
+			
+			deleteTripitem();
+			
+			initMap();
+			
+	  		$("#possition").on("change",function(){
+				initMap();
+	  		})
+			
+			sortable();
+			
 			//監聽每一個input的變化
 	  		$(document).on("change","input[name$='Time']",function(){
 		  		console.log("input changed");
@@ -343,10 +440,6 @@
 		  		timeInit();
 		  		timeReveal();
 	  		}); 
-			
-	  		$("#possition").on("change",function(){
-				initMap();
-	  		})
 			
 			//拖拉排序
 			function sortable(){
@@ -365,32 +458,6 @@
 					 	 }
 			    }).disableSelection();
 			}
-
-			//新增行程
-			$("#addTripBtn").off('click').on('click',function(){
-				var tripName=$("#trip_name").val();
-				var json={"trip_name":tripName,"trip_price":0};
-				$("#errMsg1").remove();
-				$.post("TripServlet",JSON.stringify(json),function(data){
-					console.log(data);
-					if(data.result[0]=="新增失敗。"){
-						var errMsg1=$("<span></span>").attr("style","color:red;font-size:70%").attr("id","errMsg1").text(data.trip_name[0])
-						$("#trip_name").after(errMsg1);
-					}else{
-// 						console.log("tripId="+data.trip_id[0]);
-						trip_id=data.trip_id[0];
-						$(".addTripDiv").css("display","none");
-						$(".div1").css("display","block");
-						$(".div2").css("display","block");
-						$("#title1").css("display","none");
-						$("#title2").css("display","block");
-					}
-				})
-			})  //移除錯誤訊息
-			$("#deleteTripBtn").off('click').on('click',function(){
-				$("#trip_name").val("");
-				$("#errMsg1").remove();				
-			})
 			
 			//加入行程
 			$('#addTripitemBtn').off('click').on('click',function(){
@@ -497,7 +564,6 @@
 				    $("#sendBtn").off('click').on('click',function(){
 						$("#addTripitemBtn").css("display","block");
 						$("#div3").css("display","none");
-						tripForm.append(sortDiv);
 
 				    	var selected=[];
 				        $("input[name='attCheck']:checked").each(function(){
@@ -590,8 +656,7 @@
 									tripitemTable.append(dataBox);
 								   //-------------------------------------------------------------------------------啟程初始值請另取值
 									
-									sortDiv.append(tripitemTable);
-									
+									$("#sortable").append(tripitemTable);
 									
 									addrArray.push(att1.att_addr);
 									
@@ -603,8 +668,6 @@
 								deleteTripitem();
 							})
 				       	});
-// 				        alert("景點名稱 : " + selected.join());
-                        $("#div3").after(tripForm);
 						$("#div3 input").val("");
 						$("#region_id option[value='0']").prop("selected",true);
 						$("#tripType option[value='0']").prop("selected",true);
@@ -685,7 +748,6 @@
 					    $("#sendBtn").off('click').on('click',function(){
 							$("#addTripitemBtn").css("display","block");
 							$("#div3").css("display","none");
-							tripForm.append(sortDiv);
 
 					    	var selected=[];
 					        $("input[name='attCheck']:checked").each(function(){
@@ -784,7 +846,7 @@
 										tripitemTable.append(dataBox);
 									   //-------------------------------------------------------------------------------啟程初始值請另取值
 										
-										sortDiv.append(tripitemTable);
+										$("#sortable").append(tripitemTable);
 										
 										addrArray.push(hotel1.hotel_addr);
 									})
@@ -796,7 +858,6 @@
 									deleteTripitem();
 								})
 					       	});
-	                        $("#div3").after(tripForm);
 							$("#div3 input").val("");
 							$("#region_id option[value='0']").prop("selected",true);
 							$("#tripType option[value='0']").prop("selected",true);
@@ -879,12 +940,10 @@
 					attForm.appendChild(sendBtn);
 					$("#div3").after(attForm);
 					
-				
 					//景點選單送出
 				    $("#sendBtn").off('click').on('click',function(){
 						$("#addTripitemBtn").css("display","block");
 						$("#div3").css("display","none");
-						tripForm.append(sortDiv);
 				    	var selected=[];
 				        $("input[name='attCheck']:checked").each(function(){
 							var attname1=$(this).val();
@@ -979,7 +1038,7 @@
 									tripitemTable.append(dataBox);
 								   //-------------------------------------------------------------------------------啟程初始值請另取值
 									
-									sortDiv.append(tripitemTable);
+									$("#sortable").append(tripitemTable);
 									
 									addrArray.push(att1.att_addr);
 								})
@@ -991,7 +1050,6 @@
 								deleteTripitem();
 							})
 				       	});
-                        $("#div3").after(tripForm);
 						$("#div3 input").val("");
 						$("#region_id option[value='0']").prop("selected",true);
 						$("#tripType option[value='0']").prop("selected",true);
@@ -1003,21 +1061,25 @@
 		   });
 			
 			$("#saveBtn").off('click').on('click',function(){
-					
 					var json = {
 							"trip_id":trip_id,
+							"tripitem_id":$("#start").find("input[name='tripitemId']").val(),
 							"tripitem_serial":"0",
 							"tripitem_staytime":"0",
 							"tripitem_memo":$("#possition").val(),
 							"tripitem_begin":$("#start input[name='tripitem_begin']").val(),
-							"tripitem_end":$("#start input[name='tripitem_end']").val(),
+							"tripitem_end":$("#start input[name='tripitem_end']").val()
 					};
-					$.post("../tripitem/TripitemServlet",JSON.stringify(json)).done(function(data){
-						console.log(data);
-						$.each(data,function(idx,result){
-							console.log(result);
-						})
-					})
+					console.log(json);
+					$.ajax({
+						"type":"PUT",
+						"url":"../tripitem/TripitemServlet",
+						"dataType":"json",
+						"data":JSON.stringify(json),
+						"success":function(data){
+							console.log(data.result);
+	                        }
+					})	
 					
 					$("#sortable > table").each(function(idx,table){
 // 						console.log("idx="+idx);
@@ -1025,6 +1087,7 @@
 						var tripitemPrice=$(this).find("input[name='tripitem_price']").val();
 						var itemJson={
 								"trip_id":trip_id,
+								"tripitem_id":$(this).find("input[name='tripitemId']").val(),
 								"tripitem_serial":(parseInt(idx)+1),
 								"att_id":$(this).find("input[name='att_id']").val(),
 								"hotel_id":$(this).find("input[name='hotel_id']").val(),
@@ -1035,14 +1098,18 @@
 								"tripitem_price":$(this).find("input[name='tripitem_price']").val(),
 								"tripitem_traffic":$(this).find("input[name$='addr']").val()
 						};
+						console.log(itemJson);
 						sumBudget=sumBudget+parseInt(tripitemPrice);
 						console.log("itemJson="+itemJson);
-						$.post("../tripitem/TripitemServlet",JSON.stringify(itemJson)).done(function(data){
-							console.log(data);
-							$.each(data,function(idx,result){
-								console.log(result);
-							})
-						})
+						$.ajax({
+							"type":"PUT",
+							"url":"../tripitem/TripitemServlet",
+							"dataType":"json",
+							"data":JSON.stringify(itemJson),
+							"success":function(data){
+								console.log(data.result);
+		                        }
+						})	
 					})
 					
 					$.get("TripServlet",{"trip_id":trip_id,"method":"getOneById"},function(data){
@@ -1066,6 +1133,7 @@
 						})		
 					})
 			})
+			
 	    });
 			
 	</script>

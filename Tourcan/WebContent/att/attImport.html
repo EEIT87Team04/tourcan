@@ -107,12 +107,13 @@
 					</div>
 
 					<div class="row">
-						<div class="col-sm-12 form-group">
+						<div class="col-sm-10 form-group">
 							<label>開放時間</label>
 							<textarea class="form-control" rows="2" id="att_open"
 								name="att_open" placeholder="開放時間"></textarea>
 						</div>
 					</div>
+					
 					<div class="row">
 						<div class="col-sm-7 form-group">
 							<button type="button" class="btn btn-success form-control"
@@ -208,6 +209,9 @@
 						json[form[i].name] = form[i].value;
 					}
 				}
+				
+				console.log(json);
+				
 				json["regionVO"] = regionList[json.region_id];
 
 				$.post("AttServlet", JSON.stringify(json)).done(function(data) {
