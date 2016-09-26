@@ -50,6 +50,11 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 
+	<bean id="adminDAO" class="com.tourcan.admin.model.AdminFakeDAO">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="adminVO" class="com.tourcan.admin.model.AdminVO" scope="prototype" />
+	
 	<bean id="memDAO" class="com.tourcan.mem.model.MemHibernateDAO">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
