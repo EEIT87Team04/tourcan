@@ -173,10 +173,12 @@
 
 			var att_id;
 		$(function() {
-			//-----page buttons-----
-			var pBtn = $("<a></a>").append($("<strong></strong>").text("≡景點列表").addClass("pageBtn")).attr("href","${contextPath}/att/list.jsp");
+			//------------------page buttons------------------
+			var pBtn = $("<a></a>").append($("<strong></strong>")
+								   .text("≡景點列表").addClass("pageBtn"))
+								   .attr("href","${contextPath}/adridores/att");
 			$("#pageBtns").append(pBtn);			
-			//-----page buttons-----
+			//------------------page buttons------------------
 			
 			$.get("RegionServlet").done(
 					function(list) {
