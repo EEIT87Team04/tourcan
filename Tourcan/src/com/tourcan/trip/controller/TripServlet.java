@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.tourcan.mem.model.MemVO;
 import com.tourcan.trip.model.TripService;
 import com.tourcan.trip.model.TripVO;
 import com.tourcan.tripitem.model.TripitemService;
@@ -214,8 +215,10 @@ public class TripServlet extends HttpServlet {
 				tripPrice = tripVO.getTrip_price();
 			}catch(Exception e){
 			}
-
-			memUid ="h9nbaY43OGRODXAGp2XMMhskW9r1"; // 抓出建立會員Id 且 不能修改
+			
+			
+			MemVO memVO = (MemVO) request.getSession().getAttribute("vo");
+			memUid = memVO.getMem_uid();
 			tripVO.setMem_uid(memUid);
 
 			if (checkResult.length() > 0) {

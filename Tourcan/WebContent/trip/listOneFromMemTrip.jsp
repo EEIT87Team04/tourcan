@@ -15,7 +15,7 @@
 	<div class="container">
 		<span style="font-size: 200%;font-weight:bold">我 的 行 程</span>	
 			<div class='row'>
-				<input type="hidden" id="mem_uid" name="mem_uid" value="h9nbaY43OGRODXAGp2XMMhskW9r1" >
+				<input type="hidden" id="mem_uid" name="mem_uid" value="${vo.mem_uid}" >
 				<input type="button" class="btn btn-info btn-lg  " id="serach" value="查詢">
 				<input type="button" class="btn btn-defaulf btn-lg pull-right" id="cancel" value="取消查詢">
 			</div>
@@ -34,7 +34,7 @@
 		</table>
 		
 	</div>
-<script src="../js/jquery-3.1.0.min.js"></script>  
+<script src="${contextPath}/js/jquery-3.1.0.min.js"></script>  
 	<script type="text/javascript">
 	
 	function searchCheck(){
@@ -43,7 +43,7 @@
 		myBody.empty();
 		var memuid=$("#mem_uid").val();
 //		console.log(memuid);
-	$.getJSON(("TripServlet"),{"mem_uid":memuid,"method":"findByMemuid"},function(data){
+	$.getJSON(("${contextPath}/trip/TripServlet"),{"mem_uid":memuid,"method":"findByMemuid"},function(data){
 		$.each(data,function(idx, tripvalue){
 //				console.log(idx);
 			var input3= $("<input/>").attr("type","hidden").attr('name','method').val("findByID");
