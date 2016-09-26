@@ -111,9 +111,10 @@
 				<c:forEach begin="0" end="0" var="tripitemVO1" items="${tripitemVO}">	
 					<div  id="start" class="row div1 col-sm-12">
 						<div class="col-sm-10 form-group">
-							<label>出發地點：</label> <input type="text" id="possition"
-								placeholder="地址或景點名稱" value="${tripitemVO1.tripitem_memo}">
-	<!-- 						<button type="button">送出</button> -->
+							<label>出發地點：</label> 
+							<input type="text" id="possition" placeholder="地址或景點名稱" value="${tripitemVO1.tripitem_memo}">
+							<input type="hidden" name="tripitemId" value="${tripitemVO1.tripitem_id}">
+							<input type="hidden" name="trip_id" value="${tripitemVO1.trip_id}">
 						</div>
 						<div class="col-sm-10 form-group">
 							<label for="attName">出發時間：</label> <input type="datetime-local" id="sTime" name="sTime"  value='${tripitemVO1.tripitem_begin.toString().replace(" ","T")}'>
@@ -201,7 +202,8 @@
 		 							<td colspan="3">
 		 								<input type="hidden" name="addr" value="${tripitemVO.tripitem_traffic}">
 		 								<input type="hidden" name="att_id" value="${tripitemVO.att_id}">
-		 								<input type="hidden" id="hotel_id" value="${tripitemVO.hotel_id}">
+		 								<input type="hidden" name="hotel_id" value="${tripitemVO.hotel_id}">
+		 								<input type="hidden" name="tripitemId" value="${tripitemVO.tripitem_id}">
 		 							</td>
 		 							<td colspan="3">
 		 								<P>預算:<input name="tripitem_price" type="number" style="width:60px" value="${tripitemVO.tripitem_price}" min="0">元</P>
@@ -267,7 +269,7 @@
 		var regionList;
 		var serviceProvider = "${contextPath}/hotels";
 		var addrArray=[];
-		var trip_id=null;
+		var trip_id=$("#start").find("input[name=trip_id]").val();
 		var count = "A";
 		var sumBudget=0;
 		
@@ -357,7 +359,18 @@
 			//刪除景點明細
 			function deleteTripitem(){
 				$(".deleteTripitem").off('click').on('click',function(){
+					console.log("test1111");
 					addrArray.splice($( ".deleteTripitem" ).index($( this )),1);
+					var tripitemId=$(this).parent().parent().parent().parent().find("input[name='tripitemId']").val();
+					console.log(tripitemId);
+						$.ajax({
+							type : "delete",
+							url:"TripitemServlet?" + $.param({"tripitemId" : tripitemId}),
+							dataType : "json",
+							success : function(data) {
+								console.log("刪除成功");
+							}
+						})
 					$(this).parent().parent().parent().parent().remove();
 					initMap();
 				})
@@ -411,7 +424,13 @@
 			
 			console.log(addrArray);
 			
+			deleteTripitem();
+			
 			initMap();
+			
+	  		$("#possition").on("change",function(){
+				initMap();
+	  		})
 			
 			sortable();
 			
@@ -1081,18 +1100,23 @@
 			$("#saveBtn").off('click').on('click',function(){
 					var json = {
 							"trip_id":trip_id,
+							"tripitem_id":$("#start").find("input[name='tripitemId']").val(),
 							"tripitem_serial":"0",
 							"tripitem_staytime":"0",
 							"tripitem_memo":$("#possition").val(),
 							"tripitem_begin":$("#start input[name='tripitem_begin']").val(),
 							"tripitem_end":$("#start input[name='tripitem_end']").val()
 					};
-					$.post("../tripitem/TripitemServlet",JSON.stringify(json)).done(function(data){
-						console.log(data);
-						$.each(data,function(idx,result){
-							console.log(result);
-						})
-					})
+					console.log(json);
+					$.ajax({
+						"type":"PUT",
+						"url":"../tripitem/TripitemServlet",
+						"dataType":"json",
+						"data":JSON.stringify(json),
+						"success":function(data){
+							console.log(data.result);
+	                        }
+					})	
 					
 					$("#sortable > table").each(function(idx,table){
 // 						console.log("idx="+idx);
@@ -1100,6 +1124,7 @@
 						var tripitemPrice=$(this).find("input[name='tripitem_price']").val();
 						var itemJson={
 								"trip_id":trip_id,
+								"tripitem_id":$(this).find("input[name='tripitemId']").val(),
 								"tripitem_serial":(parseInt(idx)+1),
 								"att_id":$(this).find("input[name='att_id']").val(),
 								"hotel_id":$(this).find("input[name='hotel_id']").val(),
@@ -1110,14 +1135,18 @@
 								"tripitem_price":$(this).find("input[name='tripitem_price']").val(),
 								"tripitem_traffic":$(this).find("input[name$='addr']").val()
 						};
+						console.log(itemJson);
 						sumBudget=sumBudget+parseInt(tripitemPrice);
 						console.log("itemJson="+itemJson);
-						$.post("../tripitem/TripitemServlet",JSON.stringify(itemJson)).done(function(data){
-							console.log(data);
-							$.each(data,function(idx,result){
-								console.log(result);
-							})
-						})
+						$.ajax({
+							"type":"PUT",
+							"url":"../tripitem/TripitemServlet",
+							"dataType":"json",
+							"data":JSON.stringify(itemJson),
+							"success":function(data){
+								console.log(data.result);
+		                        }
+						})	
 					})
 					
 					$.get("TripServlet",{"trip_id":trip_id,"method":"getOneById"},function(data){

@@ -24,7 +24,7 @@
 			<thead>
 				<tr class="warning">
 					<th class="col-md-5">主題名稱</th>
-					<th class="col-md-4">總運算</th>
+					<th class="col-md-4">總預算</th>
 					<th class="col-md-3">創建時間</th>
 					<th >刪除</th>
 				</tr>

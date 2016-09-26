@@ -21,7 +21,7 @@ import com.tourcan.trip.model.TripService;
 import com.tourcan.trip.model.TripVO;
 import com.tourcan.tripitem.model.TripitemService;
 
-@WebServlet("/trip/TripServlet")
+@WebServlet(urlPatterns={"/trip/TripServlet","/tripitem/TripServlet"})
 public class TripServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

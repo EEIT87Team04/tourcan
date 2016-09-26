@@ -280,20 +280,25 @@ public class TripitemServlet extends HttpServlet {
 		try {
 			JSONObject obj = new JSONObject(json); // received and parsed JSON
 			
-			tripitemId = new Integer(request.getParameter("tripitem_id"));
+			try{
+				System.out.println(obj.get("tripitem_id"));
+				tripitemId = obj.getInt("tripitem_id");
+			}catch(Exception e){
+				obj.remove("tripitem_id");
+			}
 			
 			tripId = obj.getInt("trip_id");
 
 			try {
 				attId = obj.getInt("att_id");
 			} catch (Exception e) {
-//				e.printStackTrace();
+				obj.remove("att_id");
 			}
 			
 			try {
 				hotelId = obj.getInt("hotel_id");
 			} catch (Exception e) {
-//				e.printStackTrace();
+				obj.remove("hotel_id");
 			}
 			
 			tripitemSerial = obj.getInt("tripitem_serial");
@@ -359,7 +364,7 @@ public class TripitemServlet extends HttpServlet {
 				}
 				
 		} catch (Exception e) {
-			checkResult.append("result", "新增失敗。");
+			checkResult.append("result", "更新失敗。");
 			response.getWriter().println(checkResult.toString());
 			e.printStackTrace();
 		}

@@ -387,6 +387,10 @@
 		  		timeReveal();
 	  		}); 
 			
+	  		$("#possition").on("change",function(){
+				initMap();
+	  		})
+			
 			//拖拉排序
 			function sortable(){
 				$( "#sortable" ).sortable({
