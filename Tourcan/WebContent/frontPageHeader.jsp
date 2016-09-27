@@ -16,7 +16,8 @@
 <!--   <script src="//s3-ap-northeast-1.amazonaws.com/justfont-user-script/jf-44849.js"></script> -->
 
 <link href='//fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'><script type="text/javascript">var _jf = _jf || [];_jf.push(['p','44849']);_jf.push(['_setFont','dath7','css','.dath7']);_jf.push(['_setFont','dath7','alias','dath7']);_jf.push(['_setFont','dath7','english','Open Sans']);_jf.push(['_setFont','dath7','weight',700]);(function(f,q,c,h,e,i,r,d){var k=f._jf;if(k.constructor===Object){return}var l,t=q.getElementsByTagName("html")[0],a=function(u){for(var v in k){if(k[v][0]==u){if(false===k[v][1].call(k)){break}}}},j=/\S+/g,o=/[\t\r\n\f]/g,b=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,g="".trim,s=g&&!g.call("\uFEFF\xA0")?function(u){return u==null?"":g.call(u)}:function(u){return u==null?"":(u+"").replace(b,"")},m=function(y){var w,z,v,u,x=typeof y==="string"&&y;if(x){w=(y||"").match(j)||[];z=t[c]?(" "+t[c]+" ").replace(o," "):" ";if(z){u=0;while((v=w[u++])){if(z.indexOf(" "+v+" ")<0){z+=v+" "}}t[c]=s(z)}}},p=function(y){var w,z,v,u,x=arguments.length===0||typeof y==="string"&&y;if(x){w=(y||"").match(j)||[];z=t[c]?(" "+t[c]+" ").replace(o," "):"";if(z){u=0;while((v=w[u++])){while(z.indexOf(" "+v+" ")>=0){z=z.replace(" "+v+" "," ")}}t[c]=y?s(z):""}}},n;k.push(["_eventActived",function(){p(h);m(e)}]);k.push(["_eventInactived",function(){p(h);m(i)}]);k.addScript=n=function(u,A,w,C,E,B){E=E||function(){};B=B||function(){};var x=q.createElement("script"),z=q.getElementsByTagName("script")[0],v,y=false,D=function(){x.src="";x.onerror=x.onload=x.onreadystatechange=null;x.parentNode.removeChild(x);x=null;a("_eventInactived");B()};if(C){v=setTimeout(function(){D()},C)}x.type=A||"text/javascript";x.async=w;x.onload=x.onreadystatechange=function(G,F){if(!y&&(!x.readyState||/loaded|complete/.test(x.readyState))){y=true;if(C){clearTimeout(v)}x.src="";x.onerror=x.onload=x.onreadystatechange=null;x.parentNode.removeChild(x);x=null;if(!F){setTimeout(function(){E()},200)}}};x.onerror=function(H,G,F){if(C){clearTimeout(v)}D();return true};x.src=u;z.parentNode.insertBefore(x,z)};a("_eventPreload");m(h);n(r,"text/javascript",false,3000)})(this,this.document,"className","jf-loading","jf-active","jf-inactive","//d3gc6cgx8oosp4.cloudfront.net/js/stable/v/5.0.1/id/171580764262");</script>
-
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
     <!-- Custom CSS -->
     <style>
     body {
@@ -87,7 +88,7 @@
                     <li><a class="dath7" href="${contextPath}/attractions">景點</a></li>
                     <li><a class="dath7" href="${contextPath}/restaurants">美食</a></li>
                     <li><a class="dath7" href="${contextPath}/hotels">住宿</a></li>
-                    <li><a class="dath7" href="${contextPath}/trips">規劃行程</a></li>
+                    <li><a class="dath7" href="${contextPath}/trip/listOneFromMemTrip.jsp">規劃行程</a></li>
                     <li><a class="dath7" href="${contextPath}/articles/list.jsp">討論區</a></li>
                     <c:if test="${vo!=null}">
                     <li><a class="dath7" href="${contextPath}/quest/questGetById.jsp">客服</a></li>

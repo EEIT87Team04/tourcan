@@ -203,3 +203,81 @@
     width: 46%;
     margin: auto;
 }
+
+/*Trip*/
+
+#mapPreview {
+	height: 400px;
+	border: 2px solid #E0E0E0;
+}
+
+.addTripDiv{
+	background-color: #F1E1FF;
+	border: 2px solid #E0E0E0;
+	border-radius: 20px;
+	margin-bottom: 5px;
+	padding: 5px;
+	display: block;
+}
+
+.div1 {
+	background-color: #FFECEC;
+	border: 2px solid #E0E0E0;
+	border-radius: 20px;
+	margin-bottom: 5px;
+	padding-top: 3px;
+	display: block;
+}
+
+.div2 {
+	background-color: #F0F0F0;
+	border: 2px solid #E0E0E0;
+	border-radius: 20px;
+	margin-bottom: 5px;
+	padding-top: 3px;
+	text-align: left;
+	color: #9D9D9D;
+	display: block;
+}
+
+.div3 {
+	background-color: #F0F0F0;
+	border: 2px solid #E0E0E0;
+	border-radius: 20px;
+	margin-bottom: 5px;
+	padding-top: 3px;
+	display: none;
+}
+
+.div4 {
+	background-color: #FFFFDF;
+	border: 2px solid #E0E0E0;
+	margin-bottom: 5px;
+	padding-top: 3px;
+	text-align:center;
+	height: 400PX; 
+	overflow:scroll;
+}
+
+.divAtt {
+	background-color: #DFFFDF;
+	border: 2px solid #E0E0E0;
+	border-radius: 20px;
+	margin: 3px;
+	padding-top: 3px;
+}
+
+.div5 {
+	background-color:#FFFCEC;
+	border: 2px solid #E0E0E0;
+	padding-top: 3px;
+	text-align: center;
+	font-weight:bold;
+}
+
+.div6 {
+	background-color:#FFF4C1;
+	border: 2px solid #E0E0E0;
+ 	margin-bottom: 5px; 
+	padding-top: 3px;
+}

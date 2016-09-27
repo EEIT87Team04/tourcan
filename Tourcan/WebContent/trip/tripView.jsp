@@ -1,102 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>加入行程</title>
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
-
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-<style type="text/css">
-#mapPreview {
-	height: 400px;
-	border: 2px solid #E0E0E0;
-}
-
-.addTripDiv{
-	background-color: #F1E1FF;
-	border: 2px solid #E0E0E0;
-	border-radius: 20px;
-	margin-bottom: 5px;
-	padding: 5px;
-	display: block;
-}
-
-.div1 {
-	background-color: #FFECEC;
-	border: 2px solid #E0E0E0;
-	border-radius: 20px;
-	margin-bottom: 5px;
-	padding-top: 3px;
-	display: none;
-}
-
-.div2 {
-	background-color: #F0F0F0;
-	border: 2px solid #E0E0E0;
-	border-radius: 20px;
-	margin-bottom: 5px;
-	padding-top: 3px;
-	text-align: left;
-	color: #9D9D9D;
-	display: none;
-}
-
-.div3 {
-	background-color: #F0F0F0;
-	border: 2px solid #E0E0E0;
-	border-radius: 20px;
-	margin-bottom: 5px;
-	padding-top: 3px;
-}
-
-.div4 {
-	background-color: #FFFFDF;
-	border: 2px solid #E0E0E0;
-	margin-bottom: 5px;
-	padding-top: 3px;
-	text-align:center;
-	height: 400PX; 
-	overflow:scroll;
-}
-
-.divAtt {
-	background-color: #DFFFDF;
-	border: 2px solid #E0E0E0;
-	border-radius: 20px;
-	margin: 3px;
-	padding-top: 3px;
-}
-
-.div5 {
-	background-color:#FFFCEC;
-	border: 2px solid #E0E0E0;
-	padding-top: 3px;
-	text-align: center;
-	font-weight:bold;
-}
-
-.div6 {
-	background-color:#FFF4C1;
-	border: 2px solid #E0E0E0;
- 	margin-bottom: 5px; 
-	padding-top: 3px;
-}
-</style>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-
-</head>
-<body>
+<jsp:include page="/frontPageHeader.jsp"/>
 	<div class="container">
 
 		<div class="row" style="display: block" id="title1">
@@ -1072,5 +977,4 @@
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGoTWzmY15u_6_Yo6ieFdEHAs2nZJHTBk&libraries=places&callback=initMap"
 		async defer></script>
-</body>
-</html>
+<jsp:include page="/frontPageFooter.jsp"/>

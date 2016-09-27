@@ -64,7 +64,7 @@
                 <small><a class="dath7" href="${contextPath}/attractions" onclick=$("#menu-close").click();>　景點</a></small>
                 <small><a class="dath7" href="${contextPath}/hotels" onclick=$("#menu-close").click();>　住宿</a></small>
                 <small><a class="dath7" href="${contextPath}/restaurants" onclick=$("#menu-close").click();>　美食</a></small>
-                <small><a class="dath7" href="${contextPath}/trips" onclick=$("#menu-close").click();>　規劃行程</a></small>
+                <small><a class="dath7" href="${contextPath}/trip/listOneFromMemTrip.jsp" onclick=$("#menu-close").click();>　規劃行程</a></small>
                 <small><a class="dath7" href="${contextPath}/articles/list.jsp" onclick=$("#menu-close").click();>　討 論區</a></small>
             </li>
             <li>
@@ -158,7 +158,7 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                               <a href="${contextPath}/trips"><img src="${contextPath}/images/front/icons/suitcase.png" class="front_icon"></a>
+                               <a href="${contextPath}/trip/listOneFromMemTrip.jsp"><img src="${contextPath}/images/front/icons/suitcase.png" class="front_icon"></a>
                             </span>
                                 <h4>
                                      <strong class="dath7" >規劃行程</strong>

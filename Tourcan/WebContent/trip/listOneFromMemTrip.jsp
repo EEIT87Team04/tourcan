@@ -1,18 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <!DOCTYPE html >
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<title>會員行程列表</title>
-</head>
-<body>
-	<div class="container">
+<jsp:include page="/frontPageHeader.jsp"/>
 			<div class='row'>
 		<span style="font-size: 200%;font-weight:bold">我 的 行 程</span>	
 				<input type="hidden" id="mem_uid" name="mem_uid" value="${vo.mem_uid}" >
@@ -34,7 +22,6 @@
 			</tbody>
 		</table>
 		
-	</div>
 <script src="${contextPath}/js/jquery-3.1.0.min.js"></script>  
 	<script type="text/javascript">
 	
@@ -115,5 +102,4 @@
 // 	}
 	
 	</script>
-</body>
-</html>
+<jsp:include page="/frontPageFooter.jsp"/>
