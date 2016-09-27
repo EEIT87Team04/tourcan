@@ -6,6 +6,8 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${contextPath}/css/emsBasic.css" />
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 <style type="text/css">
 /* override emsBasic.css */
 body {background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;}
@@ -45,7 +47,7 @@ body {background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;}
 				</a>
 			</div>
 			<div class="row" style="margin: 15px 15px">
-				<a id="trip" class="iconBtn shadowBtn" href="${contextPath}/trips">
+				<a id="trip" class="iconBtn shadowBtn" href="${contextPath}/trip/listAllTrip.jsp">
 					<img class="icon" src="${contextPath}/icons/EMS/trajectory.png"><span
 						class="liTxt">規劃行程</span>
 				</a>

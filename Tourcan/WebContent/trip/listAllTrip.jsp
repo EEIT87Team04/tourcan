@@ -11,15 +11,7 @@
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  	<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Trip主題列表</title>
-</head>
-<body >
+<jsp:include page="/emsPart1.jsp"/>
 <div class="container">
 	<div class="row" >
 		
@@ -231,5 +223,4 @@ $(function(){
 
 
 </script>
-</body>
-</html>
+<jsp:include page="/emsPart2.jsp"/>
