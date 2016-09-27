@@ -20,6 +20,7 @@ body {background: url(${contextPath}/images/emsBG.jpg) no-repeat center fixed;}
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<div class="listContainer" id="iBtnList">
 		<div class="col-md-2 listBox">
 			<div class="row" style="margin: 15px 15px">
