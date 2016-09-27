@@ -74,6 +74,7 @@ public class AttRestService {
 				imgs.add(request.getContextPath() + request.getServletPath() + request.getPathInfo() + "/photos/"
 						+ pvo.getPhoto_id());
 			request.setAttribute("imgs", imgs);
+			request.setAttribute("pageName", "景點");
 			request.getRequestDispatcher("/WEB-INF/att/fs_listOneAtt.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -161,6 +162,7 @@ public class AttRestService {
 			List<AttVO> vos = dao.findByName(name);
 			// 200 OK
 			request.setAttribute("attVO", vos);
+			request.setAttribute("pageName", "景點");
 			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -195,6 +197,7 @@ public class AttRestService {
 			List<AttVO> vos = dao.findByRegionId(region_id);
 			// 200 OK
 			request.setAttribute("attVO", vos);
+			request.setAttribute("pageName", "景點");
 			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -241,6 +244,7 @@ public class AttRestService {
 			// 200 OK
 			request.setAttribute("imgs", imgs);
 			request.setAttribute("attVO", vos);
+			request.setAttribute("pageName", "景點");
 			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();

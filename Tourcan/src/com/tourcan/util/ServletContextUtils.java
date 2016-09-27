@@ -15,6 +15,7 @@ public class ServletContextUtils implements ServletContextListener {
 		AdminDAO dao = new AdminFakeDAO();
 		// System.out.println("contextPath = " + sc.getContextPath());
 		sc.setAttribute("contextPath", sc.getContextPath());
+		sc.setAttribute("siteName", "Tourcan");
 		sc.setAttribute("admin", dao.findById(0));
 	}
 

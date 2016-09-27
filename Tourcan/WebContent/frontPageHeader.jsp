@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>Bare - Start Bootstrap Template</title>
+    <title>${pageName}${(pageName!=null) ? " - " : ""}${siteName}</title>
 
     <!-- Bootstrap Core CSS -->
   <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">

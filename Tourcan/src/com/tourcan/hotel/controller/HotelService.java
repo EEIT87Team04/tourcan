@@ -24,7 +24,6 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.tika.Tika;
 
-import com.tourcan.att.model.AttVO;
 import com.tourcan.hotel.model.HotelDAO;
 import com.tourcan.hotel.model.HotelVO;
 import com.tourcan.photo.model.PhotoDAO_interface;
@@ -74,6 +73,7 @@ public class HotelService {
 				imgs.add(request.getContextPath() + request.getServletPath() + request.getPathInfo() + "/photos/"
 						+ pvo.getPhoto_id());
 			request.setAttribute("imgs", imgs);
+			request.setAttribute("pageName", "飯店");
 			request.getRequestDispatcher("/WEB-INF/hotel/fs_listOneAtt.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -161,6 +161,7 @@ public class HotelService {
 			List<HotelVO> vos = dao.findByName(name);
 			// 200 OK
 			request.setAttribute("hotelVO", vos);
+			request.setAttribute("pageName", "飯店");
 			request.getRequestDispatcher("/WEB-INF/hotel/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -195,6 +196,7 @@ public class HotelService {
 			List<HotelVO> vos = dao.findByRegionId(region_id);
 			// 200 OK
 			request.setAttribute("hotelVO", vos);
+			request.setAttribute("pageName", "飯店");
 			request.getRequestDispatcher("/WEB-INF/hotel/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -241,6 +243,7 @@ public class HotelService {
 			// 200 OK
 			request.setAttribute("imgs", imgs);
 			request.setAttribute("hotelVO", vos);
+			request.setAttribute("pageName", "飯店");
 			request.getRequestDispatcher("/WEB-INF/hotel/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();

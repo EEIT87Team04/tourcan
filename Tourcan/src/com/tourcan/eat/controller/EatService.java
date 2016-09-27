@@ -68,6 +68,7 @@ public class EatService {
 				imgs.add(request.getContextPath() + request.getServletPath() + request.getPathInfo() + "/photos/"
 						+ pvo.getPhoto_id());
 			request.setAttribute("imgs", imgs);
+			request.setAttribute("pageName", "美食");
 			request.getRequestDispatcher("/WEB-INF/att/fs_listOneAtt.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -155,6 +156,7 @@ public class EatService {
 			List<AttVO> vos = dao.findByName(name);
 			// 200 OK
 			request.setAttribute("attVO", vos);
+			request.setAttribute("pageName", "美食");
 			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -189,6 +191,7 @@ public class EatService {
 			List<AttVO> vos = dao.findByRegionId(region_id);
 			// 200 OK
 			request.setAttribute("attVO", vos);
+			request.setAttribute("pageName", "美食");
 			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
@@ -234,6 +237,7 @@ public class EatService {
 			// 200 OK
 			request.setAttribute("imgs", imgs);
 			request.setAttribute("attVO", vos);
+			request.setAttribute("pageName", "美食");
 			request.getRequestDispatcher("/WEB-INF/att/fs_List.jsp").forward(request, response);
 		} catch (ServletException e) {
 			e.printStackTrace();
