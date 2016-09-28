@@ -3,9 +3,11 @@ package com.tourcan.tripitem.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -179,10 +181,13 @@ public class TripitemServlet extends HttpServlet {
 			
 			try {
 				String Begin = obj.getString("tripitem_begin");
+				Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
+				cal1.setTimeInMillis(Long.parseLong(Begin));
+				long milis1 = cal1.getTimeInMillis();
 				if (Begin == null || Begin.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemBegin=new Timestamp(Long.parseLong(Begin));
+					tripitemBegin=new Timestamp(milis1);
 					obj.remove("tripitem_begin");
 //					obj.put("tripitem_begin", tripitemBegin);
 				}
@@ -193,10 +198,13 @@ public class TripitemServlet extends HttpServlet {
 			
 			try {
 				String End = obj.getString("tripitem_end");
+				Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
+				cal1.setTimeInMillis(Long.parseLong(End));
+				long milis2 = cal1.getTimeInMillis();
 				if (End == null || End.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemEnd=new Timestamp(Long.parseLong(End));
+					tripitemEnd=new Timestamp(milis2);
 					obj.remove("tripitem_end");
 //					obj.put("tripitem_end", tripitemEegin);
 				}
@@ -307,10 +315,13 @@ public class TripitemServlet extends HttpServlet {
 			
 			try {
 				String Begin = obj.getString("tripitem_begin");
+				Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
+				cal1.setTimeInMillis(Long.parseLong(Begin));
+				long milis1 = cal1.getTimeInMillis();
 				if (Begin == null || Begin.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemBegin=new Timestamp(Long.parseLong(Begin));
+					tripitemBegin=new Timestamp(milis1);
 					obj.remove("tripitem_begin");
 //					obj.put("tripitem_begin", tripitemBegin);
 				}
@@ -321,10 +332,13 @@ public class TripitemServlet extends HttpServlet {
 			
 			try {
 				String End = obj.getString("tripitem_end");
+				Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
+				cal1.setTimeInMillis(Long.parseLong(End));
+				long milis2 = cal1.getTimeInMillis();
 				if (End == null || End.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemEnd=new Timestamp(Long.parseLong(End));
+					tripitemEnd=new Timestamp(milis2);
 					obj.remove("tripitem_end");
 //					obj.put("tripitem_end", tripitemEegin);
 				}

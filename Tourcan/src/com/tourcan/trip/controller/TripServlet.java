@@ -3,9 +3,11 @@ package com.tourcan.trip.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -207,8 +209,11 @@ public class TripServlet extends HttpServlet {
 				checkResult.append("trip_name", "旅遊名稱不得超過50個字");
 			}
 
+			
 			// 抓出建立當下時間
-			tripCtime = new Timestamp(System.currentTimeMillis());
+			Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
+			long milis1 = cal1.getTimeInMillis();
+			tripCtime = new Timestamp(milis1);
 			tripVO.setTrip_ctime(tripCtime);
 
 			try{
@@ -266,7 +271,9 @@ public class TripServlet extends HttpServlet {
 			tripId = obj.getInt("trip_id");
 
 			// 抓出修改當下時間
-			tripCtime =new Timestamp(System.currentTimeMillis());
+			Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
+			long milis1 = cal1.getTimeInMillis();
+			tripCtime =new Timestamp(milis1);
 
 			tripPrice =obj.getInt("trip_price"); 
 
