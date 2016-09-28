@@ -100,7 +100,7 @@
                     
                     
                     <c:if test="${vo!=null}">
-                    <li style="margin-left: 550px"><a class="dath7" href="${contextPath}/mem/edituser" style="float: right;">
+                    <li style="margin-left: 450px"><a class="dath7" href="${contextPath}/mem/edituser" style="float: right;">
                     ${vo.mem_nick},<c:if test="${vo.mem_nick==null}">${vo.mem_fname}</c:if>您好！
                     </a>
                     </li>
@@ -109,7 +109,7 @@
                     </li>
 	            	</c:if>
                     <c:if test="${vo==null}">
-                    <li style="margin-left: 600px">
+                    <li style="margin-left: 450px">
                     <a class="dath7" href="${contextPath}/login.jsp">登入</a>
                     </li>
 					</c:if>
