@@ -20,7 +20,7 @@ public class AdminFakeDAO implements AdminDAO {
 
 		user = new AdminVO();
 		user.setAdmin_account("root");
-		user.setAdmin_id(0);
+		user.setAdmin_id(1);
 		user.setAdmin_level(0);
 		user.setAdmin_name("Root");
 		user.setAdmin_pwd("toor");
@@ -28,7 +28,7 @@ public class AdminFakeDAO implements AdminDAO {
 
 		user = new AdminVO();
 		user.setAdmin_account("pingu8007");
-		user.setAdmin_id(0);
+		user.setAdmin_id(2);
 		user.setAdmin_level(0);
 		user.setAdmin_name("劉慶和");
 		user.setAdmin_pwd("tourcan04");

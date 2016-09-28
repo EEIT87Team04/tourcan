@@ -3,6 +3,7 @@ package com.tourcan.trip.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -208,7 +209,7 @@ public class TripServlet extends HttpServlet {
 			}
 
 			// 抓出建立當下時間
-			tripCtime = new Timestamp(System.currentTimeMillis());
+			tripCtime = new Timestamp(System.currentTimeMillis()+8*60*1000*1000);
 			tripVO.setTrip_ctime(tripCtime);
 
 			try{
@@ -266,7 +267,7 @@ public class TripServlet extends HttpServlet {
 			tripId = obj.getInt("trip_id");
 
 			// 抓出修改當下時間
-			tripCtime =new Timestamp(System.currentTimeMillis());
+			tripCtime = new Timestamp(System.currentTimeMillis()+8*60*60*1000);
 
 			tripPrice =obj.getInt("trip_price"); 
 
