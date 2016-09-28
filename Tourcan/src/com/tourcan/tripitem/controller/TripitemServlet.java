@@ -181,13 +181,10 @@ public class TripitemServlet extends HttpServlet {
 			
 			try {
 				String Begin = obj.getString("tripitem_begin");
-				Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
-				cal1.setTimeInMillis(Long.parseLong(Begin));
-				long milis1 = cal1.getTimeInMillis();
 				if (Begin == null || Begin.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemBegin=new Timestamp(milis1);
+					tripitemBegin=new Timestamp(Long.parseLong(Begin)+8*60*60*1000);
 					obj.remove("tripitem_begin");
 //					obj.put("tripitem_begin", tripitemBegin);
 				}
@@ -198,13 +195,10 @@ public class TripitemServlet extends HttpServlet {
 			
 			try {
 				String End = obj.getString("tripitem_end");
-				Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
-				cal1.setTimeInMillis(Long.parseLong(End));
-				long milis2 = cal1.getTimeInMillis();
 				if (End == null || End.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemEnd=new Timestamp(milis2);
+					tripitemEnd=new Timestamp(Long.parseLong(End)+8*60*60*1000);
 					obj.remove("tripitem_end");
 //					obj.put("tripitem_end", tripitemEegin);
 				}
@@ -315,13 +309,10 @@ public class TripitemServlet extends HttpServlet {
 			
 			try {
 				String Begin = obj.getString("tripitem_begin");
-				Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
-				cal1.setTimeInMillis(Long.parseLong(Begin));
-				long milis1 = cal1.getTimeInMillis();
 				if (Begin == null || Begin.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemBegin=new Timestamp(milis1);
+					tripitemBegin=new Timestamp(Long.parseLong(Begin)+8*60*60*1000);
 					obj.remove("tripitem_begin");
 //					obj.put("tripitem_begin", tripitemBegin);
 				}
@@ -332,13 +323,10 @@ public class TripitemServlet extends HttpServlet {
 			
 			try {
 				String End = obj.getString("tripitem_end");
-				Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
-				cal1.setTimeInMillis(Long.parseLong(End));
-				long milis2 = cal1.getTimeInMillis();
 				if (End == null || End.trim().isEmpty()) {
 					throw new Exception();
 				}else{
-					tripitemEnd=new Timestamp(milis2);
+					tripitemEnd=new Timestamp(Long.parseLong(End)+8*60*60*1000);
 					obj.remove("tripitem_end");
 //					obj.put("tripitem_end", tripitemEegin);
 				}

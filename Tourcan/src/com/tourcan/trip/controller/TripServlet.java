@@ -211,9 +211,7 @@ public class TripServlet extends HttpServlet {
 
 			
 			// 抓出建立當下時間
-			Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
-			long milis1 = cal1.getTimeInMillis();
-			tripCtime = new Timestamp(milis1);
+			tripCtime = new Timestamp(System.currentTimeMillis()+8*60*60*1000);
 			tripVO.setTrip_ctime(tripCtime);
 
 			try{
@@ -271,9 +269,7 @@ public class TripServlet extends HttpServlet {
 			tripId = obj.getInt("trip_id");
 
 			// 抓出修改當下時間
-			Calendar cal1 = Calendar.getInstance(TimeZone.getTimeZone("Asia/Taipei"));
-			long milis1 = cal1.getTimeInMillis();
-			tripCtime =new Timestamp(milis1);
+			tripCtime = new Timestamp(System.currentTimeMillis()+8*60*60*1000);
 
 			tripPrice =obj.getInt("trip_price"); 
 
