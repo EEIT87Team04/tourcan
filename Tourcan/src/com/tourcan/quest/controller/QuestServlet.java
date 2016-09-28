@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.tourcan.mem.model.MemVO;
 import com.tourcan.quest.model.QuestService;
 import com.tourcan.quest.model.QuestVO;
 
@@ -207,13 +208,15 @@ public class QuestServlet extends HttpServlet {
 
 			// 抓出建立當下時間
 			questQtime = new Timestamp(System .currentTimeMillis());
-			memUid = "1";
+			MemVO memVO=(MemVO) request.getSession().getAttribute("vo");
+			memUid = memVO.getMem_uid();
 			adminId = null;
 			questReply = null;
 			questRtime = null;
 
 			// memUid = questVO.getMem_uid(); // 抓出建立會員Id 且 不能修改
-			adminId = 1; // 抓出回覆管理員Id 且 不能修改
+//			adminId = 1
+					; // 抓出回覆管理員Id 且 不能修改
 
 			if (checkResult.length() > 0) {
 				throw new Exception();

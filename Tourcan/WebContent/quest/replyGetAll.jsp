@@ -113,7 +113,7 @@
           <form role="form" name="addQuest">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> Admin Name</label>
-              <input type="text" class="form-control"  value="${admin.admin_name }">
+              <input type="text" class="form-control"  value="${admin.admin_name }" readonly="readonly">
               <input type="hidden"  id="admin_id" name="admin_id" placeholder="Enter adminId" >
             </div>
             <div class="form-group">
@@ -483,6 +483,7 @@
 					json["quest_topic"]=quest_topic;
 					json["quest_qtime"]=quest_qtime;
 					json["mem_uid"]=mem_uid;
+					json["admin_id"]=${admin.admin_id};
 					
 					for (var i = 0; i < form.length; i++) {
 						
