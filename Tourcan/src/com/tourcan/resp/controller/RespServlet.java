@@ -150,7 +150,7 @@ public class RespServlet  extends HttpServlet{
 			if(resparticle==null||resparticle.trim().isEmpty()||resparticle.trim().length()==0){
 			checkR.append("resp_article", "請輸入回覆內容");
 			}
-			resptime=new Timestamp(System.currentTimeMillis());
+			resptime=new Timestamp(System.currentTimeMillis()+8*60*60*1000);
 //			System.out.println("themetime:"+themetime);
 			respVO.setResp_time(resptime);
 			themeid=respVO.getTheme_id();
@@ -198,7 +198,7 @@ public class RespServlet  extends HttpServlet{
 			}
 //			System.out.println("themetime:"+themetime);
 			
-			resptime=new Timestamp(System.currentTimeMillis());
+			resptime=new Timestamp(System.currentTimeMillis()+8*60*60*1000);
 			respVO.setResp_time(resptime);
 			themeid=respVO.getTheme_id();
 			respid=respVO.getResp_id();

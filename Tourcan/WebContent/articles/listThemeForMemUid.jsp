@@ -13,13 +13,15 @@
 </head>
 <body>
 <div class="container">
+	<h2>我發表的討論</h2>
+	<input type="hidden" id="mem_uid" name="mem_uid" value="rdSAmrdF3rUIAUL4A50YOqElJUR2" >
 	<table class="table table-striped" id="tab1">
 			<thead>
 				<tr class="warning">
-					<th class="col-md-5">主題名稱</th>
-					<th class="col-md-4">總預算</th>
-					<th class="col-md-3">創建時間</th>
-					<th >刪除</th>
+					<th>編號</th>				
+					<th>主題名稱</th>
+					<th>發表者</th>
+					<th>建立時間</th>
 				</tr>
 			</thead>
 			<tbody>		
@@ -27,7 +29,25 @@
 		</table>
 <script src="${contextPath}/js/jquery-3.1.0.min.js"></script>  
 	<script type="text/javascript">
-		
+		var myBody=$('#tab1>tbody')
+		var memuid=$('#mem_uid').val();
+		$(function(){
+			$.getJSON(("${contextPath}/articles/ThemeServlet"),{"mem_uid":memuid,"method":"findByMemuid"},function(data){
+				$.each(data,function(idx, tripvalue){
+						console.log(idx);
+						console.log(data);
+					var cell1 = $('<td/>').text(tripvalue.theme_id);
+					var cell2 = $("<td/>").text(tripvalue.theme_topic);
+					var cell3 = $("<td/>").text(tripvalue.mem_uid);
+					var cell4 = $('<td/>').text(tripvalue.theme_time)
+					var row = $('<tr/>').append([cell1,cell2,cell3,cell4]);
+					myBody.append(row);
+					
+				})
+			
+			
+		})
+		})
 	
 	</script>
 </div>

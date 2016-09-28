@@ -114,5 +114,26 @@ public class ThemeDAO implements Theme_interface {
 		return list;
 	}
 
+	@Override
+	public List<ThemeVO> findByMemuid(String mem_uid) {
+		List<ThemeVO> memuid = null;
+		Session sion = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = sion.beginTransaction();
+		String mid ="%" +mem_uid+ "%";
+		try{
+//			sion.beginTransaction();
+			String QueryTopic ="FROM ThemeVO WHERE mem_uid like :mem_uid";
+			Query query =sion.createQuery(QueryTopic);
+			query.setParameter("mem_uid",mid);
+			memuid=query.list();
+//			sion.getTransaction().commit();
+			tx.commit();
+			}catch (RuntimeException e) {
+//				sion.getTransaction().rollback();
+				tx.rollback();
+				throw e;
+			}
+		return memuid;
+	}
 
 }
