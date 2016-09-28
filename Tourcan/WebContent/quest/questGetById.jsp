@@ -10,6 +10,7 @@
     <input type="text" class="pull-right tooltip-show" id="txt_topic" data-placement="left" title="請輸入查詢標題" style="margin:3px">
   </div>
   <button class="btn btn-primary" id="quest_getAll">查詢全部</button>
+  <input type="hidden" id="memuid" value="${vo.mem_uid }">
   <button class="btn btn-info" id="quest_cancel">取消查詢</button>
   <button class="btn btn-danger pull-right" id="quest_insert">提出問題</button>
   <p></p>
@@ -89,7 +90,7 @@
 		    $('#replyAll').show();
 		    $('#replyAll>tbody').empty();
 		
-		var memUid=1;
+		var memUid=$('#memuid').val();
 		$.getJSON(("QuestServlet"),{"memUid":memUid,"method":"getAllByUid"},function(data){
 		    console.log(memUid);
 		    var myBody = $('#replyAll>tbody');
