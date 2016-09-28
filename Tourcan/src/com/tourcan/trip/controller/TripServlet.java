@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -208,8 +209,9 @@ public class TripServlet extends HttpServlet {
 				checkResult.append("trip_name", "旅遊名稱不得超過50個字");
 			}
 
+			
 			// 抓出建立當下時間
-			tripCtime = new Timestamp(System.currentTimeMillis()+8*60*1000*1000);
+						tripCtime = new Timestamp(System.currentTimeMillis()+8*60*60*1000);
 			tripVO.setTrip_ctime(tripCtime);
 
 			try{

@@ -196,6 +196,18 @@
 						mapTypeId : google.maps.MapTypeId.ROADMAP,
 					});
 			
+			var origin_input = document.getElementById('possition');
+			var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
+			
+			origin_autocomplete.addListener('place_changed', function() {
+			    var place = origin_autocomplete.getPlace();
+			    if (!place.geometry) {
+			      window.alert("Autocomplete's returned place contains no geometry1　");
+			      return;
+			    }
+			    origin_place_id = place.place_id;
+			 	 });
+			
 			directionsDisplay.setMap(map);
 
 			calculateAndDisplayRoute(directionsService,directionsDisplay);
@@ -251,20 +263,30 @@
 		
 		
 		// ↓ 依"啟程"的出發時間為基準，初始化基準值  ↓
-		  function timeInit()
-		  {
-			  //console.log("initial start...");
-			  sTime = new Date($("#start input[name='sTime']").val().replace('T'," ")).getTime();
-			  console.log(sTime);
-			  tTime = parseInt($("#start span[name='tTime']").text())*60*1000;
-			  wTime = 0;
-			  eTime = sTime + tTime + wTime;
-			  $("#start input[name='tripitem_begin']").val(sTime);
-			  $("#start input[name='tripitem_staytime']").val(0);
-			  $("#start input[name='tripitem_end']").val(eTime);
-			  //console.log("initial done.");
-		  }
-		// ↑ 依"啟程"的出發時間為基準，初始化基準值   ↑
+	     function timeInit()
+	     {
+	      //console.log("initial start...");
+	      sTime = new Date($("#start input[name='sTime']").val().replace('T'," ")).getTime();
+	      console.log(sTime);
+	      var tTimeStr = $('#start span[name="tTime"]').text();
+	      var idxOfHr = tTimeStr.indexOf("小時");
+	      var hrs = parseInt(tTimeStr.substr(0,idxOfHr));
+	      var mins = parseInt(tTimeStr.substr(idxOfHr+2));
+	      if(isNaN(hrs)==true)
+	     {hrs=0;}
+	      if(isNaN(mins)==true)
+	     {mins=0;}
+	      if(hrs==0)
+	     {mins = parseInt(tTimeStr);}
+	      tTime = (hrs*60*60*1000)+(mins*60*1000);
+	      wTime = 0;
+	      eTime = sTime + tTime + wTime;
+	      $("#start input[name='tripitem_begin']").val(sTime);
+	      $("#start input[name='tripitem_staytime']").val(0);
+	      $("#start input[name='tripitem_end']").val(eTime);
+	      //console.log("initial done.");
+	     }
+	   // ↑ 依"啟程"的出發時間為基準，初始化基準值   ↑
 		
 		
 			//刪除景點明細
@@ -288,41 +310,51 @@
 			}
 		
 			// ↓ 將所有sortable元素的Time帶入值，並準備轉交給下一個item  ↓
-			  function timeReveal()
-			  {
-				  console.log("reveal start...");	  
-					$("#sortable").children().each(function(){
-					  sTime = eTime;
-					  
-// 					  console.log(new Date(sTime)); //解開註解，可看該毫秒數所指日期。
-					  $(this).find('input[name="tripitem_begin"]').val(sTime);
-					  
-					  var newSt = new Date(sTime).toTimeString();
-					  var sTidx = newSt.indexOf("G");
-					  newSt = "起：" + newSt.substr(0,sTidx-4);
-					  
-					  $(this).find('p[name=sTime]').text(newSt);
-					  tTime = parseInt($(this).find('span[name="tTime"]').text())*60*1000;
-					  wTime = $(this).find('input[name="wTime"]').val();
+		       function timeReveal()
+		       {
+		        console.log("reveal start...");   
+		       $("#sortable").children().each(function(){
+		         sTime = eTime;
+		         
+//		          console.log(new Date(sTime)); //解開註解，可看該毫秒數所指日期。
+		         $(this).find('input[name="tripitem_begin"]').val(sTime);
+		         
+		         var newSt = new Date(sTime).toTimeString();
+		         var sTidx = newSt.indexOf("G");
+		         newSt = "起：" + newSt.substr(0,sTidx-4);
+		         
+		         $(this).find('p[name=sTime]').text(newSt);
+		         var tTimeStr = $(this).find('span[name="tTime"]').text();
+		         var idxOfHr = tTimeStr.indexOf("小時");
+		        var hrs = parseInt(tTimeStr.substr(0,idxOfHr));
+		        var mins = parseInt(tTimeStr.substr(idxOfHr+2));
+		        if(isNaN(hrs)==true)
+		       {hrs=0;}
+		        if(isNaN(mins)==true)
+		       {mins=0;}
+		        if(hrs==0)
+		       {mins = parseInt(tTimeStr);}
+		        tTime = (hrs*60*60*1000)+(mins*60*1000);
+		         wTime = $(this).find('input[name="wTime"]').val();
 
-					  $(this).find('input[name="tripitem_staytime"]').val(wTime);
-					  
-					  wTime = wTime*60*1000;
-					  var newEt = new Date(eTime+wTime).toTimeString();
-					  var eTidx = newEt.indexOf("G");
-					  newEt = "訖：" + newEt.substr(0,eTidx-4);
-					  
+		         $(this).find('input[name="tripitem_staytime"]').val(wTime);
+		         
+		         wTime = wTime*60*1000;
+		         var newEt = new Date(eTime+wTime).toTimeString();
+		         var eTidx = newEt.indexOf("G");
+		         newEt = "訖：" + newEt.substr(0,eTidx-4);
+		         
 
-					  //console.log(new Date(sTime+wTime)); //解開註解，可看該毫秒數所指日期。
-					  $(this).find('input[name="tripitem_end"]').val(sTime+wTime);
-					  
-					  $(this).find('p[name="eTime"]').text(newEt);
-					  
-					  eTime = sTime + tTime + wTime;
-				  });
-				  console.log("reveal done.");	  
-			  }
-			// ↑ 將所有sortable元素的Time帶入值，並準備轉交給下一個item  ↑
+		         //console.log(new Date(sTime+wTime)); //解開註解，可看該毫秒數所指日期。
+		         $(this).find('input[name="tripitem_end"]').val(sTime+wTime);
+		         
+		         $(this).find('p[name="eTime"]').text(newEt);
+		         
+		         eTime = sTime + tTime + wTime;
+		        });
+		        console.log("reveal done.");   
+		       }
+		     // ↑ 將所有sortable元素的Time帶入值，並準備轉交給下一個item  ↑
 			
 			
 			
