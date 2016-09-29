@@ -71,7 +71,7 @@ label{
   outline:none;
 }
 .box button{
-  background:rgba(116,46,204,0.5);
+  background:rgba(116,46,204,0.9);
   border:0;
   padding:10px;
   font-size:20px;
@@ -111,7 +111,7 @@ background:url("${contextPath}/images/wheat.jpg");
         </div>
 	<div class="form-group">         
         <label for="pass">密碼：</label>
-            <input class="form-control" type="text" placeholder="密碼：" name="admin_pwd"/>      
+            <input class="form-control" type="password" placeholder="密碼：" name="admin_pwd"/>      
             <button>登入</button>
          </div> 
         </form>

@@ -91,12 +91,7 @@
                     <li><a class="dath7" href="${contextPath}/hotels">住宿</a></li>
                     <li><a class="dath7" href="${contextPath}/trip/listOneFromMemTrip.jsp">規劃行程</a></li>
                     <li><a class="dath7" href="${contextPath}/articles/list.jsp">討論區</a></li>
-                    <c:if test="${vo!=null}">
                     <li><a class="dath7" href="${contextPath}/quest/questGetById.jsp">客服</a></li>
-                    </c:if>
-                    <c:if test="${vo==null}">
-                    <li><a class="dath7" onclick=alert('請先登入會員')>客服</a></li>
-                    </c:if>
                     
                     
                     <c:if test="${vo!=null}">

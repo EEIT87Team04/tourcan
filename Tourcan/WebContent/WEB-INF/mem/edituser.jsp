@@ -6,16 +6,7 @@
 	<c:set var="data" value="${vo}" scope="page"></c:set>
 </c:if>
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>編輯個人資料</title>
-<link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
-<link href="${contextPath}/css/ui-ExciteBike/jquery-ui.min.css"
-	rel="stylesheet">
-</head>
-<body>
-	<div class="container">
+<jsp:include page="/frontPageHeader.jsp"/>
 		<div class="row">
 			<div class="col-sm-6 col-sm-offset-3">
 				<h3 class="">編輯個人資料</h3>
@@ -160,7 +151,6 @@
 				<!-- <button type="button" class="btn btn-secondary" id="btnReset">Cancel</button> -->
 			</div>
 		</div>
-	</div>
 	<script src="${contextPath}/js/jquery-3.1.0.min.js"></script>
 	<script src="${contextPath}/js/ui-ExciteBike/jquery-ui-1.12.0.min.js"></script>
 	<script src="${contextPath}/js/bootstrap.min.js"></script>
@@ -235,5 +225,4 @@
 			<%-- otherwise above code may not work on slow network--%>
 		})
 	</script>
-</body>
-</html>
+<jsp:include page="/frontPageFooter.jsp"/>

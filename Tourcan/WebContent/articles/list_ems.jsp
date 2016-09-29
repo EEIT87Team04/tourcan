@@ -130,7 +130,7 @@ $(function(){
 			})
 		})
 	$('.delete1').on('click',function(){
-		var id1=$('#delete1').val();
+		var id1=$(this).val();
 		var aa=$(this).parent().parent();
 		$.ajax({
 			type : "delete",

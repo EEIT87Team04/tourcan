@@ -182,12 +182,7 @@
                         <div class="col-md-2 col-sm-6">
                             <div class="service-item">
                                 <span class="fa-stack fa-4x">
-                                <c:if test="${vo!=null}">
 	                               <a href="${contextPath}/quest/questGetById.jsp"><img src="${contextPath}/images/front/icons/info.png" class="front_icon"></a>
-                                </c:if>
-                                <c:if test="${vo==null}">
-	                               <a onclick=alert('請先登入會員')><img src="${contextPath}/images/front/icons/info.png" class="front_icon"></a>
-                                </c:if>
                             </span>
                                 <h4>
                                      <strong class="dath7" >客　　服</strong>

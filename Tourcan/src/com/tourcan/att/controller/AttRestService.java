@@ -479,6 +479,10 @@ public class AttRestService {
 			vo = ApplicationContextUtils.getContext().getBean(AttVO.class);
 			vo.setAtt_id(id);
 			try {
+				List<PhotoVO> photos = pdao.findByAttId(id);
+				for (PhotoVO photoVO : photos) {
+					pdao.delete(photoVO.getPhoto_id());
+				}
 				dao.delete(id);
 				// 200 OK
 				msg = new HashMap<String, String>();

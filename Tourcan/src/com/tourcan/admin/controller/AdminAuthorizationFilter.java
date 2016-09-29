@@ -19,30 +19,7 @@ public class AdminAuthorizationFilter implements Filter {
 
 	static {
 		// TODO complete this blacklist
-		// blacklist.put("/att", new String[] { "POST", "PUT", "DELETE" });
-		// restful.add("/att");
-		//
-		// blacklist.put("/HotelServlet", new String[] { "POST", "PUT", "DELETE"
-		// });
-		// restful.add("/HotelServlet");
-		//
-		// blacklist.put("/hotels", new String[] { "POST", "PUT", "DELETE" });
-		// restful.add("/hotels");
-		//
-		// blacklist.put("/members", new String[] { "GET", "POST", "PUT",
-		// "DELETE" });
-		// restful.add("/members");
-		//
-		// blacklist.put("/ems", new String[] { "GET", "POST", "PUT", "DELETE"
-		// });
-		// blacklist.put("/attImport.html", new String[] { "GET", "POST", "PUT",
-		// "DELETE" });
-		// blacklist.put("/att/insert.jsp", new String[] { "GET", "POST", "PUT",
-		// "DELETE" });
-		// blacklist.put("/mem", new String[] { "GET", "POST", "PUT", "DELETE"
-		// });
-		// blacklist.put("/hotelManage.jsp", new String[] { "GET", "POST",
-		// "PUT", "DELETE" });
+		
 	}
 
 	@Override
@@ -55,6 +32,10 @@ public class AdminAuthorizationFilter implements Filter {
 		if (vo == null && !req.getServletPath().startsWith("/adridores/login")) {
 			resp.sendRedirect(req.getContextPath() + "/adridores/login");
 		} else if (vo != null && req.getServletPath().startsWith("/adridores/login")) {
+			resp.sendRedirect(req.getContextPath() + "/adridores/att");
+		} else if (vo != null && req.getServletPath().equals("/adridores")) {
+			resp.sendRedirect(req.getContextPath() + "/adridores/att");
+		} else if (vo != null && req.getServletPath().equals("/adridores/")) {
 			resp.sendRedirect(req.getContextPath() + "/adridores/att");
 		} else {
 			chain.doFilter(request, response);

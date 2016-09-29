@@ -516,6 +516,10 @@ public class HotelService {
 			vo = ApplicationContextUtils.getContext().getBean(HotelVO.class);
 			vo.setHotel_id(id);
 			try {
+				List<PhotoVO> photos = pdao.findByHotleId(id);
+				for (PhotoVO photoVO : photos) {
+					pdao.delete(photoVO.getPhoto_id());
+				}
 				dao.delete(vo);
 				// 200 OK
 				msg = new HashMap<String, String>();
