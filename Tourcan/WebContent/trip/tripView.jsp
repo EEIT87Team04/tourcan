@@ -553,7 +553,7 @@
 					attForm.setAttribute("class","row div4 col-sm-12");
 					attForm.setAttribute("id","selectForm");
 					$.ajax({
-						url : serviceProvider+"/region/"+regionId,
+						url : serviceProvider+"/regions/"+regionId,
 						method : "GET"
 					}).done(function(data) {
 						console.log("200: " + data);
@@ -627,7 +627,7 @@
 					        $("input[name='attCheck']:checked").each(function(){
 								var hotelname1=$(this).val();
 								$.ajax({
-									url : serviceProvider+"/name/"+hotelname1,
+									url : serviceProvider+"/names/"+hotelname1,
 									method : "GET"
 								}).done(function(data1){
 									count = count+"B";

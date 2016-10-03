@@ -136,7 +136,7 @@ public class HotelService {
 	}
 
 	@GET
-	@Path("/name/{name}")
+	@Path("/names/{name}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response queryByName(@PathParam("name") String name) {
 		List<HotelVO> vos;
@@ -171,7 +171,7 @@ public class HotelService {
 	}
 
 	@GET
-	@Path("/region/{id}")
+	@Path("/regions/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response queryByRegion(@PathParam("id") Integer region_id) {
 		List<HotelVO> vos;
